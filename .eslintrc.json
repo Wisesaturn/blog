@@ -5,13 +5,13 @@
     "jest": true
   },
   "extends": [
+    "@remix-run/eslint-config",
+    "@remix-run/eslint-config/node",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@next/next/recommended",
     "airbnb-base",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "next/core-web-vitals",
     "eslint-config-prettier"
   ],
   "parser": "@typescript-eslint/parser",

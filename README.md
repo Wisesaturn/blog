@@ -1,13 +1,9 @@
 # Jaehan's blog
 
-- Markdown parsing을 이용하여 자체 블로그를 제작해봅니다.
-- 경험, 프로젝트와 같은 일들을 기록하고자 합니다.
+- 개발과 디자인 경험을 기록해 보았습니다.
 
----
+# Stack
 
-## Stack
-
-- Next.js
+- [Remix](https://remix.run/)
 - TypeScript
-- TailwindCSS
-- CSS Module
+- [TailwindCSS](https://tailwindcss.com/)

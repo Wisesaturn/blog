@@ -1,24 +1,40 @@
 {
   "name": "jaehan-blog",
   "private": true,
+  "sideEffects": false,
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "run-s \"build:*\"",
+    "build:css": "npm run generate:css -- --minify",
+    "build:remix": "remix build",
+    "dev": "run-p \"dev:*\"",
+    "dev:css": "npm run generate:css -- --watch",
+    "dev:remix": "remix dev",
+    "generate:css": "npx tailwindcss -o ./src/styles/tailwind.css",
+    "start": "remix-serve build"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "@remix-run/node": "^1.7.5",
+    "@remix-run/react": "^1.7.5",
+    "@remix-run/vercel": "^1.7.5",
+    "@vercel/node": "^2.4.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remix": "^1.7.5"
   },
   "devDependencies": {
+    "rehype-highlight": "^6.0.0",
+    "@remix-run/dev": "^1.7.5",
+    "@remix-run/eslint-config": "^1.7.5",
+    "@remix-run/serve": "^1.7.5",
+    "@tailwindcss/typography": "^0.5.8",
     "@types/node": "^17.0.35",
     "@types/react": "^18.0.9",
     "@types/react-dom": "18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "autoprefixer": "^10.4.7",
+    "concurrently": "^7.5.0",
     "eslint": "^8.25.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -28,10 +44,16 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "highlight.js": "^11.6.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-figure": "^1.0.1",
+    "rehype-slug": "^5.1.0",
+    "remark-gfm": "^3.0.1",
     "sass": "^1.55.0",
-    "tailwindcss": "^3.1.2",
-    "typescript": "^4.8.4"
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.7.4"
   }
 }
