@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 exports.mdx = async (filename) => {
   const [rehypeHighlight, rehypeAutolinkHeadings, rehypeSlug, remarkGfm] = await Promise.all([
     import('rehype-highlight').then((mod) => mod.default),
@@ -26,5 +27,5 @@ exports.mdx = async (filename) => {
 
 exports.cacheDirectory = './node_modules/.cache/remix';
 exports.ignoredRouteFiles = ['**/.*', '**/*.css', '**/*.test.{js,jsx,ts,tsx}'];
-exports.server = process.env.NODE_ENV === 'development' ? undefined : './server.js';
+exports.server = process.env.NODE_ENV === 'development' ? undefined : './server.ts';
 exports.serverBuildTarget = 'vercel';
