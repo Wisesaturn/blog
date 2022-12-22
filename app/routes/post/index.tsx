@@ -1,17 +1,29 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
-import * as firstPost from './setting.mdx';
-import * as secondPost from './welcome.mdx';
+import fs from 'fs/promises';
+import path from 'path';
+import parseFrontMatter from 'front-matter';
+import type { parsingTypes, postingTypes } from './types';
 
-const postFromModule = (mod: any) => {
-  return {
-    slug: mod.filename.replace(/\.mdx?$/, ''),
-    ...mod.attributes.meta,
-  };
+const postPath = path.join(process.cwd(), 'app/routes/post');
+
+export const getPosts = async () => {
+  const isPath = await fs.readdir(postPath);
+  return Promise.all(
+    isPath.map(async (filename) => {
+      const file = await fs.readFile(path.join(postPath, filename));
+      const { attributes } = parseFrontMatter<parsingTypes>(file.toString());
+
+      return {
+        slug: filename.replace(/\.mdx?$/, ''),
+        ...attributes,
+      };
+    }),
+  );
 };
 
 export const loader: LoaderFunction = () => {
-  return [postFromModule(firstPost), postFromModule(secondPost)];
+  return getPosts();
 };
 
 export const BlogIndex = () => {
@@ -20,9 +32,10 @@ export const BlogIndex = () => {
     <>
       <h2>글 목록</h2>
       <ul>
-        {posts.map((post: any) => (
+        {posts.map((post: postingTypes) => (
           <li key={post.slug}>
             <Link to={post.slug}>{post.title}</Link>
+            {post.date}
             {post.description ? <p className="m-0 lg:m-0">{post.description}</p> : null}
           </li>
         ))}
