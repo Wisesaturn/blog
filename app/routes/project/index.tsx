@@ -5,9 +5,9 @@ import path from 'path';
 import parseFrontMatter from 'front-matter';
 import type { parsingTypes, postingTypes } from './types';
 
-export const loader: LoaderFunction = async () => {
-  const postPath = path.join(__dirname, '..', 'app/routes/post');
+const postPath = path.join(process.cwd(), 'app/routes/project/__data');
 
+export const getPosts = async () => {
   const isPath = await fs.readdir(postPath);
   return Promise.all(
     isPath.map(async (filename) => {
@@ -20,6 +20,10 @@ export const loader: LoaderFunction = async () => {
       };
     }),
   );
+};
+
+export const loader: LoaderFunction = () => {
+  return getPosts();
 };
 
 export const BlogIndex = () => {
