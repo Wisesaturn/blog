@@ -11,7 +11,7 @@ export const links: LinksFunction = () => {
   ];
 };
 
-const Post = () => {
+const ProjectLayout = () => {
   return (
     <div className="flex justify-center">
       <div className="prose lg:prose-xl py-10">
@@ -21,4 +21,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default ProjectLayout;

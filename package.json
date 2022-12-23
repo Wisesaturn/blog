@@ -48,6 +48,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
+    "react-icons": "^4.7.1",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-figure": "^1.0.1",
     "rehype-highlight": "^6.0.0",

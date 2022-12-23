@@ -5,7 +5,7 @@ import path from 'path';
 import parseFrontMatter from 'front-matter';
 import type { attributeTypes, postingTypes } from './types';
 
-const postPath = path.join(process.cwd(), '../..', 'build/routes/post');
+const postPath = path.join(process.cwd(), 'app/routes/project/__post');
 
 export const getPosts = async () => {
   const isPath = await fs.readdir(postPath);
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = () => {
   return getPosts();
 };
 
-export const BlogIndex = () => {
+export const ProjectPage = () => {
   const posts = useLoaderData();
   return (
     <>
@@ -44,4 +44,4 @@ export const BlogIndex = () => {
   );
 };
 
-export default BlogIndex;
+export default ProjectPage;
