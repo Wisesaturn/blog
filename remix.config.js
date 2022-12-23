@@ -32,5 +32,4 @@ exports.serverBuildTarget = 'vercel';
 
 exports.appDirectory = 'app';
 exports.BuildDirectory = 'public/build';
-exports.serverBuildPath = 'public/build';
 exports.publicPath = '/build/';

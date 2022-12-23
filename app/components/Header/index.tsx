@@ -5,7 +5,7 @@ export default function Header(props: HeaderProps) {
   const { isContent = '' } = props;
 
   return (
-    <header className="flex justify-between items-center sticky top-0 bg-white">
+    <header className="flex z-[9999] justify-between w-full mx-auto items-center sticky top-0 bg-white">
       <nav>
         <button className="p-5">
           <AiOutlineMenu size="24" />
