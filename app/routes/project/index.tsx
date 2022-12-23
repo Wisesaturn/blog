@@ -3,16 +3,16 @@ import { Link, useLoaderData } from '@remix-run/react';
 import fs from 'fs/promises';
 import path from 'path';
 import parseFrontMatter from 'front-matter';
-import type { parsingTypes, postingTypes } from './types';
+import type { attributeTypes, postingTypes } from './types';
 
-const postPath = path.join(process.cwd(), 'app/routes/project/__data');
+const postPath = path.join(process.cwd(), '../..', 'build/routes/post');
 
 export const getPosts = async () => {
   const isPath = await fs.readdir(postPath);
   return Promise.all(
     isPath.map(async (filename) => {
       const file = await fs.readFile(path.join(postPath, filename));
-      const { attributes } = parseFrontMatter<parsingTypes>(file.toString());
+      const { attributes } = parseFrontMatter<attributeTypes>(file.toString());
 
       return {
         slug: filename.replace(/\.mdx?$/, ''),

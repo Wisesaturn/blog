@@ -1,4 +1,5 @@
-export interface parsingTypes {
+export interface attributeTypes {
+  title: string;
   date: string;
   meta: {
     title: string;

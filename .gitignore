@@ -42,6 +42,8 @@ next-env.d.ts
 .output
 
 
+build.index.js
+build.index.js.map
 /build/
 /public/build
 /api/index.js
