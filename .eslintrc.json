@@ -60,7 +60,8 @@
           ["@assets", "./app/assets"],
           ["@contexts", "./app/contexts"],
           ["@hooks", "./app/hooks"],
-          ["@utils", "./app/utils"]],
+          ["@utils", "./app/utils"],
+          ["@types", "./app/@Types"]],
         "extensions": [".js", ".jsx", ".ts", ".tsx", "css", ".scss"]
       }
     }

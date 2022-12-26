@@ -6,7 +6,7 @@ import TitleSection from '@components/Section/Title';
 export const MainPage = () => {
   return (
     <>
-      <Header isContent="헤더 영역" />
+      <Header isContent="Seize the day" />
       <TitleSection />
       <PostCardSection />
       <Footer />

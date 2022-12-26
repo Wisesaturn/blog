@@ -1,6 +1,6 @@
 export default function PostCardSection() {
   return (
-    <section className="max-w-3xl mx-auto w-11/12 flex flex-wrap flex-col justify-between align-center gap-10 md:flex-row">
+    <section className="h-full max-w-3xl mx-auto w-11/12 flex flex-wrap flex-col justify-between align-center gap-10 md:flex-row">
       <div className="flex flex-col gap-6 md:gap-8 relative md:flex-row md:h-40">
         <div className="rounded-lg w-full h-80 md:h-auto overflow-hidden shadow-md shadow-gray-300 md:min-w-[25%] md:w-1/2">
           <img

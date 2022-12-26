@@ -3,7 +3,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import fs from 'fs/promises';
 import path from 'path';
 import parseFrontMatter from 'front-matter';
-import type { attributeTypes, postingTypes } from './types';
+import type { attributeTypes, postingTypes } from '@Types/post';
 
 const postPath = path.join(process.cwd(), 'app/routes/project/__post');
 
