@@ -41,6 +41,7 @@
   }
 
   body {
+    scroll-behavior: smooth;
     box-sizing: border-box;
     min-width: 20rem;
   }
@@ -63,9 +64,18 @@
   li,
   ol {
     list-style-type: none;
-    padding-left: 0 !important;
   }
   /* initial setting is done */
+
+  /* layout */
+  .isWrapper {
+    width: 90%;
+    max-width: 48rem;
+    margin: 0 auto;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
 
   /* custom */
   .scroll-hidden {

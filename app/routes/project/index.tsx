@@ -5,7 +5,8 @@ import path from 'path';
 import parseFrontMatter from 'front-matter';
 import type { attributeTypes, postingTypes } from '@Types/post';
 
-const postPath = path.join(process.cwd(), 'app/routes/project/__post');
+const isDevelopment = process.env.NODE_ENV === 'development';
+const postPath = path.join(process.cwd(), `${isDevelopment ? `app/routes/project` : ``}/__post`);
 
 export const getPosts = async () => {
   const isPath = await fs.readdir(postPath);

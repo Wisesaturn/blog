@@ -3,6 +3,9 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        lightgreen: '#bdecb6',
+      },
       fontFamily: {
         pretandard: ['Pretandard', 'sans-serif'],
       },
