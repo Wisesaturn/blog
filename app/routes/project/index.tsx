@@ -1,9 +1,10 @@
 import type { LoaderFunction } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import fs from 'fs/promises';
 import path from 'path';
 import parseFrontMatter from 'front-matter';
-import type { attributeTypes, postingTypes } from '@Types/post';
+import type { attributeTypes } from '@Types/post';
+import PostCardSection from '@components/Section/PostCard';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const postPath = path.join(process.cwd(), `${isDevelopment ? `app/routes/project` : ``}/__post`);
@@ -13,11 +14,12 @@ export const getPosts = async () => {
   return Promise.all(
     isPath.map(async (filename) => {
       const file = await fs.readFile(path.join(postPath, filename));
-      const { attributes } = parseFrontMatter<attributeTypes>(file.toString());
+      const { attributes, body } = parseFrontMatter<attributeTypes>(file.toString());
 
       return {
         slug: filename.replace(/\.mdx?$/, ''),
         ...attributes,
+        body,
       };
     }),
   );
@@ -30,18 +32,9 @@ export const loader: LoaderFunction = () => {
 export const ProjectPage = () => {
   const posts = useLoaderData();
   return (
-    <>
-      <h2>글 목록</h2>
-      <ul>
-        {posts.map((post: postingTypes) => (
-          <li key={post.slug}>
-            <Link to={post.slug}>{post.title}</Link>
-            {post.date}
-            {post.description ? <p className="m-0 lg:m-0">{post.description}</p> : null}
-          </li>
-        ))}
-      </ul>
-    </>
+    <div className="h-full">
+      <PostCardSection data={posts} />
+    </div>
   );
 };
 

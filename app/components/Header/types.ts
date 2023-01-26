@@ -1,3 +1,3 @@
 export interface HeaderProps {
-  isContent: string;
+  isContent?: string;
 }

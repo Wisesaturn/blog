@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useScrollPosition() {
+export default function useScrollTopPosition() {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const updateScroll = () => {

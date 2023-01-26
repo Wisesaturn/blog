@@ -1,10 +1,10 @@
 import { AiOutlineMenu } from 'react-icons/ai';
-import useScrollPosition from '@hooks/useScrollPosition';
+import useScrollTopPosition from '@hooks/useScrollTopPosition';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {
   const { isContent = '' } = props;
-  const onScrollTop = useScrollPosition();
+  const onScrollTop = useScrollTopPosition();
   const hasShadow = !onScrollTop && 'shadow-md';
   const isDefaultStyle = `glassMorphism flex z-[9999] ease-in-out duration-200 justify-between w-full mx-auto items-center sticky top-0 ${hasShadow}`;
 

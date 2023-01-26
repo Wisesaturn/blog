@@ -9,7 +9,7 @@ export const MainPage = () => {
     <>
       <Header isContent="Seize the day" />
       <TitleSection />
-      <PostCardSection />
+      {/* <PostCardSection /> */}
       <Pagination />
       <Footer />
     </>
