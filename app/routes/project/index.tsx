@@ -32,9 +32,9 @@ export const loader: LoaderFunction = () => {
 export const ProjectPage = () => {
   const posts = useLoaderData();
   return (
-    <div className="h-full">
+    <>
       <PostCardSection data={posts} />
-    </div>
+    </>
   );
 };
 

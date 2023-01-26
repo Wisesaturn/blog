@@ -1,5 +1,6 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import useScrollTopPosition from '@hooks/useScrollTopPosition';
+import { useEffect } from 'react';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {

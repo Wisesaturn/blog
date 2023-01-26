@@ -2,7 +2,7 @@
   "name": "jaehan-blog",
   "private": true,
   "sideEffects": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "run-s \"build:*\"",
     "build:css": "npm run generate:css -- --minify",
@@ -20,7 +20,7 @@
     "@vercel/node": "^2.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "remix": "^1.7.5"
+    "remix": "^1.11.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.5",

@@ -4,7 +4,6 @@ import { Outlet } from '@remix-run/react';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import TitleSection from '@components/Section/Title';
-import Pagination from '@components/Pagination';
 
 export const links: LinksFunction = () => {
   return [
@@ -20,8 +19,9 @@ const ProjectLayout = () => {
     <>
       <Header isContent="🛠 프로젝트 회고" />
       <TitleSection isContent="🛠 프로젝트 회고" />
-      <Outlet />
-      <Pagination />
+      <div className="isWrapper flex flex-col h-full">
+        <Outlet />
+      </div>
       <Footer />
     </>
   );
