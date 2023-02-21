@@ -1,8 +1,8 @@
 import Header from '@components/Header';
-import Footer from '@components/Footer';
 import TitleSection from '@components/Section/Title';
 import Pagination from '@components/Pagination';
 import { Link } from '@remix-run/react';
+import Footer from '@components/Footer';
 
 export const MainPage = () => {
   return (

@@ -12,8 +12,8 @@ export default async function getPosts(document: string) {
     const parsingDate = doc.data().created.toDate().toISOString().split('T')[0];
     const parsingDescription = doc
       .data()
-      .body.replace(/[#;]*/g, '')
-      .replace(/{[^{}]*}|`[^`]*`/g, '[Code]');
+      .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
+      .replace(/(<([^>]+)>)/gi, '');
 
     data.push({ ...docData, created: parsingDate, description: parsingDescription });
   });

@@ -1,6 +1,17 @@
-import { useParams, useLoaderData } from '@remix-run/react';
-import type { LoaderArgs } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import type { LoaderArgs, LinksFunction } from '@remix-run/node';
 import getPost from '@utils/api/getPost';
+
+import styles from '@styles/markdown.css';
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: styles,
+    },
+  ];
+};
 
 export async function loader({ params }: LoaderArgs) {
   const { id } = params;
@@ -10,5 +21,9 @@ export async function loader({ params }: LoaderArgs) {
 export default function ReviewPage() {
   const post = useLoaderData();
 
-  return <>{post.body}</>;
+  return (
+    <>
+      <div className="markdown-body" dangerouslySetInnerHTML={{ __html: post.body }}></div>
+    </>
+  );
 }

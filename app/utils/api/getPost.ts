@@ -8,3 +8,27 @@ export default async function getPost(document: string, id: string) {
 
   return docSnap.data() as postingTypes;
 }
+
+// github API converts markdown
+// const githubMdfunction = async (text: string) => {
+//   return new Promise((resolve) => {
+//     axios
+//       .post(
+//         'https://api.github.com/markdown',
+//         {
+//           text: `## 랄라라
+//           Hello **world**`,
+//           mode: 'gfm',
+//         },
+//         {
+//           headers: { Authorization: `token ${process.env.GITHUB_TOKEN}` },
+//         },
+//       )
+//       .then((res) => {
+//         resolve({
+//           body: res.data,
+//         });
+//       })
+//       .catch((err) => resolve(err));
+//   });
+// };
