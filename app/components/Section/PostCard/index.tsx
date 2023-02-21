@@ -9,7 +9,7 @@ export default function PostCardSection(props: { data: any }) {
     <ul className="isWrapper w-full flex-col gap-10 justify-between align-center md:flex-row">
       {data
         .sort((a: postingTypes, b: postingTypes) => {
-          return a.created < b.created ? 1 : -1;
+          return a.createdAt < b.createdAt ? 1 : -1;
         })
         .map((post: postingTypes) => (
           <Link className="w-full" key={post.index} to={String(post.title).replace(/\s+/g, '-')}>
@@ -26,7 +26,7 @@ export default function PostCardSection(props: { data: any }) {
                   <h2 className="md:before:content-['*'] md:before:pr-2 md:before:text-red-300 md:before:absolute md:before:-translate-x-4 md:before:translate-y-0.5">
                     {post.title ?? '글 제목 영역'}
                   </h2>
-                  <h4>{post.created ?? '작성일'}</h4>
+                  <h4>{new Date(post.createdAt).toLocaleDateString() ?? '작성일'}</h4>
                 </div>
                 <span className="h-16 md:h-24 md:text-[1rem] text-[0.9rem] font-light after:content-[''] after:bg-gradient-to-r after:from-[rgb(255,255,255,0)] after:to-[rgb(255,255,255,1)] after:p-3 after:pl-10 after:bottom-0 after:right-0 after:absolute after:-ml-10">
                   {post.description ?? '글 내용'}

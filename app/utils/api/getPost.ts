@@ -5,8 +5,9 @@ import type { postingTypes } from '@Types/post';
 export default async function getPost(document: string, id: string) {
   const docRef = doc(db, document, id.replace(/-/g, ' '));
   const docSnap = await getDoc(docRef);
+  const docData = docSnap.data() as postingTypes;
 
-  return docSnap.data() as postingTypes;
+  return { ...docData, comments: {} };
 }
 
 // github API converts markdown
