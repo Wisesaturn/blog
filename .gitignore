@@ -41,7 +41,7 @@ next-env.d.ts
 .vercel
 .output
 
-
+firebaseAdminKey.json
 build.index.js
 build.index.js.map
 /build/

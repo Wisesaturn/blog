@@ -1,8 +1,8 @@
 import Header from '@components/Header';
-import Footer from '@components/Footer';
 import TitleSection from '@components/Section/Title';
 import Pagination from '@components/Pagination';
 import { Link } from '@remix-run/react';
+import Footer from '@components/Footer';
 
 export const MainPage = () => {
   return (
@@ -11,8 +11,8 @@ export const MainPage = () => {
       <TitleSection />
       <div className="isWrapper h-full flex flex-col justify-center text-center">
         <div className="p-20">프로필 영역</div>
-        <Link to="/project">
-          <h2 className="p-20">프로젝트 회고</h2>
+        <Link to="/review">
+          <h2 className="p-20">회고</h2>
         </Link>
       </div>
       <Footer />
