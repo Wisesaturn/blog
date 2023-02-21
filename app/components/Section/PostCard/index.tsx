@@ -28,10 +28,10 @@ export default function PostCardSection(props: { data: any }) {
                   <h2 className="md:before:content-['*'] md:before:pr-2 md:before:text-red-300 md:before:absolute md:before:-translate-x-4 md:before:translate-y-0.5">
                     {post.title ?? '글 제목 영역'}
                   </h2>
-                  <h4>{null ?? '작성일'}</h4>
+                  <h4>{post.created ?? '작성일'}</h4>
                 </div>
                 <p className="h-16 md:h-24 after:content-[''] after:bg-gradient-to-r after:from-[rgb(255,255,255,0)] after:to-[rgb(255,255,255,1)] after:p-3 after:pl-10 after:bottom-0 after:right-0 after:absolute after:-ml-10">
-                  {post.body ?? '글 내용'}
+                  {post.description ?? '글 내용'}
                 </p>
               </div>
             </li>

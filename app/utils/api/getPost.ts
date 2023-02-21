@@ -1,16 +1,10 @@
 import { db } from '@utils/firebase';
-import { where, collection, query, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import type { postingTypes } from '@Types/post';
 
 export default async function getPost(document: string, id: string) {
-  const q = query(collection(db, document), where('title', '==', id.replace(/-/g, ' ')));
-  const querySnapshot = await getDocs(q);
-  const data: postingTypes[] = [];
+  const docRef = doc(db, document, id.replace(/-/g, ' '));
+  const docSnap = await getDoc(docRef);
 
-  querySnapshot.forEach((doc) => {
-    const docData = doc.data() as postingTypes;
-    data.push({ ...docData });
-  });
-
-  return data;
+  return docSnap.data() as postingTypes;
 }

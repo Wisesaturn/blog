@@ -10,11 +10,5 @@ export async function loader({ params }: LoaderArgs) {
 export default function ReviewPage() {
   const post = useLoaderData();
 
-  return (
-    <>
-      {post.map((e: any) => {
-        return e.body;
-      })}
-    </>
-  );
+  return <>{post.body}</>;
 }

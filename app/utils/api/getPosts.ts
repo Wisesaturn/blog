@@ -9,7 +9,13 @@ export default async function getPosts(document: string) {
 
   querySnapshot.forEach((doc) => {
     const docData = doc.data() as postingTypes;
-    data.push({ ...docData });
+    const parsingDate = doc.data().created.toDate().toISOString().split('T')[0];
+    const parsingDescription = doc
+      .data()
+      .body.replace(/[#;]*/g, '')
+      .replace(/{[^{}]*}|`[^`]*`/g, '[Code]');
+
+    data.push({ ...docData, created: parsingDate, description: parsingDescription });
   });
 
   return data;
