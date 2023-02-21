@@ -14,12 +14,12 @@ export const links: LinksFunction = () => {
   ];
 };
 
-const ProjectLayout = () => {
+const ReviewLayout = () => {
   return (
     <>
-      <Header isContent="🛠 프로젝트 회고" />
-      <TitleSection isContent="🛠 프로젝트 회고" />
-      <div className="isWrapper flex flex-col h-full">
+      <Header isContent="🛠 회고" />
+      <TitleSection isContent="🛠 회고" />
+      <div className="isWrapper flex flex-col min-h-full">
         <Outlet />
       </div>
       <Footer />
@@ -27,4 +27,4 @@ const ProjectLayout = () => {
   );
 };
 
-export default ProjectLayout;
+export default ReviewLayout;
