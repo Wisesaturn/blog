@@ -7,7 +7,7 @@ export default async function getPost(document: string, id: string) {
   const docSnap = await getDoc(docRef);
   const docData = docSnap.data() as postingTypes;
 
-  return { ...docData, comments: {} };
+  return docData;
 }
 
 // github API converts markdown
