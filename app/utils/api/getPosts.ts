@@ -7,29 +7,31 @@ export default async function getPosts(document: string) {
   const querySnapshot = await getDocs(q);
   const data: Partial<postingTypes>[] = [];
 
-  onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      const { comments, body, ...docData } = change.doc.data() as postingTypes;
-      const parsingDate = change.doc.data().createdAt.toDate();
-      const parsingDescription = change.doc
-        .data()
-        .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
-        .replace(/(<([^>]+)>)/gi, '');
+  querySnapshot.forEach((doc) => {
+    const { comments, body, ...docData } = doc.data() as postingTypes;
+    const parsingDate = doc.data().createdAt.toDate();
+    const parsingDescription = doc
+      .data()
+      .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
+      .replace(/(<([^>]+)>)/gi, '');
 
-      data.push({ ...docData, createdAt: parsingDate, description: parsingDescription });
-    });
+    data.push({ ...docData, createdAt: parsingDate, description: parsingDescription });
   });
 
-  // querySnapshot.forEach((doc) => {
-  //   const { comments, body, ...docData } = doc.data() as postingTypes;
-  //   const parsingDate = doc.data().createdAt.toDate();
-  //   const parsingDescription = doc
-  //     .data()
-  //     .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
-  //     .replace(/(<([^>]+)>)/gi, '');
+  if (!querySnapshot) {
+    onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        const { comments, body, ...docData } = change.doc.data() as postingTypes;
+        const parsingDate = change.doc.data().createdAt.toDate();
+        const parsingDescription = change.doc
+          .data()
+          .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
+          .replace(/(<([^>]+)>)/gi, '');
 
-  //   data.push({ ...docData, createdAt: parsingDate, description: parsingDescription });
-  // });
+        data.push({ ...docData, createdAt: parsingDate, description: parsingDescription });
+      });
+    });
+  }
 
   return data;
 }
