@@ -15,7 +15,7 @@ export default function TitleSection(props: TitleProps) {
         <span className="text-gray-200">{'<'}</span> {isContent}{' '}
         <span className="text-gray-200">{'/>'}</span>
       </h1>
-      <h4>{isSubContent}</h4>
+      <p>{isSubContent}</p>
     </section>
   );
 }

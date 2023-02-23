@@ -1,21 +1,19 @@
-import { Header } from '@components/Header';
+import Header from '@components/Header';
 import TitleSection from '@components/Section/Title';
 import Pagination from '@components/Pagination';
-import { Link } from '@remix-run/react';
+import { Link, useLocation } from '@remix-run/react';
 import Footer from '@components/Footer';
-import { useTitle } from '@hooks/index';
 
 export const MainPage = () => {
-  const { changeTitle } = useTitle();
-  changeTitle('Seize the day');
-  
+  const location = useLocation();
+
   return (
     <>
-      <Header />
+      <Header paths={location.pathname.split('/')} />
       <TitleSection />
       <div className="isWrapper h-full flex flex-col justify-center text-center">
         <div className="p-20">프로필 영역</div>
-        <Link to="/review">
+        <Link prefetch="render" to="/review">
           <h2 className="p-20">회고</h2>
         </Link>
       </div>

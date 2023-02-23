@@ -12,7 +12,12 @@ export default function PostCardSection(props: { data: any }) {
           return a.createdAt < b.createdAt ? 1 : -1;
         })
         .map((post: postingTypes) => (
-          <Link className="w-full" key={post.index} to={String(post.title).replace(/\s+/g, '-')}>
+          <Link
+            prefetch="render"
+            className="w-full"
+            key={post.index}
+            to={String(post.title).replace(/\s+/g, '-')}
+          >
             <li className="flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row md:h-40">
               <div className="rounded-lg w-full aspect-video md:h-auto overflow-hidden shadow-md shadow-gray-300 md:w-1/2">
                 <img
