@@ -1,9 +1,30 @@
 import useScroll from '@hooks/useScroll';
 import { Link } from '@remix-run/react';
-import type { ActionFunction } from '@remix-run/node';
+import { useState, useRef, useEffect } from 'react';
 import type { HeaderProps } from './types';
 
-export const action: ActionFunction = (props: any) => {};
+const ProgressBar = () => {
+  const { isScrollPercent } = useScroll();
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const checkProgress = () => {
+    progressBarRef.current!.style.width = `${isScrollPercent}%`;
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkProgress);
+
+    return () => {
+      window.removeEventListener('scroll', checkProgress);
+    };
+  });
+
+  return (
+    <>
+      <div className="w-full z-[9999] fixed h-1 bg-gray-200"></div>
+      <div ref={progressBarRef} className={`z-[9999] fixed h-1 bg-green-lighter`} />
+    </>
+  );
+};
 
 export default function Header(props: HeaderProps) {
   const { paths } = props;
@@ -15,21 +36,30 @@ export default function Header(props: HeaderProps) {
   // });
 
   const { isScrollTop, isScrollDirection } = useScroll();
-  const hasShadow = !isScrollTop && 'shadow-md';
-  const hasDisable = isScrollDirection === 'down' && 'animate-upDisappear';
-  const isDefaultStyle = `glassMorphism flex z-[9999] sticky ease-in-out duration-200 justify-between w-full mx-auto items-center transition top-0 ${hasDisable} ${hasShadow}`;
+  const hasShadow = !isScrollTop ? 'shadow-md' : '';
+  const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
+  const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto items-center transition top-0 ${hasDisabled} ${hasShadow}`;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <header className={isDefaultStyle}>
-      <div className="flex gap-3 ml-3"></div>
-      <nav className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
-        <img
-          className="w-full h-full object-cover"
-          alt="profile"
-          src="https://avatars.githubusercontent.com/u/79848632?v=4"
-        />
-      </nav>
-    </header>
+    <>
+      <ProgressBar />
+      <header className={isDefaultStyle}>
+        <div className="flex gap-3 ml-3"></div>
+
+        <nav className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
+          <img
+            className="w-full h-full object-cover"
+            alt="profile"
+            src="https://avatars.githubusercontent.com/u/79848632?v=4"
+          />
+        </nav>
+      </header>
+      <div className="h-[3.75rem]" />
+    </>
   );
 }
 
