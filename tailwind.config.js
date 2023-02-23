@@ -19,14 +19,13 @@ module.exports = {
         push: {
           to: { transform: 'scale(94.25%)' },
         },
-        open: {
-          from: { transform: 'scale(95%)' },
-          to: { transform: 'scale(100%)' },
+        upDisappear: {
+          to: { transform: 'translateY(-100%)' },
         },
       },
       animation: {
         push: 'push .15s ease-out forwards',
-        open: 'open .25s ease-in-out forwards',
+        upDisappear: 'upDisappear .2s ease-in forwards',
       },
     },
   },
