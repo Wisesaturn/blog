@@ -31,9 +31,6 @@ module.exports = {
             opacity: '0.8',
           },
         },
-        upDisappear: {
-          to: { transform: 'translateY(-100%)' },
-        },
       },
       animation: {
         push: 'push .15s ease-out forwards',
