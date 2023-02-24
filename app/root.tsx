@@ -3,6 +3,8 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 import styles from '@styles/tailwind.css';
 import { RecoilRoot } from 'recoil';
 
+import { Suspense } from 'react';
+
 const metaSNS = {
   'og:type': 'website',
   'og:url': 'https://jaehan.blog/',
@@ -46,9 +48,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <RecoilRoot>
-          <Outlet />
-        </RecoilRoot>
+        <Suspense fallback={<>로딩 중...</>}>
+          <RecoilRoot>
+            <Outlet />
+          </RecoilRoot>
+        </Suspense>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

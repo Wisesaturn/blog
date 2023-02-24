@@ -9,7 +9,7 @@ export default async function getPosts(document: string) {
 
   querySnapshot.forEach((doc) => {
     const { comments, body, ...docData } = doc.data() as postingTypes;
-    const parsingDate = doc.data().createdAt.toDate();
+    const parsingDate = doc.data().createdAt.toDate().toLocaleDateString();
     const parsingDescription = doc
       .data()
       .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')
@@ -22,7 +22,7 @@ export default async function getPosts(document: string) {
     onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         const { comments, body, ...docData } = change.doc.data() as postingTypes;
-        const parsingDate = change.doc.data().createdAt.toDate() as Date;
+        const parsingDate = change.doc.data().createdAt.toDate().toLocaleDateString();
         const parsingDescription = change.doc
           .data()
           .body.replace(/<pre(.*?)<\/pre>|<code(.*?)<\/code>/g, '[Code]')

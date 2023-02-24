@@ -7,7 +7,7 @@ export default async function getPost(document: string, id: string) {
   const docSnap = await getDoc(docRef);
   const docData = docSnap.data() as postingTypes;
 
-  const parsingDate = docSnap.data()!.createdAt.toDate();
+  const parsingDate = docSnap.data()!.createdAt.toDate().toLocaleString();
 
   return { ...docData, createdAt: parsingDate };
 }

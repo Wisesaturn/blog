@@ -24,7 +24,7 @@ export default function ReviewPage() {
 
   return (
     <>
-      <PostTitle thumbnail={post.thumbnail} title={post.title} createdAt={new Date(post.createdAt).toLocaleString()} tags={post.tags} />
+      <PostTitle thumbnail={post.thumbnail} title={post.title} createdAt={post.createdAt} tags={post.tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-800 my-10"/>
       <div className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: post.body }} />
     </>
