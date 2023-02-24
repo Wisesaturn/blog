@@ -3,6 +3,9 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      maxWidth: {
+        layout: '48rem',
+      },
       boxShadow: {
         invert: '0 -1px 6px 3.5px rgb(0 0 0 / 0.15);',
       },
@@ -20,7 +23,12 @@ module.exports = {
       },
       keyframes: {
         push: {
-          to: { transform: 'scale(94.25%)' },
+          to: {
+            backgroundColor: 'rgba(233, 233, 233, 0.3)',
+            transform: 'scale(94.25%)',
+            brightness: '65%',
+            opacity: '0.8',
+          },
         },
         upDisappear: {
           to: { transform: 'translateY(-100%)' },
