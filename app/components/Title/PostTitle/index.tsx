@@ -2,19 +2,27 @@ import thumbnailReview from '@public/default.png';
 import type { PostTitleProps } from './types';
 
 export default function PostTitle(props: PostTitleProps) {
-  const { title, commentsSize, count, tags, createdAt, thumbnail } = props;
+  const { title, tags, createdAt, thumbnail } = props;
 
   return (
-    <section className="relative max-h-60 shadow-lg rounded-2xl w-full max-w-layout mx-auto">
-      <div className="relative text-white flex h-60 z-10 flex-col gap-4 items-center justify-center">
+    <section className="relative max-h-40 shadow-lg rounded-2xl w-full max-w-layout mx-auto">
+      <div className="relative text-white flex h-40 z-10 flex-col gap-3 items-center justify-center">
         <h1>
-          <span className="text-gray-500">{'<'}</span> {title}{' '}
-          <span className="text-gray-500">{'/>'}</span>
+          <span className="text-green-brighter">{'<'}</span> {title}{' '}
+          <span className="text-green-brighter">{'/>'}</span>
         </h1>
-        <span>{tags}</span>
-        <span>{createdAt}</span>
-        <span>{count}</span>
-        <span>{commentsSize}</span>
+        <div className="flex items-center text-[0.875rem] justify-center flex-col">
+          <div className="font-light">{createdAt}</div>
+          <div>
+            {tags.map((e, idx) => {
+              return (
+                <span className="py-0.5 px-2 text-green-brighter font-bold rounded-sm" key={idx}>
+                  # {e}
+                </span>
+              );
+            })}
+          </div>
+        </div>
       </div>
       <div className="top-0 bottom-0 absolute brightness-[0.25] overflow-hidden rounded-2xl w-full max-w-layout">
         <img

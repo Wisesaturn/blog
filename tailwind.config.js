@@ -10,6 +10,7 @@ module.exports = {
         invert: '0 -1px 6px 3.5px rgb(0 0 0 / 0.15);',
       },
       colors: {
+        black: '#333333',
         green: {
           dark: '#586E54',
           darker: '#8BAD86',
