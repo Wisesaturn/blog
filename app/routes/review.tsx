@@ -1,13 +1,14 @@
-import { Outlet } from '@remix-run/react';
+import { Outlet, useLocation } from '@remix-run/react';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import TitleSection from '@components/Section/Title';
+import type { MetaFunction } from '@remix-run/node';
 
 const ReviewLayout = () => {
+  const location = useLocation();
+
   return (
     <>
-      <Header isContent="🛠 회고" />
-      <TitleSection isContent="🛠 회고" />
+      <Header paths={location.pathname.split('/')} />
       <article className="isWrapper flex flex-col min-h-screen">
         <Outlet />
       </article>

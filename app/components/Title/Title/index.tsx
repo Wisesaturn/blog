@@ -3,10 +3,10 @@ import type { TitleProps } from './types';
 /**
  *
  * @param isContent 제목 <h1>
- * @param isSubContent 소제목 <h4>
+ * @param isSubContent 소제목 <p>
  */
 
-export default function TitleSection(props: TitleProps) {
+export default function Title(props: TitleProps) {
   const { isContent = 'Seize the day', isSubContent = '' } = props;
 
   return (
@@ -15,7 +15,7 @@ export default function TitleSection(props: TitleProps) {
         <span className="text-gray-200">{'<'}</span> {isContent}{' '}
         <span className="text-gray-200">{'/>'}</span>
       </h1>
-      <h4>{isSubContent}</h4>
+      <p>{isSubContent}</p>
     </section>
   );
 }

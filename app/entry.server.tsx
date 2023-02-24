@@ -11,6 +11,10 @@ export default function handleRequest(
   const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
 
   responseHeaders.set('Content-Type', 'text/html');
+  responseHeaders.set(
+    'Cache-Control',
+    'public, max-age=3600, s-maxage=86400, stale-while-revalidate=300',
+  );
 
   return new Response(`<!DOCTYPE html>${markup}`, {
     headers: responseHeaders,

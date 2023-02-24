@@ -1,7 +1,7 @@
 export interface postingTypes {
   readonly title: string;
   readonly description?: string;
-  readonly createdAt: string;
+  readonly createdAt: Date;
   readonly thumbnail: string;
   readonly index: number;
   readonly body: string;
