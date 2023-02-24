@@ -10,8 +10,8 @@ export default function Footer() {
   const onToggleStyle = (input: string) => {
     if (isSelected === input) {
       return {
-        icon: '#8BAD86',
-        text: 'text-green-darker',
+        icon: '#166534',
+        text: 'text-green-800',
       };
     }
     return {

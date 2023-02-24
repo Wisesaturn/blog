@@ -1,3 +1,3 @@
-import useScrollTopPosition from './useScroll';
+import useScroll from './useScroll';
 
-export { useScrollTopPosition };
+export { useScroll };

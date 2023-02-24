@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 
 type scrollDirectionType = 'up' | 'down';
 
-export default function useScrollTopPosition() {
+export default function useScroll() {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   const [isScrollPercent, setIsScrollPercent] = useState<number>(0);
-  const [isScrollTop, setIsScrollTop] = useState<boolean>(false);
+  const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
   const [isScrollDirection, setIsScrollDirection] = useState<scrollDirectionType>('up');
 
   const [hideHeight, setHideHeight] = useState<number>(0);

@@ -1,8 +1,8 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import PostCardSection from '@components/Section/PostCard';
+import PostCardSection from '@components/PostCard';
 import getPosts from '@utils/api/getPosts';
-import TitleSection from '@components/Section/Title';
+import { Title } from '@components/Title';
 
 export const loader: LoaderFunction = () => {
   return getPosts('review');
@@ -13,7 +13,7 @@ export const ReviewPage = () => {
 
   return (
     <>
-      <TitleSection isContent="🛠 회고" />
+      <Title isContent="🛠 회고" />
       <PostCardSection data={posts} />
     </>
   );

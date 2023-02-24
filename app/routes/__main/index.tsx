@@ -1,5 +1,5 @@
 import Header from '@components/Header';
-import TitleSection from '@components/Section/Title';
+import TitleSection from '@components/Title/Title';
 import Pagination from '@components/Pagination';
 import { Link, useLocation } from '@remix-run/react';
 import Footer from '@components/Footer';

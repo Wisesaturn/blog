@@ -1,6 +1,6 @@
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import Title from '@components/Section/Title';
+import { Title }from '@components/Title';
 import { useLocation } from '@remix-run/react';
 
 export default function ErrorPage() {
