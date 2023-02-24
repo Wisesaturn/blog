@@ -4,4 +4,5 @@ export interface PostTitleProps {
   tags: string[];
   count: number;
   commentsSize: number;
+  thumbnail: string;
 }
