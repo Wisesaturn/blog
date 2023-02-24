@@ -1,8 +1,10 @@
 export default function Footer() {
   return (
-    <footer className="text-gray-400 text-[12px] md:text-sm flex justify-center flex-col items-center bg-gray-100 mt-10 py-6">
-      <span>기록하고 싶은 것들을 모아두었습니다.</span>
-      <span> © 2023 Copyright by 송재한, based on remix</span>
-    </footer>
+    <>
+      <div className="h-[4.5rem]" />
+      <footer className="glassMorphism flex justify-center items-center shadow-invert fixed bottom-0 w-full py-6">
+        <div>홈 버튼</div>
+      </footer>
+    </>
   );
 }

@@ -3,6 +3,9 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      boxShadow: {
+        invert: '0 -1px 6px 3.5px rgb(0 0 0 / 0.15);',
+      },
       colors: {
         green: {
           dark: '#586E54',
