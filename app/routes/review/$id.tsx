@@ -23,7 +23,7 @@ export default function ReviewPage() {
 
   return (
     <>
-      <div className="markdown-body" dangerouslySetInnerHTML={{ __html: post.body }} />
+      <div className="markdown-body py-10" dangerouslySetInnerHTML={{ __html: post.body }} />
     </>
   );
 }
