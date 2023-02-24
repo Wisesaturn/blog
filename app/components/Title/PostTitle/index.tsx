@@ -13,10 +13,10 @@ export default function PostTitle(props: PostTitleProps) {
         </h1>
         <div className="flex items-center text-[0.875rem] justify-center flex-col">
           <div className="font-light">{createdAt}</div>
-          <div>
+          <div className="flex gap-3">
             {tags.map((e, idx) => {
               return (
-                <span className="py-0.5 px-2 text-green-brighter font-bold rounded-sm" key={idx}>
+                <span className="text-green-brighter font-bold rounded-sm" key={idx}>
                   # {e}
                 </span>
               );
