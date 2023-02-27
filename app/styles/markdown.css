@@ -1099,3 +1099,28 @@
 .markdown-body ::-webkit-calendar-picker-indicator {
   filter: invert(50%);
 }
+
+/* 원본 스타일링은 바꾸지 않고, 밑에서 customize */
+/* custom markdown styles */
+code {
+  color: #50ad63;
+  background-color: #f0f0f0 !important;
+}
+
+pre {
+  color: #efefef;
+  background-color: #333333 !important;
+}
+
+pre > em {
+  color: #979797;
+}
+
+blockquote > b {
+  color: #50ad63;
+}
+
+blockquote {
+  background-color: #f0f0f0;
+}
+/* custom markdown styles is done */

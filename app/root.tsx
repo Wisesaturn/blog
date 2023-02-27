@@ -36,10 +36,6 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
-// const initializeState = ({ set }: MutableSnapshot) => {
-//   set(titleSelector, '🛠 회고');
-// };
-
 export default function App() {
   return (
     <html lang="ko">

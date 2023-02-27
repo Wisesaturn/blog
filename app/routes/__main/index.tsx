@@ -1,15 +1,13 @@
 import Header from '@components/Header';
 import TitleSection from '@components/Title/Title';
 import Pagination from '@components/Pagination';
-import { Link, useLocation } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 import Footer from '@components/Footer';
 
 export const MainPage = () => {
-  const location = useLocation();
-
   return (
     <>
-      <Header paths={location.pathname.split('/')} />
+      <Header />
       <TitleSection />
       <div className="isWrapper h-full flex flex-col justify-center text-center">
         <div className="p-20">프로필 영역</div>

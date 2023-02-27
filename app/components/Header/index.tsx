@@ -1,40 +1,17 @@
 import useScroll from '@hooks/useScroll';
-import { Link } from '@remix-run/react';
-import { useState, useRef, useEffect } from 'react';
-import type { HeaderProps } from './types';
+import { Link, useLocation } from '@remix-run/react';
+import { useEffect } from 'react';
+import { ProgressBar } from './Components/ProgressBar';
 
-const ProgressBar = () => {
-  const { isScrollPercent } = useScroll();
-  const progressBarRef = useRef<HTMLDivElement>(null);
-  const checkProgress = () => {
-    progressBarRef.current!.style.width = `${isScrollPercent}%`;
-  };
+export default function Header() {
+  // path
+  const location = useLocation();
+  const category = location.pathname.split('/')[1];
+  const postTitle = location.pathname.split('/')[2]
+    ? decodeURI(location.pathname.split('/')[2])
+    : '';
 
-  useEffect(() => {
-    window.addEventListener('scroll', checkProgress);
-
-    return () => {
-      window.removeEventListener('scroll', checkProgress);
-    };
-  });
-
-  return (
-    <>
-      <div className="w-full z-[9999] fixed h-1 bg-gray-200"></div>
-      <div ref={progressBarRef} className={`z-[9999] fixed h-1 bg-green-800`} />
-    </>
-  );
-};
-
-export default function Header(props: HeaderProps) {
-  const { paths } = props;
-
-  // paths.reduce((acc, cur) => {
-  //   acc += `/${decodeURI(cur)}`;
-  //    [`${decodeURI(cur)}`, `${decodeURI(acc)}`]
-  //   return acc;
-  // });
-
+  // style for scroll
   const { isScrollTop, isScrollDirection } = useScroll();
   const hasShadow = !isScrollTop ? 'shadow-md' : '';
   const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
@@ -48,8 +25,33 @@ export default function Header(props: HeaderProps) {
     <>
       <ProgressBar />
       <header className={isDefaultStyle}>
-        <div className="flex gap-3 ml-3"></div>
-
+        <div className="flex gap-2 ml-3 items-center">
+          <Link className="flex items-center gap-2" to={`/`}>
+            <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+              📚 Jaehan's Blog
+            </span>
+          </Link>
+          {category !== '' && (
+            <>
+              <span className="text-gray-300">{'>'}</span>
+              <Link className="flex items-center gap-2" to={`/${category}`}>
+                <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+                  {decodeURI(category).replace(/-/g, ' ')}
+                </span>
+              </Link>
+            </>
+          )}
+          {postTitle !== '' && (
+            <>
+              <span className="text-gray-300">{'>'}</span>
+              <Link className="flex items-center gap-2" to={`${postTitle}`}>
+                <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+                  {decodeURI(postTitle).replace(/-/g, ' ')}
+                </span>
+              </Link>
+            </>
+          )}
+        </div>
         <nav className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
           <img
             className="w-full h-full object-cover"
@@ -62,10 +64,3 @@ export default function Header(props: HeaderProps) {
     </>
   );
 }
-
-// <Link className="flex items-center gap-2" key={idx} to={'w'}>
-//   <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
-//     {decodeURI(element).replace(/-/g, ' ')}
-//   </span>
-//   {idx < 3 && (<span>{">"}</span>)}
-// </Link>
