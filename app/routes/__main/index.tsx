@@ -1,7 +1,7 @@
 import Header from '@components/Header';
 import TitleSection from '@components/Title/Title';
 import Pagination from '@components/Pagination';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 import Footer from '@components/Footer';
 import type { CategoryType } from '@utils/constant/category';
 import { CATEGORY_DATA } from '@utils/constant/category';

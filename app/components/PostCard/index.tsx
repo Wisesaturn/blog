@@ -15,6 +15,7 @@ export default function PostCardSection(props: { data: any }) {
           <Link
             prefetch="render"
             className="w-full"
+            reloadDocument
             key={post.index}
             to={String(post.title).replace(/\s+/g, '-')}
           >

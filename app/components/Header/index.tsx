@@ -1,6 +1,6 @@
 import useScroll from '@hooks/useScroll';
 import { Link } from '@remix-run/react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { CategoryType } from '@utils/constant/category';
 import { ProgressBar } from './Components/ProgressBar';
@@ -15,6 +15,7 @@ export default function Header(props: HeaderProps) {
   const hasShadow = !isScrollTop ? 'shadow-md' : '';
   const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
   const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto items-center transition top-0 ${hasDisabled} ${hasShadow}`;
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,7 +24,7 @@ export default function Header(props: HeaderProps) {
   return (
     <>
       <ProgressBar />
-      <header className={isDefaultStyle}>
+      <header ref={headerRef} className={isDefaultStyle}>
         <div className="flex gap-2 ml-3 items-center last-arrow-disappear">
           {paths
             .filter((e) => {
@@ -31,14 +32,17 @@ export default function Header(props: HeaderProps) {
             })
             .map((ele: CategoryType) => {
               return (
-                <>
-                  <Link key={ele.link} className="flex items-center gap-2" to={ele.link}>
-                    <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
-                      {ele.name}
-                    </span>
-                    <span className="text-gray-300">{'>'}</span>
-                  </Link>
-                </>
+                <Link
+                  reloadDocument
+                  key={ele.name}
+                  className="flex items-center gap-2"
+                  to={ele.link}
+                >
+                  <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+                    {ele.name}
+                  </span>
+                  <span className="text-gray-300">{'>'}</span>
+                </Link>
               );
             })}
         </div>

@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData, useLocation } from '@remix-run/react';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import type { MetaFunction, LoaderArgs } from '@remix-run/node';
@@ -27,7 +27,7 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 const PostLayout = () => {
-  const load = useLoaderData();
+  const load = useLoaderData<typeof loader>();
 
   return (
     <>

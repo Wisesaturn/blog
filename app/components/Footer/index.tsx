@@ -33,6 +33,7 @@ export default function Footer() {
             <span className={`${onToggleStyle('').text} text-[0.875rem]`}>홈</span>
           </Link>
           <Link
+            reloadDocument
             className="active:animate-push justify-between rounded-2xl flex px-10 gap-0.5 flex-col items-center hover:cursor-pointer"
             to="/review"
           >
