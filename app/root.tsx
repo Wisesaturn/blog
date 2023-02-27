@@ -5,6 +5,10 @@ import { RecoilRoot } from 'recoil';
 
 import { Suspense } from 'react';
 
+import Header from '@components/Header';
+import Footer from '@components/Footer';
+import { Title } from '@components/Title';
+
 const metaSNS = {
   'og:type': 'website',
   'og:url': 'https://jaehan.blog/',
@@ -52,6 +56,34 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary({ error }: any) {
+  const ErrorData = [
+    { name: `📚 Jaehan's Blog`, link: '/' },
+    {
+      name: `😥 ERROR`,
+      link: `error`,
+    },
+  ];
+
+  return (
+    <html>
+      <head>
+        <title>Error 😥</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Header paths={ErrorData} />
+        <div className="w-full h-full flex flex-col justify-start items-center gap-2">
+          <Title isContent="ERROR" isSubContent={`${error.message}`} />
+        </div>
+        <Footer />
+        <Scripts />
       </body>
     </html>
   );

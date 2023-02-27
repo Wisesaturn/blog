@@ -5,6 +5,7 @@ import thumbnailReview from '@public/default.png';
 
 export default function PostCardSection(props: { data: any }) {
   const { data } = props;
+
   return (
     <ul className="isWrapper w-full flex-col gap-10 justify-between align-center md:flex-row">
       {data

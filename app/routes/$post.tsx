@@ -5,25 +5,29 @@ import type { MetaFunction, LoaderArgs } from '@remix-run/node';
 import { CATEGORY_DATA } from '@utils/constant/category';
 
 export async function loader({ params }: LoaderArgs) {
-  const { post, id } = params;
+  try {
+    const { post, id } = params;
 
-  const category = CATEGORY_DATA.filter((ele) => {
-    return ele.link === post;
-  });
+    const category = CATEGORY_DATA.filter((ele) => {
+      return ele.link === post;
+    });
 
-  const data = [
-    { name: `📚 Jaehan's Blog`, link: '/' },
-    {
-      name: `${category[0].name}`,
-      link: `/${category[0].link}`,
-    },
-    {
-      name: `${id ? decodeURI(id!) : ''}`,
-      link: `${id ? decodeURI(id!) : ''}`,
-    },
-  ];
+    const data = [
+      { name: `📚 Jaehan's Blog`, link: '/' },
+      {
+        name: `${category[0].name}`,
+        link: `/${category[0].link}`,
+      },
+      {
+        name: `${id ? decodeURI(id!) : ''}`,
+        link: `${id ? decodeURI(id!) : ''}`,
+      },
+    ];
 
-  return data;
+    return data;
+  } catch (err) {
+    throw new Error('페이지를 찾을 수 없습니다.');
+  }
 }
 
 const PostLayout = () => {
