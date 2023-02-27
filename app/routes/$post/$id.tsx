@@ -15,8 +15,8 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({ params }: LoaderArgs) {
-  const { id } = params;
-  return getPost('review', id!);
+  const { post, id } = params;
+  return getPost(post!, id!);
 }
 
 export default function ReviewPage() {

@@ -1,15 +1,14 @@
 import useScroll from '@hooks/useScroll';
-import { Link, useLocation } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 import { useEffect } from 'react';
+
+import type { CategoryType } from '@utils/constant/category';
 import { ProgressBar } from './Components/ProgressBar';
 
-export default function Header() {
-  // path
-  const location = useLocation();
-  const category = location.pathname.split('/')[1];
-  const postTitle = location.pathname.split('/')[2]
-    ? decodeURI(location.pathname.split('/')[2])
-    : '';
+import type { HeaderProps } from './types';
+
+export default function Header(props: HeaderProps) {
+  const { paths } = props;
 
   // style for scroll
   const { isScrollTop, isScrollDirection } = useScroll();
@@ -26,31 +25,22 @@ export default function Header() {
       <ProgressBar />
       <header className={isDefaultStyle}>
         <div className="flex gap-2 ml-3 items-center">
-          <Link className="flex items-center gap-2" to={`/`}>
-            <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
-              📚 Jaehan's Blog
-            </span>
-          </Link>
-          {category !== '' && (
-            <>
-              <span className="text-gray-300">{'>'}</span>
-              <Link className="flex items-center gap-2" to={`/${category}`}>
-                <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
-                  {decodeURI(category).replace(/-/g, ' ')}
-                </span>
-              </Link>
-            </>
-          )}
-          {postTitle !== '' && (
-            <>
-              <span className="text-gray-300">{'>'}</span>
-              <Link className="flex items-center gap-2" to={`${postTitle}`}>
-                <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
-                  {decodeURI(postTitle).replace(/-/g, ' ')}
-                </span>
-              </Link>
-            </>
-          )}
+          {paths
+            .filter((e) => {
+              return e.name !== 'undefined' && e.name !== '';
+            })
+            .map((ele: CategoryType) => {
+              return (
+                <>
+                  <Link key={ele.link} className="flex items-center gap-2" to={ele.link}>
+                    <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+                      {ele.name}
+                    </span>
+                    <span className="text-gray-300">{'>'}</span>
+                  </Link>
+                </>
+              );
+            })}
         </div>
         <nav className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
           <img
