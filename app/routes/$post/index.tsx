@@ -13,7 +13,6 @@ export async function loader({ params }: LoaderArgs) {
     return ele.link === post;
   });
 
-  console.log(category);
   const data = await getPosts(post!);
   return json({ category: category[0].name, data });
 }

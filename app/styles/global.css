@@ -115,6 +115,10 @@
     backdrop-filter: blur(15px);
   }
 
+  .last-arrow-disappear a:last-child > span:last-child {
+    display: none;
+  }
+
   /* font */
   h1 {
     font-size: 2.25rem;

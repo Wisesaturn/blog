@@ -24,7 +24,7 @@ export default function Header(props: HeaderProps) {
     <>
       <ProgressBar />
       <header className={isDefaultStyle}>
-        <div className="flex gap-2 ml-3 items-center">
+        <div className="flex gap-2 ml-3 items-center last-arrow-disappear">
           {paths
             .filter((e) => {
               return e.name !== 'undefined' && e.name !== '';
