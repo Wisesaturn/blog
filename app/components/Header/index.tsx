@@ -3,6 +3,7 @@ import { Link } from '@remix-run/react';
 import { useEffect, useRef } from 'react';
 
 import type { CategoryType } from '@utils/constant/category';
+import { AiFillGithub } from 'react-icons/ai';
 import { ProgressBar } from './Components/ProgressBar';
 
 import type { HeaderProps } from './types';
@@ -14,7 +15,7 @@ export default function Header(props: HeaderProps) {
   const { isScrollTop, isScrollDirection } = useScroll();
   const hasShadow = !isScrollTop ? 'shadow-md' : '';
   const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
-  const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto items-center transition top-0 ${hasDisabled} ${hasShadow}`;
+  const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Header(props: HeaderProps) {
     <>
       <ProgressBar />
       <header ref={headerRef} className={isDefaultStyle}>
-        <div className="flex gap-2 ml-3 items-center last-arrow-disappear">
+        <div className="flex gap-2 ml-3 items-center hidden-last-arrow">
           {paths
             .filter((e) => {
               return e.name !== 'undefined' && e.name !== '';
@@ -38,7 +39,7 @@ export default function Header(props: HeaderProps) {
                   className="flex items-center gap-2"
                   to={ele.link}
                 >
-                  <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover: p-1 text-[0.9rem]">
+                  <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 p-1 text-[0.9rem]">
                     {ele.name}
                   </span>
                   <span className="text-gray-300">{'>'}</span>
@@ -46,15 +47,19 @@ export default function Header(props: HeaderProps) {
               );
             })}
         </div>
-        <nav className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
-          <img
-            className="w-full h-full object-cover"
-            alt="profile"
-            src="https://avatars.githubusercontent.com/u/79848632?v=4"
-          />
-        </nav>
+        <div className="flex p-2 items-center">
+          <a
+            className="rounded p- active:bg-gray-200 duration-200 hover:bg-gray-100"
+            href="https://www.github.com/wisesaturn"
+          >
+            <AiFillGithub
+              className="fill-gray-300 hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100"
+              size="32"
+            />
+          </a>
+        </div>
       </header>
-      <div className="h-[3.75rem]" />
+      <div className="h-[3rem]" />
     </>
   );
 }

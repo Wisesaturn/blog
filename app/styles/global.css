@@ -115,8 +115,12 @@
     backdrop-filter: blur(15px);
   }
 
-  .last-arrow-disappear a:last-child > span:last-child {
+  .hidden-last-arrow a:last-child > span:last-child {
     display: none;
+  }
+
+  .hidden-blur:hover :last-child > div:after {
+    display: none !important;
   }
 
   /* font */
