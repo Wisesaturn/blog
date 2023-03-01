@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+
 import { useScroll } from '@hooks/index';
 
 export const ProgressBar = () => {

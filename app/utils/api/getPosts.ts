@@ -1,5 +1,7 @@
-import { db } from '@utils/firebase';
 import { collection, onSnapshot, query, getDocs } from 'firebase/firestore';
+
+import { db } from '@utils/firebase';
+
 import type { postingTypes } from '@Types/post';
 
 export default async function getPosts(document: string) {

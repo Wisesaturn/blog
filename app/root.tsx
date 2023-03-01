@@ -1,13 +1,13 @@
-import type { MetaFunction, LinksFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import styles from '@styles/tailwind.css';
 import { RecoilRoot } from 'recoil';
-
 import { Suspense } from 'react';
 
+import styles from '@styles/tailwind.css';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { Title } from '@components/Title';
+
+import type { MetaFunction, LinksFunction } from '@remix-run/node';
 
 const metaSNS = {
   'og:type': 'website',

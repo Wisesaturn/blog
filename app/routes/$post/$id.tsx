@@ -1,9 +1,10 @@
 import { useLoaderData } from '@remix-run/react';
-import type { LoaderArgs, LinksFunction } from '@remix-run/node';
-import getPost from '@utils/api/getPost';
 
+import getPost from '@utils/api/getPost';
 import styles from '@styles/markdown.css';
 import { PostTitle } from '@components/Title';
+
+import type { LoaderArgs, LinksFunction } from '@remix-run/node';
 
 export const links: LinksFunction = () => {
   return [

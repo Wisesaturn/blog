@@ -1,8 +1,11 @@
 import { Outlet, useLoaderData, useLocation } from '@remix-run/react';
+
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import type { MetaFunction, LoaderArgs } from '@remix-run/node';
 import { CATEGORY_DATA } from '@utils/constant/category';
+import Copyright from '@components/Footer/Copyright';
+
+import type { MetaFunction, LoaderArgs } from '@remix-run/node';
 
 export async function loader({ params }: LoaderArgs) {
   try {
@@ -39,6 +42,7 @@ const PostLayout = () => {
       <article className="isWrapper flex flex-col min-h-screen">
         <Outlet />
       </article>
+      <Copyright />
       <Footer />
     </>
   );

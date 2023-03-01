@@ -1,7 +1,9 @@
-import type { postingTypes } from '@Types/post';
 import { Link } from '@remix-run/react';
+
 // eslint-disable-next-line import/no-unresolved
 import thumbnailReview from '@public/default.png';
+
+import type { postingTypes } from '@Types/post';
 
 export default function PostCardSection(props: { data: any }) {
   const { data } = props;

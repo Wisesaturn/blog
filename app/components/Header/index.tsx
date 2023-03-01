@@ -1,11 +1,12 @@
-import useScroll from '@hooks/useScroll';
 import { Link } from '@remix-run/react';
 import { useEffect, useRef } from 'react';
+import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
 
-import type { CategoryType } from '@utils/constant/category';
-import { AiFillGithub } from 'react-icons/ai';
+import useScroll from '@hooks/useScroll';
+
 import { ProgressBar } from './Components/ProgressBar';
 
+import type { CategoryType } from '@utils/constant/category';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {
@@ -21,6 +22,12 @@ export default function Header(props: HeaderProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // style
+  const styleIcon =
+    'fill-gray-300 hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100';
+  const styleIconWrapper =
+    'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100';
 
   return (
     <>
@@ -39,23 +46,18 @@ export default function Header(props: HeaderProps) {
                   className="flex items-center gap-2"
                   to={ele.link}
                 >
-                  <span className="rounded active:bg-gray-200 duration-200 hover:bg-gray-100 p-1 text-[0.9rem]">
-                    {ele.name}
-                  </span>
+                  <span className={`${styleIcon} text-[0.9rem]`}>{ele.name}</span>
                   <span className="text-gray-300">{'>'}</span>
                 </Link>
               );
             })}
         </div>
-        <div className="flex p-2 items-center">
-          <a
-            className="rounded p- active:bg-gray-200 duration-200 hover:bg-gray-100"
-            href="https://www.github.com/wisesaturn"
-          >
-            <AiFillGithub
-              className="fill-gray-300 hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100"
-              size="32"
-            />
+        <div className="flex py-2 px-3 gap-3 items-center">
+          <span className={styleIconWrapper}>
+            <AiOutlineSearch className={styleIcon} size="32" />
+          </span>
+          <a className={styleIconWrapper} href="https://www.github.com/wisesaturn">
+            <AiFillGithub className={styleIcon} size="32" />
           </a>
         </div>
       </header>
