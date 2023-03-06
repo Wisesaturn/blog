@@ -5,5 +5,5 @@ export interface CategoryType {
 
 export const CATEGORY_DATA: CategoryType[] = [
   { name: '🛠 회고', link: 'review' },
-  { name: '🛠 회고', link: 'review' },
+  { name: '회고 테스트', link: 'review' },
 ];

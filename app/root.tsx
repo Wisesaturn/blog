@@ -12,7 +12,7 @@ import type { MetaFunction, LinksFunction } from '@remix-run/node';
 const metaSNS = {
   'og:type': 'website',
   'og:url': 'https://jaehan.blog/',
-  'og:title': `Jaehan's blog 📚`,
+  'og:title': `📚 사툰사툰`,
   'og:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
   'og:description': `기록하고 싶은 것들을 모아두었습니다`,
   'og:locale': `ko_KR`,
@@ -23,14 +23,14 @@ const metaSNS = {
 const metaTwitter = {
   'twitter:card': 'summary',
   'twitter:url': 'https://jaehan.blog/',
-  'twitter:title': `Jaehan's blog 📚`,
+  'twitter:title': `📚 사툰사툰`,
   'twitter:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
   'twitter:description': `기록하고 싶은 것들을 모아두었습니다`,
 };
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: `Jaehan's blog 📚`,
+  title: `📚 사툰사툰`,
   keywords: 'blog, programming, dev, react, remix, 송재한',
   description: `기록하고 싶은 것들을 모아두었습니다`,
   viewport: 'width=device-width,height=device-height,initial-scale=1,viewport-fit=cover',
@@ -63,7 +63,7 @@ export default function App() {
 
 export function ErrorBoundary({ error }: any) {
   const ErrorData = [
-    { name: `📚 Jaehan's Blog`, link: '/' },
+    { name: `📚 사툰사툰`, link: '/' },
     {
       name: `😥 ERROR`,
       link: `error`,

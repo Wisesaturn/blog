@@ -9,7 +9,7 @@ export default function PostCardSection(props: { data: any }) {
   const { data } = props;
 
   return (
-    <ul className="isWrapper w-full flex-col gap-10 justify-between align-center md:flex-row">
+    <section className="isWrapper w-full flex-col gap-10 justify-between align-center md:flex-row">
       {data
         .sort((a: postingTypes, b: postingTypes) => {
           return a.createdAt < b.createdAt ? 1 : -1;
@@ -22,7 +22,7 @@ export default function PostCardSection(props: { data: any }) {
             key={post.index}
             to={String(post.title).replace(/\s+/g, '-')}
           >
-            <li className="hover:bg-gray-100 hidden-blur p-2 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row md:h-40">
+            <div className="hover:bg-gray-100 hidden-blur p-2 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row md:h-40">
               <div className="rounded-lg w-full aspect-video md:h-auto overflow-hidden shadow-md shadow-gray-300 md:w-1/2">
                 <img
                   className="rounded-lg w-full h-full object-cover object-left-top"
@@ -55,9 +55,9 @@ export default function PostCardSection(props: { data: any }) {
                   })}
                 </span>
               </div>
-            </li>
+            </div>
           </Link>
         ))}
-    </ul>
+    </section>
   );
 }

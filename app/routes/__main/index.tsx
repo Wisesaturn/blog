@@ -1,5 +1,6 @@
 import { Link, useLoaderData } from '@remix-run/react';
 import { useState } from 'react';
+import { json } from '@remix-run/node';
 
 import Pagination from '@components/Pagination';
 import Header from '@components/Header';
@@ -14,17 +15,20 @@ import type { CategoryType } from '@utils/constant/category';
 import type { postingTypes } from '@Types/post';
 
 export async function loader() {
-  const dataAll: postingTypes[] = [];
+  const dataAll: any = [];
+
   CATEGORY_DATA.map(async (ele) => {
     const data = await getPosts(ele.link);
-    return data;
+    return dataAll.push(data);
   });
 
-  return dataAll;
+  // 모든 컬렉션에서 read해야함
+
+  return json(dataAll);
 }
 
 export const MainPage = () => {
-  const headerData = [{ name: `📚 Jaehan's Blog`, link: '/' }];
+  const headerData = [{ name: `📚 사툰사툰`, link: '/' }];
   const newPostData = useLoaderData();
 
   return (
@@ -44,6 +48,7 @@ export const MainPage = () => {
           })}
         </div>
         <h2>최신글</h2>
+        <PostCardSection data={newPostData} />
       </main>
       <Copyright />
       <Footer />
