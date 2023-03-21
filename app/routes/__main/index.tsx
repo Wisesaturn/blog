@@ -10,6 +10,7 @@ import TitleSection from '@components/Title/Title';
 import Copyright from '@components/Footer/Copyright';
 import PostCardSection from '@components/PostCard';
 import getPosts from '@utils/api/getPosts';
+import ProfileSection from '@components/Profile';
 
 import type { CategoryType } from '@utils/constant/category';
 import type { postingTypes } from '@Types/post';
@@ -36,7 +37,8 @@ export const MainPage = () => {
       <Header paths={headerData} />
       <main className="isWrapper min-h-screen flex flex-col">
         <TitleSection isContent="사툰사툰" isSubContent="기록하고 싶은 것을 담아보았습니다" />
-        <div className="flex gap-2 text-center mb-8">
+        <ProfileSection />
+        <section className="flex gap-2 text-center mb-8">
           {CATEGORY_DATA.map((ele: CategoryType) => {
             return (
               <Link key={ele.name} prefetch="render" to={ele.link}>
@@ -46,7 +48,7 @@ export const MainPage = () => {
               </Link>
             );
           })}
-        </div>
+        </section>
         <h2>최신글</h2>
         <PostCardSection data={newPostData} />
       </main>

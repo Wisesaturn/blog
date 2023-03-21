@@ -17,6 +17,6 @@
     "incremental": true
   },
   "extends": "./tsconfig.paths.json",
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/utils/api/getPost.ts"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

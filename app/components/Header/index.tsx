@@ -17,7 +17,7 @@ export default function Header(props: HeaderProps) {
   const hasShadow = !isScrollTop ? 'shadow-md' : '';
   const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
   const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);

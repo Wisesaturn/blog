@@ -26,7 +26,7 @@ export default function useScroll() {
     window.addEventListener('scroll', updateScroll);
 
     return () => {
-      window.removeEventListener('wheel', checkDirectionScroll);
+      window.removeEventListener('scroll', updateScroll);
     };
   });
 
