@@ -20,8 +20,11 @@ export default function ProfileSection() {
       <div className="flex flex-col gap-2">
         <h1>송재한</h1>
         <p className="text-[16px] md:text-[18px]">
-          안녕하세요! 많은 것을 배우고 싶은 <b className="font-bold">예비 UX 엔지니어</b>
+          안녕하세요! 깔끔한 애니메이션을 구현하는 걸 좋아하는{' '}
+          <b className="font-bold">예비 프론트엔드 엔지니어</b>
           입니다.
+          <br />
+          UX 이론과 클린 코딩에 관심이 많아요!
         </p>
         <hr className="my-2" />
         <div className="flex gap-2 w-max">
