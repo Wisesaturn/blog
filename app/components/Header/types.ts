@@ -1,3 +1,6 @@
 export interface HeaderProps {
-  paths: string[];
+  paths: {
+    name: string;
+    link: string;
+  }[];
 }

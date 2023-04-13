@@ -12,11 +12,11 @@ module.exports = {
       colors: {
         black: '#333333',
         green: {
-          dark: '#586E54',
-          darker: '#8BAD86',
-          main: '#A9D4A3',
-          brighter: '#bdecb6',
-          bright: '#EEFAEB',
+          dark: '#326E3E',
+          darker: '#50ad63',
+          main: '#86BB92',
+          brighter: '#9DFAB3',
+          bright: '#BBFACB',
         },
       },
       fontFamily: {
@@ -30,9 +30,6 @@ module.exports = {
             brightness: '65%',
             opacity: '0.8',
           },
-        },
-        upDisappear: {
-          to: { transform: 'translateY(-100%)' },
         },
       },
       animation: {

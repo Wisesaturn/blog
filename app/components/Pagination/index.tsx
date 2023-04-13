@@ -1,5 +1,6 @@
-import Button from '@components/Button';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+
+import Button from '@components/Button';
 
 export default function Pagination() {
   return (
