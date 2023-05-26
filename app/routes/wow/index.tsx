@@ -5,8 +5,12 @@ import remarkBreaks from 'remark-breaks';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
+import rehypeHighlight from 'rehype-highlight';
+import remarkMath from 'remark-math';
+import styles from 'highlight.js/styles/github-dark-dimmed.css';
+import rehypeMathjax from 'rehype-mathjax';
 
-import type { LoaderArgs } from '@remix-run/node';
+import type { LinksFunction } from '@remix-run/node';
 
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
@@ -37,18 +41,31 @@ export async function loader() {
     .use(remarkParse) // markdown을 mdast로 변환
     .use(remarkGfm) // remark가 GFM도 지원 가능하도록
     .use(remarkBreaks) // remark가 line-break도 지원 가능하도록
+    .use(remarkMath) // math 기호
     .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
-    .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
+    .use(rehypeStringify, { allowDangerousHtml: true })
+    .use(rehypeMathjax) // hast를 html 변환
+    .use(rehypeHighlight) // code 강조용
     .process(mdString.parent);
-  return result;
+  return result.value;
 }
 
-const Testing = () => {
-  const load = useLoaderData();
-
-  console.log(load);
-
-  return <>{load}</>;
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: styles,
+    },
+  ];
 };
 
-export default Testing;
+export default function ReviewPage() {
+  const post = useLoaderData();
+
+  return (
+    <>
+      <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-800 my-10" />
+      <div className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: post }} />
+    </>
+  );
+}
