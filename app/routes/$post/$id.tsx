@@ -1,6 +1,5 @@
 import { useLoaderData } from '@remix-run/react';
-
-import styles from '@styles/markdown.css';
+import styles from 'highlight.js/styles/github-dark-dimmed.css';
 
 import { PostTitle } from '@components/Title';
 
