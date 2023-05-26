@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
 
 import styles from '@styles/tailwind.css';
+
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { Title } from '@components/Title';

@@ -1,8 +1,10 @@
 import { useLoaderData } from '@remix-run/react';
 
-import getPost from '@utils/api/getPost';
 import styles from '@styles/markdown.css';
+
 import { PostTitle } from '@components/Title';
+
+import getPost from '@utils/api/getPost';
 
 import type { LoaderArgs, LinksFunction } from '@remix-run/node';
 

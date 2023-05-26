@@ -1,9 +1,10 @@
 import { Outlet, useLoaderData } from '@remix-run/react';
 
+import Copyright from '@components/Footer/Copyright';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
+
 import { CATEGORY_DATA } from '@utils/constant/category';
-import Copyright from '@components/Footer/Copyright';
 
 import type { MetaFunction, LoaderArgs } from '@remix-run/node';
 
