@@ -41,10 +41,10 @@ export async function loader() {
     .use(remarkParse) // markdown을 mdast로 변환
     .use(remarkGfm) // remark가 GFM도 지원 가능하도록
     .use(remarkBreaks) // remark가 line-break도 지원 가능하도록
-    .use(remarkMath) // math 기호
+    .use(remarkMath) // math 기호 구분
     .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
-    .use(rehypeStringify, { allowDangerousHtml: true })
-    .use(rehypeMathjax) // hast를 html 변환
+    .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
+    .use(rehypeMathjax) // math 구문 강조용
     .use(rehypeHighlight) // code 강조용
     .process(mdString.parent);
   return result.value;

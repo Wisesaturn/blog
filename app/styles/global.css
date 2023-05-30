@@ -208,19 +208,37 @@
 }
 
 /* custom markdown */
-p > code {
-  color: #50ad63;
+.markdown-body strong {
   font-weight: bold;
 }
 
-pre > em {
+.markdown-body p > code {
+  color: #50ad63;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+.markdown-body pre > em {
   color: #979797;
 }
 
-blockquote > b {
+.markdown-body blockquote > b {
   color: #50ad63;
 }
 
-blockquote {
+.markdown-body blockquote {
   background-color: #f0f0f0;
+}
+
+.markdown-body p > a {
+  color: #0969da;
+}
+
+.markdown-body p > a:hover {
+  transition: 0.35s ease-in-out;
+  color: #54aeff;
+}
+
+.markdown-body p > a:active {
+  color: #033d8b;
 }
