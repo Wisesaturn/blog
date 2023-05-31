@@ -7,14 +7,10 @@ import Header from '@components/Header';
 import Footer from '@components/Footer';
 import TitleSection from '@components/Title/Title';
 import Copyright from '@components/Footer/Copyright';
-import PostCardSection from '@components/PostCard';
 import ProfileSection from '@components/Profile';
 
-import getPosts from '@utils/api/getPosts';
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
-
-import type { postingTypes } from '@Types/post';
 
 export const MainPage = () => {
   const headerData = [{ name: `📚 사툰사툰`, link: '/' }];

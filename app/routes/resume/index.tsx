@@ -1,5 +1,10 @@
 import { Title } from '@components/Title';
 
+// export async function loader() {
+
+//   return blogPages;
+// }
+
 export const ResumePage = () => {
   return (
     <>

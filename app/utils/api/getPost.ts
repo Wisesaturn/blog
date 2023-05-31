@@ -2,13 +2,13 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from '@utils/firebase';
 
-import type { postingTypes } from '@Types/post';
+import type { IPost } from '@Types/post';
 
 export default async function getPost(document: string, id: string) {
   try {
     const docRef = doc(db, document, id.replace(/-/g, ' '));
     const docSnap = await getDoc(docRef);
-    const docData = docSnap.data() as postingTypes;
+    const docData = docSnap.data() as IPost;
 
     const parsingDate = docSnap.data()!.createdAt.toDate().toLocaleString('ko-KR');
 

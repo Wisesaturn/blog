@@ -4,7 +4,7 @@ import { json } from '@remix-run/node';
 import PostCardSection from '@components/PostCard';
 import { Title } from '@components/Title';
 
-import getPosts from '@utils/api/getPosts';
+import fetchNotionPosts from '@utils/api/fetchNotionPosts';
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
 
@@ -16,10 +16,10 @@ export async function loader({ params }: LoaderArgs) {
     return ele.link === post;
   });
 
-  const data = await getPosts(post!);
+  const data = await fetchNotionPosts(post!);
   return json({ category: category[0].name, data });
 }
-export const ReviewPage = () => {
+export const SelectedPostPage = () => {
   const load = useLoaderData();
 
   return (
@@ -30,4 +30,4 @@ export const ReviewPage = () => {
   );
 };
 
-export default ReviewPage;
+export default SelectedPostPage;
