@@ -22,8 +22,8 @@ export default async function fetchNotionPosts(document: string) {
 
         const blogPagesMap = blogPageIdList
           .map((post: any): INotionPostReturn => {
-            console.log(post.properties.description.rich_text);
             return {
+              plain_title: `${post.properties.이름.title[0].plain_text}`,
               title: `${post.icon?.emoji ? `${post.icon.emoji} ` : ''}${
                 post.properties.이름.title[0].plain_text
               }`,

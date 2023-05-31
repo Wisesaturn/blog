@@ -17,7 +17,7 @@ export default function PostCardSection(props: { data: any }) {
             className="w-full"
             reloadDocument
             key={post.index}
-            to={String(post.title).replace(/\s+/g, '-')}
+            to={String(post.plain_title).replace(/\s+/g, '-')}
           >
             <div className="hover:bg-gray-100 hidden-blur p-2 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row md:h-40">
               <div className="rounded-lg w-full aspect-video md:h-auto overflow-hidden shadow-md shadow-gray-300 md:w-1/2">

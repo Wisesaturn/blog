@@ -1,5 +1,8 @@
+import React from 'react';
+
 import thumbnailReview from '@public/default.png';
 
+import type { ITags } from '@Types/post';
 import type { PostTitleProps } from './types';
 
 export default function PostTitle(props: PostTitleProps) {
@@ -15,10 +18,10 @@ export default function PostTitle(props: PostTitleProps) {
         <div className="flex items-center text-[0.875rem] justify-center flex-col">
           <div className="font-light">{createdAt}</div>
           <div className="flex gap-3">
-            {tags.map((e, idx) => {
+            {tags.map((tag: ITags) => {
               return (
-                <span className="text-green-brighter font-bold rounded-sm" key={idx}>
-                  # {e}
+                <span className="text-green-brighter font-bold rounded-sm" key={createdAt}>
+                  # {tag.name}
                 </span>
               );
             })}

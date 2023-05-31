@@ -1,6 +1,8 @@
+import type { ITags } from '@Types/post';
+
 export interface PostTitleProps {
   title: string;
   createdAt: string | number;
-  tags: string[];
+  tags: ITags[];
   thumbnail: string;
 }

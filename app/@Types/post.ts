@@ -5,6 +5,7 @@ export interface ITags {
 }
 export interface IPost {
   readonly title: string;
+  readonly plain_title: string;
   readonly description?: string;
   readonly createdAt: string;
   readonly thumbnail: string;
@@ -22,6 +23,7 @@ export interface IPost {
 
 export interface INotionPostReturn {
   title: string;
+  plain_title: string;
   createdAt: string;
   thumbnail: string;
   index: string;

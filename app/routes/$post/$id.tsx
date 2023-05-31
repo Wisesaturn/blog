@@ -4,6 +4,7 @@ import styles from 'highlight.js/styles/github-dark-dimmed.css';
 import { PostTitle } from '@components/Title';
 
 import getPost from '@utils/api/getPost';
+import fetchNotionPost from '@utils/api/fetchNotionPost';
 
 import type { LoaderArgs, LinksFunction } from '@remix-run/node';
 
@@ -18,7 +19,7 @@ export const links: LinksFunction = () => {
 
 export async function loader({ params }: LoaderArgs) {
   const { post, id } = params;
-  return getPost(post!, id!);
+  return fetchNotionPost(post!, id!);
 }
 
 export default function ReviewPage() {
