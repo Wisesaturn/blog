@@ -1,6 +1,5 @@
 import { RemixServer } from '@remix-run/react';
 import { renderToString } from 'react-dom/server';
-import { cacheHeader } from 'pretty-cache-header';
 import { createCookie } from '@remix-run/node';
 
 import type { EntryContext } from '@remix-run/node';
@@ -47,24 +46,14 @@ export default async function handleRequest(
   if (!responseHeaders.has('Cache-Control')) {
     responseHeaders.append(
       'Cache-Control',
-      cacheHeader({
-        public: true, // cache on CDN
-        maxAge: '1h', // cache time
-        staleWhileRevalidate: '1w', // enables ISR
-        staleIfError: '1w', // enables ISR
-      }),
+      'public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600',
     );
   }
 
   // Add new headers to the response
-  responseHeaders.append('Vary', 'Cookie');
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
 
   responseHeaders.set('Content-Type', 'text/html');
-  // responseHeaders.set(
-  //   'Cache-Control',
-  //   'public, max-age=3600, s-maxage=86400, stale-while-revalidate=300',
-  // );
 
   return new Response(`<!DOCTYPE html>${markup}`, {
     headers: responseHeaders,
