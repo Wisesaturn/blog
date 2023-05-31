@@ -1,33 +1,67 @@
-import { AiOutlineMenu } from 'react-icons/ai';
-import useScrollTopPosition from '@hooks/useScrollTopPosition';
-import { useEffect } from 'react';
+import { Link } from '@remix-run/react';
+import { useEffect, useRef } from 'react';
+import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
+
+import useScroll from '@hooks/useScroll';
+
+import { ProgressBar } from './Components/ProgressBar';
+
+import type { CategoryType } from '@utils/constant/category';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {
-  const { isContent = '' } = props;
-  const onScrollTop = useScrollTopPosition();
-  const hasShadow = !onScrollTop && 'shadow-md';
-  const isDefaultStyle = `glassMorphism flex z-[9999] ease-in-out duration-200 justify-between w-full mx-auto items-center sticky top-0 ${hasShadow}`;
+  const { paths } = props;
+
+  // style for scroll
+  const { isScrollTop, isScrollDirection } = useScroll();
+  const hasShadow = !isScrollTop ? 'shadow-md' : '';
+  const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
+  const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // style
+  const styleIcon =
+    'fill-gray-300 hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100';
+  const styleIconWrapper =
+    'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100';
 
   return (
-    <header className={isDefaultStyle}>
-      <nav>
-        <button className="p-5">
-          <AiOutlineMenu size="24" />
-        </button>
-      </nav>
-      {!onScrollTop && isContent !== '' && (
-        <div className="animate-open">
-          <h3>{isContent}</h3>
+    <>
+      <ProgressBar />
+      <header ref={headerRef} className={isDefaultStyle}>
+        <div className="flex gap-2 ml-3 items-center hidden-last-arrow">
+          {paths
+            .filter((e) => {
+              return e.name !== 'undefined' && e.name !== '';
+            })
+            .map((ele: CategoryType) => {
+              return (
+                <Link
+                  reloadDocument
+                  key={ele.name}
+                  className="flex items-center gap-2"
+                  to={ele.link}
+                >
+                  <span className={`${styleIcon} text-[0.9rem]`}>{ele.name}</span>
+                  <span className="text-gray-300">{'>'}</span>
+                </Link>
+              );
+            })}
         </div>
-      )}
-      <div className="w-9 h-9 m-3 shadow-md shadow-gray-500/50 rounded-full hover:cursor-pointer overflow-hidden">
-        <img
-          className="w-full h-full object-cover"
-          alt="profile"
-          src="https://avatars.githubusercontent.com/u/79848632?v=4"
-        />
-      </div>
-    </header>
+        <div className="flex py-2 px-3 gap-3 items-center">
+          <span className={styleIconWrapper}>
+            <AiOutlineSearch className={styleIcon} size="32" />
+          </span>
+          <a className={styleIconWrapper} href="https://www.github.com/wisesaturn">
+            <AiFillGithub className={styleIcon} size="32" />
+          </a>
+        </div>
+      </header>
+      <div className="h-[3rem]" />
+    </>
   );
 }

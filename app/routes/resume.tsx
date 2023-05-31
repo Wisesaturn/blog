@@ -1,0 +1,27 @@
+import { Outlet } from '@remix-run/react';
+
+import Copyright from '@components/Footer/Copyright';
+import Header from '@components/Header';
+import Footer from '@components/Footer';
+
+import { CATEGORY_DATA } from '@utils/constant/category';
+
+const WriteLayout = () => {
+  const headerData = [
+    { name: `📚 사툰사툰`, link: '/' },
+    { name: `이력서`, link: '/resume' },
+  ];
+
+  return (
+    <>
+      <Header paths={headerData} />
+      <article className="isWrapper flex flex-col min-h-screen">
+        <Outlet />
+      </article>
+      <Copyright />
+      <Footer />
+    </>
+  );
+};
+
+export default WriteLayout;

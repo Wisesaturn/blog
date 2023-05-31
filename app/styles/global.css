@@ -18,8 +18,11 @@
     width: 100%;
     height: 100vh;
     color: #333;
+    line-height: 180%;
 
-    font-family: 'Pretendard', 'sans-serif';
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
@@ -34,10 +37,22 @@
     user-select: none;
   }
 
+  /* Drag Selection */
+  ::selection {
+    background-color: #bdecb6;
+    color: #000000;
+  }
+
+  ::-moz-selection {
+    background-color: #bdecb6;
+    color: #000000;
+  }
+
   /* selected Drag */
   p,
   code,
-  pre {
+  pre,
+  blockquote {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
@@ -87,7 +102,7 @@
     flex-wrap: wrap;
   }
 
-  /* custom */
+  /* custom class */
   .scroll-hidden {
     height: 100%;
     min-height: 100%;
@@ -101,14 +116,24 @@
     backdrop-filter: blur(15px);
   }
 
+  .hidden-last-arrow a:last-child > span:last-child {
+    display: none;
+  }
+
+  .hidden-blur:hover :last-child > div:after {
+    display: none !important;
+  }
+
   /* font */
   h1 {
     font-size: 2.25rem;
     font-weight: bold;
+    line-height: 200%;
   }
   h2 {
     font-size: 1.5rem;
     font-weight: bold;
+    line-height: 180%;
   }
 
   h3 {
@@ -116,17 +141,20 @@
     font-size: 1.25rem;
     font-weight: 500;
     width: max-content;
+    line-height: 180%;
   }
 
   h4 {
     font-size: 1rem;
     font-weight: 400;
+    line-height: 180%;
   }
 
   p {
     font-size: 1rem;
     font-weight: 300;
     text-align: justify;
+    line-height: 180%;
   }
 
   /* underline */
@@ -134,14 +162,30 @@
     content: '';
     position: absolute;
     width: 100%;
-    opacity: 0.35;
 
-    margin-top: 1.2rem;
-    padding: 0.35rem;
+    margin-top: 1.7rem;
+    padding: 0.15rem;
 
     border-radius: 1rem;
-    background-color: #bdecb6;
+    background-color: #50ad63;
   }
+
+  /* animation */
+  @keyframes upDisappear {
+    from {
+      -webkit-transform: translateY(0%);
+      -moz-transform: translateY(0%);
+      -ms-transform: translateY(0%);
+      transform: translateY(0%);
+    }
+    to {
+      -webkit-transform: translateY(-100%);
+      -moz-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
+    }
+  }
+
   /* mobile */
   @media only screen and (max-width: 768px) {
     h1 {
@@ -156,14 +200,45 @@
       font-size: 1rem;
     }
 
-    h3:before {
-      margin-top: 0.9rem;
-      padding: 0.3rem;
-    }
-
     h4,
     p {
       font-size: 0.9rem;
     }
   }
+}
+
+/* custom markdown */
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body p > code {
+  color: #50ad63;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+.markdown-body pre > em {
+  color: #979797;
+}
+
+.markdown-body blockquote > b {
+  color: #50ad63;
+}
+
+.markdown-body blockquote {
+  background-color: #f0f0f0;
+}
+
+.markdown-body p > a {
+  color: #0969da;
+}
+
+.markdown-body p > a:hover {
+  transition: 0.35s ease-in-out;
+  color: #54aeff;
+}
+
+.markdown-body p > a:active {
+  color: #033d8b;
 }

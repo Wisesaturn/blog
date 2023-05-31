@@ -1,3 +1,6 @@
 export interface HeaderProps {
-  isContent?: string;
+  paths: {
+    name: string;
+    link: string;
+  }[];
 }

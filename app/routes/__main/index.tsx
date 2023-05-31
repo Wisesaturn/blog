@@ -1,20 +1,40 @@
-import Header from '@components/Header';
-import TitleSection from '@components/Section/Title';
+import { Link, useLoaderData } from '@remix-run/react';
+import { useState } from 'react';
+import { json } from '@remix-run/node';
+
 import Pagination from '@components/Pagination';
-import { Link } from '@remix-run/react';
+import Header from '@components/Header';
 import Footer from '@components/Footer';
+import TitleSection from '@components/Title/Title';
+import Copyright from '@components/Footer/Copyright';
+import ProfileSection from '@components/Profile';
+
+import { CATEGORY_DATA } from '@utils/constant/category';
+import type { CategoryType } from '@utils/constant/category';
 
 export const MainPage = () => {
+  const headerData = [{ name: `📚 사툰사툰`, link: '/' }];
+
   return (
     <>
-      <Header isContent="Seize the day" />
-      <TitleSection />
-      <div className="isWrapper h-full flex flex-col justify-center text-center">
-        <div className="p-20">프로필 영역</div>
-        <Link to="/review">
-          <h2 className="p-20">회고</h2>
-        </Link>
-      </div>
+      <Header paths={headerData} />
+      <main className="isWrapper min-h-screen flex flex-col">
+        <TitleSection isContent="사툰사툰" isSubContent="기록하고 싶은 것을 담아보았습니다" />
+        <ProfileSection />
+        <section className="flex gap-2 text-center mb-8">
+          {CATEGORY_DATA.map((ele: CategoryType) => {
+            return (
+              <Link key={ele.name} prefetch="render" to={ele.link}>
+                <h4 className="py-1 px-4 rounded-lg border-2 before:hidden bg-green-darker font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
+                  {ele.name}
+                </h4>
+              </Link>
+            );
+          })}
+        </section>
+        <h2>최신글</h2>
+      </main>
+      <Copyright />
       <Footer />
     </>
   );
