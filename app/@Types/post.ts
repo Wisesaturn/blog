@@ -29,4 +29,5 @@ export interface INotionPostReturn {
   index: string;
   tags: string[];
   description: string;
+  last_editedAt: string;
 }

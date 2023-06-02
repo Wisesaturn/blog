@@ -6,7 +6,7 @@ import Footer from '@components/Footer';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
 
-import type { MetaFunction, LoaderArgs } from '@remix-run/node';
+import type { LoaderArgs } from '@remix-run/node';
 
 export async function loader({ params }: LoaderArgs) {
   try {

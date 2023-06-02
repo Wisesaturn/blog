@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useLoaderData } from '@remix-run/react';
 import styles from 'highlight.js/styles/github-dark-dimmed.css';
 
 import { PostTitle } from '@components/Title';
 
-import getPost from '@utils/api/getPost';
-import fetchNotionPost from '@utils/api/fetchNotionPost';
+import fetchDB from '@utils/api/fetchDB';
 
 import type { LoaderArgs, LinksFunction } from '@remix-run/node';
 
@@ -19,7 +19,8 @@ export const links: LinksFunction = () => {
 
 export async function loader({ params }: LoaderArgs) {
   const { post, id } = params;
-  return fetchNotionPost(post!, id!);
+
+  return fetchDB(post!, id!);
 }
 
 export default function ReviewPage() {

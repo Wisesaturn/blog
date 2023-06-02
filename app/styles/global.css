@@ -79,6 +79,30 @@
     box-shadow: none;
   }
 
+  summary {
+    cursor: pointer;
+  }
+
+  summary::marker {
+    transition: 0.35s ease-in-out;
+    color: #86bb92;
+  }
+
+  img {
+    border-radius: 0.75rem;
+  }
+
+  blockquote {
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  pre,
+  code {
+    border-radius: 0.75rem;
+    border: 0px solid;
+  }
+
   a,
   a:visited {
     text-decoration: none;
@@ -183,6 +207,18 @@
       -moz-transform: translateY(-100%);
       -ms-transform: translateY(-100%);
       transform: translateY(-100%);
+    }
+  }
+
+  @keyframes skeleton-gradient {
+    0% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+    50% {
+      background-color: rgba(165, 165, 165, 0.3);
+    }
+    100% {
+      background-color: rgba(165, 165, 165, 0.1);
     }
   }
 

@@ -1,4 +1,3 @@
-import { useLoaderData } from '@remix-run/react';
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -7,12 +6,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import rehypeHighlight from 'rehype-highlight';
 import remarkMath from 'remark-math';
-import styles from 'highlight.js/styles/github-dark-dimmed.css';
 import rehypeMathjax from 'rehype-mathjax';
-import { json } from '@remix-run/node';
-
-import type { IPost, INotionPostReturn } from '@Types/post';
-import type { LinksFunction } from '@remix-run/node';
 
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
@@ -50,20 +44,23 @@ export default async function fetchNotionPost(document: string, title: string) {
           .use(rehypeMathjax) // math 구문 강조용
           .use(rehypeHighlight) // code 강조용
           .process(mdString.parent);
-        return json({
+        return {
+          plain_title: `${selectedPost[0].properties.이름.title[0].plain_text}`,
           title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
             selectedPost[0].properties.이름.title[0].plain_text
           }`,
           thumbnail: selectedPost[0].cover?.external.url ?? '',
           createdAt: new Date(selectedPost[0].created_time).toLocaleDateString('ko-KR'),
           tags: selectedPost[0].properties.tags.multi_select,
+          index: selectedPost[0].id,
+          description: selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '',
+          last_editedAt: new Date(selectedPost[0].last_edited_time).toLocaleDateString('ko-KR'),
           body: result.value,
-        });
+        };
       });
 
     return blogPage;
   } catch (err: any) {
-    if (err.message === '') throw new Error('게시물을 불러오는데 실패하였습니다.');
-    throw new Error(err.message);
+    throw new Error('게시물을 불러오는데 실패하였습니다.');
   }
 }

@@ -4,9 +4,10 @@ import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
 
 import useScroll from '@hooks/useScroll';
 
+import type { CategoryType } from '@utils/constant/category';
+
 import { ProgressBar } from './Components/ProgressBar';
 
-import type { CategoryType } from '@utils/constant/category';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {
