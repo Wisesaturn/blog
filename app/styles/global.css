@@ -191,6 +191,15 @@
     background-color: #4caf50;
   }
 
+  ul[class='contains-task-list'] {
+    padding-left: 0;
+  }
+
+  ul li[class='task-list-item']::before {
+    content: '';
+    display: none;
+  }
+
   ol li {
     counter-increment: item;
     text-align: left; /* 카운터 증가 */

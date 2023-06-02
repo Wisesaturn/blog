@@ -9,8 +9,8 @@ export default function ProfileSection() {
     'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100';
 
   return (
-    <section className="flex gap-10 items-center w-full py-10 px-10 border-2 r shadow-md rounded-xl mb-4">
-      <div className="items-center border-2 border-green-darker flex w-20 h-20 md:w-40 md:h-40 overflow-hidden rounded-full shadow-xl">
+    <section className="flex flex-col gap-10 items-center w-full py-10 px-10 border-2 r shadow-md rounded-xl mb-4">
+      <div className="items-center border-2 border-green-darker flex w-40 h-40 overflow-hidden rounded-full shadow-xl">
         <img
           className="translate-y-1/2 w-full h-full object-cover scale-[200%]"
           src={profile}
