@@ -35,7 +35,7 @@ export default async function fetchNotionPosts(document: string) {
             const title = `${post.icon?.emoji ? `${post.icon.emoji} ` : ''} ${
               post.properties.이름.title[0].plain_text
             }`;
-            const thumbnail = post.cover?.external.url ?? '';
+            const thumbnail = (post.cover?.external?.url || post.cover?.file?.url) ?? '';
             const tags = post.properties.tags.multi_select;
             const index = post.id;
             const description = post.properties.description.rich_text[0]?.plain_text ?? '';
@@ -51,13 +51,19 @@ export default async function fetchNotionPosts(document: string) {
               description,
             };
 
-            fetchDB(category, plain_title.replace(/\s+/g, '-')).then((res) => {
-              if (last_editedAt === res.last_editedAt) return;
+            fetchDB(category, plain_title.replace(/\s+/g, '-'))
+              .then((res) => {
+                if (last_editedAt === res.last_editedAt) return;
 
-              fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
-                postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
+                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
+                  postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
+                });
+              })
+              .catch(() => {
+                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
+                  postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
+                });
               });
-            });
 
             return postDataJSON;
           })

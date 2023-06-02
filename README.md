@@ -13,4 +13,5 @@
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"/>&nbsp;&nbsp;
 <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white"/>&nbsp;&nbsp;
 <img src="https://img.shields.io/badge/Firebase-FFA611?style=for-the-badge&logo=Firebase&logoColor=white"/>&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/Notion_API-EFEFEF?style=for-the-badge&logo=Notion&logoColor=333333"/>&nbsp;&nbsp;
 </p>

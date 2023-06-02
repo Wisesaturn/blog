@@ -49,7 +49,8 @@ export default async function fetchNotionPost(document: string, title: string) {
           title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
             selectedPost[0].properties.이름.title[0].plain_text
           }`,
-          thumbnail: selectedPost[0].cover?.external.url ?? '',
+          thumbnail:
+            (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '',
           createdAt: new Date(selectedPost[0].created_time).toLocaleDateString('ko-KR'),
           tags: selectedPost[0].properties.tags.multi_select,
           index: selectedPost[0].id,
