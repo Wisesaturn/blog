@@ -85,6 +85,11 @@
 
   summary {
     cursor: pointer;
+    color: #50ad63;
+  }
+
+  table {
+    margin: 1rem auto !important;
   }
 
   summary::marker {
@@ -125,7 +130,6 @@
   }
 
   li {
-    font-size: 1rem;
     font-weight: semibold;
   }
 
@@ -224,7 +228,7 @@
   .isWrapper {
     width: 90%;
     max-width: 48rem;
-    margin: 0 auto;
+    margin: 1rem auto;
 
     display: flex;
     flex-wrap: wrap;
@@ -259,30 +263,39 @@
     line-height: 200%;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.875rem;
     font-weight: bold;
     line-height: 180%;
   }
 
   h3 {
     position: relative;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
     width: max-content;
     line-height: 180%;
   }
 
   h4 {
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 400;
     line-height: 180%;
   }
 
-  p {
+  p,
+  h4,
+  li,
+  summary p,
+  summary {
     font-size: 1rem;
     font-weight: 300;
     text-align: justify;
     line-height: 180%;
+  }
+
+  mjx-container[jax='SVG'][display='true'] {
+    display: flex !important;
+    justify-content: center;
   }
 
   /* underline */
@@ -291,8 +304,8 @@
     position: absolute;
     width: 100%;
 
-    margin-top: 1.9rem;
-    padding: 0.2rem;
+    margin-top: 2.375rem;
+    padding: 0.15rem;
 
     border-radius: 1rem;
     background-color: #50ad63;
@@ -328,43 +341,42 @@
 
   /* mobile */
   @media only screen and (max-width: 768px) {
-    summary,
-    summary p {
-      font-size: 14.4px;
-    }
-
     summary {
       font-weight: semiboid;
       color: #50ad63;
     }
 
+    pre > code > span {
+      font-size: 0.875rem !important;
+    }
+
     summary p {
       font-weight: 400;
     }
-    li {
-      font-size: 14.4px;
-    }
 
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.625rem;
     }
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
     }
 
     h3 {
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
 
     h3:before {
-      margin-top: 1.5rem;
+      margin-top: 1.85rem;
       padding: 0.15rem;
     }
 
     h4,
+    li,
+    summary p,
+    summary,
     p {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
   }
 }
