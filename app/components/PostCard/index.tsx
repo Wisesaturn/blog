@@ -1,7 +1,8 @@
+// eslint-disable-next-line import/no-unresolved
+
 import { Link } from '@remix-run/react';
 
-// eslint-disable-next-line import/no-unresolved
-import thumbnailReview from '@public/default.png';
+import thumbnailDefault from '@public/thumbnail.webp';
 
 import type { IPost, ITags } from '@Types/post';
 
@@ -22,9 +23,9 @@ export default function PostCardSection(props: { data: any }) {
             <div className="hover:bg-gray-100 hidden-blur p-2 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row md:h-40">
               <div className="rounded-lg w-full aspect-video md:h-auto overflow-hidden shadow-md shadow-gray-300 md:w-1/2">
                 <img
-                  className="bg-gray-100 animate-skeletonUI rounded-lg w-full h-full object-cover object-left-top"
+                  className="bg-gray-100 animate-skeletonUI rounded-lg w-full h-full object-cover"
                   alt="썸네일"
-                  src={post.thumbnail === '' ? thumbnailReview : post.thumbnail}
+                  src={post.thumbnail === '' ? thumbnailDefault : post.thumbnail}
                 />
               </div>
               <div className="overflow-hidden flex justify-between gap-2 flex-col md:w-full md:pl-5">

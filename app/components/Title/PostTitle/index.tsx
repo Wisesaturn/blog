@@ -1,6 +1,6 @@
 import React from 'react';
 
-import thumbnailReview from '@public/default.png';
+import thumbnailReview from '@public/default.webp';
 
 import type { ITags } from '@Types/post';
 import type { PostTitleProps } from './types';
