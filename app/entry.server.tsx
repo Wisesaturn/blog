@@ -46,7 +46,7 @@ export default async function handleRequest(
   if (!responseHeaders.has('Cache-Control')) {
     responseHeaders.append(
       'Cache-Control',
-      'public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600',
+      'public, max-age=3600, s-maxage=3600, stale-while-revalidate=1800',
     );
   }
 
