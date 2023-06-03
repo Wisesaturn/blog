@@ -6,7 +6,7 @@ import { CATEGORY_DATA } from '@utils/constant/category';
 export default async function countDB() {
   const allCountData = await Promise.all(
     CATEGORY_DATA.map(async (cur) => {
-      const coll = collection(db, 'etc');
+      const coll = collection(db, cur.link);
       const snapshot = await getCountFromServer(coll);
       return snapshot.data().count;
     }),

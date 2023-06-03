@@ -12,15 +12,15 @@ export async function loader() {
   const countNum = await countDB();
   const searchAllData = await searchAllDB();
 
-  return json({ countNum, data: searchAllData });
+  return json({ countNum, totalDB: searchAllData });
 }
 export default function SearchAllPostPage() {
-  const { countNum, data } = useLoaderData();
+  const { countNum, totalDB } = useLoaderData();
 
   return (
     <>
       <Title isContent="📖 포스트" isSubContent={`${countNum}개의 게시물이 존재합니다`} />
-      {/* <PostCardSection data={data} /> */}
+      <PostCardSection data={totalDB.searchData} />
     </>
   );
 }
