@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from '@remix-run/react';
-import { useState } from 'react';
-import { json } from '@remix-run/node';
+import { SlArrowRight } from 'react-icons/sl';
+
+import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 import Pagination from '@components/Pagination';
 import Header from '@components/Header';
@@ -8,12 +9,21 @@ import Footer from '@components/Footer';
 import TitleSection from '@components/Title/Title';
 import Copyright from '@components/Footer/Copyright';
 import ProfileSection from '@components/Profile';
+import PostListSection from '@components/PostList';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
+import searchAllDB from '@utils/api/searchAllDB';
+
+export async function loader() {
+  const searchAllData = await searchAllDB(5);
+
+  return searchAllData;
+}
 
 export const MainPage = () => {
   const headerData = [{ name: `📚 사툰사툰`, link: '/' }];
+  const recentDB = useLoaderData();
 
   return (
     <>
@@ -25,14 +35,22 @@ export const MainPage = () => {
           {CATEGORY_DATA.map((ele: CategoryType) => {
             return (
               <Link key={ele.name} prefetch="render" to={ele.link}>
-                <h4 className="py-1 px-4 rounded-lg border-2 before:hidden bg-green-darker font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
+                <h4 className="py-1 px-4 rounded-lg border-2 before:hidden bg-green-main font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
                   {ele.name}
                 </h4>
               </Link>
             );
           })}
         </section>
-        <h2>최신글</h2>
+        <div className="flex justify-between items-center">
+          <h2>최신글</h2>
+          <span className={`${TWstyleIconWrapper} h-min`}>
+            <Link to="all">
+              <SlArrowRight className={`${TWstyleIcon}`} size="1.75rem" />
+            </Link>
+          </span>
+        </div>
+        <PostListSection data={recentDB} />
       </main>
       <Copyright />
       <Footer />

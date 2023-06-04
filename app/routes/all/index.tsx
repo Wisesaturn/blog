@@ -1,6 +1,5 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import { useState, useEffect } from 'react';
 
 import { Title } from '@components/Title';
 import PostCardSection from '@components/PostCard';
@@ -20,7 +19,7 @@ export default function SearchAllPostPage() {
   return (
     <>
       <Title isContent="📖 포스트" isSubContent={`${countNum}개의 게시물이 존재합니다`} />
-      <PostCardSection data={totalDB.searchData} />
+      <PostCardSection data={totalDB} />
     </>
   );
 }
