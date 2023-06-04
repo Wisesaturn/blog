@@ -41,39 +41,55 @@
         "scss": "never"
       }
     ],
-     "import/order": [ // import 정렬 및 구분
-        "error",
-        {
-          "groups": [
-            "builtin",
-            "external",
-            "internal",
-            ["sibling", "parent", "index"],
-            "type",
-            "unknown"  
-          ],
-          "pathGroups": [
-            {
-              "pattern": "{remix*,remix*/**}",
-              "group": "external",
-              "position": "before"
-            },
-            {
-              "pattern": "./**/index.tsx",
-              "group": "internal"
-            },
-            {
-              "pattern": "./**/style.tsx",
-              "group": "unknown"
-            },
-            {
-              "pattern": "./**/*.css",
-              "group": "unknown"
-            }
-          ],
-          "newlines-between": "always"
-        }
-      ],
+    "import/order": [
+      // import 정렬 및 구분
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["sibling", "parent", "index"],
+          "type",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "{remix*,remix*/**}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@routes/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@components/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "./**/index.tsx",
+            "group": "internal"
+          },
+          {
+            "pattern": "./**/style.tsx",
+            "group": "unknown"
+          },
+          {
+            "pattern": "./**/*.css",
+            "group": "unknown"
+          }
+        ],
+        "newlines-between": "always"
+      }
+    ],
     "no-param-reassign": ["error", { "props": false }],
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
@@ -94,7 +110,8 @@
           ["@contexts", "./app/contexts"],
           ["@hooks", "./app/hooks"],
           ["@utils", "./app/utils"],
-          ["@types", "./app/@Types"]],
+          ["@Types", "./app/@Types"]
+        ],
         "extensions": [".js", ".jsx", ".ts", ".tsx", "css", ".scss"]
       }
     }

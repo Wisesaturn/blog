@@ -1,27 +1,35 @@
 import { Link } from '@remix-run/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
 
 import useScroll from '@hooks/useScroll';
 
+import type { CategoryType } from '@utils/constant/category';
+
 import { ProgressBar } from './Components/ProgressBar';
 
-import type { CategoryType } from '@utils/constant/category';
 import type { HeaderProps } from './types';
 
 export default function Header(props: HeaderProps) {
   const { paths } = props;
-
+  const [hasDisabled, setHasDisabled] = useState<string>('');
+  const [hasShadow, setHasShadow] = useState<string>('');
   // style for scroll
   const { isScrollTop, isScrollDirection } = useScroll();
-  const hasShadow = !isScrollTop ? 'shadow-md' : '';
-  const hasDisabled = isScrollDirection === 'down' ? 'animate-upDisappear' : '';
   const isDefaultStyle = `glassMorphism flex z-[9999] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    setHasDisabled(isScrollDirection === 'down' ? 'animate-upDisappear' : '');
+  }, [isScrollDirection]);
+
+  useEffect(() => {
+    setHasShadow(!isScrollTop ? 'shadow-md' : '');
+  }, [isScrollTop]);
 
   // style
   const styleIcon =
@@ -33,7 +41,7 @@ export default function Header(props: HeaderProps) {
     <>
       <ProgressBar />
       <header ref={headerRef} className={isDefaultStyle}>
-        <div className="flex gap-2 ml-3 items-center hidden-last-arrow">
+        <div className="flex gap-2 ml-3 items-center hidden-last-arrow whitespace-nowrap md:w-full w-2/3 overflow-hidden text-ellipsis">
           {paths
             .filter((e) => {
               return e.name !== 'undefined' && e.name !== '';

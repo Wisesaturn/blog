@@ -3,4 +3,4 @@ export interface CategoryType {
   link: string;
 }
 
-export const CATEGORY_DATA: CategoryType[] = [{ name: '🛠 회고', link: 'review' }];
+export const CATEGORY_DATA: CategoryType[] = [{ name: '⚙ ETC', link: 'etc' }];

@@ -35,6 +35,7 @@ module.exports = {
       animation: {
         push: 'push .15s ease-out forwards',
         upDisappear: 'upDisappear .2s ease-in forwards',
+        skeletonUI: 'skeleton-gradient 1.5s infinite ease-in-out',
       },
     },
   },

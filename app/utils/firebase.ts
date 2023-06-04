@@ -1,8 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
+import { getFunctions } from 'firebase/functions';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
@@ -20,7 +22,8 @@ const app = initializeApp(firebaseConfig);
 
 const storage = getStorage(app);
 const db = getFirestore(app);
+const functions = getFunctions(app);
 
 // Subsequent queries will use persistence, if it was enabled successfully
 
-export { storage, db };
+export { storage, db, functions };

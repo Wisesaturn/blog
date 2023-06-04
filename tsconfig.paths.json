@@ -8,7 +8,7 @@
       "@contexts/*": ["./contexts/*"],
       "@hooks/*": ["./hooks/*"],
       "@utils/*": ["./utils/*"],
-      "@types/*": ["./@Types/*"],
+      "@Types/*": ["./@Types/*"],
       "@public/*": ["../public/*"],
     },
   }

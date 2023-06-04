@@ -18,6 +18,7 @@
     width: 100%;
     height: 100vh;
     color: #333;
+    line-height: 180%;
 
     font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
       Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
@@ -58,6 +59,10 @@
     user-select: text;
   }
 
+  p {
+    padding: 0.35rem 0;
+  }
+
   /* Hidden Scrollbar */
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
@@ -78,6 +83,40 @@
     box-shadow: none;
   }
 
+  summary {
+    cursor: pointer;
+    color: #50ad63;
+  }
+
+  table {
+    margin: 1rem auto !important;
+  }
+
+  summary::marker {
+    transition: 0.35s ease-in-out;
+    color: #4caf50;
+  }
+
+  img {
+    border-radius: 0.75rem;
+  }
+
+  blockquote {
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+  }
+
+  blockquote p {
+    font-weight: bold;
+  }
+
+  pre,
+  code {
+    border-radius: 0.75rem;
+    border: 0px solid;
+  }
+
   a,
   a:visited {
     text-decoration: none;
@@ -89,13 +128,107 @@
   ol {
     list-style-type: none;
   }
+
+  li {
+    font-weight: semibold;
+  }
+
+  ul,
+  ol {
+    padding: 1rem;
+  }
+
+  li > ul {
+    margin: 0;
+  }
+
+  ol {
+    background-color: #f0f0f0;
+    border-radius: 0.75rem;
+  }
+
+  ul {
+    list-style-type: none; /* 기본 글머리 숨김 */
+    padding-left: 20px; /* 왼쪽 여백 설정 */
+  }
+
+  ul li {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  ul li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  table {
+    margin: 1rem 0;
+    border: 1px solid #ddd;
+  }
+
+  thead {
+    background-color: #f2f2f2;
+    padding: 0.75rem 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  th {
+    border: 1px solid #ddd;
+    padding: 0.75rem 2.5rem;
+  }
+
+  td {
+    border: 1px solid #ddd;
+    padding: 0.75rem 2.5rem;
+  }
+
+  ul li::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -14px; /* 아이템 마커 위치 조절 */
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4caf50;
+  }
+
+  ul[class='contains-task-list'] {
+    padding-left: 0;
+  }
+
+  ul li[class='task-list-item']::before {
+    content: '';
+    display: none;
+  }
+
+  ol li {
+    counter-increment: item;
+    text-align: left; /* 카운터 증가 */
+  }
+
+  ol li::before {
+    display: inline-block;
+    content: counter(item) '. ';
+    font-weight: bold;
+    text-align: center;
+    width: 1.25rem;
+    padding-right: 0.5rem; /* 순서와 마침표 추가 */
+  }
+
+  ul ul {
+    padding-left: 20px; /* 중첩된 목록의 왼쪽 여백 설정 */
+  }
+
   /* initial setting is done */
 
   /* layout */
   .isWrapper {
     width: 90%;
     max-width: 48rem;
-    margin: 0 auto;
+    margin: 1rem auto;
 
     display: flex;
     flex-wrap: wrap;
@@ -127,28 +260,42 @@
   h1 {
     font-size: 2.25rem;
     font-weight: bold;
+    line-height: 200%;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.875rem;
     font-weight: bold;
+    line-height: 180%;
   }
 
   h3 {
     position: relative;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
     width: max-content;
+    line-height: 180%;
   }
 
   h4 {
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 400;
+    line-height: 180%;
   }
 
-  p {
+  p,
+  h4,
+  li,
+  summary p,
+  summary {
     font-size: 1rem;
     font-weight: 300;
     text-align: justify;
+    line-height: 180%;
+  }
+
+  mjx-container[jax='SVG'][display='true'] {
+    display: flex !important;
+    justify-content: center;
   }
 
   /* underline */
@@ -157,7 +304,7 @@
     position: absolute;
     width: 100%;
 
-    margin-top: 1.7rem;
+    margin-top: 2.375rem;
     padding: 0.15rem;
 
     border-radius: 1rem;
@@ -180,23 +327,92 @@
     }
   }
 
+  @keyframes skeleton-gradient {
+    0% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+    50% {
+      background-color: rgba(165, 165, 165, 0.3);
+    }
+    100% {
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+  }
+
   /* mobile */
   @media only screen and (max-width: 768px) {
+    summary {
+      font-weight: semiboid;
+      color: #50ad63;
+    }
+
+    pre > code > span {
+      font-size: 0.875rem !important;
+    }
+
+    summary p {
+      font-weight: 400;
+    }
+
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.625rem;
     }
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
     }
 
     h3 {
-      font-size: 1rem;
+      font-size: 1.125rem;
+    }
+
+    h3:before {
+      margin-top: 1.85rem;
+      padding: 0.15rem;
     }
 
     h4,
+    li,
+    summary p,
+    summary,
     p {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
   }
+}
+
+/* custom markdown */
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body p > code {
+  color: #50ad63;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+.markdown-body pre > em {
+  color: #979797;
+}
+
+.markdown-body blockquote > b {
+  color: #50ad63;
+}
+
+.markdown-body blockquote {
+  background-color: rgb(187, 250, 203, 0.5);
+}
+
+.markdown-body p > a {
+  color: #0969da;
+}
+
+.markdown-body p > a:hover {
+  transition: 0.35s ease-in-out;
+  color: #54aeff;
+}
+
+.markdown-body p > a:active {
+  color: #033d8b;
 }
