@@ -5,7 +5,7 @@ import { Title } from '@components/Title';
 import PostCardSection from '@components/PostCard';
 
 import countDB from '@utils/api/countDB';
-import searchAllDB from '@utils/api/searchAllDB';
+import searchAllDB from '@utils/api/searchAllDB.server';
 
 export async function loader() {
   const countNum = await countDB();

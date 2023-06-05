@@ -1,6 +1,6 @@
 import { doc, setDoc } from 'firebase/firestore';
 
-import { db } from '@utils/firebase';
+import { db } from '@utils/firebase.server';
 
 import type { INotionPostReturn } from '@Types/post';
 

@@ -1,4 +1,5 @@
 import { Outlet, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
 
 import Copyright from '@components/Footer/Copyright';
 import Header from '@components/Header';
@@ -11,6 +12,7 @@ import type { LoaderArgs } from '@remix-run/node';
 export async function loader({ params }: LoaderArgs) {
   try {
     const { post, id } = params;
+
     const category = CATEGORY_DATA.filter((ele) => {
       return ele.link === post;
     });
@@ -33,11 +35,11 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 const PostLayout = () => {
-  const load = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
 
   return (
     <>
-      <Header paths={load} />
+      <Header paths={data} />
       <article className="isWrapper flex flex-col min-h-screen">
         <Outlet />
       </article>

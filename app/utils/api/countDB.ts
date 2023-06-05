@@ -1,6 +1,6 @@
 import { collection, getCountFromServer } from 'firebase/firestore';
 
-import { db } from '@utils/firebase';
+import { db } from '@utils/firebase.server';
 import { CATEGORY_DATA } from '@utils/constant/category';
 
 export default async function countDB() {

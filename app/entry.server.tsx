@@ -13,26 +13,6 @@ const versionCookie = createCookie('version', {
   maxAge: 60 * 60 * 24 * 365, // keep the cookie for a year
 });
 
-// export default function handleRequest(
-//   request: Request,
-//   responseStatusCode: number,
-//   responseHeaders: Headers,
-//   remixContext: EntryContext,
-// ) {
-//   const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
-
-//   responseHeaders.set('Content-Type', 'text/html');
-//   responseHeaders.set(
-//     'Cache-Control',
-//     'public, max-age=3600, s-maxage=86400, stale-while-revalidate=300',
-//   );
-
-//   return new Response(`<!DOCTYPE html>${markup}`, {
-//     headers: responseHeaders,
-//     status: responseStatusCode,
-//   });
-// }
-
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -52,7 +32,6 @@ export default async function handleRequest(
 
   // Add new headers to the response
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
-
   responseHeaders.set('Content-Type', 'text/html');
 
   return new Response(`<!DOCTYPE html>${markup}`, {

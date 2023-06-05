@@ -416,3 +416,31 @@
 .markdown-body p > a:active {
   color: #033d8b;
 }
+
+/* spinner */
+.spinner {
+  width: 9.6px;
+  height: 9.6px;
+  background: #86bb92;
+  color: #86bb92;
+  border-radius: 50%;
+  box-shadow: 16px 0, -16px 0;
+  animation: dots-u8fzftsm 0.8s infinite linear alternate;
+}
+
+@keyframes dots-u8fzftsm {
+  0% {
+    box-shadow: 16px 0, -16px 0;
+    background: ;
+  }
+
+  33% {
+    box-shadow: 16px 0, -16px 0 rgba(134, 187, 146, 0.13);
+    background: rgba(134, 187, 146, 0.13);
+  }
+
+  66% {
+    box-shadow: 16px 0 rgba(134, 187, 146, 0.13), -16px 0;
+    background: rgba(134, 187, 146, 0.13);
+  }
+}
