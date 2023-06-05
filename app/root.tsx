@@ -1,6 +1,14 @@
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { RecoilRoot } from 'recoil';
-import { Suspense } from 'react';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from '@remix-run/react';
+import React, { Suspense, createContext } from 'react';
+import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
 
@@ -8,7 +16,9 @@ import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { Title } from '@components/Title';
 
-import type { MetaFunction, LinksFunction } from '@remix-run/node';
+import { getEnv } from '@utils/firebase.server';
+
+import type { MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
 
 const metaSNS = {
   'og:type': 'website',
@@ -41,7 +51,19 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
+export const loader: LoaderFunction = () => {
+  return json({
+    ENV: getEnv(),
+  });
+};
+
+export const EnvContext = createContext({
+  ENV: {},
+});
+
 export default function App() {
+  const { ENV } = useLoaderData();
+
   return (
     <html lang="ko">
       <head>
@@ -50,9 +72,9 @@ export default function App() {
       </head>
       <body>
         <Suspense fallback={<>로딩 중...</>}>
-          <RecoilRoot>
+          <EnvContext.Provider value={ENV}>
             <Outlet />
-          </RecoilRoot>
+          </EnvContext.Provider>
         </Suspense>
         <ScrollRestoration />
         <Scripts />

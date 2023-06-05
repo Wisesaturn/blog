@@ -13,7 +13,7 @@ import PostListSection from '@components/PostList';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
-import searchAllDB from '@utils/api/searchAllDB';
+import searchAllDB from '@utils/api/searchAllDB.server';
 
 export async function loader() {
   const searchAllData = await searchAllDB(5);

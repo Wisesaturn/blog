@@ -1,14 +1,14 @@
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, where } from 'firebase/firestore';
 
-import { db } from '@utils/firebase';
+import setClientFirebase from '@utils/firebase.client';
 import { CATEGORY_DATA } from '@utils/constant/category';
-
-import countDB from './countDB';
 
 import type { DocumentData } from 'firebase/firestore';
 import type { IPost } from '@Types/post';
 
-export default async function searchAllDB(size?: number) {
+export default async function searchAllDB(size?: number, env?: any) {
+  const { db } = setClientFirebase(env);
+
   const allSearchData = await Promise.all(
     CATEGORY_DATA.map(async (cur) => {
       const q = query(collection(db, cur.link));
@@ -19,6 +19,7 @@ export default async function searchAllDB(size?: number) {
       return { searchData };
     }),
   );
+
   const combinedData = allSearchData.reduce((acc, cur) => {
     acc.searchData.push(...cur.searchData);
 
@@ -31,7 +32,7 @@ export default async function searchAllDB(size?: number) {
     return dateA < dateB ? 1 : -1;
   });
 
-  const slicedData = combinedData.searchData.slice(0, size || (await countDB()));
+  const slicedData = combinedData.searchData.slice(0, 5 || size);
 
-  return slicedData;
+  return slicedData as IPost[];
 }
