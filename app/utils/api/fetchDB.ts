@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 
-import { db } from '@utils/firebase';
+import { db } from '@utils/firebase.server';
 
 export default async function fetchDB(document: string, title: string) {
   const docRef = doc(db, document, title!);

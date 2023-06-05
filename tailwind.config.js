@@ -31,10 +31,21 @@ module.exports = {
             opacity: '0.8',
           },
         },
+        slideRight: {
+          from: {
+            opacity: 0,
+            transform: 'translateX(-15%)',
+          },
+          to: {
+            opacity: 1,
+            transform: 'translateX(0)',
+          },
+        },
       },
       animation: {
         push: 'push .15s ease-out forwards',
         upDisappear: 'upDisappear .2s ease-in forwards',
+        slideRight: 'slideRight .55s ease-in-out forwards',
         skeletonUI: 'skeleton-gradient 1.5s infinite ease-in-out',
       },
     },

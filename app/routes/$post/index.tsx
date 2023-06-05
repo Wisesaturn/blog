@@ -20,12 +20,12 @@ export async function loader({ params }: LoaderArgs) {
   return json({ category: category[0].name, data });
 }
 export const SelectedPostPage = () => {
-  const load = useLoaderData();
+  const { category, data } = useLoaderData();
 
   return (
     <>
-      <Title isContent={load.category} />
-      <PostCardSection data={load.data} />
+      <Title isContent={category} />
+      <PostCardSection data={data} />
     </>
   );
 };

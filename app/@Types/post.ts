@@ -13,6 +13,7 @@ export interface IPost {
   readonly body: string;
   readonly count: number;
   readonly tags: ITags[];
+  readonly category: string;
   readonly comments: {
     readonly username: string;
     readonly password: string;

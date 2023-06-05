@@ -24,18 +24,13 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 export default function ReviewPage() {
-  const post = useLoaderData();
+  const { thumbnail, title, createdAt, tags, body } = useLoaderData();
 
   return (
     <>
-      <PostTitle
-        thumbnail={post.thumbnail}
-        title={post.title}
-        createdAt={post.createdAt}
-        tags={post.tags}
-      />
+      <PostTitle thumbnail={thumbnail} title={title} createdAt={createdAt} tags={tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-800 my-10" />
-      <div className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: post.body }} />
+      <div className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: body }} />
     </>
   );
 }

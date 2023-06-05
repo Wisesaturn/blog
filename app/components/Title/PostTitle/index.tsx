@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 
-import thumbnailDefault from '@public/default.webp';
+import thumbnailDefault from '@public/thumbnail.webp';
 
 import type { ITags } from '@Types/post';
 import type { PostTitleProps } from './types';

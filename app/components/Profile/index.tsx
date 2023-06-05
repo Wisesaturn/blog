@@ -1,16 +1,12 @@
 import { AiFillInstagram, AiFillMail, AiFillGithub } from 'react-icons/ai';
 
 import profile from '@public/profile.png';
+import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 export default function ProfileSection() {
-  const styleIcon =
-    'fill-gray-300 hover:fill-green-darker rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100';
-  const styleIconWrapper =
-    'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100';
-
   return (
     <section className="flex flex-col gap-10 items-center w-full py-10 px-10 border-2 r shadow-md rounded-xl mb-4">
-      <div className="items-center border-2 border-green-darker flex w-40 h-40 overflow-hidden rounded-full shadow-xl">
+      <div className="items-center bg-green-main flex w-40 h-40 overflow-hidden rounded-full shadow-xl">
         <img
           className="translate-y-1/2 w-full h-full object-cover scale-[200%]"
           src={profile}
@@ -28,23 +24,23 @@ export default function ProfileSection() {
         </p>
         <hr className="my-2" />
         <div className="flex gap-2 w-max">
-          <span className={styleIconWrapper}>
+          <span className={TWstyleIconWrapper}>
             <a
               target="_blank"
               href="mailto:rfv1479@gmail.com?subject=[Blog Contact] "
               rel="noreferrer"
             >
-              <AiFillMail className={styleIcon} size="2.25rem" />
+              <AiFillMail className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>
-          <span className={styleIconWrapper}>
+          <span className={TWstyleIconWrapper}>
             <a target="_blank" href="https://www.github.com/wisesaturn" rel="noreferrer">
-              <AiFillGithub className={styleIcon} size="2.25rem" />
+              <AiFillGithub className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>
-          <span className={styleIconWrapper}>
+          <span className={TWstyleIconWrapper}>
             <a target="_blank" href="https://www.instagram.com/songjh_97" rel="noreferrer">
-              <AiFillInstagram className={styleIcon} size="2.25rem" />
+              <AiFillInstagram className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>
         </div>
