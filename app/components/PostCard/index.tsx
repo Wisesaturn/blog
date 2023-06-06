@@ -39,16 +39,16 @@ export default function PostCardSection(props: { data: IPost[] }) {
                   </h2>
                   <span className="text-[0.875rem] font-light">{post.createdAt ?? '작성일'}</span>
                 </div>
-                <div className="relative h-[4.5rem] overflow-hidden after:content-[''] after:bg-gradient-to-r after:from-[rgb(255,255,255,0)] after:to-[rgb(255,255,255,1)] after:p-3 after:pl-10 after:bottom-0 after:right-0 after:absolute after:-ml-10">
-                  <span className=" md:text-[1rem] text-[0.9rem] font-light">
+                <div className="relative h-[4.5rem] overflow-hidden after:content-[''] after:bg-gradient-to-r after:from-[rgb(255,255,255,0)] after:to-[rgb(255,255,255,1)] after:p-3 after:pl-10 after:bottom-5 md:after:bottom-0 after:right-0 after:absolute after:-ml-10">
+                  <span className=" md:text-[1rem] text-[0.9rem] font-light whitespace-pre-line">
                     {post.description ?? ''}
                   </span>
                 </div>
-                <span className="text-[0.75rem] font-light flex gap-2">
+                <span className="text-[0.75rem] font-light flex flex-wrap gap-2 md:inline-block md:space-x-2 md:space-y-2 md:whitespace-nowrap">
                   {post.tags.map((tag: ITags) => {
                     return (
                       <span
-                        className="py-0.5 px-2 text-black bg-gray-200 font-bold rounded-md"
+                        className="inline-block py-0.5 px-2 text-black bg-gray-200 font-bold rounded-md"
                         key={tag.id}
                       >
                         {tag.name}
