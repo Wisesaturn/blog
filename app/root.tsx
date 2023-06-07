@@ -22,10 +22,7 @@ import type { MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/nod
 
 const metaSNS = {
   'og:type': 'website',
-  'og:url': 'https://jaehan.blog/',
-  'og:title': `📚 사툰사툰`,
   'og:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
-  'og:description': `기록하고 싶은 것들을 모아두었습니다`,
   'og:locale': `ko_KR`,
   'og:image:width': `1200`,
   'og:image:height': `630`,
@@ -33,21 +30,29 @@ const metaSNS = {
 
 const metaTwitter = {
   'twitter:card': 'summary',
-  'twitter:url': 'https://jaehan.blog/',
-  'twitter:title': `📚 사툰사툰`,
   'twitter:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
-  'twitter:description': `기록하고 싶은 것들을 모아두었습니다`,
 };
 
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  title: `📚 사툰사툰`,
-  keywords: 'blog, programming, dev, react, remix, 송재한',
-  description: `기록하고 싶은 것들을 모아두었습니다`,
-  viewport: 'width=device-width,height=device-height,initial-scale=1,viewport-fit=cover',
-  ...metaSNS,
-  ...metaTwitter,
-});
+export const meta: MetaFunction = ({ params }) => {
+  const { post } = params;
+
+  const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
+  const isDescription = `기록하고 싶은 것들을 모아두었습니다`;
+  const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
+
+  return {
+    title: isTitle,
+    description: isDescription,
+    'og:url': isURL,
+    'og:title': isTitle,
+    'og:description': isDescription,
+    'twitter:url': isURL,
+    'twitter:title': isTitle,
+    'twitter:description': isDescription,
+    ...metaSNS,
+    ...metaTwitter,
+  };
+};
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 

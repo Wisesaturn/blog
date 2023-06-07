@@ -34,7 +34,7 @@ export default function PostCardSection(props: { data: IPost[] }) {
               </div>
               <div className="overflow-hidden flex justify-between gap-2 flex-col md:w-full md:pl-5">
                 <div className="flex justify-between items-start">
-                  <h2 className="md:before:content-['*'] md:before:pr-2 md:leading-none md:pb-2 md:before:text-red-300 md:before:absolute md:before:-translate-x-4 md:before:translate-y-0.5">
+                  <h2 className="pt-0 md:before:content-['*'] md:before:pr-2 md:leading-none md:pb-2 md:before:text-red-300 md:before:absolute md:before:-translate-x-4 md:before:translate-y-0.5">
                     {post.title ?? '글 제목 영역'}
                   </h2>
                   <span className="text-[0.875rem] font-light">{post.createdAt ?? '작성일'}</span>

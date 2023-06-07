@@ -1,4 +1,4 @@
-import { collection, query, getDocs, where } from 'firebase/firestore';
+import { collection, query, getDocs } from 'firebase/firestore';
 
 import setClientFirebase from '@utils/firebase.client';
 import { CATEGORY_DATA } from '@utils/constant/category';

@@ -6,7 +6,27 @@ import { PostTitle } from '@components/Title';
 
 import fetchDB from '@utils/api/fetchDB';
 
-import type { LoaderArgs, LinksFunction } from '@remix-run/node';
+import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
+
+export const meta: MetaFunction = ({ data, params }) => {
+  const { post, id } = params;
+  const { description } = data;
+
+  const isTitle = `${id} :: 📚 사툰사툰`;
+  const isDescription = `${description}`;
+  const isURL = `https://jaehan.blog/${post}/${id}`;
+
+  return {
+    title: isTitle,
+    description: isDescription,
+    'og:url': isURL,
+    'og:title': isTitle,
+    'og:description': isDescription,
+    'twitter:url': isURL,
+    'twitter:title': isTitle,
+    'twitter:description': isDescription,
+  };
+};
 
 export const links: LinksFunction = () => {
   return [
