@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { AiFillEye } from 'react-icons/ai';
 
 import thumbnailDefault from '@public/thumbnail.webp';
 
@@ -17,7 +18,7 @@ export default function PostTitle(props: PostTitleProps) {
             <span className="text-gray-400">{'/>'}</span>
           </h1>
           <div className="flex items-center text-[0.875rem] justify-center flex-col">
-            <div className="font-light">{createdAt}</div>
+            <div className="font-light inline-block align-sub">{createdAt}</div>
             <div className="flex gap-3">
               {tags.map((tag: ITags) => {
                 return (
