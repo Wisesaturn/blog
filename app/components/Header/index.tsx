@@ -86,7 +86,11 @@ export default function Header(props: HeaderProps) {
           <span className={styleIconWrapper} onClick={onToggleSearchBar}>
             <AiOutlineSearch className={styleIcon} size="32" />
           </span>
-          <a className={styleIconWrapper} href="https://www.github.com/wisesaturn">
+          <a
+            className={styleIconWrapper}
+            href="https://www.github.com/wisesaturn"
+            aria-label="follow my github"
+          >
             <AiFillGithub className={styleIcon} size="32" />
           </a>
         </div>

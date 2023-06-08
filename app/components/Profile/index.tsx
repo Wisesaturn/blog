@@ -1,6 +1,6 @@
 import { AiFillInstagram, AiFillMail, AiFillGithub } from 'react-icons/ai';
 
-import profile from '@public/profile.png';
+import profile from '@public/profile.webp';
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 export default function ProfileSection() {
@@ -29,17 +29,28 @@ export default function ProfileSection() {
               target="_blank"
               href="mailto:rfv1479@gmail.com?subject=[Blog Contact] "
               rel="noreferrer"
+              aria-label="contact on email"
             >
               <AiFillMail className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>
           <span className={TWstyleIconWrapper}>
-            <a target="_blank" href="https://www.github.com/wisesaturn" rel="noreferrer">
+            <a
+              target="_blank"
+              href="https://www.github.com/wisesaturn"
+              aria-label="follow my github"
+              rel="noreferrer"
+            >
               <AiFillGithub className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>
           <span className={TWstyleIconWrapper}>
-            <a target="_blank" href="https://www.instagram.com/songjh_97" rel="noreferrer">
+            <a
+              target="_blank"
+              href="https://www.instagram.com/songjh_97"
+              aria-label="follow my instagram"
+              rel="noreferrer"
+            >
               <AiFillInstagram className={TWstyleIcon} size="2.25rem" />
             </a>
           </span>

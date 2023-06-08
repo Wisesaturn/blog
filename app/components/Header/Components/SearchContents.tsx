@@ -23,13 +23,13 @@ export default function SearchContents(props: ISearchBar) {
   useEffect(() => {
     setIsLoadingState('loading');
     searchAllDB(5, env).then((res: any) => {
-      const isEmpty = res.filter((data: IPost) => {
+      const isFilteringData = res.filter((data: IPost) => {
         return data.plain_title.includes(debouncedInput);
       });
 
-      if (isEmpty.length === 0) setIsLoadingState('empty');
+      if (isFilteringData.length === 0) setIsLoadingState('empty');
       else setIsLoadingState('none');
-      setPostData(res);
+      setPostData(isFilteringData);
     });
   }, [debouncedInput, env]);
 

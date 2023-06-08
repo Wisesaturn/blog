@@ -21,8 +21,8 @@
     line-height: 180%;
 
     font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+      Tossface, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
+      'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
@@ -136,6 +136,7 @@
   ul,
   ol {
     padding: 1rem;
+    margin: 1rem 0;
   }
 
   li > ul {
@@ -222,6 +223,10 @@
     padding-left: 20px; /* 중첩된 목록의 왼쪽 여백 설정 */
   }
 
+  hr {
+    margin: 1.2rem 0 1rem;
+  }
+
   /* initial setting is done */
 
   /* layout */
@@ -260,7 +265,7 @@
   h1 {
     font-size: 2.25rem;
     font-weight: bold;
-    line-height: 200%;
+    line-height: 180%;
   }
   h2 {
     font-size: 1.875rem;
@@ -363,7 +368,7 @@
     }
 
     h3 {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
     }
 
     h3:before {
@@ -378,10 +383,35 @@
     p {
       font-size: 1rem;
     }
+
+    .markdown-body h1 {
+      padding-top: 1.2rem;
+    }
+
+    .markdown-body h2 {
+      padding-top: 1rem;
+    }
+
+    .markdown-body h3 {
+      padding-top: 0.8rem;
+    }
   }
 }
 
 /* custom markdown */
+
+.markdown-body h1 {
+  padding-top: 1.5rem;
+}
+
+.markdown-body h2 {
+  padding-top: 1.2rem;
+}
+
+.markdown-body h3 {
+  padding-top: 1rem;
+}
+
 .markdown-body strong {
   font-weight: bold;
 }

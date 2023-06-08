@@ -55,7 +55,7 @@ export default async function fetchNotionPost(document: string, title: string) {
           tags: selectedPost[0].properties.tags.multi_select,
           index: selectedPost[0].id,
           description: selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '',
-          last_editedAt: new Date(selectedPost[0].last_edited_time).toLocaleDateString('ko-KR'),
+          last_editedAt: new Date(selectedPost[0].last_edited_time),
           body: result.value,
           category: selectedPost[0].properties.category.select.name,
         };
