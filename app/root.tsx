@@ -74,6 +74,14 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin={'true'} />
+        <link
+          href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
+          rel="stylesheet"
+          type="text/css"
+        />
+        <link rel="manifest" href="manifest.json" />
       </head>
       <body>
         <Suspense fallback={<>로딩 중...</>}>
