@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
-import React, { Suspense, createContext } from 'react';
+import React, { Suspense, createContext, useState, useEffect } from 'react';
 import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
@@ -41,6 +41,7 @@ export const meta: MetaFunction = ({ params }) => {
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
 
   return {
+    viewport: 'width=device-width',
     title: isTitle,
     description: isDescription,
     'og:url': isURL,
@@ -68,23 +69,29 @@ export const EnvContext = createContext({
 
 export default function App() {
   const { ENV } = useLoaderData();
+  const [showLoadingUI, setShowLoadingUI] = useState<boolean>(false);
+
+  const LoadingSpinner = () => (
+    <div className="fixed top-0 left-0 bg-gray-300 h-full translate-1/2 z-[10000] bg-opacity-25 w-full py-10 flex items-center justify-center">
+      <div className="spinner" />
+    </div>
+  );
 
   return (
     <html lang="ko">
       <head>
         <Meta />
         <Links />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin={'true'} />
+        <link rel="manifest" href="/manifest.json" />
         <link
           href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
           rel="stylesheet"
           type="text/css"
         />
-        <link rel="manifest" href="manifest.json" />
       </head>
       <body>
         <Suspense fallback={<>로딩 중...</>}>
+          {showLoadingUI && <LoadingSpinner />}
           <EnvContext.Provider value={ENV}>
             <Outlet />
           </EnvContext.Provider>
