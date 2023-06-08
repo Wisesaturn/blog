@@ -29,7 +29,7 @@ export default async function fetchNotionPosts(document: string) {
         const blogPagesMap = blogPageIdList
           .map((post: any): INotionPostReturn => {
             const category = post.properties.category.select.name;
-            const last_editedAt = new Date(post.last_edited_time).toLocaleDateString('ko-KR');
+            const last_editedAt = new Date(post.last_edited_time);
             const createdAt = new Date(post.created_time).toLocaleDateString('ko-KR');
             const plain_title = `${post.properties.이름.title[0].plain_text}`;
             const title = `${post.icon?.emoji ? `${post.icon.emoji} ` : ''} ${

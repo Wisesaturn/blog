@@ -1,0 +1,17 @@
+{
+  "short_name": "📚 사툰사툰",
+  "name": "📚 사툰사툰 - 재한 블로그",
+  "description": "기록하고 싶은 것들을 모아두었습니다",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/ico"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#50ad63",
+  "background_color": "#ffffff"
+}

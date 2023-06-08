@@ -45,7 +45,7 @@ export const MainPage = () => {
         <div className="flex justify-between items-center">
           <h2>최신글</h2>
           <span className={`${TWstyleIconWrapper} h-min`}>
-            <Link to="all">
+            <Link to="all" aria-label="show all my posts">
               <SlArrowRight className={`${TWstyleIcon}`} size="1.75rem" />
             </Link>
           </span>
