@@ -2,9 +2,6 @@ export const loader = () => {
   // handle "GET" request
   // set up our text content that will be returned in the response
   const robotText = `
-    User-agent: Googlebot
-    Allow: /public/
-
     User-agent: *
     Allow: /
 
