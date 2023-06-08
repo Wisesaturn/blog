@@ -41,6 +41,7 @@ export const meta: MetaFunction = ({ params }) => {
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
 
   return {
+    charset: 'utf-8',
     viewport: 'width=device-width',
     title: isTitle,
     description: isDescription,
@@ -80,9 +81,10 @@ export default function App() {
   return (
     <html lang="ko">
       <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
         <Links />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
           rel="stylesheet"
