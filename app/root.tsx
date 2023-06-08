@@ -82,12 +82,6 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        <link rel="manifest" href="/manifest.json" />
-        <link
-          href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
-          rel="stylesheet"
-          type="text/css"
-        />
       </head>
       <body>
         <Suspense fallback={<>로딩 중...</>}>
