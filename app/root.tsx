@@ -86,6 +86,11 @@ export default function App() {
         <Links />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
+          rel="stylesheet"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
+        />
+        <link
           href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
           rel="stylesheet"
           type="text/css"

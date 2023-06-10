@@ -35,9 +35,9 @@ export const MainPage = () => {
           {CATEGORY_DATA.map((ele: CategoryType) => {
             return (
               <Link key={ele.name} prefetch="render" to={ele.link}>
-                <h4 className="py-1 px-4 rounded-lg border-2 before:hidden bg-green-main font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
+                <div className="px-3 py-0.5 md:py-1 md:px-4 rounded-lg border-2 before:hidden bg-green-main font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
                   {ele.name}
-                </h4>
+                </div>
               </Link>
             );
           })}

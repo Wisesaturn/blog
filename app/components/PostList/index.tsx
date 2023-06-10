@@ -31,16 +31,18 @@ export default function PostCardSection(props: { data: IPost[] }) {
                         {post.category}
                       </span>
                     </span>
-                    <span className="text-xs md:text-sm flex gap-2 flex-wrap whitespace-nowrap">
-                      {post.tags.map((tag: ITags) => {
-                        return (
-                          <span className="text-gray-400 font-light rounded-md" key={tag.id}>
-                            {'#'}
-                            {tag.name}
-                          </span>
-                        );
-                      })}
-                    </span>
+                    <div className="hidden md:block">
+                      <span className="text-xs md:text-sm flex gap-2 flex-wrap whitespace-nowrap">
+                        {post.tags.map((tag: ITags) => {
+                          return (
+                            <span className="text-gray-400 font-light rounded-md" key={tag.id}>
+                              {'#'}
+                              {tag.name}
+                            </span>
+                          );
+                        })}
+                      </span>
+                    </div>
                   </div>
                   <span className="text-xs md:text-sm font-light whitespace-nowrap">
                     {post.createdAt ?? '작성일'}
