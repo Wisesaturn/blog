@@ -17,20 +17,23 @@ import type { INotionPostReturn } from '@Types/post';
 
 export const meta: MetaFunction = ({ data, params }) => {
   const { post, id } = params;
-  const { description } = data! as INotionPostReturn;
+  const { description, thumbnail } = data! as INotionPostReturn;
 
   const isTitle = `${id} :: 📚 사툰사툰`;
   const isDescription = `${description}`;
   const isURL = `https://jaehan.blog/${post}/${id}`;
+  const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
 
   return {
     title: isTitle,
     description: isDescription,
     'og:url': isURL,
     'og:title': isTitle,
+    'og:image': thumbnail === '' ? defaultThumbnail : thumbnail,
     'og:description': isDescription,
     'twitter:url': isURL,
     'twitter:title': isTitle,
+    'twitter:image': thumbnail === '' ? defaultThumbnail : thumbnail,
     'twitter:description': isDescription,
   };
 };

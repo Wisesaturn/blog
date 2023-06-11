@@ -42,7 +42,7 @@ export const meta: MetaFunction = ({ params }) => {
 
   return {
     charset: 'utf-8',
-    viewport: 'width=device-width',
+    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
     title: isTitle,
     description: isDescription,
     'og:url': isURL,
@@ -83,7 +83,7 @@ export default function App() {
       <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
-        <Links />
+        <link rel="canonical" href="https://jaehan.blog" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           rel="stylesheet"
@@ -95,6 +95,7 @@ export default function App() {
           rel="stylesheet"
           type="text/css"
         />
+        <Links />
       </head>
       <body>
         <Suspense fallback={<>로딩 중...</>}>
