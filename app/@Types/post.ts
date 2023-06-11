@@ -31,4 +31,5 @@ export interface INotionPostReturn {
   tags: string[];
   description: string;
   last_editedAt: Date;
+  views: number;
 }

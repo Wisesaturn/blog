@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
-import React, { Suspense, createContext, useState, useEffect } from 'react';
+import { Suspense, createContext, useState } from 'react';
 import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
@@ -83,6 +83,8 @@ export default function App() {
       <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
+        <link rel="icon" type="image/ico" href="/favicon.ico" />
+        <link rel="maifest" href="/manifest.json" />
         <link rel="canonical" href="https://jaehan.blog" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link

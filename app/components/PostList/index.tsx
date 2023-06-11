@@ -12,7 +12,7 @@ export default function PostCardSection(props: { data: IPost[] }) {
       {data.map((post: IPost) => {
         return (
           <Link
-            prefetch="render"
+            prefetch="none"
             className="w-full"
             reloadDocument
             key={post.index}
