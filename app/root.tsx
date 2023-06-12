@@ -73,6 +73,8 @@ export default function App() {
   const { ENV } = useLoaderData();
   const transition = useTransition();
 
+  const isLoading = transition.state === ('loading' || 'submitting');
+
   const LoadingSpinner = () => (
     <div className="fixed top-0 left-0 bg-gray-300 h-full translate-1/2 z-[10000] bg-opacity-25 w-full py-10 flex items-center justify-center">
       <div className="spinner" />
@@ -102,7 +104,7 @@ export default function App() {
       </head>
       <body>
         <Suspense fallback={<LoadingSpinner />}>
-          {transition.state === 'loading' && <LoadingSpinner />}
+          {isLoading && <LoadingSpinner />}
           <EnvContext.Provider value={ENV}>
             <Outlet />
           </EnvContext.Provider>

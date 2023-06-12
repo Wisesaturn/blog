@@ -5,6 +5,7 @@ import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
 import { createCookie } from '@remix-run/node';
+import { useState } from 'react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
@@ -58,6 +59,16 @@ export async function loader({ params, request }: LoaderArgs) {
 
 export default function ReviewPage() {
   const { thumbnail, title, createdAt, tags, body, views } = useLoaderData();
+  const [toastText, setToastText] = useState<string>('');
+
+  const handleCopyPage = () => {
+    copyPageUrl();
+    setToastText('복사 완료!');
+
+    setTimeout(() => {
+      setToastText('');
+    }, 2000);
+  };
 
   return (
     <>
@@ -69,8 +80,13 @@ export default function ReviewPage() {
           <AiFillEye size="1rem" />
           <span className="text-left text-lg">{views}</span>
         </div>
-        <div className="flex gap-2 w-min">
-          <span className={TWstyleIconWrapper} onClick={copyPageUrl}>
+        <div className="flex gap-2 w-min relative">
+          {toastText && (
+            <span className="animate-bounceCenterAndFadeOut absolute whitespace-nowrap bg-gray-700 text-gray-50 px-4 py-1 rounded-lg">
+              {toastText}
+            </span>
+          )}
+          <span className={TWstyleIconWrapper} onClick={handleCopyPage}>
             <IoCopy className={TWstyleIcon} size="2.25rem" />
           </span>
           <span className={TWstyleIconWrapper} onClick={sharePage}>
