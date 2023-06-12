@@ -84,7 +84,7 @@ export default function App() {
   return (
     <html lang="ko">
       <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="maifest" href="/manifest.json" />

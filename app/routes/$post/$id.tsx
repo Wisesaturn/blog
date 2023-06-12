@@ -4,15 +4,15 @@ import styles from 'highlight.js/styles/github-dark-dimmed.css';
 import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
-import { createCookie } from '@remix-run/node';
 import { useState } from 'react';
+import { createCookie, json } from '@remix-run/node';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 import { PostTitle } from '@components/Title';
 
-import updateDB from '@utils/api/updateDB';
 import fetchDB from '@utils/api/fetchDB';
+import postDB from '@utils/api/postDB';
 import { copyPageUrl, sharePage } from '@utils/lib/post';
 
 import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
@@ -41,21 +41,36 @@ export const meta: MetaFunction = ({ data, params }) => {
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
-export async function loader({ params, request }: LoaderArgs) {
+export const loader = async ({ params, request }: LoaderArgs) => {
   const { post, id } = params;
   const isFetchDB = await fetchDB(post!, id!);
 
-  // cookie 체크 필요 (30분)
+  const hasUserVisited = createCookie(`${isFetchDB.index}`, {
+    path: '/',
+    secure: false,
+    httpOnly: true,
+    maxAge: 60 * 60 * 0.5,
+  });
+  const cookieHeader = request.headers.get('Cookie');
+  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  if (process.env.NODE_ENV === 'development') {
+  if (!cookieHeader?.includes(`${isFetchDB.index}`) && process.env.NODE_ENV !== 'development') {
     const countNewViews = isFetchDB.views ? isFetchDB.views + 1 : 1;
 
     isFetchDB.views = countNewViews;
-    await updateDB(post!, id!, { views: countNewViews });
+    await postDB(post!, id!, { views: countNewViews });
   }
 
-  return isFetchDB;
-}
+  if (hasUserVisitedPage) {
+    return isFetchDB;
+  }
+
+  return json(isFetchDB, {
+    headers: {
+      'Set-Cookie': await hasUserVisited.serialize({}),
+    },
+  });
+};
 
 export default function ReviewPage() {
   const { thumbnail, title, createdAt, tags, body, views } = useLoaderData();
@@ -78,7 +93,7 @@ export default function ReviewPage() {
       <div className="flex justify-between">
         <div className="flex gap-1.5 text-gray-500 items-center justify-center">
           <AiFillEye size="1rem" />
-          <span className="text-left text-lg">{views}</span>
+          <span className="text-left text-lg">{views ?? 0}</span>
         </div>
         <div className="flex gap-2 w-min relative">
           {toastText && (
