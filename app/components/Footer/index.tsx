@@ -43,7 +43,7 @@ export default function Footer() {
             <GiHouse color={`${onToggleStyle('').icon}`} size=" 1.5rem" />
             <span className={`${onToggleStyle('').text} text-[0.875rem]`}>홈</span>
           </Link>
-          <Link reloadDocument className={iconStyle} to="/all">
+          <Link className={iconStyle} to="/all">
             <GiNotebook color={`${onToggleStyle('all').icon}`} size="1.5rem" />
             <span className={`${onToggleStyle('all').text} text-[0.875rem]`}>포스트</span>
           </Link>

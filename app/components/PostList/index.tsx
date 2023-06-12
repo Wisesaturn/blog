@@ -14,7 +14,6 @@ export default function PostCardSection(props: { data: IPost[] }) {
           <Link
             prefetch="none"
             className="w-full"
-            reloadDocument
             key={post.index}
             to={`${
               post.category

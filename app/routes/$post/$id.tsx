@@ -4,7 +4,7 @@ import styles from 'highlight.js/styles/github-dark-dimmed.css';
 import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
-import { createCookie, redirect } from '@remix-run/node';
+import { createCookie } from '@remix-run/node';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
@@ -14,7 +14,7 @@ import updateDB from '@utils/api/updateDB';
 import fetchDB from '@utils/api/fetchDB';
 import { copyPageUrl, sharePage } from '@utils/lib/post';
 
-import type { LoaderArgs, ActionArgs, MetaFunction, LinksFunction } from '@remix-run/node';
+import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
 import type { INotionPostReturn } from '@Types/post';
 
 export const meta: MetaFunction = ({ data, params }) => {
@@ -42,39 +42,18 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export async function loader({ params, request }: LoaderArgs) {
   const { post, id } = params;
-  const cookieHeader = request.headers.get('Cookie');
-  const hasUserVisited = createCookie(`${id}`);
-
-  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
-
   const isFetchDB = await fetchDB(post!, id!);
 
-  if (id !== '') {
-    const updateViews = {
-      views: isFetchDB.views ? isFetchDB.views + 1 : 1,
-    };
+  // cookie 체크 필요 (30분)
 
-    isFetchDB.views = isFetchDB.views ? isFetchDB.views + 1 : 1;
-    await updateDB(post!, id!, updateViews);
+  if (process.env.NODE_ENV === 'development') {
+    const countNewViews = isFetchDB.views ? isFetchDB.views + 1 : 1;
+
+    isFetchDB.views = countNewViews;
+    await updateDB(post!, id!, { views: countNewViews });
   }
 
   return isFetchDB;
-}
-
-export async function action({ request, params }: ActionArgs) {
-  const { id } = params;
-
-  const cookieHeader = request.headers.get('Cookie');
-
-  const hasUserVisited = createCookie(`${id}`);
-
-  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
-
-  return redirect('/', {
-    headers: {
-      'Set-Cookie': await hasUserVisited.serialize(hasUserVisitedPage),
-    },
-  });
 }
 
 export default function ReviewPage() {

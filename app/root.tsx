@@ -6,8 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useTransition,
 } from '@remix-run/react';
-import { Suspense, createContext, useState } from 'react';
+import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
@@ -70,7 +71,7 @@ export const EnvContext = createContext({
 
 export default function App() {
   const { ENV } = useLoaderData();
-  const [showLoadingUI, setShowLoadingUI] = useState<boolean>(false);
+  const transition = useTransition();
 
   const LoadingSpinner = () => (
     <div className="fixed top-0 left-0 bg-gray-300 h-full translate-1/2 z-[10000] bg-opacity-25 w-full py-10 flex items-center justify-center">
@@ -100,8 +101,8 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Suspense fallback={<>로딩 중...</>}>
-          {showLoadingUI && <LoadingSpinner />}
+        <Suspense fallback={<LoadingSpinner />}>
+          {transition.state === 'loading' && <LoadingSpinner />}
           <EnvContext.Provider value={ENV}>
             <Outlet />
           </EnvContext.Provider>
