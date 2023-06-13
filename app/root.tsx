@@ -88,7 +88,6 @@ export default function App() {
         <Meta />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="maifest" href="/manifest.json" />
-        <link rel="canonical" href="https://jaehan.blog" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           rel="stylesheet"
