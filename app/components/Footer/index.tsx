@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <>
       <div className="h-[3.6875rem]" />
-      <footer className="glassMorphism shadow-invert fixed bottom-0 w-full pt-2 pb-1">
+      <footer className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1">
         <div className="flex mx-auto max-w-layout justify-around items-center">
           <div
             className={iconStyle}
@@ -43,7 +43,7 @@ export default function Footer() {
             <GiHouse color={`${onToggleStyle('').icon}`} size=" 1.5rem" />
             <span className={`${onToggleStyle('').text} text-[0.875rem]`}>홈</span>
           </Link>
-          <Link reloadDocument className={iconStyle} to="/all">
+          <Link className={iconStyle} to="/all">
             <GiNotebook color={`${onToggleStyle('all').icon}`} size="1.5rem" />
             <span className={`${onToggleStyle('all').text} text-[0.875rem]`}>포스트</span>
           </Link>

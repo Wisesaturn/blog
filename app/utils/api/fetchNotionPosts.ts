@@ -27,7 +27,7 @@ export default async function fetchNotionPosts(document: string) {
           throw new Error(`"${document}" 카테고리가 존재하지 않습니다.`);
 
         const blogPagesMap = blogPageIdList
-          .map((post: any): INotionPostReturn => {
+          .map((post: any): Partial<INotionPostReturn> => {
             const category = post.properties.category.select.name;
             const last_editedAt = new Date(post.last_edited_time);
             const createdAt = new Date(post.created_time).toLocaleDateString('ko-KR');

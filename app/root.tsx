@@ -6,8 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useTransition,
 } from '@remix-run/react';
-import React, { Suspense, createContext, useState, useEffect } from 'react';
+import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
@@ -42,7 +43,7 @@ export const meta: MetaFunction = ({ params }) => {
 
   return {
     charset: 'utf-8',
-    viewport: 'width=device-width',
+    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
     title: isTitle,
     description: isDescription,
     'og:url': isURL,
@@ -70,7 +71,9 @@ export const EnvContext = createContext({
 
 export default function App() {
   const { ENV } = useLoaderData();
-  const [showLoadingUI, setShowLoadingUI] = useState<boolean>(false);
+  const transition = useTransition();
+
+  const isLoading = transition.state === ('loading' || 'submitting');
 
   const LoadingSpinner = () => (
     <div className="fixed top-0 left-0 bg-gray-300 h-full translate-1/2 z-[10000] bg-opacity-25 w-full py-10 flex items-center justify-center">
@@ -81,19 +84,27 @@ export default function App() {
   return (
     <html lang="ko">
       <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
-        <Links />
+        <link rel="icon" type="image/ico" href="/favicon.ico" />
+        <link rel="maifest" href="/manifest.json" />
+        <link rel="canonical" href="https://jaehan.blog" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link
+          rel="stylesheet"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
+        />
         <link
           href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
           rel="stylesheet"
           type="text/css"
         />
+        <Links />
       </head>
       <body>
-        <Suspense fallback={<>로딩 중...</>}>
-          {showLoadingUI && <LoadingSpinner />}
+        <Suspense fallback={<LoadingSpinner />}>
+          {isLoading && <LoadingSpinner />}
           <EnvContext.Provider value={ENV}>
             <Outlet />
           </EnvContext.Provider>
