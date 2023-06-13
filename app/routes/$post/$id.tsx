@@ -21,7 +21,7 @@ import type { INotionPostReturn } from '@Types/post';
 export const meta: MetaFunction = ({ data, params }) => {
   const { post, id } = params;
   const { description, thumbnail } = data! as INotionPostReturn;
-  const isTitle = `${id} :: 📚 사툰사툰`;
+  const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
   const isDescription = `${description}`;
   const isURL = `https://jaehan.blog/${post}/${id}`;
   const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
