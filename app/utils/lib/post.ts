@@ -1,5 +1,5 @@
 const copyPageUrl = () => {
-  const copyText = window.location.href as string;
+  const copyText = decodeURI(window.location.href) as string;
   navigator.clipboard
     .writeText(copyText)
     .then(() => {
