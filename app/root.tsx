@@ -57,7 +57,23 @@ export const meta: MetaFunction = ({ params }) => {
   };
 };
 
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
+export const links: LinksFunction = () => [
+  {
+    rel: 'stylesheet',
+    as: 'style',
+    crossOrigin: 'anonymous',
+    type: 'text/css',
+    href: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.7/dist/web/variable/pretendardvariable-dynamic-subset.css',
+  },
+  {
+    rel: 'stylesheet',
+    as: 'style',
+    crossOrigin: 'anonymous',
+    type: 'text/css',
+    href: 'https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css',
+  },
+  { rel: 'stylesheet', type: 'text/css', href: styles },
+];
 
 export const loader: LoaderFunction = () => {
   return json({
@@ -86,26 +102,9 @@ export default function App() {
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="maifest" href="/manifest.json" />
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          crossOrigin=""
-          href={`https://cdn.jsdelivr.net/gh/wisesaturn/blog@main/app/styles/font/variable/woff2/PretendardStdVariable.woff2`}
-        />
-        <link
-          rel="stylesheet"
-          as="style"
-          href="https://cdn.jsdelivr.net/gh/wisesaturn/blog@main/app/styles/font/static/pretendard-std.css"
-        />
-        {/* <link
-          href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
-          rel="stylesheet"
-          type="text/css"
-        /> */}
         <Links />
       </head>
       <body>
