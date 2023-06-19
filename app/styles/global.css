@@ -18,7 +18,7 @@
     color: #333;
     line-height: 180%;
 
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, Tossface,
+    font-family: 'Pretendard Std', Pretendard, -apple-system, BlinkMacSystemFont, Tossface,
       system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
       'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
     /* Blocked IOS touch interactions */
@@ -291,7 +291,7 @@
   summary p,
   summary {
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
     text-align: justify;
     line-height: 180%;
   }
@@ -412,12 +412,23 @@
 
 .markdown-body strong {
   font-weight: bold;
+  color : #50ad63;
 }
 
 .markdown-body p > code {
   color: #50ad63;
-  font-weight: bold;
-  font-family: inherit;
+  font-family: 'ui-monospace','SFMono-Regular',
+    'Menlo',
+    'Monaco',
+    'Consolas',
+    'Liberation Mono',
+    'Courier New',
+    'monospace';
+  font-weight : bold;
+  padding : 0 .3rem;
+  white-space : normal;
+  background : rgb(225, 247, 230);
+  color : rgb(26, 61, 33);
 }
 
 .markdown-body pre > em {
@@ -459,7 +470,7 @@
 @keyframes dots-u8fzftsm {
   0% {
     box-shadow: 16px 0, -16px 0;
-    background: ;
+    background: none;
   }
 
   33% {

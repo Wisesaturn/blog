@@ -86,19 +86,26 @@ export default function App() {
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <Meta />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="maifest" href="/manifest.json" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+          href={`https://cdn.jsdelivr.net/gh/wisesaturn/blog@main/app/styles/font/variable/woff2/PretendardStdVariable.woff2`}
+        />
         <link
           rel="stylesheet"
           as="style"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
+          href="https://cdn.jsdelivr.net/gh/wisesaturn/blog@main/app/styles/font/static/pretendard-std.css"
         />
-        <link
+        {/* <link
           href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css"
           rel="stylesheet"
           type="text/css"
-        />
+        /> */}
         <Links />
       </head>
       <body>
