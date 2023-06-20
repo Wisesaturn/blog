@@ -10,8 +10,14 @@ export const loader = () => {
         <priority>0.5</priority>
         </url>
         <url>
+        <loc>https://jaehan.blog/resume</loc>
+        <lastmod>2023-06-20T00:15:16+01:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+        </url>
+        <url>
         <loc>https://jaehan.blog/etc</loc>
-        <lastmod>2023-06-08T00:15:16+01:00</lastmod>
+        <lastmod>2023-06-05T00:15:16+01:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
         </url>

@@ -458,6 +458,10 @@
   color: #0969da;
 }
 
+.markdown-body p > a:before {
+  content: '📎  '
+}
+
 .markdown-body p > a:hover {
   transition: 0.35s ease-in-out;
   color: #54aeff;
@@ -493,4 +497,9 @@
     box-shadow: 16px 0 rgba(134, 187, 146, 0.13), -16px 0;
     background: rgba(134, 187, 146, 0.13);
   }
+}
+
+.sticky {
+  position : -webkit-sticky;
+  position : sticky;
 }
