@@ -16,12 +16,6 @@ export const loader = () => {
         <priority>0.3</priority>
         </url>
         <url>
-        <loc>https://jaehan.blog/etc</loc>
-        <lastmod>2023-06-05T00:15:16+01:00</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-        </url>
-        <url>
         <loc>https://jaehan.blog/etc/마크다운-테스트</loc>
         <lastmod>2023-06-05T00:15:16+01:00</lastmod>
         <changefreq>weekly</changefreq>
