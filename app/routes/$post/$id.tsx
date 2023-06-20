@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useLoaderData } from '@remix-run/react';
-import styles from 'highlight.js/styles/github-dark-dimmed.css';
+import styles from 'highlight.js/styles/vs2015.css';
 import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
