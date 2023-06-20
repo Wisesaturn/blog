@@ -349,8 +349,14 @@
       color: #50ad63;
     }
 
-    pre > code > span {
-      font-size: 0.875rem !important;
+    .markdown-body pre > code > span {
+      font-size: 0.75rem !important;
+    }
+
+    .markdown-body pre > code {
+      font-size : 0.75rem !important;
+      line-height: 1.6 !important;
+      white-space : break-spaces !important;
     }
 
     summary p {
@@ -377,9 +383,10 @@
     h4,
     li,
     summary p,
+    p > code,
     summary,
     p {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .markdown-body h1 {
@@ -415,20 +422,24 @@
   color : #50ad63;
 }
 
+.markdown-body pre > code {
+  font-size : .875rem;
+}
+
 .markdown-body p > code {
   color: #50ad63;
-  font-family: 'ui-monospace','SFMono-Regular',
+  font-family: 'ui-monospace', 'SFMono-Regular',
     'Menlo',
     'Monaco',
     'Consolas',
     'Liberation Mono',
     'Courier New',
     'monospace';
-  font-weight : bold;
-  padding : 0 .3rem;
-  white-space : normal;
-  background : rgb(225, 247, 230);
-  color : rgb(26, 61, 33);
+  font-weight: bold;
+  padding: 0 .3rem;
+  white-space: normal;
+  background: rgb(225, 247, 230);
+  color: rgb(26, 61, 33);
 }
 
 .markdown-body pre > em {
