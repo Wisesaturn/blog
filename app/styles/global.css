@@ -356,7 +356,6 @@
     .markdown-body pre > code {
       font-size : 0.75rem !important;
       line-height: 1.6 !important;
-      white-space : break-spaces !important;
     }
 
     summary p {
@@ -389,6 +388,15 @@
       font-size: 0.95rem;
     }
 
+    p {
+      padding-bottom : .4rem;
+    }
+
+    p > a {
+      line-height : 120%;
+      font-size : .775rem;
+    }
+
     .markdown-body h1 {
       padding-top: 1.2rem;
     }
@@ -404,6 +412,14 @@
 }
 
 /* custom markdown */
+
+.markdown-body pre {
+  padding : 1rem 0;
+}
+
+.markdown-body details {
+ padding-bottom : 1rem;
+}
 
 .markdown-body h1 {
   padding-top: 1.5rem;
@@ -424,6 +440,7 @@
 
 .markdown-body pre > code {
   font-size : .875rem;
+  white-space : break-spaces !important;
 }
 
 .markdown-body p > code {
