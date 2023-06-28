@@ -8,16 +8,6 @@ export const loader = () => {
         <lastmod>2023-06-12T00:15:16+01:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
-<<<<<<< Updated upstream
-        </url>
-        <url>
-        <loc>https://jaehan.blog/resume</loc>
-        <lastmod>2023-06-20T00:15:16+01:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.3</priority>
-        </url>
-        <url>
-=======
       </url>
       <url>
         <loc>https://jaehan.blog/resume</loc>
@@ -26,7 +16,6 @@ export const loader = () => {
         <priority>0.3</priority>
       </url>
       <url>
->>>>>>> Stashed changes
         <loc>https://jaehan.blog/etc/마크다운-테스트</loc>
         <lastmod>2023-06-05T00:15:16+01:00</lastmod>
         <changefreq>monthly</changefreq>
