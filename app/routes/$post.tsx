@@ -40,9 +40,9 @@ const PostLayout = () => {
   return (
     <>
       <Header paths={data} />
-      <article className="isWrapper flex flex-col min-h-screen">
+      <main className="isWrapper flex flex-col min-h-screen">
         <Outlet />
-      </article>
+      </main>
       <Copyright />
       <Footer />
     </>
