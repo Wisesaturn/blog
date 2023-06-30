@@ -89,8 +89,8 @@ export default function ReviewPage() {
     <>
       <PostTitle thumbnail={thumbnail} title={title} createdAt={createdAt} tags={tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-dark my-10" />
-      <main className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: body }} />
-      <div className="flex justify-between">
+      <article className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: body }} />
+      <aside className="flex justify-between">
         <div className="flex gap-1.5 text-gray-500 items-center justify-center">
           <AiFillEye size="1rem" />
           <span className="text-left text-lg">{views ?? 0}</span>
@@ -108,7 +108,7 @@ export default function ReviewPage() {
             <GiShare className={TWstyleIcon} size="2.25rem" />
           </span>
         </div>
-      </div>
+      </aside>
     </>
   );
 }
