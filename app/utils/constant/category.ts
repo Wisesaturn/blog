@@ -3,9 +3,11 @@ export interface CategoryType {
   link: string;
 }
 
-export const CATEGORY_DATA: CategoryType[] = [
-  { name: '⚙ ETC', link: 'etc' },
-  { name: 'Typescript', link: 'typescript' },
-].concat(
-  process.env.NODE_ENV === 'development' ? [{ name: '로컬 테스트 환경', link: 'NEED_글작성' }] : [],
+export const CATEGORY_DATA: CategoryType[] = [{ name: 'Typescript', link: 'typescript' }].concat(
+  process.env.NODE_ENV === 'development'
+    ? [
+        { name: '✍️ NEED_글작성', link: 'NEED_글작성' },
+        { name: '⚙ LOCAL ⚙', link: 'LOCAL_TEST' },
+      ]
+    : [],
 );
