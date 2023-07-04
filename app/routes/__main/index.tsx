@@ -31,7 +31,7 @@ export const MainPage = () => {
       <main className="isWrapper min-h-screen flex flex-col">
         <TitleSection isContent="사툰사툰" isSubContent="기록하고 싶은 것을 담아보았습니다" />
         <ProfileSection />
-        <section className="flex gap-2 text-center mb-8">
+        <section className="flex gap-2 whitespace-nowrap flex-wrap text-center mb-8">
           {CATEGORY_DATA.map((ele: CategoryType) => {
             return (
               <Link key={ele.name} prefetch="none" to={ele.link}>
