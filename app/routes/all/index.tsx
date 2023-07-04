@@ -19,7 +19,7 @@ export default function SearchAllPostPage() {
   return (
     <>
       <Title isContent="📖 포스트" isSubContent={`${countNum}개의 게시물이 존재합니다`} />
-      <PostCardSection data={totalDB} />
+      <PostCardSection data={totalDB} showCategory={true} />
     </>
   );
 }
