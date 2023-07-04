@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import { AiFillEye } from 'react-icons/ai';
+import { Image, remixImageLoader } from 'remix-image';
 
 import thumbnailDefault from '@public/thumbnail.webp';
+import thumbnailBlur from '@public/gray.png';
 
 import type { ITags } from '@Types/post';
 import type { PostTitleProps } from './types';
@@ -31,11 +33,15 @@ export default function PostTitle(props: PostTitleProps) {
           </div>
         </div>
         <div className="top-0 bottom-0 absolute brightness-[0.25] bg-gray-100 animate-skeletonUI overflow-hidden rounded-xl w-full max-w-layout">
-          <img
-            loading="lazy"
+          <Image
+            loader={remixImageLoader}
+            blurDataURL={thumbnail === '' ? thumbnailDefault : thumbnail}
             className="rounded-xl w-full h-full object-cover"
-            alt="썸네일"
+            placeholder="blur"
+            alt="Thumbnail"
+            key={thumbnail === '' ? thumbnailDefault : thumbnail}
             src={thumbnail === '' ? thumbnailDefault : thumbnail}
+            dprVariants={[1, 3]}
           />
         </div>
       </Suspense>
