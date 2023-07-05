@@ -31,7 +31,7 @@ export default function PostCardSection(props: { data: IPost[] }) {
                       </span>
                     </span>
                     <div className="hidden md:block">
-                      <span className="text-xs md:text-sm flex gap-2 flex-wrap whitespace-nowrap">
+                      <span className="text-xs md:text-sm flex gap-2 flex-wrap">
                         {post.tags.map((tag: ITags) => {
                           return (
                             <span className="text-gray-400 font-light rounded-md" key={tag.id}>
@@ -48,7 +48,9 @@ export default function PostCardSection(props: { data: IPost[] }) {
                   </span>
                 </div>
                 <div className="flex justify-between items-start">
-                  <h3 className="leading-snug pt-1">{post.title ?? '글 제목 영역'}</h3>
+                  <span className="text-base font-semibold md:text-2xl leading-snug pt-1 w-full overflow-x-hidden text-ellipsis whitespace-nowrap">
+                    <span>{post.title ?? '글 제목 영역'}</span>
+                  </span>
                 </div>
               </div>
             </div>
