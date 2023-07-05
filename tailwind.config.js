@@ -18,6 +18,7 @@ module.exports = {
           brighter: '#73FA8E',
           bright: '#BBFACB',
         },
+        yellow: '#fffa82',
       },
       fontFamily: {
         pretandard: ['Pretandard', 'sans-serif'],

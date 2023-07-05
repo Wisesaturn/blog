@@ -87,7 +87,10 @@ export default function ReviewPage() {
     <>
       <PostTitle thumbnail={thumbnail} title={title} createdAt={createdAt} tags={tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-dark my-10" />
-      <article className="markdown-body pb-10" dangerouslySetInnerHTML={{ __html: body }} />
+      <article
+        className="markdown-body pb-10 max-w-full"
+        dangerouslySetInnerHTML={{ __html: body }}
+      />
       <aside className="flex justify-between">
         <div className="flex gap-1.5 text-gray-500 items-center justify-center">
           <AiFillEye size="1rem" />

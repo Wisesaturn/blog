@@ -97,7 +97,7 @@
 
   img {
     border-radius: 0.75rem;
-    width : max-content;
+    width: max-content;
   }
 
   blockquote {
@@ -143,7 +143,7 @@
   }
 
   ol {
-    background-color: #f0f0f0;
+    background-color: #fafabe;
     border-radius: 0.75rem;
   }
 
@@ -308,7 +308,7 @@
     position: absolute;
     width: 100%;
 
-    margin-top: 2.375rem;
+    margin-top: 2.075rem;
     padding: 0.15rem;
 
     border-radius: 1rem;
@@ -359,6 +359,11 @@
       line-height: 1.6 !important;
     }
 
+    .markdown-body p > u > em {
+      padding: 1.95rem 0 !important;
+      font-size: 0.95rem !important;
+    }
+
     summary p {
       font-weight: 400;
     }
@@ -407,7 +412,8 @@
     }
 
     .markdown-body h3 {
-      padding-top: 0.8rem;
+      padding-top: 1.25rem;
+      padding-bottom: 0.25rem;
     }
   }
 }
@@ -423,15 +429,16 @@
 }
 
 .markdown-body h1 {
-  padding-top: 1.5rem;
+  padding-top: 2rem;
 }
 
 .markdown-body h2 {
-  padding-top: 1.2rem;
+  padding-top: 1.75rem;
 }
 
 .markdown-body h3 {
-  padding-top: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0.55rem;
 }
 
 .markdown-body strong {
@@ -463,8 +470,30 @@
   color: #50ad63;
 }
 
+.markdown-body p > u > em {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 2.25rem 0;
+  text-align: center;
+
+  font-size: 1.15rem;
+
+  color: #777;
+  text-decoration-color: #777;
+}
+
 .markdown-body blockquote {
   background-color: rgb(187, 250, 203, 0.5);
+}
+
+.markdown-body img {
+  marign: 0 auto;
+  width: 100%;
+
+  padding: 1.25rem 0;
 }
 
 .markdown-body p > a {
