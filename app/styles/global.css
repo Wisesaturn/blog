@@ -98,10 +98,6 @@
   img {
     border-radius: 0.75rem;
     width : max-content;
-
-    @media screen and (max-width: 576px) {
-      max-width : 248px;
-    }
   }
 
   blockquote {
@@ -389,6 +385,7 @@
     summary p,
     p > code,
     summary,
+    p > a,
     p {
       font-size: 0.95rem;
     }
@@ -399,7 +396,6 @@
 
     p > a {
       line-height: 120%;
-      font-size: 0.775rem;
     }
 
     .markdown-body h1 {
@@ -473,10 +469,6 @@
 
 .markdown-body p > a {
   color: #0969da;
-}
-
-.markdown-body p > a:before {
-  content: '📎  ';
 }
 
 .markdown-body p > a:hover {

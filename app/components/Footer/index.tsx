@@ -26,10 +26,14 @@ export default function Footer() {
       <div className="h-[3.6875rem]" />
       <footer className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1">
         <div className="flex mx-auto max-w-layout justify-around items-center">
-          <Link reloadDocument className={iconStyle} to="/resume">
+          <div className={iconStyle} onClick={() => alert('준비중이에요!')}>
             <GiPapers color={`${onToggleStyle('resume').icon}`} size="1.2rem" />
             <span className={`${onToggleStyle('resume').text} text-xs md:text-sm`}>이력서</span>
-          </Link>
+          </div>
+          {/* <Link reloadDocument className={iconStyle} to="/resume">
+            <GiPapers color={`${onToggleStyle('resume').icon}`} size="1.2rem" />
+            <span className={`${onToggleStyle('resume').text} text-xs md:text-sm`}>이력서</span>
+          </Link> */}
           <Link className={iconStyle} to="/">
             <GiHouse color={`${onToggleStyle('').icon}`} size="1.2rem" />
             <span className={`${onToggleStyle('').text} text-xs md:text-sm`}>홈</span>
