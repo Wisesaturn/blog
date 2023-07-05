@@ -54,16 +54,14 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  if (!cookieHeader?.includes(`${isFetchDB.index}`) && process.env.NODE_ENV !== 'development') {
-    const countNewViews = isFetchDB.views ? isFetchDB.views + 1 : 1;
-
-    isFetchDB.views = countNewViews;
-    await postDB(post!, id!, { views: countNewViews });
-  }
-
-  if (hasUserVisitedPage) {
+  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
     return isFetchDB;
   }
+
+  const countNewViews = isFetchDB.views ? isFetchDB.views + 1 : 1;
+
+  isFetchDB.views = countNewViews;
+  await postDB(post!, id!, { views: countNewViews });
 
   return json(isFetchDB, {
     headers: {

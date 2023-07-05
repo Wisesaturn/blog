@@ -5,25 +5,25 @@ export const loader = () => {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
       <loc>https://jaehan.blog/</loc>
-      <lastmod>2023-06-12T00:15:16+01:00</lastmod>
+      <lastmod>2023-06-12</lastmod>
       <changefreq>weekly</changefreq>
-      <priority>0.5</priority>
-      </url>
-      <url>
-      <loc>https://jaehan.blog/resume</loc>
-      <lastmod>2023-06-20T00:15:16+01:00</lastmod>
-      <changefreq>monthly</changefreq>
       <priority>0.3</priority>
       </url>
       <url>
-      <loc>https://jaehan.blog/etc/마크다운-테스트</loc>
-      <lastmod>2023-06-05T00:15:16+01:00</lastmod>
+      <loc>https://jaehan.blog/resume</loc>
+      <lastmod>2023-06-20</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+      </url>
+      <url>
+      <loc>https://jaehan.blog/typescript/함수-타입-선언하기</loc>
+      <lastmod>2023-06-27</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1.0</priority>
       </url>
       <url>
-      <loc>https://jaehan.blog/typescript/함수-타입-선언하기</loc>
-      <lastmod>2023-06-27T15:55:16+01:00</lastmod>
+      <loc>https://jaehan.blog/frontend/쌩-npm으로-MFE-구축하기-(1)-:-개념</loc>
+      <lastmod>2023-07-05</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1.0</priority>
       </url>
