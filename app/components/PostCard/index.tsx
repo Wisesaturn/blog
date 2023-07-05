@@ -34,7 +34,9 @@ export default function PostCardSection(props: { data: IPost[]; showCategory?: b
               </div>
               <div className="overflow-hidden flex justify-between gap-2 flex-col md:w-full md:pl-5">
                 <div className="flex items-start flex-col leading-tight pb-2">
-                  <h2 className="pt-0 text-left">{post.title ?? '글 제목 영역'}</h2>
+                  <h2 className="pt-0 text-left w-full leading-snug whitespace-nowrap text-ellipsis overflow-hidden">
+                    <span>{post.title ?? '글 제목 영역'}</span>
+                  </h2>
                   <span className="space-x-2 inline-block text-xs text-gray-400 font-light whitespace-nowrap">
                     {showCategory && (
                       <span className="text-xs text-green-main leading-normal">

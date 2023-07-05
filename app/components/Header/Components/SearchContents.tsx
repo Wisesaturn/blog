@@ -47,7 +47,10 @@ export default function SearchContents(props: ISearchBar) {
                   : `${String(data.plain_title).replace(/\s+/g, '-')}`
               }`}
             >
-              <div key={idx} className="p-2 px-4 border-t-2 border-green-main">
+              <div
+                key={idx}
+                className="p-2 px-4 border-t-2 border-green-main w-full text-ellipsis overflow-x-hidden whitespace-nowrap"
+              >
                 {data.title}
               </div>
             </Link>

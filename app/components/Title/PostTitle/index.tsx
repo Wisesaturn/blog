@@ -15,13 +15,16 @@ export default function PostTitle(props: PostTitleProps) {
     <section className="relative max-h-60 shadow-lg rounded-xl w-full max-w-layout mx-auto">
       <Suspense fallback={<>로딩 중...</>}>
         <div className="relative text-white flex h-60 z-10 flex-col items-center justify-center">
-          <h2 className="whitespace-nowrap md:text-[2rem]">
-            <span className="text-gray-400">{'<'}</span> {title}{' '}
+          <h2 className="md:text-[2rem] px-4 max-w-[300px] md:max-w-[700px] flex">
+            <span className="text-gray-400">{'<'}</span>
+            <span className="px-1 overflow-x-hidden text-ellipsis w-full whitespace-nowrap">
+              <span>{title}</span>
+            </span>
             <span className="text-gray-400">{'/>'}</span>
           </h2>
           <div className="flex items-center text-[0.875rem] justify-center flex-col">
             <div className="inline-block align-sub text-gray-300">{createdAt}</div>
-            <div className="pt-3 flex flex-wrap items-center justify-center gap-2 whitespace-nowrap">
+            <div className="pt-3 flex flex-wrap items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4">
               {tags.map((tag: ITags, idx: number) => {
                 return (
                   <span className="text-gray-400 font-bold md:text-sm text-xs rounded-sm" key={idx}>

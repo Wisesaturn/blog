@@ -62,7 +62,7 @@ export default function Header(props: HeaderProps) {
             <SearchContents input={inputValue} />
           </>
         ) : (
-          <div className="flex gap-2 ml-3 items-center hidden-last-arrow whitespace-nowrap md:w-full w-2/3 overflow-hidden text-ellipsis">
+          <div className="flex gap-2 ml-3 items-center hidden-last-arrow whitespace-nowrap md:w-full w-2/3 overflow-hidden">
             {paths
               .filter((e) => {
                 return e.name !== 'undefined' && e.name !== '';
@@ -75,7 +75,9 @@ export default function Header(props: HeaderProps) {
                     className="flex items-center gap-2"
                     to={ele.link}
                   >
-                    <span className={`${styleIcon} text-[0.9rem]`}>{ele.name}</span>
+                    <span className={`${styleIcon} text-[0.9rem] overflow-hidden`}>
+                      <span>{ele.name}</span>
+                    </span>
                     <span className="text-gray-300">{'>'}</span>
                   </Link>
                 );
