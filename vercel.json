@@ -15,6 +15,14 @@
         {
           "key": "Vercel-CDN-Cache-Control",
           "value": "public, max-age=31556952, stale-while-revalidate=1800"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, max-age=31556952, stale-while-revalidate=1800"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31556952, stale-while-revalidate=1800"
         }
       ]
     }

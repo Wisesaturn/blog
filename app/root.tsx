@@ -10,6 +10,7 @@ import {
 } from '@remix-run/react';
 import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
+import { Analytics } from '@vercel/analytics/react';
 
 import styles from '@styles/tailwind.css';
 
@@ -115,6 +116,7 @@ export default function App() {
           </EnvContext.Provider>
         </Suspense>
         <ScrollRestoration />
+        <Analytics />
         <Scripts />
         <LiveReload />
       </body>
@@ -144,6 +146,7 @@ export function ErrorBoundary({ error }: any) {
           <Title isContent="ERROR" isSubContent={`${error.message}`} />
         </div>
         <Footer />
+        <Analytics />
         <Scripts />
       </body>
     </html>
