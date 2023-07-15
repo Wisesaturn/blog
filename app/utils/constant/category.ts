@@ -9,7 +9,7 @@ export const CATEGORY_DATA: CategoryType[] = [
 ].concat(
   process.env.NODE_ENV === 'development'
     ? [
-        { name: '✍️ NEED_글작성', link: 'NEED_글작성' },
+        { name: '✍️ NEED_글작성', link: 'LOCAL_WRITING' },
         { name: '⚙ LOCAL ⚙', link: 'LOCAL_TEST' },
       ]
     : [],
