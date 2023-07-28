@@ -4,7 +4,7 @@ import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 export default function Contact() {
   return (
-    <div className="flex gap-2 w-max py-4">
+    <div className="flex mx-auto gap-2 w-max py-2 border-b-2 border-green-main">
       <span className={TWstyleIconWrapper}>
         <a
           target="_blank"

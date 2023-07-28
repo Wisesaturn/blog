@@ -5,17 +5,21 @@ import ResumeButton from '@components/Button/ResumeButton';
 
 import MainProfile from './components/MainProfile';
 import Contact from './components/Contact';
+import Works from './components/Works';
 
 const sectionArray = {
   Profile: <MainProfile />,
   Contact: <Contact />,
-  'Tech Stacks': <></>,
-  Experiences: <></>,
+  Works: <Works />,
   'Team Projects': <></>,
   'Personal Projects': <></>,
+  Experiences: <></>,
   Activities: <></>,
+  'Tech Stacks': <></>,
   Awards: <></>,
 };
+
+const disallowTitleSection = ['Contact', 'Profile'];
 
 export type SectionType = keyof typeof sectionArray;
 
@@ -42,7 +46,7 @@ export default function ResumePage() {
         </h1>
         <div className="block space-y-10 pb-20">
           {Object.entries(sectionArray).map(([key, value], idx) => (
-            <ResumeSection key={idx} title={key !== 'Profile' ? key : ''}>
+            <ResumeSection key={idx} title={key} showTitle={!disallowTitleSection.includes(key)}>
               {value}
             </ResumeSection>
           ))}
