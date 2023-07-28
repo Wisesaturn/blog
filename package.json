@@ -27,6 +27,8 @@
     "remix-image": "^1.4.0"
   },
   "devDependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.11.1",
     "@notionhq/client": "^2.2.5",
     "@remix-run/dev": "^1.7.5",
     "@remix-run/eslint-config": "^1.7.5",

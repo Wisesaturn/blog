@@ -2,13 +2,13 @@ import profile from '@public/profile-real.webp';
 
 export default function MainProfile() {
   return (
-    <div className="flex md:flex-row md:gap-0 gap-5 flex-col items-center justify-center md:space-x-10 w-full pb-16">
+    <section className="flex md:flex-row md:gap-0 gap-5 flex-col items-center justify-center md:space-x-10 w-full pb-16">
       <img
         className="animate-skeletonUI inline-block min-w-[15rem] w-60 h-60 object-cover rounded-full"
         src={profile}
         alt="프로필 사진"
       />
-      <article className="text-justify leading-loose">
+      <div className="text-justify leading-loose">
         <span className="block pb-4">
           <strong className="block text-3xl">송재한</strong>
           <p className="block text-xl">Frontend Developer</p>
@@ -23,7 +23,7 @@ export default function MainProfile() {
         <p className="before:content-['💬'] before:pr-2">
           서비스의 가치는 <strong>피드백</strong>으로부터 나온다고 믿습니다.
         </p>
-      </article>
-    </div>
+      </div>
+    </section>
   );
 }

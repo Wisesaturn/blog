@@ -1,7 +1,35 @@
+import { useState } from 'react';
+
+import ResumeSection from '@components/Title/ResumeSection';
+import ResumeButton from '@components/Button/ResumeButton';
+
 import MainProfile from './components/MainProfile';
 import Contact from './components/Contact';
 
+const sectionArray = {
+  Profile: <MainProfile />,
+  Contact: <Contact />,
+  'Tech Stacks': <></>,
+  Experiences: <></>,
+  'Team Projects': <></>,
+  'Personal Projects': <></>,
+  Activities: <></>,
+  Awards: <></>,
+};
+
+export type SectionType = keyof typeof sectionArray;
+
 export default function ResumePage() {
+  const [selectCategory, setSelectCategory] = useState<keyof typeof sectionArray>('Profile');
+
+  const handleCategory = (category: keyof typeof sectionArray) => {
+    setSelectCategory(category);
+
+    if (category === 'Profile') {
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <>
       <section className="w-full">
@@ -12,61 +40,24 @@ export default function ResumePage() {
           </span>
           <span className="text-gray-200">{'/>'}</span>
         </h1>
-        <MainProfile />
         <div className="block space-y-10 pb-20">
-          <Contact />
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Tech Stacks</h2>
-            <p>내용</p>
-          </div>
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Experiences</h2>
-            <p>내용</p>
-          </div>
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Team Projects</h2>
-            <p>내용</p>
-          </div>
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Personal Projects</h2>
-            <p>내용</p>
-          </div>
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Activities</h2>
-            <p>내용</p>
-          </div>
-          <div className="">
-            <h2 className="text-3xl font-semibold tracking-tight">Awards</h2>
-            <p>내용</p>
-          </div>
+          {Object.entries(sectionArray).map(([key, value], idx) => (
+            <ResumeSection key={idx} title={key !== 'Profile' ? key : ''}>
+              {value}
+            </ResumeSection>
+          ))}
         </div>
       </section>
       <section className="hidden md:block whitespace-nowrap">
         <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
-          <button type="button" className="px-6 py-1 bg-[#18191b] rounded-full text-white">
-            Profile
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Contact
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Tech Stacks
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Experiences
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Team Projects
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Personal Projects
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Activities
-          </button>
-          <button type="button" className="px-6 py-1 bg-white rounded-full text-black">
-            Awards
-          </button>
+          {Object.keys(sectionArray).map((item, idx) => (
+            <ResumeButton
+              key={idx}
+              target={item}
+              onClick={handleCategory}
+              selected={selectCategory}
+            />
+          ))}
         </div>
       </section>
     </>

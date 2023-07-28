@@ -20,7 +20,7 @@ export const ProgressBar = () => {
   return (
     <>
       <div className="w-full z-[9999] fixed h-1 bg-gray-200"></div>
-      <div ref={progressBarRef} className={`z-[9999] fixed h-1 bg-green-800`} />
+      <div ref={progressBarRef} className={`z-[10000] fixed h-1 bg-green-800`} />
     </>
   );
 };
