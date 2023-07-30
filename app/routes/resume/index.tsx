@@ -23,10 +23,14 @@ const disallowTitleSection = ['Contact', 'Profile'];
 
 export type SectionType = keyof typeof sectionArray;
 
-export default function ResumePage() {
-  const [selectCategory, setSelectCategory] = useState<keyof typeof sectionArray>('Profile');
+const isSectionType = (item: string): item is SectionType => {
+  return item in sectionArray;
+};
 
-  const handleCategory = (category: keyof typeof sectionArray) => {
+export default function ResumePage() {
+  const [selectCategory, setSelectCategory] = useState<SectionType>('Profile');
+
+  const handleCategory = (category: SectionType) => {
     setSelectCategory(category);
 
     if (category === 'Profile') {
@@ -54,14 +58,19 @@ export default function ResumePage() {
       </section>
       <section className="hidden md:block whitespace-nowrap">
         <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
-          {Object.keys(sectionArray).map((item, idx) => (
-            <ResumeButton
-              key={idx}
-              target={item}
-              onClick={handleCategory}
-              selected={selectCategory}
-            />
-          ))}
+          {Object.keys(sectionArray).map((item, idx) => {
+            if (isSectionType(item)) {
+              return (
+                <ResumeButton
+                  key={idx}
+                  target={item}
+                  onClick={handleCategory}
+                  selected={selectCategory}
+                />
+              );
+            }
+            return null;
+          })}
         </div>
       </section>
     </>

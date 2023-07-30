@@ -13,9 +13,9 @@ const SearchAllPostLayout = () => {
   return (
     <>
       <Header paths={headerData} />
-      <article className="isWrapper flex flex-col min-h-screen">
+      <main className="isWrapper flex flex-col min-h-screen">
         <Outlet />
-      </article>
+      </main>
       <Copyright />
       <Footer />
     </>

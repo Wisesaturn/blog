@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 
-import type { SectionType } from 'routes/resume';
+import type { SectionType } from 'routes/resume/index';
 
 interface ResumeButtonProps {
   key?: number;
-  target: string;
+  target: SectionType;
   onClick: (category: SectionType) => void;
   selected: SectionType;
 }

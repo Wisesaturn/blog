@@ -5,9 +5,9 @@ import Footer from '@components/Footer';
 const WriteLayout = () => {
   return (
     <>
-      <article className="isWrapper relative flex justify-between min-h-screen">
+      <main className="isWrapper relative flex justify-between min-h-screen">
         <Outlet />
-      </article>
+      </main>
       <Footer />
     </>
   );
