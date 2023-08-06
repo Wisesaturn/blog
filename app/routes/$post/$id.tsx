@@ -20,29 +20,38 @@ import type { INotionPostReturn } from '@Types/post';
 
 export const meta: MetaFunction = ({ data, params }) => {
   const { post, id } = params;
-  const { description, thumbnail } = data! as INotionPostReturn;
-  const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
-  const isDescription = `${description}`;
-  const isURL = `https://jaehan.blog/${post}/${id}`;
-  const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
-  return {
-    title: isTitle,
-    description: isDescription,
-    'og:url': isURL,
-    'og:title': isTitle,
-    'og:image': thumbnail === '' ? defaultThumbnail : thumbnail,
-    'og:description': isDescription,
-    'twitter:url': isURL,
-    'twitter:title': isTitle,
-    'twitter:image': thumbnail === '' ? defaultThumbnail : thumbnail,
-    'twitter:description': isDescription,
-  };
+
+  if (data) {
+    const { description, thumbnail } = data as INotionPostReturn;
+    const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
+    const isDescription = `${description}`;
+    const isURL = `https://jaehan.blog/${post}/${id}`;
+    const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
+    return {
+      title: isTitle,
+      description:
+        isDescription === undefined
+          ? '안녕하세요 꾸준히 성장하고 싶은 프론트엔드 개발자 송재한입니다. 기록하고 싶은 것들을 모아두었습니다'
+          : isDescription,
+      'og:url': isURL,
+      'og:title': isTitle,
+      'og:image': thumbnail === '' ? defaultThumbnail : thumbnail,
+      'og:description': isDescription,
+      'twitter:url': isURL,
+      'twitter:title': isTitle,
+      'twitter:image': thumbnail === '' ? defaultThumbnail : thumbnail,
+      'twitter:description': isDescription,
+    };
+  }
+
+  return {};
 };
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const { post, id } = params;
+
   const isFetchDB = await fetchDB(post!, id!);
 
   const hasUserVisited = createCookie(`${isFetchDB.index}`, {
