@@ -7,6 +7,8 @@ import {
   ScrollRestoration,
   useLoaderData,
   useTransition,
+  useCatch,
+  useParams,
 } from '@remix-run/react';
 import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
@@ -38,13 +40,11 @@ const metaTwitter = {
 export const meta: MetaFunction = ({ params }) => {
   const { post } = params;
 
-  const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
-  const isDescription = `기록하고 싶은 것들을 모아두었습니다`;
+  const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰 - Jaehan.blog`;
+  const isDescription = `안녕하세요 꾸준히 성장하고 싶은 프론트엔드 개발자 송재한입니다. 기록하고 싶은 것들을 모아두었습니다`;
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
 
   return {
-    charset: 'utf-8',
-    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
     title: isTitle,
     description: isDescription,
     'og:url': isURL,
@@ -101,11 +101,15 @@ export default function App() {
   return (
     <html lang="ko">
       <head>
-        <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta charSet="utf-8" />
+        <meta http-equiv="content-type" content="text/html" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        <link rel="icon" type="image/ico" href="/favicon.ico" />
-        <link rel="maifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+        <link rel="canonical" href="https://jaehan.blog" />
+        <link rel="icon" type="image/ico" href="favicon.ico" />
+        <link rel="manifest" href="manifest.json" />
         <Links />
       </head>
       <body>
@@ -137,13 +141,42 @@ export function ErrorBoundary({ error }: any) {
     <html>
       <head>
         <title>Error 😥</title>
-        <Meta />
         <Links />
       </head>
       <body>
         <Header paths={ErrorData} />
         <div className="w-full h-full flex flex-col justify-start items-center gap-2">
           <Title isContent="ERROR" isSubContent={`${error.message}`} />
+        </div>
+        <Footer />
+        <Analytics />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  const ErrorData = [
+    { name: `📚 사툰사툰`, link: '/' },
+    {
+      name: `😥 ${caught.status}`,
+      link: `error`,
+    },
+  ];
+
+  return (
+    <html>
+      <head>
+        <title>{caught.status} 😥</title>
+        <Links />
+      </head>
+      <body>
+        <Header paths={ErrorData} />
+        <div className="w-full h-full flex flex-col justify-start items-center gap-2">
+          <Title isContent={String(caught.status)} isSubContent={`${caught.statusText}`} />
         </div>
         <Footer />
         <Analytics />

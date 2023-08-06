@@ -8,7 +8,7 @@ import type { EntryContext } from '@remix-run/node';
 
 const versionCookie = createCookie('version', {
   path: '/', // make sure the cookie we receive the request on every path
-  secure: false, // enable this in prod
+  secure: true, // enable this in prod
   httpOnly: true, // only for server-side usage
   maxAge: 60 * 60 * 24 * 365, // keep the cookie for a year
 });

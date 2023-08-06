@@ -4,28 +4,33 @@ export const loader = () => {
   const content = `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
-      <loc>https://jaehan.blog/</loc>
-      <lastmod>2023-06-12</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.3</priority>
+        <loc>https://jaehan.blog/</loc>
+        <lastmod>2023-07-05</lastmod>
+        <priority>1.0</priority>
       </url>
       <url>
-      <loc>https://jaehan.blog/resume</loc>
-      <lastmod>2023-06-20</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.5</priority>
+        <loc>https://jaehan.blog/resume</loc>
+        <lastmod>2023-06-20</lastmod>
       </url>
       <url>
-      <loc>https://jaehan.blog/typescript/함수-타입-선언하기</loc>
-      <lastmod>2023-06-27</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>1.0</priority>
+        <loc>https://jaehan.blog/typescript/함수-타입-선언하기</loc>
+        <lastmod>2023-06-27</lastmod>
       </url>
       <url>
-      <loc>https://jaehan.blog/frontend/쌩-npm으로-MFE-구축하기-(1)-:-개념</loc>
-      <lastmod>2023-07-05</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>1.0</priority>
+        <loc>https://jaehan.blog/frontend/쌩-npm으로-MFE-구축하기-(1)-:-개념</loc>
+        <lastmod>2023-07-05</lastmod>
+      </url>
+      <url>
+        <loc>https://jaehan.blog/typescript</loc>
+      </url>
+      <url>
+        <loc>https://jaehan.blog/resume</loc>
+      </url>
+      <url>
+        <loc>https://jaehan.blog/all</loc>
+      </url>
+      <url>
+        <loc>https://jaehan.blog/frontend</loc>
       </url>
     </urlset>
     `;

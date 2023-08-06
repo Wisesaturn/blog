@@ -14,7 +14,7 @@ export default function ProfileSection() {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <h1>송재한</h1>
+        <div className="text-xl md:text-2xl font-bold">송재한</div>
         <p className="text-[16px] md:text-[18px] leading-normal">
           안녕하세요! 깔끔한 애니메이션을 구현하는 걸 좋아하는{' '}
           <b className="font-bold">예비 프론트엔드 엔지니어</b>
