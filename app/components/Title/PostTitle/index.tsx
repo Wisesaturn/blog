@@ -14,7 +14,7 @@ export default function PostTitle(props: PostTitleProps) {
   return (
     <section className="relative max-h-60 shadow-lg rounded-xl w-full max-w-layout mx-auto">
         <div className="relative text-white flex h-60 z-10 flex-col items-center justify-center">
-          {subTitle && (<span className="bg-white rounded-xl px-4 py-0.5 text-[11px] mb-1 leading-4 md:leading-5 text-black font-bold md:text-[12px]">{subTitle}</span>)}
+          {subTitle && (<span className="bg-white rounded-xl px-4 py-0.5 text-[11px] mb-1 leading-4 text-black font-bold md:text-[12px]">{subTitle}</span>)}
           <h2 className="text-[17px] md:text-[2rem] px-4 max-w-[290px] md:max-w-[700px] flex">
             <span className="text-gray-400">{'<'}</span>
             <span className="px-1 overflow-x-hidden text-ellipsis w-full whitespace-nowrap">
