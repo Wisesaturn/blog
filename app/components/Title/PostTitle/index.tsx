@@ -1,9 +1,6 @@
-import React, { Suspense } from 'react';
-import { AiFillEye } from 'react-icons/ai';
 import { Image, remixImageLoader } from 'remix-image';
 
 import thumbnailDefault from '@public/thumbnail.webp';
-import thumbnailBlur from '@public/gray.png';
 
 import type { ITags } from '@Types/post';
 import type { PostTitleProps } from './types';
@@ -11,14 +8,17 @@ import type { PostTitleProps } from './types';
 export default function PostTitle(props: PostTitleProps) {
   const { title, tags, createdAt, thumbnail } = props;
 
+  const parsingTitle = title.split(':');
+  const [mainTitle, subTitle] = parsingTitle;
+
   return (
     <section className="relative max-h-60 shadow-lg rounded-xl w-full max-w-layout mx-auto">
-      <Suspense fallback={<>로딩 중...</>}>
         <div className="relative text-white flex h-60 z-10 flex-col items-center justify-center">
-          <h2 className="md:text-[2rem] px-4 max-w-[300px] md:max-w-[700px] flex">
+          {subTitle && (<span className="bg-white rounded-xl px-4 py-0.5 text-[11px] mb-1 leading-4 md:leading-5 text-black font-bold md:text-[12px]">{subTitle}</span>)}
+          <h2 className="text-[15px] md:text-[2rem] px-4 max-w-[280px] md:max-w-[700px] flex">
             <span className="text-gray-400">{'<'}</span>
             <span className="px-1 overflow-x-hidden text-ellipsis w-full whitespace-nowrap">
-              <span>{title}</span>
+              <span>{mainTitle}</span>
             </span>
             <span className="text-gray-400">{'/>'}</span>
           </h2>
@@ -47,7 +47,6 @@ export default function PostTitle(props: PostTitleProps) {
             dprVariants={[1, 3]}
           />
         </div>
-      </Suspense>
     </section>
   );
 }
