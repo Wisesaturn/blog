@@ -22,13 +22,10 @@ export default async function handleRequest(
   const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
   const { version } = remixContext.manifest; // get the build version
 
-  // if the response doesn't already have a cache-control header, add one
-  // if (!responseHeaders.has('Cache-Control')) {
-  //   responseHeaders.append(
-  //     'Cache-Control',
-  //     'public, max-age=1800, s-maxage=1800, stale-while-revalidate=1800',
-  //   );
-  // }
+  responseHeaders.append(
+    'Cache-Control',
+    'public, s-max-age=604800, max-age=31556952, stale-while-revalidate=1800',
+  );
 
   // Add new headers to the response
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
