@@ -10,6 +10,7 @@ import {
 } from '@remix-run/react';
 import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
+import { Analytics } from '@vercel/analytics/react';
 
 import styles from '@styles/tailwind.css';
 
@@ -117,6 +118,7 @@ export default function App() {
         </Suspense>
         <ScrollRestoration />
         <Scripts />
+        <Analytics />
         <LiveReload />
       </body>
     </html>
