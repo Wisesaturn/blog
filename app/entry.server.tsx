@@ -24,7 +24,7 @@ export default async function handleRequest(
 
   responseHeaders.append(
     'Cache-Control',
-    'public, s-max-age=604800, max-age=31556952, stale-while-revalidate=1800',
+    'public, s-maxage=31556952, max-age=604800, stale-while-revalidate=31556952',
   );
 
   // Add new headers to the response
