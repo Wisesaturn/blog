@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useLoaderData } from '@remix-run/react';
 import styles from 'highlight.js/styles/atom-one-dark-reasonable.css';
 import { GiShare } from 'react-icons/gi';

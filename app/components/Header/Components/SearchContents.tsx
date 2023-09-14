@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from '@remix-run/react';
 
+import { EnvContext } from '@app/root';
 import useDebounce from '@hooks/useDebounce';
-import { EnvContext } from 'root';
 
 import type { LoadingT } from '@utils/stores/env';
 import searchAllDB from '@utils/api/searchAllDB.client';

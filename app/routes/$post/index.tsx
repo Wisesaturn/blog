@@ -16,7 +16,11 @@ export async function loader({ params }: LoaderArgs) {
     return ele.link === post;
   });
 
-  const data = await fetchNotionPosts(post!);
+  if (post === undefined) {
+    throw new Error('Wrong Path');
+  }
+
+  const data = await fetchNotionPosts(post);
   return json({ category: category[0].name, data });
 }
 export const SelectedPostPage = () => {
