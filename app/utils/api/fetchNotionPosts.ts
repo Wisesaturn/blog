@@ -46,6 +46,7 @@ export default async function fetchNotionPosts(document: string) {
               title,
               thumbnail,
               createdAt,
+              category,
               tags,
               index,
               description,

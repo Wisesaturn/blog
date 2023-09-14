@@ -18,9 +18,23 @@
     color: #333;
     line-height: 180%;
 
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, Tossface,
-      system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
-      'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      Tossface,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
@@ -84,16 +98,16 @@
 
   summary {
     cursor: pointer;
-    border-bottom : 2px solid #4caf50;
-    width : max-content;
-    transition : 0.15s ease-in-out;
-    padding : 0.15rem 0.5rem;
+    border-bottom: 2px solid #4caf50;
+    width: max-content;
+    transition: 0.15s ease-in-out;
+    padding: 0.15rem 0.5rem;
   }
 
   summary:hover {
-    background-color : #4caf50;
-    color : white;
-    border-bottom : 2px solid white;
+    background-color: #4caf50;
+    color: white;
+    border-bottom: 2px solid white;
   }
 
   summary::marker {
@@ -120,12 +134,13 @@
     font-weight: bold;
   }
 
-  pre>code
-  {
+  pre > code {
     border-radius: 0.75rem;
     border: 0px solid;
 
-    box-shadow : 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.2);
+    box-shadow:
+      0 10px 20px rgba(0, 0, 0, 0.2),
+      0 6px 6px rgba(0, 0, 0, 0.2);
   }
 
   a,
@@ -156,11 +171,22 @@
 
   ol {
     border-radius: 0.75rem;
-    border : 1px solid #979797;
+    border: 1px solid #b7b7b7;
   }
 
   ol li {
-    margin : .35rem 0;
+    margin: 0.35rem 0;
+  }
+
+  ol li code {
+    color: #50ad63;
+    font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
+      'Courier New', 'monospace';
+    font-size: 0.85rem;
+    padding: 0.1rem 0.35rem;
+    white-space: normal;
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
   }
 
   ul {
@@ -363,14 +389,15 @@
   @media only screen and (max-width: 768px) {
     summary {
       font-weight: semiboid;
-      color : #333;
+      color: #333;
     }
 
     .markdown-body pre > code > span {
       font-size: 0.75rem !important;
     }
 
-    .markdown-body pre > code, code {
+    .markdown-body pre > code,
+    code {
       font-size: 0.75rem !important;
       line-height: 1.6 !important;
     }
@@ -380,8 +407,9 @@
       font-size: 0.95rem !important;
     }
 
-    .markdown-body th, .markdown-body tr {
-      font-size : 0.85rem !important;
+    .markdown-body th,
+    .markdown-body tr {
+      font-size: 0.85rem !important;
       padding: 0.375rem 1.25rem;
     }
 
@@ -440,7 +468,7 @@
 
 /* custom markdown */
 .markdown-body img {
-  max-width : 500px;
+  max-width: 500px;
 }
 
 .markdown-body pre {
@@ -478,10 +506,10 @@
   color: #50ad63;
   font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
     'Courier New', 'monospace';
-  font-size : 0.85rem;
-  padding : .1rem .35rem;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.35rem;
   white-space: normal;
-  background: rgba(0,0,0,.1);
+  background: rgba(0, 0, 0, 0.1);
   color: black;
 }
 
@@ -539,23 +567,31 @@
   background: #86bb92;
   color: #86bb92;
   border-radius: 50%;
-  box-shadow: 16px 0, -16px 0;
+  box-shadow:
+    16px 0,
+    -16px 0;
   animation: dots-u8fzftsm 0.8s infinite linear alternate;
 }
 
 @keyframes dots-u8fzftsm {
   0% {
-    box-shadow: 16px 0, -16px 0;
+    box-shadow:
+      16px 0,
+      -16px 0;
     background: none;
   }
 
   33% {
-    box-shadow: 16px 0, -16px 0 rgba(134, 187, 146, 0.13);
+    box-shadow:
+      16px 0,
+      -16px 0 rgba(134, 187, 146, 0.13);
     background: rgba(134, 187, 146, 0.13);
   }
 
   66% {
-    box-shadow: 16px 0 rgba(134, 187, 146, 0.13), -16px 0;
+    box-shadow:
+      16px 0 rgba(134, 187, 146, 0.13),
+      -16px 0;
     background: rgba(134, 187, 146, 0.13);
   }
 }
