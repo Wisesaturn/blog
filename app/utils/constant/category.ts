@@ -6,6 +6,7 @@ export interface CategoryType {
 export const CATEGORY_DATA: CategoryType[] = [
   { name: 'Typescript', link: 'typescript' },
   { name: 'Frontend', link: 'frontend' },
+  { name: 'React', link: 'react' },
 ].concat(
   process.env.NODE_ENV === 'development'
     ? [
