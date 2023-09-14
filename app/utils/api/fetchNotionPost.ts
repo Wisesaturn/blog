@@ -62,7 +62,7 @@ export default async function fetchNotionPost(document: string, title: string) {
       });
 
     return blogPage;
-  } catch (err: any) {
+  } catch (err) {
     throw new Error('게시물을 불러오는데 실패하였습니다.');
   }
 }

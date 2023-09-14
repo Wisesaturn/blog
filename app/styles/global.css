@@ -47,10 +47,7 @@
   }
 
   /* selected Drag */
-  p,
-  code,
-  pre,
-  blockquote {
+  .markdown-body {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
@@ -81,18 +78,31 @@
     box-shadow: none;
   }
 
-  summary {
-    cursor: pointer;
-    color: #50ad63;
-  }
-
   table {
     margin: 1rem auto !important;
+  }
+
+  summary {
+    cursor: pointer;
+    border-bottom : 2px solid #4caf50;
+    width : max-content;
+    transition : 0.15s ease-in-out;
+    padding : 0.15rem 0.5rem;
+  }
+
+  summary:hover {
+    background-color : #4caf50;
+    color : white;
+    border-bottom : 2px solid white;
   }
 
   summary::marker {
     transition: 0.35s ease-in-out;
     color: #4caf50;
+  }
+
+  summary:hover::marker {
+    color: white;
   }
 
   img {
@@ -110,10 +120,12 @@
     font-weight: bold;
   }
 
-  pre,
-  code {
+  pre>code
+  {
     border-radius: 0.75rem;
     border: 0px solid;
+
+    box-shadow : 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.2);
   }
 
   a,
@@ -143,8 +155,12 @@
   }
 
   ol {
-    background-color: #fafabe;
     border-radius: 0.75rem;
+    border : 1px solid #979797;
+  }
+
+  ol li {
+    margin : .35rem 0;
   }
 
   ul {
@@ -354,7 +370,7 @@
       font-size: 0.75rem !important;
     }
 
-    .markdown-body pre > code {
+    .markdown-body pre > code, code {
       font-size: 0.75rem !important;
       line-height: 1.6 !important;
     }
@@ -362,6 +378,11 @@
     .markdown-body p > u > em {
       padding: 1.95rem 0 !important;
       font-size: 0.95rem !important;
+    }
+
+    .markdown-body th, .markdown-body tr {
+      font-size : 0.85rem !important;
+      padding: 0.375rem 1.25rem;
     }
 
     summary p {
@@ -388,7 +409,6 @@
     h4,
     li,
     summary p,
-    p > code,
     summary,
     p > a,
     p {
@@ -419,6 +439,9 @@
 }
 
 /* custom markdown */
+.markdown-body img {
+  max-width : 500px;
+}
 
 .markdown-body pre {
   padding: 1rem 0;
@@ -443,7 +466,7 @@
 
 .markdown-body strong {
   font-weight: bold;
-  color: #50ad63;
+  color: #333;
 }
 
 .markdown-body pre > code {
@@ -455,11 +478,11 @@
   color: #50ad63;
   font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
     'Courier New', 'monospace';
-  font-weight: bold;
-  padding: 0 0.3rem;
+  font-size : 0.85rem;
+  padding : .1rem .35rem;
   white-space: normal;
-  background: rgb(225, 247, 230);
-  color: rgb(26, 61, 33);
+  background: rgba(0,0,0,.1);
+  color: black;
 }
 
 .markdown-body pre > em {

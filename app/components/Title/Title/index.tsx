@@ -11,10 +11,10 @@ export default function Title(props: TitleProps) {
 
   return (
     <section className="flex flex-col gap-4 items-center justify-center max-w-full mx-auto pt-4 pb-10 md:pt-12 md:pb-20">
-      <h1>
+      <h2>
         <span className="text-gray-200">{'<'}</span> {isContent}{' '}
         <span className="text-gray-200">{'/>'}</span>
-      </h1>
+      </h2>
       <p>{isSubContent}</p>
     </section>
   );
