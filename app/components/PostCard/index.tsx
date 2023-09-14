@@ -12,6 +12,9 @@ export default function PostCardSection(props: { data: IPost[]; showCategory?: b
   return (
     <section className="isWrapper w-full flex-col md:gap-6 gap-3 justify-between align-center md:flex-row">
       {data.map((post: IPost) => {
+        const parsingTitle = post.title.split(':');
+        const [mainTitle, subTitle] = parsingTitle;
+
         return (
           <Link
             prefetch="none"
@@ -34,10 +37,11 @@ export default function PostCardSection(props: { data: IPost[]; showCategory?: b
               </div>
               <div className="overflow-hidden flex justify-between gap-2 flex-col md:w-full md:pl-5">
                 <div className="flex items-start flex-col leading-tight pb-2">
-                  <h2 className="pt-0 text-left w-full leading-snug whitespace-nowrap text-ellipsis overflow-hidden">
-                    <span>{post.title ?? '글 제목 영역'}</span>
+                  <h2 className="pt-0 pb-1 text-left w-full leading-snug whitespace-nowrap text-ellipsis overflow-hidden">
+                    <span>{mainTitle ?? '글 제목 영역'}</span>
                   </h2>
                   <span className="space-x-2 inline-block text-xs text-gray-400 font-light whitespace-nowrap">
+                    {subTitle && <span className="text-black font-bold">{subTitle}</span>}
                     {showCategory && (
                       <span className="text-xs text-green-main leading-normal">
                         {post.category.replace(/^\w/, (c) => c.toUpperCase())}
