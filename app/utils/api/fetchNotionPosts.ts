@@ -30,9 +30,17 @@ export default async function fetchNotionPosts(document: string) {
 
         const blogPagesMap = blogPageIdList
           .map((post: any): Partial<INotionPostReturn> => {
+            const createdTime = new Date(post.created_time);
+            createdTime.setHours(createdTime.getHours() + 9);
+
+            const formattedDate = `${createdTime.getUTCFullYear()}. ${
+              createdTime.getUTCMonth() + 1
+            }. ${createdTime.getUTCDate()}.`;
+
+            // JSON //
             const category = post.properties.category.select.name;
             const last_editedAt = new Date(post.last_edited_time);
-            const createdAt = new Date(post.created_time).toLocaleDateString('ko-KR');
+            const createdAt = formattedDate;
             const plain_title = `${post.properties.이름.title[0].plain_text}`;
             const title = `${post.icon?.emoji ? `${post.icon.emoji} ` : ''} ${
               post.properties.이름.title[0].plain_text
@@ -41,6 +49,7 @@ export default async function fetchNotionPosts(document: string) {
             const tags = post.properties.tags.multi_select;
             const index = post.id;
             const description = post.properties.description.rich_text[0]?.plain_text ?? '';
+            // JSON //
 
             const postDataJSON = {
               last_editedAt,
