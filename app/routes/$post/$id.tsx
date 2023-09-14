@@ -12,7 +12,8 @@ import { PostTitle } from '@components/Title';
 
 import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
-import { copyPageUrl, sharePage } from '@utils/lib/post';
+import sharePage from '@utils/lib/sharePage';
+import copyPageUrl from '@utils/lib/copyPageUrl';
 
 import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
 import type { INotionPostReturn } from '@Types/post';

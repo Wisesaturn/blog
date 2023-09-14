@@ -7,6 +7,9 @@ import rehypeStringify from 'rehype-stringify';
 import rehypeHighlight from 'rehype-highlight';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
+import { GiConsoleController } from 'react-icons/gi';
+
+import saveImageIntoFirebase from '@utils/lib/saveImageIntoFirebase';
 
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
@@ -44,6 +47,14 @@ export default async function fetchNotionPost(document: string, title: string) {
           .use(rehypeMathjax) // math 구문 강조용
           .use(rehypeHighlight) // code 강조용
           .process(mdString.parent);
+
+        const createdTime = new Date(selectedPost[0].created_time);
+        createdTime.setHours(createdTime.getHours() + 9);
+
+        const formattedDate = `${createdTime.getUTCFullYear()}. ${
+          createdTime.getUTCMonth() + 1
+        }. ${createdTime.getUTCDate()}.`;
+
         return {
           plain_title: `${selectedPost[0].properties.이름.title[0].plain_text}`,
           title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
@@ -51,7 +62,7 @@ export default async function fetchNotionPost(document: string, title: string) {
           }`,
           thumbnail:
             (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '',
-          createdAt: new Date(selectedPost[0].created_time).toLocaleDateString('ko-KR'),
+          createdAt: formattedDate,
           tags: selectedPost[0].properties.tags.multi_select,
           index: selectedPost[0].id,
           description: selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '',
