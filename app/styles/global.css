@@ -363,7 +363,7 @@
   @media only screen and (max-width: 768px) {
     summary {
       font-weight: semiboid;
-      color: #50ad63;
+      color : #333;
     }
 
     .markdown-body pre > code > span {
