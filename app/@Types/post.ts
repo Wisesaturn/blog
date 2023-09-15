@@ -10,9 +10,9 @@ export interface IFirebasePostReturn {
   createdAt: string;
   description: string;
   index: string;
-  last_editedAt: Date;
+  last_editedAt: Date | string;
   plain_title: string;
-  tags: string[];
+  tags: ITags[];
   thumbnail: string;
   title: string;
   views: number;
