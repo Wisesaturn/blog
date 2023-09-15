@@ -9,9 +9,11 @@ const uploadImageToFirebase = async (srcUrl: string, category: string, title: st
   const data = await response.arrayBuffer();
 
   const ext = String(isSrcUrl.split('.').pop()).split('?').shift();
-  const filename = String(String(isSrcUrl.split('/').pop()).split('?').shift())
-    .split('.')
-    .shift();
+  const filename = decodeURIComponent(
+    String(String(isSrcUrl.split('/').pop()).split('?').shift())
+      .split('.')
+      .shift()!,
+  );
   const metadata = { contentType: `image/${ext}` };
   const now = new Date();
   const hours = now.getHours();
