@@ -2,14 +2,14 @@
 
 import { Link } from '@remix-run/react';
 
-import type { IPost, ITags } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
-export default function PostCardSection(props: { data: IPost[] }) {
+export default function PostCardSection(props: { data: IFirebasePostReturn[] }) {
   const { data } = props;
 
   return (
     <section className="isWrapper w-full flex-col gap-5 justify-between align-center md:flex-row">
-      {data.map((post: IPost) => {
+      {data.map((post: IFirebasePostReturn) => {
         return (
           <Link
             prefetch="none"
@@ -27,12 +27,12 @@ export default function PostCardSection(props: { data: IPost[] }) {
                   <div className="flex gap-1 md:gap-3 md:flex-row flex-col">
                     <span className="text-xs md:text-sm flex gap-2">
                       <span className="text-green-main font-semibold rounded-md whitespace-nowrap">
-                        {post.category}
+                        {post.category.toUpperCase()}
                       </span>
                     </span>
                     <div className="hidden md:block">
                       <span className="text-xs md:text-sm flex gap-2 flex-wrap">
-                        {post.tags.map((tag: ITags) => {
+                        {post.tags.map((tag) => {
                           return (
                             <span className="text-gray-400 font-light rounded-md" key={tag.id}>
                               {'#'}

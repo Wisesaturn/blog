@@ -1,5 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
-import { json } from '@remix-run/node';
+import { json, LoaderFunction } from '@remix-run/node';
+
+import { IFirebasePostReturn } from '@Types/post';
 
 import PostCardSection from '@components/PostCard';
 import { Title } from '@components/Title';
@@ -16,8 +18,8 @@ export async function loader({ params, request }: LoaderArgs) {
   const { post } = params;
   const url = new URL(request.url);
   const refetch = url.searchParams.get('refetch');
-  const category = CATEGORY_DATA.filter((ele: CategoryType) => {
-    return ele.link === post;
+  const chooseCategory = CATEGORY_DATA.filter((item: CategoryType) => {
+    return item.link === post;
   });
 
   if (post === undefined) {
@@ -30,11 +32,11 @@ export async function loader({ params, request }: LoaderArgs) {
 
   const data = await searchDB(post);
 
-  return json({ category: category[0].name, data, post: String(post) });
+  return json({ chooseCategory: chooseCategory[0], data, post: String(post) });
 }
 
 export const SelectedPostPage = () => {
-  const { category, data, post } = useLoaderData();
+  const { chooseCategory, data, post } = useLoaderData<typeof loader>();
 
   const updatePost = async () => {
     window.location.href = `${post}?refetch=true`;
@@ -43,7 +45,7 @@ export const SelectedPostPage = () => {
 
   return (
     <>
-      <Title isContent={category} />
+      <Title isContent={chooseCategory.name} isContentIcon={chooseCategory.icon} />
       {process.env.NODE_ENV === 'development' && (
         <Button
           onClick={updatePost}

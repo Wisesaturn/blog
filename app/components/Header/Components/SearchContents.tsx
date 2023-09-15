@@ -7,7 +7,7 @@ import useDebounce from '@hooks/useDebounce';
 import type { LoadingT } from '@utils/stores/env';
 import searchAllDB from '@utils/api/searchAllDB.client';
 
-import type { IPost } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 interface ISearchBar {
   input?: string;
@@ -17,13 +17,13 @@ export default function SearchContents(props: ISearchBar) {
   const { input = '' } = props;
   const [isLoadingState, setIsLoadingState] = useState<LoadingT>('loading');
   const debouncedInput = useDebounce(input, 450);
-  const [postData, setPostData] = useState<IPost[]>([]);
+  const [postData, setPostData] = useState<IFirebasePostReturn[]>([]);
   const env = useContext(EnvContext);
 
   useEffect(() => {
     setIsLoadingState('loading');
     searchAllDB(5, env).then((res: any) => {
-      const isFilteringData = res.filter((data: IPost) => {
+      const isFilteringData = res.filter((data: IFirebasePostReturn) => {
         return data.plain_title.includes(debouncedInput);
       });
 
@@ -36,7 +36,7 @@ export default function SearchContents(props: ISearchBar) {
   const SearchResultCondition: { [k in LoadingT]: React.ReactElement } = {
     none: (
       <>
-        {postData.map((data: IPost, idx) => {
+        {postData.map((data: IFirebasePostReturn, idx) => {
           return (
             <Link
               reloadDocument
@@ -49,7 +49,7 @@ export default function SearchContents(props: ISearchBar) {
             >
               <div
                 key={idx}
-                className="p-2 px-4 border-t-2 border-green-main w-full text-ellipsis overflow-x-hidden whitespace-nowrap"
+                className="p-2 px-4 border-t-2 border-gray-100 w-full text-ellipsis overflow-x-hidden whitespace-nowrap hover:bg-gray-100 duration-200 hover:border-gray-100"
               >
                 {data.title}
               </div>
