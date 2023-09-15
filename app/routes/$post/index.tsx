@@ -22,7 +22,7 @@ export async function loader({ params }: LoaderArgs) {
   }
 
   const data =
-    process.env.NODE_ENV !== 'development' ? await fetchNotionPosts(post) : await searchDB(post);
+    process.env.NODE_ENV === 'development' ? await fetchNotionPosts(post) : await searchDB(post);
 
   return json({ category: category[0].name, data });
 }

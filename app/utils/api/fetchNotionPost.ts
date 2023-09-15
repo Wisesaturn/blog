@@ -9,7 +9,8 @@ import rehypeHighlight from 'rehype-highlight';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
-import saveImageIntoFirebase from '@utils/lib/saveImageIntoFirebase';
+import convertImageNotionToFirebase from '@utils/lib/convertImageNotionToFirebase';
+import uploadImageToFirebase from '@utils/lib/uploadImageToFirebase';
 
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
@@ -62,14 +63,17 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
         }`;
         const category = selectedPost[0].properties.category.select.name;
         const thumbnail =
-          (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '';
+          (await uploadImageToFirebase(
+            selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
+            category,
+            title,
+          )) ?? '';
         const createdAt = formattedDate;
         const tags = selectedPost[0].properties.tags.multi_select;
         const index = selectedPost[0].id;
         const description = selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '';
         const last_editedAt = new Date(selectedPost[0].last_edited_time);
-        // const body = result.value;
-        const body = await saveImageIntoFirebase(result.value, category, title);
+        const body = await convertImageNotionToFirebase(result.value, category, title);
         // ////////////////// data /////////////////// //
 
         return {
