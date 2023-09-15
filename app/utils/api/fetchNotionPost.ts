@@ -7,7 +7,6 @@ import rehypeStringify from 'rehype-stringify';
 import rehypeHighlight from 'rehype-highlight';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
-import { GiConsoleController } from 'react-icons/gi';
 
 import saveImageIntoFirebase from '@utils/lib/saveImageIntoFirebase';
 
