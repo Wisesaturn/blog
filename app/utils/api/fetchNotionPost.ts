@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -19,7 +20,7 @@ const notion = new Client({
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-export default async function fetchNotionPost(document: string, title: string) {
+export default async function fetchNotionPost(document: string, inputTitle: string) {
   try {
     const blogPage = await notion.databases
       .query({
@@ -29,7 +30,7 @@ export default async function fetchNotionPost(document: string, title: string) {
         const selectedPost = data.results.filter((e: any) => {
           return (
             e.object === 'page' &&
-            e.properties.이름.title[0].plain_text === title.replace(/-+/g, ' ')
+            e.properties.이름.title[0].plain_text === inputTitle.replace(/-+/g, ' ')
           );
         });
 
@@ -54,20 +55,34 @@ export default async function fetchNotionPost(document: string, title: string) {
           createdTime.getUTCMonth() + 1
         }. ${createdTime.getUTCDate()}.`;
 
+        // ////////////////// data /////////////////// //
+        const plain_title = `${selectedPost[0].properties.이름.title[0].plain_text}`;
+        const title = `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
+          selectedPost[0].properties.이름.title[0].plain_text
+        }`;
+        const category = selectedPost[0].properties.category.select.name;
+        const thumbnail =
+          (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '';
+        const createdAt = formattedDate;
+        const tags = selectedPost[0].properties.tags.multi_select;
+        const index = selectedPost[0].id;
+        const description = selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '';
+        const last_editedAt = new Date(selectedPost[0].last_edited_time);
+        // const body = result.value;
+        const body = await saveImageIntoFirebase(result.value, category, title);
+        // ////////////////// data /////////////////// //
+
         return {
-          plain_title: `${selectedPost[0].properties.이름.title[0].plain_text}`,
-          title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
-            selectedPost[0].properties.이름.title[0].plain_text
-          }`,
-          thumbnail:
-            (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '',
-          createdAt: formattedDate,
-          tags: selectedPost[0].properties.tags.multi_select,
-          index: selectedPost[0].id,
-          description: selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '',
-          last_editedAt: new Date(selectedPost[0].last_edited_time),
-          body: result.value,
-          category: selectedPost[0].properties.category.select.name,
+          plain_title,
+          title,
+          category,
+          thumbnail,
+          createdAt,
+          tags,
+          index,
+          description,
+          last_editedAt,
+          body,
         };
       });
 

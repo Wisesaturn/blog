@@ -23,6 +23,7 @@ export async function loader({ params }: LoaderArgs) {
   const data = await fetchNotionPosts(post);
   return json({ category: category[0].name, data });
 }
+
 export const SelectedPostPage = () => {
   const { category, data } = useLoaderData();
 

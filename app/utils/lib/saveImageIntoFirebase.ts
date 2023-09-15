@@ -1,37 +1,60 @@
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { storage } from '@utils/firebase.server';
 
-export default function saveImageIntoFirebase(res: any) {
-  const test = `https://s3.us-west-2.amazonaws.com/secure.notion-static.com/482c3cd6-929d-438e-9a70-0cdf7a85821b/thumbnail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230914T164034Z&X-Amz-Expires=3600&X-Amz-Signature=e188bc2e7c9d3c49a40608573f5d81c5aabbf1c4ec7c93612b5b6b7197dcab8f&X-Amz-SignedHeaders=host&x-id=GetObject`;
+export default async function saveImageIntoFirebase(res: any, category: string, title: string) {
   const imgSrcRegex = /<img[^>]*src="([^"]*)"/g;
-  const imgSrcArray = [];
+  const imgSrcArray: string[] = [];
   let match = imgSrcRegex.exec(res);
 
   // notion url에서 img src 추출
   while (match !== null) {
-    imgSrcArray.push(match[1]);
+    if (!match[1].includes('firebasestorage')) {
+      imgSrcArray.push(match[1]);
+    }
     match = imgSrcRegex.exec(res);
   }
 
-  const uploadImages = async () => {
-    const response = await fetch(test);
-    const data = await response.blob();
-    const ext = String(test.split('.').pop()).split('?').shift();
-    const filename = test.split('/').pop();
-    const metadata = { type: `image/${ext}` };
-    const file = new File([data], filename!, metadata);
+  const uploadImages = async (srcUrl: string) => {
+    const response = await fetch(srcUrl);
+    const data = await response.arrayBuffer();
 
-    const mountainsRef = ref(storage, `images/${filename}.${ext}`);
-    uploadBytes(mountainsRef, file).then((snapshot) => {
-      console.log('update!');
+    const ext = String(srcUrl.split('.').pop()).split('?').shift();
+    const filename = String(String(srcUrl.split('/').pop()).split('?').shift())
+      .split('.')
+      .shift();
+    const metadata = { contentType: `image/${ext}` };
+
+    const postRef = ref(storage, `post/${category}/${title}/${filename}.${ext}`);
+    const ImgUrl = await uploadBytes(postRef, data, metadata).then(async () => {
+      console.log(`------- [update ${filename}.${ext}] -------`);
+      const url = await getDownloadURL(postRef);
+      return url;
     });
+
+    return ImgUrl;
   };
 
-  // TODO : 파일 추출해서 업로드 후 다시 load해서 file 주소를 바꿔놓아야 함
   try {
-    uploadImages();
+    if (imgSrcArray.length === 0) {
+      return res;
+    }
+
+    const convertImgSrcArray = await Promise.all(
+      imgSrcArray.map(async (img) => {
+        const ImgUrl = await uploadImages(img.replace(/#x26;/g, '&'));
+        return ImgUrl;
+      }),
+    );
+
+    const modifiedRes = imgSrcArray.reduce((acc, imgSrc, index) => {
+      return acc.replace(imgSrc, convertImgSrcArray[index]);
+    }, res);
+
+    return modifiedRes;
   } catch (err) {
     console.log(err);
   }
+
+  return res;
 }
