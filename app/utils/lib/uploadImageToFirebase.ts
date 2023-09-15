@@ -3,6 +3,10 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@utils/firebase.server';
 
 const uploadImageToFirebase = async (srcUrl: string, category: string, title: string) => {
+  if (srcUrl === undefined || srcUrl === '') {
+    return '';
+  }
+
   const isSrcUrl = srcUrl.replace(/#x26;/g, '&');
 
   const response = await fetch(isSrcUrl);
