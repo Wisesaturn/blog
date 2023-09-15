@@ -23,7 +23,7 @@ export default function MainProfile() {
       <div className="text-justify leading-loose">
         <span className="block pb-4">
           <strong className="block text-3xl">송재한</strong>
-          <p className="block text-xl">노력하는 개발자</p>
+          <p className="block text-xl">Frontend Developer</p>
         </span>
         {IntroduceSetences.map((item, idx) => (
           <p key={idx} className="before:content-['💬'] before:pr-2">
