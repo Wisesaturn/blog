@@ -7,6 +7,7 @@ import { Title } from '@components/Title';
 import fetchNotionPosts from '@utils/api/fetchNotionPosts';
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
+import searchDB from '@utils/api/searchDB';
 
 import type { LoaderArgs } from '@remix-run/node';
 
@@ -20,9 +21,12 @@ export async function loader({ params }: LoaderArgs) {
     throw new Error('Wrong Path');
   }
 
-  const data = await fetchNotionPosts(post);
+  const data =
+    process.env.NODE_ENV !== 'development' ? await fetchNotionPosts(post) : await searchDB(post);
+
   return json({ category: category[0].name, data });
 }
+
 export const SelectedPostPage = () => {
   const { category, data } = useLoaderData();
 
