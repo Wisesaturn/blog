@@ -2,12 +2,12 @@ import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
 
 import { db } from '@utils/firebase.server';
 
-import type { INotionPostReturn } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 export default async function postDB(
   document: string,
   title: string,
-  data: Partial<INotionPostReturn>,
+  data: Partial<IFirebasePostReturn>,
 ) {
   try {
     const docRef = doc(db, document, title);

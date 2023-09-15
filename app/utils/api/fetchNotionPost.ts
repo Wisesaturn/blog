@@ -12,6 +12,8 @@ import rehypeMathjax from 'rehype-mathjax';
 import convertImageNotionToFirebase from '@utils/lib/convertImageNotionToFirebase';
 import uploadImageToFirebase from '@utils/lib/uploadImageToFirebase';
 
+import deleteStore from './deleteStore';
+
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
 
@@ -62,12 +64,14 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
           selectedPost[0].properties.이름.title[0].plain_text
         }`;
         const category = selectedPost[0].properties.category.select.name;
-        const thumbnail =
-          (await uploadImageToFirebase(
-            selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
-            category,
-            title,
-          )) ?? '';
+
+        deleteStore(category, title);
+
+        const thumbnail = await uploadImageToFirebase(
+          selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
+          category,
+          title,
+        );
         const createdAt = formattedDate;
         const tags = selectedPost[0].properties.tags.multi_select;
         const index = selectedPost[0].id;
@@ -92,6 +96,7 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
 
     return blogPage;
   } catch (err) {
+    console.log(err);
     throw new Error('게시물을 불러오는데 실패하였습니다.');
   }
 }

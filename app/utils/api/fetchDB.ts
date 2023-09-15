@@ -1,5 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 
+import { IFirebasePostReturn } from '@Types/post';
+
 import { db } from '@utils/firebase.server';
 
 export default async function fetchDB(document: string, title: string) {
@@ -8,5 +10,5 @@ export default async function fetchDB(document: string, title: string) {
 
   if (!docSnap.exists()) throw new Error('게시물을 찾을 수 없습니다');
 
-  return docSnap.data();
+  return docSnap.data() as IFirebasePostReturn;
 }

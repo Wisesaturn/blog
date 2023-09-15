@@ -3,33 +3,17 @@ export interface ITags {
   id: string;
   name: string;
 }
-export interface IPost {
-  readonly title: string;
-  readonly plain_title: string;
-  readonly description?: string;
-  readonly createdAt: string;
-  readonly thumbnail: string;
-  readonly index: number;
-  readonly body: string;
-  readonly count: number;
-  readonly tags: ITags[];
-  readonly category: string;
-  readonly comments: {
-    readonly username: string;
-    readonly password: string;
-    readonly createdAt: string;
-    readonly body: string;
-  };
-}
 
-export interface INotionPostReturn {
-  title: string;
-  plain_title: string;
+export interface IFirebasePostReturn {
+  body: string;
+  category: string;
   createdAt: string;
-  thumbnail: string;
-  index: string;
-  tags: string[];
   description: string;
+  index: string;
   last_editedAt: Date;
+  plain_title: string;
+  tags: string[];
+  thumbnail: string;
+  title: string;
   views: number;
 }

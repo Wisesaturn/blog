@@ -3,7 +3,7 @@ import { collection, query, getDocs } from 'firebase/firestore';
 import { db } from '@utils/firebase.server';
 
 import type { DocumentData } from 'firebase/firestore';
-import type { IPost } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 export default async function searchDB(category: string) {
   const q = query(collection(db, category));
@@ -17,5 +17,5 @@ export default async function searchDB(category: string) {
     return dateA < dateB ? 1 : -1;
   });
 
-  return categoryData as IPost[];
+  return categoryData as IFirebasePostReturn[];
 }

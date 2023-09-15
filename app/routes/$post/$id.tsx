@@ -16,13 +16,13 @@ import sharePage from '@utils/lib/sharePage';
 import copyPageUrl from '@utils/lib/copyPageUrl';
 
 import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
-import type { INotionPostReturn } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 export const meta: MetaFunction = ({ data, params }) => {
   const { post, id } = params;
 
   if (data) {
-    const { description, thumbnail } = data as INotionPostReturn;
+    const { description, thumbnail } = data as IFirebasePostReturn;
     const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
     const isDescription = `${description}`;
     const isURL = `https://jaehan.blog/${post}/${id}`;

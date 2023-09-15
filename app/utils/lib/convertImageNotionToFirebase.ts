@@ -1,21 +1,12 @@
 import uploadImageToFirebase from './uploadImageToFirebase';
+import searchNotFirebaseUrl from './searchNotFirebaseUrl';
 
 export default async function convertImageNotionToFirebase(
   res: any,
   category: string,
   title: string,
 ) {
-  const imgSrcRegex = /<img[^>]*src="([^"]*)"/g;
-  const imgSrcArray: string[] = [];
-  let match = imgSrcRegex.exec(res);
-
-  // notion url에서 img src 추출
-  while (match !== null) {
-    if (!match[1].includes('firebasestorage') && !match[1].includes('giphy.com')) {
-      imgSrcArray.push(match[1]);
-    }
-    match = imgSrcRegex.exec(res);
-  }
+  const imgSrcArray = searchNotFirebaseUrl(res);
 
   try {
     if (imgSrcArray.length === 0) {

@@ -4,14 +4,17 @@ import { Link } from '@remix-run/react';
 
 import thumbnailDefault from '@public/thumbnail.webp';
 
-import type { IPost, ITags } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
-export default function PostCardSection(props: { data: IPost[]; showCategory?: boolean }) {
+export default function PostCardSection(props: {
+  data: IFirebasePostReturn[];
+  showCategory?: boolean;
+}) {
   const { data, showCategory } = props;
 
   return (
     <section className="isWrapper w-full flex-col md:gap-6 gap-3 justify-between align-center md:flex-row">
-      {data.map((post: IPost) => {
+      {data.map((post: IFirebasePostReturn) => {
         const parsingTitle = post.title.split(':');
         const [mainTitle, subTitle] = parsingTitle;
 
