@@ -24,7 +24,7 @@ export default async function handleRequest(
 
   responseHeaders.append(
     'Cache-Control',
-    'public, s-maxage=31556952, max-age=604800, stale-while-revalidate=31556952',
+    'public, s-maxage=31556952, max-age=0, stale-while-revalidate=31556952',
   );
   responseHeaders.append('Vercel-CDN-Cache-Control', 'public, s-maxage=31556952, max-age=0');
 
