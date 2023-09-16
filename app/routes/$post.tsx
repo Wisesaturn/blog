@@ -24,10 +24,9 @@ export async function loader({ params }: LoaderArgs) {
       },
       {
         name: `${id ? decodeURI(id!).replace(/-/g, ' ') : ''}`,
-        link: `${id ? decodeURI(id!) : ''}`,
+        link: `/${category[0].link}/${id ? decodeURI(id!) : ''}`,
       },
     ];
-
     return data;
   } catch (err) {
     throw new Error('페이지를 찾을 수 없습니다.');

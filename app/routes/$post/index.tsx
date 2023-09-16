@@ -1,7 +1,5 @@
 import { useLoaderData } from '@remix-run/react';
-import { json, LoaderFunction } from '@remix-run/node';
-
-import { IFirebasePostReturn } from '@Types/post';
+import { json } from '@remix-run/node';
 
 import PostCardSection from '@components/PostCard';
 import { Title } from '@components/Title';
