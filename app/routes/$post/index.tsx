@@ -38,7 +38,10 @@ export const SelectedPostPage = () => {
 
   const updatePost = async () => {
     window.location.href = `${post}?refetch=true`;
-    window.location.replace(`${post}`);
+
+    setTimeout(() => {
+      window.location.replace(`${post}`);
+    }, 100);
   };
 
   return (
