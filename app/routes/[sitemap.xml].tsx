@@ -15,8 +15,13 @@ const sitePost: ISitemap[] = [
     loc: `${HOST_URL}/react/Loading-Chunk-Failed-:-청크-로드-에러-해결하기`,
     lastmod: `2023-09-15`,
   },
+  {
+    loc: `${HOST_URL}/nextjs/Hydration-Error-:-Minified-React-Error-해결하기`,
+    lastmod: `2023-09-22`,
+  },
   { loc: `${HOST_URL}/frontend` },
   { loc: `${HOST_URL}/react` },
+  { loc: `${HOST_URL}/nextjs` },
   { loc: `${HOST_URL}/typescript` },
   { loc: `${HOST_URL}/resume` },
   { loc: `${HOST_URL}/all` },

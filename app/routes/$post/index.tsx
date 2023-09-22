@@ -1,5 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
+import { useRef } from 'react';
 
 import PostCardSection from '@components/PostCard';
 import { Title } from '@components/Title';
@@ -9,23 +10,35 @@ import fetchNotionPosts from '@utils/api/fetchNotionPosts';
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
 import searchDB from '@utils/api/searchDB';
+import fetchDB from '@utils/api/fetchDB';
+import postDB from '@utils/api/postDB';
+import fetchNotionPost from '@utils/api/fetchNotionPost';
 
 import type { LoaderArgs } from '@remix-run/node';
 
 export async function loader({ params, request }: LoaderArgs) {
   const { post } = params;
   const url = new URL(request.url);
-  const refetch = url.searchParams.get('refetch');
+  const refetch = Boolean(url.searchParams.get('refetch'));
+  const title = String(url.searchParams.get('title'));
   const chooseCategory = CATEGORY_DATA.filter((item: CategoryType) => {
     return item.link === post;
   });
 
-  if (post === undefined) {
-    throw new Error('Wrong Path');
+  if (post === undefined || title === undefined) {
+    throw new Error('Wrong State : development');
   }
 
   if (refetch) {
-    await fetchNotionPosts(post);
+    console.log(title);
+    await fetchNotionPost('', title.replace(/\s+/g, '-'))
+      .then((notionRes) => {
+        postDB(chooseCategory[0].link, title.replace(/\s+/g, '-'), notionRes);
+      })
+      .catch((err) => {
+        console.log('[refetch error]');
+        console.log(err);
+      });
   }
 
   const data = await searchDB(post);
@@ -35,9 +48,11 @@ export async function loader({ params, request }: LoaderArgs) {
 
 export const SelectedPostPage = () => {
   const { chooseCategory, data, post } = useLoaderData<typeof loader>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const updatePost = async () => {
-    window.location.href = `${post}?refetch=true`;
+    const title = inputRef.current?.value;
+    window.location.href = `${post}?refetch=true&title=${title}`;
 
     setTimeout(() => {
       window.location.replace(`${post}`);
@@ -48,11 +63,18 @@ export const SelectedPostPage = () => {
     <>
       <Title isContent={chooseCategory.name} isContentIcon={chooseCategory.icon} />
       {process.env.NODE_ENV === 'development' && (
-        <Button
-          onClick={updatePost}
-          className="w-full bg-gray-700 text-white hover:bg-gray-800 active:bg-gray-900"
-          content="새로고침"
-        />
+        <div className="flex gap-4">
+          <input
+            ref={inputRef}
+            className="w-full border-2 border-gray-300 px-4 rounded-md"
+            placeholder="Search할 게시물을 입력해주세요"
+          />
+          <Button
+            onClick={updatePost}
+            className="w-full bg-gray-700 text-white hover:bg-gray-800 active:bg-gray-900"
+            content="새로고침"
+          />
+        </div>
       )}
       <PostCardSection data={data} />
     </>

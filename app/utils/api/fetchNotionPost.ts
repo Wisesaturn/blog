@@ -37,6 +37,10 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
           );
         });
 
+        if (selectedPost.length === 0) {
+          throw new Error('게시물을 찾을 수 없습니다.');
+        }
+
         const mdblocks = await n2m.pageToMarkdown(selectedPost[0].id);
         const mdString = n2m.toMarkdownString(mdblocks);
 
