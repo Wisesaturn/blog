@@ -17,7 +17,7 @@ const sitePost: ISitemap[] = [
   },
   {
     loc: `${HOST_URL}/nextjs/Hydration-Error-:-Minified-React-Error-해결하기`,
-    lastmod: `2023-09-22`,
+    lastmod: `2023-11-09`,
   },
   { loc: `${HOST_URL}/frontend` },
   { loc: `${HOST_URL}/react` },
