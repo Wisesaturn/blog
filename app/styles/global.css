@@ -496,6 +496,17 @@
   color: #333;
 }
 
+.markdown-body li > code {
+  color: #50ad63;
+  font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
+    'Courier New', 'monospace';
+  font-size: 0.85rem;
+  padding: 0.1rem 0.35rem;
+  white-space: normal;
+  background: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
 .markdown-body pre > code {
   font-size: 0.875rem;
   line-height: 160% !important;
