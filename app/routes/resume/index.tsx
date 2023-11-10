@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 import ResumeSection from '@components/Title/ResumeSection';
 import ResumeButton from '@components/Button/ResumeButton';
-
-import MainProfile from './components/MainProfile';
-import Contact from './components/Contact';
-import Works from './components/Works';
+import MainProfile from '@components/ResumeSection/MainProfile';
+import Contact from '@components/ResumeSection/Contact';
+import Works from '@components/ResumeSection/Works';
 
 const sectionArray = {
   Profile: <MainProfile />,
@@ -56,7 +55,7 @@ export default function ResumePage() {
           ))}
         </div>
       </section>
-      <section className="hidden md:block whitespace-nowrap">
+      <aside className="hidden md:block whitespace-nowrap">
         <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
           {Object.keys(sectionArray).map((item, idx) => {
             if (isSectionType(item)) {
@@ -72,7 +71,7 @@ export default function ResumePage() {
             return null;
           })}
         </div>
-      </section>
+      </aside>
     </>
   );
 }

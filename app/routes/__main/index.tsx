@@ -3,7 +3,6 @@ import { SlArrowRight } from 'react-icons/sl';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
-import Pagination from '@components/Pagination';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import TitleSection from '@components/Title/Title';

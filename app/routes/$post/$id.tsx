@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useLoaderData } from '@remix-run/react';
 import styles from 'highlight.js/styles/atom-one-dark-reasonable.css';
@@ -15,28 +16,63 @@ import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
 import { copyPageUrl, sharePage } from '@utils/lib/post';
 
-import type { LoaderArgs, MetaFunction, LinksFunction } from '@remix-run/node';
+import type { LoaderArgs, LinksFunction, V2_MetaFunction } from '@remix-run/node';
 import type { INotionPostReturn } from '@Types/post';
 
-export const meta: MetaFunction = ({ data, params }) => {
+export const meta: V2_MetaFunction = ({ data, params }) => {
   const { post, id } = params;
   const { description, thumbnail } = data! as INotionPostReturn;
   const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
   const isDescription = `${description}`;
   const isURL = `https://jaehan.blog/${post}/${id}`;
   const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
-  return {
-    title: isTitle,
-    description: isDescription,
-    'og:url': isURL,
-    'og:title': isTitle,
-    'og:image': thumbnail === '' ? defaultThumbnail : thumbnail,
-    'og:description': isDescription,
-    'twitter:url': isURL,
-    'twitter:title': isTitle,
-    'twitter:image': thumbnail === '' ? defaultThumbnail : thumbnail,
-    'twitter:description': isDescription,
-  };
+
+  return [
+    {
+      title: isTitle,
+    },
+    {
+      name: 'description',
+      content: isDescription,
+    },
+    {
+      property: 'og:url',
+      content: isURL,
+    },
+    {
+      property: 'og:title',
+      content: isTitle,
+    },
+    {
+      property: 'og:image',
+      content: thumbnail === '' ? defaultThumbnail : thumbnail,
+    },
+    {
+      property: 'og:description',
+      content: isDescription,
+    },
+    {
+      property: 'twitter:url',
+      content: isURL,
+    },
+    {
+      property: 'twitter:title',
+      content: isTitle,
+    },
+    {
+      property: 'twitter:image',
+      content: thumbnail === '' ? defaultThumbnail : thumbnail,
+    },
+    {
+      property: 'twitter:description',
+      content: isDescription,
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: isURL,
+    },
+  ];
 };
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];

@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react';
 
 import thumbnailDefault from '@public/thumbnail.webp';
 
-import type { IPost, ITags } from '@Types/post';
+import type { IPost } from '@Types/post';
 
 export default function PostCardSection(props: { data: IPost[]; showCategory?: boolean }) {
   const { data, showCategory } = props;
