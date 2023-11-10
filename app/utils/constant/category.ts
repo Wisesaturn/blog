@@ -1,11 +1,15 @@
 export interface CategoryType {
   name: string;
   link: string;
+  color?: string;
+  icon?: string;
 }
 
 export const CATEGORY_DATA: CategoryType[] = [
-  { name: 'Typescript', link: 'typescript' },
+  { name: 'Typescript', link: 'typescript', color: '#3178c6', icon: 'akar-icons:typescript-fill' },
   { name: 'Frontend', link: 'frontend' },
+  { name: 'React', link: 'react', color: '#00d8ff', icon: 'mdi:react' },
+  { name: 'Next.js', link: 'nextjs', color: '#000000', icon: 'akar-icons:nextjs-fill' },
 ].concat(
   process.env.NODE_ENV === 'development'
     ? [

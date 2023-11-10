@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
 
 import useScroll from '@hooks/useScroll';

@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useLoaderData } from '@remix-run/react';
 import styles from 'highlight.js/styles/atom-one-dark-reasonable.css';
 import { GiShare } from 'react-icons/gi';
@@ -14,14 +13,15 @@ import { PostTitle } from '@components/Title';
 
 import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
-import { copyPageUrl, sharePage } from '@utils/lib/post';
+import sharePage from '@utils/lib/sharePage';
+import copyPageUrl from '@utils/lib/copyPageUrl';
 
 import type { LoaderArgs, LinksFunction, V2_MetaFunction } from '@remix-run/node';
-import type { INotionPostReturn } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 export const meta: V2_MetaFunction = ({ data, params }) => {
   const { post, id } = params;
-  const { description, thumbnail } = data! as INotionPostReturn;
+  const { description, thumbnail } = data! as IFirebasePostReturn;
   const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
   const isDescription = `${description}`;
   const isURL = `https://jaehan.blog/${post}/${id}`;

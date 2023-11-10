@@ -11,6 +11,7 @@ import {
 } from '@remix-run/react';
 import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
+import { Analytics } from '@vercel/analytics/react';
 
 import styles from '@styles/tailwind.css';
 
@@ -139,6 +140,7 @@ export default function App() {
     <html lang="ko">
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="naver-site-verification" content="379a5ac8e5c6d8d023affe7f0d558e14d67f66f4" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -154,6 +156,7 @@ export default function App() {
         </Suspense>
         <ScrollRestoration />
         <Scripts />
+        <Analytics />
         <LiveReload />
       </body>
     </html>

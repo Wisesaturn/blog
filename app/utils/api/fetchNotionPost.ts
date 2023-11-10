@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -8,6 +9,11 @@ import rehypeHighlight from 'rehype-highlight';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
+import convertImageNotionToFirebase from '@utils/lib/convertImageNotionToFirebase';
+import uploadImageToFirebase from '@utils/lib/uploadImageToFirebase';
+
+import deleteStore from './deleteStore';
+
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
 
@@ -17,7 +23,7 @@ const notion = new Client({
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-export default async function fetchNotionPost(document: string, title: string) {
+export default async function fetchNotionPost(document: string, inputTitle: string) {
   try {
     const blogPage = await notion.databases
       .query({
@@ -27,9 +33,13 @@ export default async function fetchNotionPost(document: string, title: string) {
         const selectedPost = data.results.filter((e: any) => {
           return (
             e.object === 'page' &&
-            e.properties.이름.title[0].plain_text === title.replace(/-+/g, ' ')
+            e.properties.이름.title[0].plain_text === inputTitle.replace(/-+/g, ' ')
           );
         });
+
+        if (selectedPost.length === 0) {
+          throw new Error('게시물을 찾을 수 없습니다.');
+        }
 
         const mdblocks = await n2m.pageToMarkdown(selectedPost[0].id);
         const mdString = n2m.toMarkdownString(mdblocks);
@@ -44,25 +54,53 @@ export default async function fetchNotionPost(document: string, title: string) {
           .use(rehypeMathjax) // math 구문 강조용
           .use(rehypeHighlight) // code 강조용
           .process(mdString.parent);
+
+        const createdTime = new Date(selectedPost[0].created_time);
+        createdTime.setHours(createdTime.getHours() + 9);
+
+        const formattedDate = `${createdTime.getUTCFullYear()}. ${
+          createdTime.getUTCMonth() + 1
+        }. ${createdTime.getUTCDate()}.`;
+
+        // ////////////////// data /////////////////// //
+        const plain_title = `${selectedPost[0].properties.이름.title[0].plain_text}`;
+        const title = `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
+          selectedPost[0].properties.이름.title[0].plain_text
+        }`;
+        const category = selectedPost[0].properties.category.select.name;
+
+        deleteStore(category, title);
+
+        const thumbnail = await uploadImageToFirebase(
+          selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
+          category,
+          title,
+        );
+        const createdAt = formattedDate;
+        const tags = selectedPost[0].properties.tags.multi_select;
+        const index = selectedPost[0].id;
+        const description = selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '';
+        const last_editedAt = new Date(selectedPost[0].last_edited_time);
+        const body = await convertImageNotionToFirebase(result.value, category, title);
+        // ////////////////// data /////////////////// //
+
         return {
-          plain_title: `${selectedPost[0].properties.이름.title[0].plain_text}`,
-          title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
-            selectedPost[0].properties.이름.title[0].plain_text
-          }`,
-          thumbnail:
-            (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) ?? '',
-          createdAt: new Date(selectedPost[0].created_time).toLocaleDateString('ko-KR'),
-          tags: selectedPost[0].properties.tags.multi_select,
-          index: selectedPost[0].id,
-          description: selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '',
-          last_editedAt: new Date(selectedPost[0].last_edited_time),
-          body: result.value,
-          category: selectedPost[0].properties.category.select.name,
+          plain_title,
+          title,
+          category,
+          thumbnail,
+          createdAt,
+          tags,
+          index,
+          description,
+          last_editedAt,
+          body,
         };
       });
 
     return blogPage;
-  } catch (err: any) {
+  } catch (err) {
+    console.log(err);
     throw new Error('게시물을 불러오는데 실패하였습니다.');
   }
 }

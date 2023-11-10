@@ -1,16 +1,19 @@
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
+
 import fetchDB from './fetchDB';
 import postDB from './postDB';
 import fetchNotionPost from './fetchNotionPost';
 
-import type { IPost, INotionPostReturn } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 const { Client } = require('@notionhq/client');
 
 const notion = new Client({
   auth: process.env.NOTION_KEY,
 });
+
+export type EnforceType = 'enforce' | 'default';
 
 export default async function fetchNotionPosts(document: string) {
   try {
@@ -27,10 +30,18 @@ export default async function fetchNotionPosts(document: string) {
           throw new Error(`"${document}" 카테고리가 존재하지 않습니다.`);
 
         const blogPagesMap = blogPageIdList
-          .map((post: any): Partial<INotionPostReturn> => {
+          .map((post: any): Partial<IFirebasePostReturn> => {
+            const createdTime = new Date(post.created_time);
+            createdTime.setHours(createdTime.getHours() + 9);
+
+            const formattedDate = `${createdTime.getUTCFullYear()}. ${
+              createdTime.getUTCMonth() + 1
+            }. ${createdTime.getUTCDate()}.`;
+
+            // JSON //
             const category = post.properties.category.select.name;
             const last_editedAt = new Date(post.last_edited_time);
-            const createdAt = new Date(post.created_time).toLocaleDateString('ko-KR');
+            const createdAt = formattedDate;
             const plain_title = `${post.properties.이름.title[0].plain_text}`;
             const title = `${post.icon?.emoji ? `${post.icon.emoji} ` : ''} ${
               post.properties.이름.title[0].plain_text
@@ -39,6 +50,7 @@ export default async function fetchNotionPosts(document: string) {
             const tags = post.properties.tags.multi_select;
             const index = post.id;
             const description = post.properties.description.rich_text[0]?.plain_text ?? '';
+            // JSON //
 
             const postDataJSON = {
               last_editedAt,
@@ -46,34 +58,15 @@ export default async function fetchNotionPosts(document: string) {
               title,
               thumbnail,
               createdAt,
+              category,
               tags,
               index,
               description,
             };
 
-            function isExpiredThumbnail(url: string) {
-              const match = url.match(/X-Amz-Date=(\d{8}T\d{6}Z)/);
-              if (match) {
-                const dateString = match[1];
-                const year = dateString.substring(0, 4);
-                const month = dateString.substring(4, 6);
-                const day = dateString.substring(6, 8);
-                const hour = dateString.substring(9, 11);
-                const minute = dateString.substring(11, 13);
-                const second = dateString.substring(13, 15);
-
-                const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`);
-                const expires = new Date(date.getTime() + 3600000); // 1시간(60분 * 60초 * 1000밀리초)
-                return Date.now() > expires.getTime();
-              }
-
-              return false;
-            }
-
             fetchDB(category, plain_title.replace(/\s+/g, '-'))
               .then((res) => {
-                if (last_editedAt === res.last_editedAt && !isExpiredThumbnail(res.thumbnail))
-                  return;
+                if (last_editedAt === res.last_editedAt) return;
 
                 fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
                   postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
@@ -87,7 +80,7 @@ export default async function fetchNotionPosts(document: string) {
 
             return postDataJSON;
           })
-          .sort((a: IPost, b: IPost) => {
+          .sort((a: IFirebasePostReturn, b: IFirebasePostReturn) => {
             return a.createdAt < b.createdAt ? 1 : -1;
           });
 

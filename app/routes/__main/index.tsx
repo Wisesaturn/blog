@@ -1,5 +1,7 @@
 import { Link, useLoaderData } from '@remix-run/react';
 import { SlArrowRight } from 'react-icons/sl';
+import { css } from '@emotion/react';
+import { Icon } from '@iconify/react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
@@ -24,6 +26,8 @@ export const MainPage = () => {
   const headerData = [{ name: `📚 사툰사툰`, link: '/' }];
   const recentDB = useLoaderData();
 
+  const categoryClass = `flex gap-1 items-center justify-center px-3 py-0.5 md:py-1 md:px-4 rounded-lg border-2 before:hidden font-light duration-200`;
+
   return (
     <>
       <Header paths={headerData} />
@@ -31,11 +35,24 @@ export const MainPage = () => {
         <TitleSection isContent="사툰사툰" isSubContent="기록하고 싶은 것을 담아보았습니다" />
         <ProfileSection />
         <section className="flex gap-2 whitespace-nowrap flex-wrap text-center mb-8">
-          {CATEGORY_DATA.map((ele: CategoryType) => {
+          {CATEGORY_DATA.map((item: CategoryType) => {
             return (
-              <Link key={ele.name} prefetch="none" to={ele.link}>
-                <div className="px-3 py-0.5 md:py-1 md:px-4 rounded-lg border-2 before:hidden bg-green-main font-light text-white duration-200 hover:bg-white border-white hover:text-black hover:border-green-bright">
-                  {ele.name}
+              <Link key={item.name} prefetch="none" reloadDocument to={item.link}>
+                <div
+                  css={css`
+                    background-color: ${item.color || '#333'};
+                    color: white;
+                    border-color: white;
+                    :hover {
+                      border-color: ${item.color || '#333'};
+                      color: ${item.color || '#333'};
+                      background-color: white;
+                    }
+                  `}
+                  className={categoryClass}
+                >
+                  {item.icon && <Icon icon={item.icon} />}
+                  {item.name}
                 </div>
               </Link>
             );

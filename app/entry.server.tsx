@@ -8,7 +8,7 @@ import type { EntryContext } from '@remix-run/node';
 
 const versionCookie = createCookie('version', {
   path: '/', // make sure the cookie we receive the request on every path
-  secure: false, // enable this in prod
+  secure: true, // enable this in prod
   httpOnly: true, // only for server-side usage
   maxAge: 60 * 60 * 24 * 365, // keep the cookie for a year
 });
@@ -22,13 +22,11 @@ export default async function handleRequest(
   const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
   const { version } = remixContext.manifest; // get the build version
 
-  // if the response doesn't already have a cache-control header, add one
-  if (!responseHeaders.has('Cache-Control')) {
-    responseHeaders.append(
-      'Cache-Control',
-      'public, max-age=1800, s-maxage=1800, stale-while-revalidate=1800',
-    );
-  }
+  responseHeaders.append(
+    'Cache-Control',
+    'public, s-maxage=31556952, max-age=0, stale-while-revalidate=31556952',
+  );
+  responseHeaders.append('Vercel-CDN-Cache-Control', 'public, s-maxage=31556952, max-age=0');
 
   // Add new headers to the response
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));

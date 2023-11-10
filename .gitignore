@@ -48,6 +48,7 @@ build.index.js.map
 /public/build
 /api/index.js
 /api/index.js.map
+/api/metafile.*
 /app/styles/tailwind.css
 
 api/
