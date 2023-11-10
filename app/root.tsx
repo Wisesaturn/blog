@@ -36,9 +36,9 @@ const metaSNS = [
 ];
 
 const metaTwitter = [
-  { property: 'twitter:card', content: 'summary' },
+  { name: 'twitter:card', content: 'summary' },
   {
-    property: 'twitter:image',
+    name: 'twitter:image',
     content:
       'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
   },
@@ -52,13 +52,6 @@ export const meta: V2_MetaFunction = ({ params }) => {
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
 
   return [
-    {
-      charset: 'utf-8',
-    },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1, viewport-fit=cover',
-    },
     {
       name: 'title',
       content: isTitle,
@@ -80,15 +73,15 @@ export const meta: V2_MetaFunction = ({ params }) => {
       content: isDescription,
     },
     {
-      property: 'twitter:url',
+      name: 'twitter:url',
       content: isURL,
     },
     {
-      property: 'twitter:title',
+      name: 'twitter:title',
       content: isTitle,
     },
     {
-      property: 'twitter:description',
+      name: 'twitter:description',
       content: isDescription,
     },
     ...metaSNS,
@@ -140,11 +133,13 @@ export default function App() {
     <html lang="ko">
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="naver-site-verification" content="379a5ac8e5c6d8d023affe7f0d558e14d67f66f4" />
+        <meta charSet="utf-8" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
-        <link rel="maifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <Links />
       </head>
       <body>

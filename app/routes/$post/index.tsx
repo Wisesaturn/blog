@@ -6,11 +6,9 @@ import PostCardSection from '@components/PostCard';
 import { Title } from '@components/Title';
 import Button from '@components/Button';
 
-import fetchNotionPosts from '@utils/api/fetchNotionPosts';
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
 import searchDB from '@utils/api/searchDB';
-import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
 import fetchNotionPost from '@utils/api/fetchNotionPost';
 
@@ -30,7 +28,6 @@ export async function loader({ params, request }: LoaderArgs) {
   }
 
   if (refetch) {
-    console.log(title);
     await fetchNotionPost('', title.replace(/\s+/g, '-'))
       .then((notionRes) => {
         postDB(chooseCategory[0].link, title.replace(/\s+/g, '-'), notionRes);

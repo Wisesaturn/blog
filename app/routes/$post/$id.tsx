@@ -52,19 +52,19 @@ export const meta: V2_MetaFunction = ({ data, params }) => {
       content: isDescription,
     },
     {
-      property: 'twitter:url',
+      name: 'twitter:url',
       content: isURL,
     },
     {
-      property: 'twitter:title',
+      name: 'twitter:title',
       content: isTitle,
     },
     {
-      property: 'twitter:image',
+      name: 'twitter:image',
       content: thumbnail === '' ? defaultThumbnail : thumbnail,
     },
     {
-      property: 'twitter:description',
+      name: 'twitter:description',
       content: isDescription,
     },
     {
