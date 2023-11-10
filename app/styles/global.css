@@ -345,7 +345,7 @@
   }
 
   /* underline */
-  h3:before {
+  .markdown-body h3:before {
     content: '';
     position: absolute;
     width: 100%;

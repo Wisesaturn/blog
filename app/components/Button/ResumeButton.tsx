@@ -9,20 +9,22 @@ interface ResumeButtonProps {
   selected: SectionType;
 }
 
-export default function ResumeButton(props: ResumeButtonProps) {
+function ResumeButton(props: ResumeButtonProps) {
   const { key, target, onClick, selected } = props;
 
   return (
-    <a
+    <button
       key={key}
       css={css`
         color: ${selected !== target ? '#18191b' : 'white'} !important;
         background-color: ${selected !== target ? 'white' : '#18191b'};
       `}
-      href={`#${target}`}
       className="px-6 py-1 rounded-full"
+      onClick={() => onClick(target)}
     >
-      <div onClick={() => onClick(target)}>{target}</div>
-    </a>
+      {target}
+    </button>
   );
 }
+
+export default ResumeButton;

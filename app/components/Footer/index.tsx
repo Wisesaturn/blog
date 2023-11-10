@@ -3,7 +3,7 @@ import { Link, useLocation } from '@remix-run/react';
 
 type IsSelectedType = '' | 'all' | 'resume';
 
-export default function Footer() {
+function Footer() {
   const location = useLocation();
   const isSelected = location.pathname.split('/')[1] as IsSelectedType;
   const iconStyle = `active:animate-push justify-between rounded-2xl flex px-10 gap-1 md:gap-0.5 flex-col items-center hover:cursor-pointer`;
@@ -43,3 +43,4 @@ export default function Footer() {
     </>
   );
 }
+export default Footer;

@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import ResumeSection from '@components/Title/ResumeSection';
 import ResumeButton from '@components/Button/ResumeButton';
 import MainProfile from '@components/ResumeSection/MainProfile';
-import Contact from '@components/ResumeSection/Contact';
 import Works from '@components/ResumeSection/Works';
+
+import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
 const sectionArray = {
   Profile: <MainProfile />,
-  Contact: <Contact />,
   Works: <Works />,
   'Team Projects': <></>,
   'Personal Projects': <></>,
@@ -26,21 +26,42 @@ const isSectionType = (item: string): item is SectionType => {
   return item in sectionArray;
 };
 
+interface Category {
+  id: SectionType;
+  scrollY: number;
+}
+
 export default function ResumePage() {
   const [selectCategory, setSelectCategory] = useState<SectionType>('Profile');
+  const [CategorySection, setCategorySection] = useState<Category[]>([]);
 
-  const handleCategory = (category: SectionType) => {
-    setSelectCategory(category);
+  const handleCategory = useCallback(
+    (category: SectionType) => {
+      const getScrollY = CategorySection.filter((section) => section.id === category)[0].scrollY;
+      window.scrollTo({ top: getScrollY, behavior: 'smooth' });
+    },
+    [CategorySection],
+  );
 
-    if (category === 'Profile') {
-      window.scrollTo(0, 0);
-    }
-  };
+  useEffect(() => {
+    const observer = getIntersectionObserver(setSelectCategory);
+    const headingElements = Array.from(document.querySelectorAll('section'));
+
+    const categorySection = headingElements.map((section) => ({
+      id: section.id as SectionType,
+      scrollY: section.offsetTop,
+    }));
+    setCategorySection(categorySection);
+
+    headingElements.map((header) => {
+      return observer.observe(header);
+    });
+  }, []);
 
   return (
     <>
-      <section className="w-full">
-        <h1 className="text-center py-10 font-light space-x-2">
+      <div className="w-full">
+        <h1 id="Profile" className="text-center py-10 font-light space-x-2">
           <span className="text-gray-200">{'<'}</span>
           <span className="text-gray-600">
             안녕하세요 <span className="text-black font-semibold">송재한</span> 입니다
@@ -54,7 +75,7 @@ export default function ResumePage() {
             </ResumeSection>
           ))}
         </div>
-      </section>
+      </div>
       <aside className="hidden md:block whitespace-nowrap">
         <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
           {Object.keys(sectionArray).map((item, idx) => {

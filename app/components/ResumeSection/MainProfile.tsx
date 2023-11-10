@@ -1,5 +1,7 @@
 import profile from '@public/profile-real.webp';
 
+import Contact from './Contact';
+
 export default function MainProfile() {
   const IntroduceSetences = [
     <>
@@ -14,23 +16,26 @@ export default function MainProfile() {
   ];
 
   return (
-    <section className="flex md:flex-row md:gap-0 gap-5 flex-col items-center justify-center md:space-x-10 w-full">
-      <img
-        className="animate-skeletonUI inline-block min-w-[15rem] w-60 h-60 object-cover rounded-full"
-        src={profile}
-        alt="프로필 사진"
-      />
-      <div className="text-justify leading-loose">
-        <span className="block pb-4">
-          <strong className="block text-3xl">송재한</strong>
-          <p className="block text-xl">Frontend Developer</p>
-        </span>
-        {IntroduceSetences.map((item, idx) => (
-          <p key={idx} className="before:content-['💬'] before:pr-2">
-            {item}
-          </p>
-        ))}
+    <>
+      <div className="flex md:flex-row md:gap-0 gap-5 flex-col items-center justify-center md:space-x-10 w-full">
+        <img
+          className="animate-skeletonUI inline-block min-w-[15rem] w-60 h-60 object-cover rounded-full"
+          src={profile}
+          alt="프로필 사진"
+        />
+        <div className="text-justify leading-loose">
+          <span className="block pb-4">
+            <strong className="block text-3xl">송재한</strong>
+            <p className="block text-xl">Frontend Developer</p>
+          </span>
+          {IntroduceSetences.map((item, idx) => (
+            <p key={idx} className="before:content-['💬'] before:pr-2">
+              {item}
+            </p>
+          ))}
+        </div>
       </div>
-    </section>
+      <Contact />
+    </>
   );
 }
