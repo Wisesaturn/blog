@@ -1,4 +1,5 @@
 import { RemixBrowser } from '@remix-run/react';
+import { Analytics } from '@vercel/analytics/react';
 import { startTransition, StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
@@ -8,6 +9,7 @@ function hydrate() {
       document,
       <StrictMode>
         <RemixBrowser />
+        <Analytics />
       </StrictMode>,
     );
   });
