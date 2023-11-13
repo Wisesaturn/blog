@@ -10,7 +10,6 @@ import {
 } from '@remix-run/react';
 import { Suspense, createContext } from 'react';
 import { json } from '@remix-run/node';
-import { Analytics } from '@vercel/analytics/react';
 
 import styles from '@styles/tailwind.css';
 
@@ -106,7 +105,7 @@ export default function App() {
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
-        <link rel="maifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <Links />
       </head>
       <body>
@@ -118,7 +117,6 @@ export default function App() {
         </Suspense>
         <ScrollRestoration />
         <Scripts />
-        <Analytics />
         <LiveReload />
       </body>
     </html>
