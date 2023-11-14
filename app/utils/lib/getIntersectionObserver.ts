@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { SectionType } from '@app/routes/resume/index';
 
 const observerOption = {
-  threshold: 0.7,
-  rootMargin: '40px 0px 0px 0px',
+  threshold: 0.4,
+  rootMargin: '-30px 0px 0px 0px',
 };
 
 export const getIntersectionObserver = (setState: Dispatch<SetStateAction<SectionType>>) => {

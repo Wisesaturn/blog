@@ -159,6 +159,17 @@
     font-weight: semibold;
   }
 
+  li > code {
+    color: theme(colors.green.main);
+    font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
+      'Courier New', 'monospace';
+    font-size: 0.85rem;
+    padding: 0.1rem 0.35rem;
+    white-space: normal;
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+
   ul,
   ol {
     padding: 1rem;
@@ -179,7 +190,7 @@
   }
 
   ol li code {
-    color: #50ad63;
+    color: theme(colors.green.main);
     font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
       'Courier New', 'monospace';
     font-size: 0.85rem;
@@ -226,7 +237,7 @@
   }
 
   ul li {
-    padding-left : 1rem;
+    padding-left: 1rem;
   }
 
   ul li::before {
@@ -242,7 +253,7 @@
   }
 
   .markdown-body ul li {
-    padding-left : .25rem;
+    padding-left: 0.25rem;
   }
 
   .markdown-body ul li::before {
@@ -374,7 +385,7 @@
     padding: 0.15rem;
 
     border-radius: 1rem;
-    background-color: #50ad63;
+    background-color: theme(colors.green.main);
   }
 
   /* animation */
@@ -517,7 +528,7 @@
 }
 
 .markdown-body li > code {
-  color: #50ad63;
+  color: theme(colors.green.main);
   font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
     'Courier New', 'monospace';
   font-size: 0.85rem;
@@ -534,7 +545,7 @@
 }
 
 .markdown-body p > code {
-  color: #50ad63;
+  color: theme(colors.green.main);
   font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
     'Courier New', 'monospace';
   font-size: 0.85rem;
@@ -549,7 +560,7 @@
 }
 
 .markdown-body blockquote > b {
-  color: #50ad63;
+  color: theme(colors.green.main);
 }
 
 .markdown-body p > u > em {
@@ -630,4 +641,15 @@
 .sticky {
   position: -webkit-sticky;
   position: sticky;
+}
+
+.link {
+  color: theme(colors.blue.500) !important;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
+
+.link:hover {
+  color: theme(colors.blue.700) !important;
 }
