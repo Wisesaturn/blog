@@ -6,7 +6,7 @@ const teamprojectSection = [TEAMPROJECT_아주그라운드, TEAMPROJECT_언더�
 
 export default function TeamProjects() {
   return (
-    <div className="flex pt-8 pb-4 gap-16 w-full flex-col max-md:gap-2">
+    <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
       {teamprojectSection.map((data) => (
         <ProjectSection data={data} isActive={false} />
       ))}

@@ -6,7 +6,7 @@ const workSection = [WORK_이지일렉트릭];
 
 export default function Work() {
   return (
-    <div className="flex pt-8 pb-4 gap-16 w-full flex-col max-md:gap-2">
+    <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
       {workSection.map((data, idx) => (
         <ProjectSection data={data} isActive={idx === 0} />
       ))}
