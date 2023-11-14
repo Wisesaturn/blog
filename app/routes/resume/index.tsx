@@ -4,13 +4,14 @@ import ResumeSection from '@components/Title/ResumeSection';
 import ResumeButton from '@components/Button/ResumeButton';
 import MainProfile from '@components/ResumeSection/MainProfile';
 import Works from '@components/ResumeSection/Works';
+import TeamProjects from '@components/ResumeSection/TeamProjects';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
 const sectionArray = {
   Profile: <MainProfile />,
   Works: <Works />,
-  'Team Projects': <></>,
+  'Team Projects': <TeamProjects />,
   'Personal Projects': <></>,
   Experiences: <></>,
   Activities: <></>,

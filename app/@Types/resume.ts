@@ -1,20 +1,23 @@
 import React from 'react';
 
-interface WorkInfo {
-  company: string;
+interface ProjectInfo {
+  teamName: string;
   date: string;
   role: string;
   position: string;
   description: string[];
   link?: string;
+  linkAlt?: string;
+  techStack?: string[];
+  isAwarded?: boolean;
 }
 
-interface WorkContent {
+interface ProjectContent {
   title: string;
   list: React.ReactNode[];
 }
 
-export interface WorkItem {
-  info: WorkInfo;
-  content: WorkContent[];
+export interface ProjectItem {
+  info: ProjectInfo;
+  content: ProjectContent[];
 }
