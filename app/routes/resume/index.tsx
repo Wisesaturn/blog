@@ -61,7 +61,7 @@ export default function ResumePage() {
   return (
     <>
       <div className="w-full">
-        <h1 id="Profile" className="text-center py-10 font-light space-x-2">
+        <h1 id="Resume Title" className="text-center py-10 font-light space-x-2">
           <span className="text-gray-200">{'<'}</span>
           <span className="text-gray-600">
             안녕하세요 <span className="text-black font-semibold">송재한</span> 입니다

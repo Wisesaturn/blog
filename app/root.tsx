@@ -104,6 +104,11 @@ export const links: LinksFunction = () => [
     href: 'https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css',
   },
   { rel: 'stylesheet', type: 'text/css', href: styles },
+  {
+    rel: 'stylesheet',
+    type: 'text/css',
+    href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+  },
 ];
 
 export const loader: LoaderFunction = () => {
