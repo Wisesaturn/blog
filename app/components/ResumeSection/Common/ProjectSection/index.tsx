@@ -25,15 +25,14 @@ export default function ProjectSection({
           </h3>
         </div>
         <div
-          className={`${infoClass} py-2 mt-2 sticky ml-0.5 pl-7 border-l-2 h-auto w-60 max-w-60 bg-gray-50 max-md:w-screen max-md:max-w-full`}
+          className={`${infoClass} py-2 mt-2 sticky ml-0.5 px-7 border-l-2 h-auto w-60 max-w-60 bg-gray-50 max-md:w-screen max-md:max-w-full`}
         >
           <p className="p-0 text-sm">{date}</p>
           <p className="p-0 text-sm">{role}</p>
           <p className="p-0 text-sm">{position}</p>
-          {techStack?.map((stack) => <p className="p-0 text-sm">{stack}</p>)}
           <div className="py-4" />
           {description.map((item) => (
-            <p className="p-0 text-sm text-gray-500 pr-7">{item}</p>
+            <p className="p-0 text-sm text-gray-500">{item}</p>
           ))}
           <a href={link} target="_blank" className="text-sm link">
             {linkAlt ?? link}

@@ -10,7 +10,7 @@ export default function ResumeSection({
   children: React.ReactNode;
 }) {
   return (
-    <section id={title}>
+    <section id={title} className="py-8">
       {showTitle && (
         <h2 id={title} className="text-3xl font-semibold tracking-tight">
           {title}

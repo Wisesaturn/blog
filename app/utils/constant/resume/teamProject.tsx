@@ -6,8 +6,9 @@ export const TEAMPROJECT_아주그라운드: ProjectItem = {
     date: '2023.03.18 ~ 2023.03.19',
     role: 'Frontend & UI Developer',
     position: '팀장 [4명]',
+    techStack: ['Next.js', 'Javascript', 'TailwindCSS'],
     description: [
-      '이틀동안 주어진 주제에 따라 사회 발전에 기여할 수 있는 Web 또는 Mobile App을 만드는 것을 목표로 하는 교내 1박 2일 해커톤에 참여하였습니다',
+      '이틀동안 주어진 주제에 따라 사회 발전에 기여할 수 있는 Web 또는 Mobile App을 만드는 것을 목표로 하는 교내 해커톤에 참여하였습니다',
     ],
     link: 'https://github.com/AJOUChakra7/ajou-ground',
     linkAlt: '아주그라운드 깃허브',
@@ -38,6 +39,7 @@ export const TEAMPROJECT_언더바: ProjectItem = {
     date: '2022.09 ~ 2022.12',
     role: 'Frontend Developer',
     position: '팀장 [3명]',
+    techStack: ['React', 'Typescript', 'Styled-Components', 'Recoil'],
     description: [
       '졸업프로젝트로 시작하였으며, 학과별 정보 공유 및 익명성 커뮤니티 서비스 출시를 목표로 하였습니다.',
       '기획부터 개발, 배포, 운영까지 전반적인 플랫폼 운영 방식을 경험해보았습니다.',
@@ -65,6 +67,103 @@ export const TEAMPROJECT_언더바: ProjectItem = {
         'Github Actions를 활용하여 CI/CD 자동화',
         'react-hook-form을 사용하여 쉽게 input 및 form 태그 상태 관리',
       ],
+    },
+  ],
+};
+
+export const TEAMPROJECT_펫탈로그: ProjectItem = {
+  info: {
+    teamName: '펫탈로그',
+    date: '2022.07 ~ 2022.12',
+    role: 'UI Developer',
+    position: '팀원 [4명]',
+    techStack: ['React', 'Typescript', 'Redux', 'TailwindCSS', 'Lottie'],
+    description: [
+      '각자 개성이 넘치는 사랑스러운 반려견에게 맞춤 정보를 제공해드립니다!',
+      '반려견을 위한 사료 추천 및 건강 관리 애플리케이션을 개발하였습니다.',
+    ],
+    link: 'https://github.com/PinkDumbbell/CocoBob-FE',
+    linkAlt: '펫탈로그 깃허브',
+  },
+  content: [
+    {
+      title: '서비스 개발',
+      list: ['서비스 랜딩 페이지 개발'],
+    },
+    {
+      title: '프로젝트 설계',
+      list: [
+        <>
+          UI/UX 디자인 일관성을 높이기 위해 자체{' '}
+          <a
+            className="link"
+            href="https://www.figma.com/file/g3XuRlHsew0qauASvFPmER/Style-Guide?node-id=815%3A4716&t=sGvEwNgBZjK6NHQM-1&fuid=1092707171298235723"
+          >
+            디자인 시스템 설계
+          </a>
+        </>,
+        'TailwindCSS 디자인 시스템에 맞게 명료화',
+        '웹 접근성을 고려한 시맨틱 태그 및 대체 텍스트 사용',
+        'Intersection Observer를 활용한 슬라이딩 애니메이션 구현',
+        'Lottie를 활용하여 기존 방법 대비 리소스 용량을 약 3-4MB에서 200KB 이내로 축소',
+      ],
+    },
+  ],
+};
+
+export const TEAMPROJECT_브이토피아: ProjectItem = {
+  info: {
+    teamName: '브이토피아',
+    date: '2023.03 ~ 2023.06',
+    role: 'Frontend Developer',
+    position: '팀원 / 개발팀 [2명]',
+    techStack: ['Javascript', 'Jest', 'SCSS'],
+    description: ['버추얼 아티스트를 만들고 관리해주는 매니지먼트 프로젝트에 참여하였습니다'],
+    link: 'https://github.com/Wisesaturn/V-Topia',
+    linkAlt: '브이토피아 깃허브',
+  },
+  content: [
+    {
+      title: '서비스 개발',
+      list: ['브이토피아를 소개하는 회사 매니지먼트 페이지 개발'],
+    },
+    {
+      title: '프로젝트 설계',
+      list: ['Vanila JS를 통해 SPA 구현', 'Jest를 사용하여 유닛 테스트 진행'],
+    },
+  ],
+};
+
+export const TEAMPROJECT_유클러버스: ProjectItem = {
+  info: {
+    teamName: '유클러버스',
+    date: '2023.03 ~ 2023.06',
+    role: 'Frontend Developer & UI/UX Designer',
+    position: '팀원 [5명]',
+    techStack: ['React', 'Typescript', 'Recoil', 'Styled-Components'],
+    description: [
+      '팬데믹으로 인한 비대면의 불편함 해소를 위해 동아리 커뮤니티 서비스를 제작하였습니다.',
+      '비대면 소학회 및 동아리 간접경험과 홍보/신청이란 도전과제를 목표를 두었습니다',
+    ],
+    link: 'https://github.com/taehong0-0/Ucluverse',
+    linkAlt: '유클러버스 깃허브',
+  },
+  content: [
+    {
+      title: '서비스 개발',
+      list: [
+        '서비스 랜딩 페이지 개발 (UI)',
+        '디자인 및 마크업 등 퍼블리싱 작업',
+        '벡터 이미지 내 CSS을 통해 애니메이션 구현',
+      ],
+    },
+    {
+      title: '프로젝트 운영',
+      list: ['Notion을 통해 주차별 회의 진행 및 프로젝트 상황 공유'],
+    },
+    {
+      title: '디자인',
+      list: ['Adobe XD를 통해 UI/UX 디자인 작업', 'After Effects를 통해 애니메이션 작업'],
     },
   ],
 };

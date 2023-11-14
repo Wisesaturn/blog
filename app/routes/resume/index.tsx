@@ -70,7 +70,7 @@ export default function ResumePage() {
           <span className="text-gray-600">이력서</span>
           <span className="text-gray-200">{'/>'}</span>
         </h1>
-        <div className="block space-y-10 pb-20">
+        <div className="block pb-20">
           {Object.entries(sectionArray).map(([key, value], idx) => (
             <ResumeSection key={idx} title={key} showTitle={!disallowTitleSection.includes(key)}>
               {value}
