@@ -39,6 +39,7 @@ export default function ResumePage() {
     (category: SectionType) => {
       const getScrollY = CategorySection.filter((section) => section.id === category)[0].scrollY;
       window.scrollTo({ top: getScrollY, behavior: 'smooth' });
+      setSelectCategory(category);
     },
     [CategorySection],
   );
@@ -61,11 +62,12 @@ export default function ResumePage() {
   return (
     <>
       <div className="w-full">
-        <h1 id="Resume Title" className="text-center py-10 font-light space-x-2">
+        <h1
+          id="Resume Title"
+          className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl"
+        >
           <span className="text-gray-200">{'<'}</span>
-          <span className="text-gray-600">
-            안녕하세요 <span className="text-black font-semibold">송재한</span> 입니다
-          </span>
+          <span className="text-gray-600">이력서</span>
           <span className="text-gray-200">{'/>'}</span>
         </h1>
         <div className="block space-y-10 pb-20">

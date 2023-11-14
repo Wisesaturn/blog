@@ -19,7 +19,7 @@ function ResumeButton(props: ResumeButtonProps) {
         color: ${selected !== target ? '#18191b' : 'white'} !important;
         background-color: ${selected !== target ? 'white' : '#18191b'};
       `}
-      className="px-6 py-1 rounded-full"
+      className="px-6 py-2 rounded-full"
       onClick={() => onClick(target)}
     >
       {target}
