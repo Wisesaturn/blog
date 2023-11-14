@@ -39,7 +39,6 @@ export default function ResumePage() {
     (category: SectionType) => {
       const getScrollY = CategorySection.filter((section) => section.id === category)[0].scrollY;
       window.scrollTo({ top: getScrollY, behavior: 'smooth' });
-      setSelectCategory(category);
     },
     [CategorySection],
   );

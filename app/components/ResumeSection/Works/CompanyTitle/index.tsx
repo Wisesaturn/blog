@@ -1,14 +1,18 @@
 import Ping from '@components/Ping';
 
-export default function CompanyTitle({ title }: { title: string }) {
+export default function CompanyTitle({ title, isActive }: { title: string; isActive?: boolean }) {
+  const infoClass = `${isActive ? `border-green-main` : `border-gray-300`}`;
+
   return (
     <div className="w-full flex h-auto max-md:flex-col mb-8">
       <div className="h-auto">
         <div className="flex items-center">
-          <Ping />
+          <Ping isActive={isActive} />
           <h3 className="text-xl font-semibold">{title}</h3>
         </div>
-        <div className="py-2 mt-2 sticky ml-0.5 pl-7 border-l-2 h-auto w-60 max-w-60 bg-gray-50 border-green-main max-md:w-screen max-md:max-w-full">
+        <div
+          className={`${infoClass} py-2 mt-2 sticky ml-0.5 pl-7 border-l-2 h-auto w-60 max-w-60 bg-gray-50 max-md:w-screen max-md:max-w-full`}
+        >
           <p className="p-0 text-[14px]">2023.06 ~ 2023.12</p>
           <p className="p-0 text-[14px]">Frontend Developer</p>
           <p className="p-0 text-[14px]">인턴 / 개발팀</p>
