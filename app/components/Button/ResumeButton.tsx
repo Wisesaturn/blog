@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import React from 'react';
 
 import type { SectionType } from 'routes/resume/index';
 
@@ -12,6 +13,11 @@ interface ResumeButtonProps {
 function ResumeButton(props: ResumeButtonProps) {
   const { key, target, onClick, selected } = props;
 
+  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onClick(target);
+  };
+
   return (
     <button
       key={key}
@@ -20,7 +26,7 @@ function ResumeButton(props: ResumeButtonProps) {
         background-color: ${selected !== target ? 'white' : '#18191b'};
       `}
       className="px-6 py-2 rounded-full"
-      onClick={() => onClick(target)}
+      onClick={onButtonClick}
     >
       {target}
     </button>

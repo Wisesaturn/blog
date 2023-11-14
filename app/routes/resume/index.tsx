@@ -46,7 +46,7 @@ export default function ResumePage() {
 
   useEffect(() => {
     const observer = getIntersectionObserver(setSelectCategory);
-    const headingElements = Array.from(document.querySelectorAll('section'));
+    const headingElements: HTMLHeadingElement[] = Array.from(document.querySelectorAll('h1, h2'));
 
     const categorySection = headingElements.map((section) => ({
       id: section.id as SectionType,
@@ -57,15 +57,16 @@ export default function ResumePage() {
     headingElements.map((header) => {
       return observer.observe(header);
     });
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <>
-      <div className="w-full">
-        <h1
-          id="Resume Title"
-          className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl"
-        >
+      <div className="w-full mb-60">
+        <h1 id="Profile" className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl">
           <span className="text-gray-200">{'<'}</span>
           <span className="text-gray-600">이력서</span>
           <span className="text-gray-200">{'/>'}</span>
