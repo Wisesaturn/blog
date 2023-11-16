@@ -22,8 +22,12 @@ function ResumeButton(props: ResumeButtonProps) {
       css={css`
         color: ${selected !== target ? '#18191b' : 'white'} !important;
         background-color: ${selected !== target ? 'white' : '#18191b'};
+
+        &:hover {
+          background-color: ${selected !== target ? '#f3f4f6' : '#333333'};
+        }
       `}
-      className="px-6 py-2 rounded-full"
+      className="px-6 py-2 rounded-full transition-colors"
       onClick={onButtonClick}
     >
       {target}

@@ -6,6 +6,7 @@ import MainProfile from '@components/ResumeSection/MainProfile';
 import Works from '@components/ResumeSection/Works';
 import TeamProjects from '@components/ResumeSection/TeamProjects';
 import PersonalProjects from '@components/ResumeSection/PersonalProjects';
+import Experiences from '@components/ResumeSection/Experiences';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
@@ -14,7 +15,7 @@ const sectionArray = {
   Works: <Works />,
   'Team Projects': <TeamProjects />,
   'Personal Projects': <PersonalProjects />,
-  Experiences: <></>,
+  Experiences: <Experiences />,
   Activities: <></>,
   'Tech Stacks': <></>,
   Awards: <></>,
