@@ -1,4 +1,10 @@
+import Thumbnail펫탈로그 from '@public/thumbnail/project/펫탈로그.jpg';
 import { ProjectItem } from '@Types/resume';
+import Thumbnail브이토피아 from '@public/thumbnail/project/브이토피아.png';
+import Thumbnail아주그라운드 from '@public/thumbnail/project/아주그라운드.png';
+import Thumbnail언더바 from '@public/thumbnail/project/언더바.png';
+import Thumbnail유클러버스 from '@public/thumbnail/project/유클러버스.png';
+import ThumbnailGOTCHA from '@public/thumbnail/project/GOTCHA.png';
 
 export const TEAMPROJECT_아주그라운드: ProjectItem = {
   info: {
@@ -13,6 +19,7 @@ export const TEAMPROJECT_아주그라운드: ProjectItem = {
     link: 'https://github.com/AJOUChakra7/ajou-ground',
     linkAlt: '아주그라운드 깃허브',
     isAwarded: true,
+    thumbnail: Thumbnail아주그라운드,
   },
   content: [
     {
@@ -46,6 +53,7 @@ export const TEAMPROJECT_언더바: ProjectItem = {
     ],
     link: 'https://github.com/MP-2022-2/FE-newMIL',
     linkAlt: '언더바 깃허브',
+    thumbnail: Thumbnail언더바,
   },
   content: [
     {
@@ -84,6 +92,7 @@ export const TEAMPROJECT_펫탈로그: ProjectItem = {
     ],
     link: 'https://github.com/PinkDumbbell/CocoBob-FE',
     linkAlt: '펫탈로그 깃허브',
+    thumbnail: Thumbnail펫탈로그,
   },
   content: [
     {
@@ -121,6 +130,7 @@ export const TEAMPROJECT_브이토피아: ProjectItem = {
     description: ['버추얼 아티스트를 만들고 관리해주는 매니지먼트 프로젝트에 참여하였습니다'],
     link: 'https://github.com/Wisesaturn/V-Topia',
     linkAlt: '브이토피아 깃허브',
+    thumbnail: Thumbnail브이토피아,
   },
   content: [
     {
@@ -147,6 +157,7 @@ export const TEAMPROJECT_유클러버스: ProjectItem = {
     ],
     link: 'https://github.com/taehong0-0/Ucluverse',
     linkAlt: '유클러버스 깃허브',
+    thumbnail: Thumbnail유클러버스,
   },
   content: [
     {
@@ -181,6 +192,7 @@ export const TEAMPROJECT_GOTCHA: ProjectItem = {
     ],
     link: 'https://github.com/IMP-2022-1',
     linkAlt: 'Gotcha 깃허브',
+    thumbnail: ThumbnailGOTCHA,
   },
   content: [
     {

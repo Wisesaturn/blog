@@ -10,7 +10,18 @@ export default function ProjectSection({
   isActive?: boolean;
 }) {
   const { content, info } = data;
-  const { isAwarded, techStack, teamName, date, description, position, role, link, linkAlt } = info;
+  const {
+    isAwarded,
+    techStack,
+    thumbnail,
+    teamName,
+    date,
+    description,
+    position,
+    role,
+    link,
+    linkAlt,
+  } = info;
 
   const infoClass = `${isActive ? `border-green-main` : `border-gray-300`}`;
 
@@ -19,7 +30,7 @@ export default function ProjectSection({
       <div className="h-auto">
         <div className="flex items-center">
           <Ping isActive={isActive} />
-          <h3 className="text-xl font-semibold">
+          <h3 id={thumbnail} className="text-xl font-semibold">
             {teamName}
             {isAwarded && <span className="pl-2">🏆</span>}
           </h3>

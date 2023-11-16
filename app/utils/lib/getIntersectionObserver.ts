@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction } from 'react';
-
-import { SectionType } from '@app/routes/resume/index';
-
-const observerOption = {
-  threshold: [0.05],
-  rootMargin: '0px 0px -65% -0px',
-};
-
-export const getIntersectionObserver = (setState: Dispatch<SetStateAction<SectionType>>) => {
+export const getIntersectionObserver = (
+  setState: (id: string) => void,
+  threshold: number[],
+  rootMargin?: string,
+) => {
   let prevYposition = 0;
+
+  const observerOption = {
+    threshold,
+    rootMargin: rootMargin ?? '0px 0px -65% -0px',
+  };
 
   const checkScrollDirection = (prevY: number) => {
     return window.scrollY > prevY ? 'down' : 'up';
@@ -16,14 +16,11 @@ export const getIntersectionObserver = (setState: Dispatch<SetStateAction<Sectio
 
   const handleIntersection = (entry: IntersectionObserverEntry) => {
     const direction = checkScrollDirection(prevYposition);
-    // console.log(entry.target.id, entry.isIntersecting, direction, entry.intersectionRatio);
+    console.log(entry.target.id, entry.isIntersecting);
 
     if (entry.isIntersecting) {
-      if (
-        (direction === 'up' && entry.intersectionRatio < 0.3) ||
-        (direction === 'down' && entry.intersectionRatio < 0.3)
-      ) {
-        setState(entry.target.id as SectionType);
+      if (direction === 'up' || direction === 'down') {
+        setState(entry.target.id);
       }
     }
 

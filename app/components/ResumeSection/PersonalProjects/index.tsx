@@ -9,7 +9,7 @@ const personalProjectsSection = [PERSONALPROJECT_푸드모아, PERSONALPROJECT_�
 
 export default function PersonalProjects() {
   return (
-    <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
+    <div className="flex pt-8 pb-4 gap-20 w-full flex-col">
       {personalProjectsSection.map((data, idx) => (
         <ProjectSection key={idx} data={data} isActive={false} />
       ))}

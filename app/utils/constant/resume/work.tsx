@@ -1,4 +1,5 @@
 import { ProjectItem } from '@Types/resume';
+import Thumbnail엔지니오 from '@public/thumbnail/project/엔지니오.png';
 
 export const WORK_이지일렉트릭: ProjectItem = {
   info: {
@@ -8,6 +9,7 @@ export const WORK_이지일렉트릭: ProjectItem = {
     position: '인턴 / 개발팀',
     description: ['엔지니오 웹 서비스 개발', 'Next.js 마이그레이션 주도'],
     link: 'https://engineeo.kr',
+    thumbnail: Thumbnail엔지니오,
   },
   content: [
     {

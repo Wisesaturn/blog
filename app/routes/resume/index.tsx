@@ -35,7 +35,9 @@ interface Category {
 
 export default function ResumePage() {
   const [selectCategory, setSelectCategory] = useState<SectionType>('Profile');
+  const [selectProjectThumbnail, setSelectProjectThumbnail] = useState('');
   const [CategorySection, setCategorySection] = useState<Category[]>([]);
+  const [imageVisible, setImageVisible] = useState(false);
 
   const handleCategory = useCallback(
     (category: SectionType) => {
@@ -45,27 +47,66 @@ export default function ResumePage() {
     [CategorySection],
   );
 
-  useEffect(() => {
-    const observer = getIntersectionObserver(setSelectCategory);
-    const headingElements = Array.from(document.querySelectorAll('section'));
+  const setCategory = useCallback((category: string) => {
+    if (isSectionType(category)) {
+      setSelectCategory(category);
+    }
+  }, []);
 
-    const categorySection = headingElements.map((section) => ({
+  const setProject = useCallback((thumbnail: string) => {
+    setSelectProjectThumbnail(thumbnail);
+  }, []);
+
+  useEffect(() => {
+    const categoryObserver = getIntersectionObserver(setCategory, [0.05]);
+    const projectObserver = getIntersectionObserver(setProject, [0.7], '0% 0px -70% 0px');
+
+    const categoryElements = Array.from(document.querySelectorAll('section'));
+    const projectElements = Array.from(document.querySelectorAll('h3'));
+
+    const categorySection = categoryElements.map((section) => ({
       id: section.id as SectionType,
       scrollY: section.offsetTop,
     }));
     setCategorySection(categorySection);
 
-    headingElements.map((header) => {
-      return observer.observe(header);
+    categoryElements.map((header) => {
+      return categoryObserver.observe(header);
+    });
+
+    projectElements.map((header) => {
+      return projectObserver.observe(header);
     });
 
     return () => {
-      observer.disconnect();
+      categoryObserver.disconnect();
+      projectObserver.disconnect();
     };
   }, []);
 
+  useEffect(() => {
+    setImageVisible(false);
+    if (selectProjectThumbnail !== '') {
+      setTimeout(() => {
+        setImageVisible(true);
+      }, 10);
+    }
+  }, [selectProjectThumbnail]);
+
   return (
     <>
+      <div className="hidden xl:block whitespace-nowrap">
+        {imageVisible && (
+          <div className="animate-slideRight fixed left-8 top-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed w-60">
+            <img
+              className="inline-block min-w-[15rem] object-cover"
+              src={selectProjectThumbnail}
+              alt="프로젝트 썸네일"
+              loading="lazy"
+            />
+          </div>
+        )}
+      </div>
       <div className="w-full mb-60">
         <h1 id="Profile" className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl">
           <span className="text-gray-200">{'<'}</span>
@@ -80,8 +121,8 @@ export default function ResumePage() {
           ))}
         </div>
       </div>
-      <aside className="hidden md:block whitespace-nowrap">
-        <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
+      <aside className="hidden xl:block whitespace-nowrap">
+        <div className="fixed m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
           {Object.keys(sectionArray).map((item) => {
             if (isSectionType(item)) {
               return (

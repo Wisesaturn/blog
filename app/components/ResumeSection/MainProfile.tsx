@@ -35,6 +35,8 @@ export default function MainProfile() {
           ))}
         </div>
       </div>
+      {/* Thumbnail Observer용 (프로필에선 Thumbnail 안 나오게) */}
+      <h3 id="" />
       <Contact />
     </>
   );

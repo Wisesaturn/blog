@@ -20,7 +20,7 @@ const teamprojectSection = [
 
 export default function TeamProjects() {
   return (
-    <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
+    <div className="flex pt-8 pb-4 gap-20 w-full flex-col">
       {teamprojectSection.map((data, idx) => (
         <ProjectSection key={idx} data={data} isActive={false} />
       ))}

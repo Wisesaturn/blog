@@ -10,6 +10,7 @@ interface ProjectInfo {
   linkAlt?: string;
   techStack?: string[];
   isAwarded?: boolean;
+  thumbnail?: string;
 }
 
 interface ProjectContent {

@@ -1,4 +1,6 @@
 import { ProjectItem } from '@Types/resume';
+import Thumbnail푸드모아2023 from '@public/thumbnail/project/푸드모아2023.png';
+import ThumbnailBlog from '@public/thumbnail.webp';
 
 export const PERSONALPROJECT_푸드모아: ProjectItem = {
   info: {
@@ -10,6 +12,7 @@ export const PERSONALPROJECT_푸드모아: ProjectItem = {
     ],
     link: 'https://wisesaturn.github.io/FoodMoa2023',
     linkAlt: '홈페이지',
+    thumbnail: Thumbnail푸드모아2023,
   },
   content: [
     {
@@ -34,6 +37,7 @@ export const PERSONALPROJECT_블로그: ProjectItem = {
     ],
     link: 'https://github.com/Wisesaturn/blog',
     linkAlt: '블로그 깃허브',
+    thumbnail: ThumbnailBlog,
   },
   content: [
     {
@@ -45,13 +49,13 @@ export const PERSONALPROJECT_블로그: ProjectItem = {
         'Client단 Data Fetching을 위해 Context API를 이용하여 환경 변수를 서버단에서 내려받을 수 있도록 구현',
         'Prefetch를 통해 필요한 리소스를 먼저 로딩하여 사용자 경험 개선',
         <>
+          <code>serverDependenciesToBundle</code>을 추가하여&nbsp;
           <a
             className="link"
             href="https://remix.run/docs/en/main/file-conventions/remix-config#serverdependenciestobundle"
           >
             ESM-Only Module 문제를 해결
           </a>
-          하기 위해 <code>serverDependenciesToBundle</code> 설정
         </>,
       ],
     },
