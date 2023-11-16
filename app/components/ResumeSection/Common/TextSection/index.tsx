@@ -20,7 +20,7 @@ export default function TextSection({
       <a href={link} target="_blank" className="text-sm link">
         {linkAlt ?? link}
       </a>
-      <hr className="my-2" />
+      {(tasks || highlightTasks) && <hr className="my-2" />}
       <ul className="p-0 m-0 pt-3">
         {highlightTasks &&
           highlightTasks.map((task, index) => (
@@ -29,11 +29,12 @@ export default function TextSection({
               <div className="text-sm">{task}</div>
             </li>
           ))}
-        {tasks.map((task, index) => (
-          <li key={index} className="text-sm">
-            {task}
-          </li>
-        ))}
+        {tasks &&
+          tasks.map((task, index) => (
+            <li key={index} className="text-sm">
+              {task}
+            </li>
+          ))}
       </ul>
     </div>
   );

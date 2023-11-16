@@ -25,7 +25,7 @@ export interface ProjectItem {
 
 export interface TextItem {
   title: string;
-  tasks: React.ReactNode[];
+  tasks?: React.ReactNode[];
   highlightTasks?: React.ReactNode[];
   position?: string;
   date?: string;

@@ -9,6 +9,7 @@ import PersonalProjects from '@components/ResumeSection/PersonalProjects';
 import Experiences from '@components/ResumeSection/Experiences';
 import Activities from '@components/ResumeSection/Activities';
 import TechStacks from '@components/ResumeSection/TechStacks';
+import Awards from '@components/ResumeSection/Awards';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
@@ -20,7 +21,7 @@ const sectionArray = {
   Experiences: <Experiences />,
   Activities: <Activities />,
   'Tech Stacks': <TechStacks />,
-  Awards: <></>,
+  Awards: <Awards />,
   Education: <></>,
 };
 
