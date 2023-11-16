@@ -1,4 +1,5 @@
 import {
+  TEAMPROJECT_GOTCHA,
   TEAMPROJECT_브이토피아,
   TEAMPROJECT_아주그라운드,
   TEAMPROJECT_언더바,
@@ -14,6 +15,7 @@ const teamprojectSection = [
   TEAMPROJECT_언더바,
   TEAMPROJECT_펫탈로그,
   TEAMPROJECT_유클러버스,
+  TEAMPROJECT_GOTCHA,
 ];
 
 export default function TeamProjects() {

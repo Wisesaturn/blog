@@ -137,7 +137,7 @@ export const TEAMPROJECT_브이토피아: ProjectItem = {
 export const TEAMPROJECT_유클러버스: ProjectItem = {
   info: {
     teamName: '유클러버스',
-    date: '2023.03 ~ 2023.06',
+    date: '2022.03 ~ 2022.06',
     role: 'Frontend Developer & UI/UX Designer',
     position: '팀원 [5명]',
     techStack: ['React', 'Typescript', 'Recoil', 'Styled-Components'],
@@ -164,6 +164,46 @@ export const TEAMPROJECT_유클러버스: ProjectItem = {
     {
       title: '디자인',
       list: ['Adobe XD를 통해 UI/UX 디자인 작업', 'After Effects를 통해 애니메이션 작업'],
+    },
+  ],
+};
+
+export const TEAMPROJECT_GOTCHA: ProjectItem = {
+  info: {
+    teamName: 'GOTCHA',
+    date: '2022.03 ~ 2022.06',
+    role: 'Client Developer',
+    position: '팀원 [4명]',
+    techStack: ['Unity', 'C#'],
+    description: [
+      '몰입형 미디어 프로그래밍이라는 전공 수업 과정에서 Unity를 활용해 VR 및 AR 게임을 제작하였습니다',
+      '일상에 모기가 많아진 이유를 알아내기 위해 모기 군단을 퇴치하며 실마리를 파헤치는 이야기입니다.',
+    ],
+    link: 'https://github.com/IMP-2022-1',
+    linkAlt: 'Gotcha 깃허브',
+  },
+  content: [
+    {
+      title: '클라이언트 개발 (AR)',
+      list: [
+        '게임 오버 및 타이머 등 게임 매니저 설계',
+        '체력 감소, 공격 이펙트, 체력 바, 타이머 등 전반적인 게임 UI 디자인',
+        '모기에게 대항할 때 필요한 조건별 비즈니스 로직 구현',
+        '사운드 효과음 및 게임 화면 UX 개선',
+      ],
+    },
+    {
+      title: '클라이언트 개발 (VR)',
+      list: [
+        '실험실 내 퍼즐 문제 제작',
+        'Raycast를 활용하여 실험실 내 상호작용 구현',
+        '플레이어의 좌표를 확인하여 특정 장소에 가면 TV가 자동 재생 되도록 구현',
+        'Kinamatic과 Rigidbody를 활용하여 상자 속에 아이템을 찾도록 충돌 이벤트 구현',
+      ],
+    },
+    {
+      title: '프로젝트 운영',
+      list: ['게임 소개 트레일러 제작', '일정 및 문서 관리'],
     },
   ],
 };
