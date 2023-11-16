@@ -1,9 +1,12 @@
 import { TextItem } from '@Types/resume';
 
+import Ping from '@components/Ping';
+
 export default function TextSection({
   title,
   thumbnail,
   position,
+  highlightTasks,
   tasks,
   date,
   link,
@@ -19,6 +22,13 @@ export default function TextSection({
       </a>
       <hr className="my-2" />
       <ul className="p-0 m-0 pt-3">
+        {highlightTasks &&
+          highlightTasks.map((task, index) => (
+            <li key={index} className="before:hidden flex items-center gap-2 p-0">
+              <Ping isActive noMargin small />
+              <div className="text-sm">{task}</div>
+            </li>
+          ))}
         {tasks.map((task, index) => (
           <li key={index} className="text-sm">
             {task}

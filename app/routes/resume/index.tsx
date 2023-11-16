@@ -8,6 +8,7 @@ import TeamProjects from '@components/ResumeSection/TeamProjects';
 import PersonalProjects from '@components/ResumeSection/PersonalProjects';
 import Experiences from '@components/ResumeSection/Experiences';
 import Activities from '@components/ResumeSection/Activities';
+import TechStacks from '@components/ResumeSection/TechStacks';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
@@ -18,8 +19,9 @@ const sectionArray = {
   'Personal Projects': <PersonalProjects />,
   Experiences: <Experiences />,
   Activities: <Activities />,
-  'Tech Stacks': <></>,
+  'Tech Stacks': <TechStacks />,
   Awards: <></>,
+  Education: <></>,
 };
 
 const disallowTitleSection = ['Contact', 'Profile'];

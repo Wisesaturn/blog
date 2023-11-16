@@ -4,7 +4,7 @@ import Thumbnail모각소 from '@public/thumbnail/activities/모각소.jpg';
 import Thumbnail두잇 from '@public/thumbnail/activities/Do-it.png';
 
 export const ACTIVITY_GDSC: TextItem = {
-  title: 'GDSC (Google Developer Student Clubs)',
+  title: 'GDSC',
   position: '교내/교외 활동',
   date: '2023.03 ~ 2023.08',
   thumbnail: ThumbnailGDSC,
