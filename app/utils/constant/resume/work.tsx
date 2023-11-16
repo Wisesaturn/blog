@@ -1,5 +1,5 @@
 import { ProjectItem } from '@Types/resume';
-import Thumbnail엔지니오 from '@public/thumbnail/project/엔지니오.png';
+import Thumbnail엔지니오 from '@public/thumbnail/work/엔지니오.png';
 
 export const WORK_이지일렉트릭: ProjectItem = {
   info: {

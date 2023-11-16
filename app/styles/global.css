@@ -245,7 +245,7 @@
     display: block;
     position: absolute;
     left: 0px; /* 아이템 마커 위치 조절 */
-    top: 12px;
+    top: 8px;
     width: 4px;
     height: 4px;
     border-radius: 50%;

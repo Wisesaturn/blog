@@ -22,3 +22,13 @@ export interface ProjectItem {
   info: ProjectInfo;
   content: ProjectContent[];
 }
+
+export interface TextItem {
+  title: string;
+  position: string;
+  tasks: React.ReactNode[];
+  date?: string;
+  link?: string;
+  linkAlt?: string;
+  thumbnail?: string;
+}

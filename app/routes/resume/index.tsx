@@ -7,6 +7,7 @@ import Works from '@components/ResumeSection/Works';
 import TeamProjects from '@components/ResumeSection/TeamProjects';
 import PersonalProjects from '@components/ResumeSection/PersonalProjects';
 import Experiences from '@components/ResumeSection/Experiences';
+import Activities from '@components/ResumeSection/Activities';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
@@ -16,7 +17,7 @@ const sectionArray = {
   'Team Projects': <TeamProjects />,
   'Personal Projects': <PersonalProjects />,
   Experiences: <Experiences />,
-  Activities: <></>,
+  Activities: <Activities />,
   'Tech Stacks': <></>,
   Awards: <></>,
 };
@@ -36,7 +37,7 @@ interface Category {
 
 export default function ResumePage() {
   const [selectCategory, setSelectCategory] = useState<SectionType>('Profile');
-  const [selectProjectThumbnail, setSelectProjectThumbnail] = useState('');
+  const [selectThumbnail, setSelectThumbnail] = useState('');
   const [CategorySection, setCategorySection] = useState<Category[]>([]);
   const [imageVisible, setImageVisible] = useState(false);
 
@@ -54,16 +55,16 @@ export default function ResumePage() {
     }
   }, []);
 
-  const setProject = useCallback((thumbnail: string) => {
-    setSelectProjectThumbnail(thumbnail);
+  const setThumbnail = useCallback((thumbnail: string) => {
+    setSelectThumbnail(thumbnail);
   }, []);
 
   useEffect(() => {
     const categoryObserver = getIntersectionObserver(setCategory, [0.05]);
-    const projectObserver = getIntersectionObserver(setProject, [0.7], '0% 0px -70% 0px');
+    const thumbnailObserver = getIntersectionObserver(setThumbnail, [0.7], '0% 0px -70% 0px');
 
     const categoryElements = Array.from(document.querySelectorAll('section'));
-    const projectElements = Array.from(document.querySelectorAll('h3'));
+    const thumbnailElements = Array.from(document.querySelectorAll('h3'));
 
     const categorySection = categoryElements.map((section) => ({
       id: section.id as SectionType,
@@ -75,24 +76,24 @@ export default function ResumePage() {
       return categoryObserver.observe(header);
     });
 
-    projectElements.map((header) => {
-      return projectObserver.observe(header);
+    thumbnailElements.map((header) => {
+      return thumbnailObserver.observe(header);
     });
 
     return () => {
       categoryObserver.disconnect();
-      projectObserver.disconnect();
+      thumbnailObserver.disconnect();
     };
   }, []);
 
   useEffect(() => {
     setImageVisible(false);
-    if (selectProjectThumbnail !== '') {
+    if (selectThumbnail !== '') {
       setTimeout(() => {
         setImageVisible(true);
       }, 10);
     }
-  }, [selectProjectThumbnail]);
+  }, [selectThumbnail]);
 
   return (
     <>
@@ -101,7 +102,7 @@ export default function ResumePage() {
           <div className="animate-slideRight fixed left-8 top-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed w-60">
             <img
               className="inline-block min-w-[15rem] object-cover"
-              src={selectProjectThumbnail}
+              src={selectThumbnail}
               alt="프로젝트 썸네일"
               loading="lazy"
             />
