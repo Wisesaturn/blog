@@ -8,7 +8,7 @@ export default function Work() {
   return (
     <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
       {workSection.map((data, idx) => (
-        <ProjectSection data={data} isActive={idx === 0} />
+        <ProjectSection key={idx} data={data} isActive={idx === 0} />
       ))}
     </div>
   );

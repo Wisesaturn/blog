@@ -31,8 +31,10 @@ export default function ProjectSection({
           <p className="p-0 text-sm">{role}</p>
           <p className="p-0 text-sm">{position}</p>
           <div className="py-4" />
-          {description.map((item) => (
-            <p className="p-0 text-sm text-gray-500">{item}</p>
+          {description.map((item, idx) => (
+            <p key={idx} className="p-0 text-sm text-gray-500">
+              {item}
+            </p>
           ))}
           <a href={link} target="_blank" className="text-sm link">
             {linkAlt ?? link}
@@ -40,15 +42,17 @@ export default function ProjectSection({
         </div>
       </div>
       <div className="flex flex-col gap-8 max-md:gap-0 ml-0.5 pl-7 max-md:pl-0">
-        {content.map((item) => {
+        {content.map((item, index) => {
           const { title, list } = item;
 
           return (
-            <div className="max-md:pt-4 max-md:py-2 w-full max-md:mt-2 h-auto">
+            <div key={index} className="max-md:pt-4 max-md:py-2 w-full max-md:mt-2 h-auto">
               <span className="font-bold text-[22px]">{title}</span>
               <ul className="p-0 m-0 pt-2">
-                {list.map((text) => (
-                  <li className="text-sm">{text}</li>
+                {list.map((text, idx) => (
+                  <li key={idx} className="text-sm">
+                    {text}
+                  </li>
                 ))}
               </ul>
             </div>

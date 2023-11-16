@@ -19,8 +19,8 @@ const teamprojectSection = [
 export default function TeamProjects() {
   return (
     <div className="flex pt-8 pb-4 gap-16 w-full flex-col">
-      {teamprojectSection.map((data) => (
-        <ProjectSection data={data} isActive={false} />
+      {teamprojectSection.map((data, idx) => (
+        <ProjectSection key={idx} data={data} isActive={false} />
       ))}
     </div>
   );

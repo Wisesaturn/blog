@@ -46,7 +46,7 @@ export default function ResumePage() {
 
   useEffect(() => {
     const observer = getIntersectionObserver(setSelectCategory);
-    const headingElements: HTMLHeadingElement[] = Array.from(document.querySelectorAll('h1, h2'));
+    const headingElements = Array.from(document.querySelectorAll('section'));
 
     const categorySection = headingElements.map((section) => ({
       id: section.id as SectionType,
@@ -72,8 +72,8 @@ export default function ResumePage() {
           <span className="text-gray-200">{'/>'}</span>
         </h1>
         <div className="block pb-20">
-          {Object.entries(sectionArray).map(([key, value], idx) => (
-            <ResumeSection key={idx} title={key} showTitle={!disallowTitleSection.includes(key)}>
+          {Object.entries(sectionArray).map(([key, value]) => (
+            <ResumeSection key={key} title={key} showTitle={!disallowTitleSection.includes(key)}>
               {value}
             </ResumeSection>
           ))}
@@ -81,11 +81,11 @@ export default function ResumePage() {
       </div>
       <aside className="hidden md:block whitespace-nowrap">
         <div className="fixed top-8 m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
-          {Object.keys(sectionArray).map((item, idx) => {
+          {Object.keys(sectionArray).map((item) => {
             if (isSectionType(item)) {
               return (
                 <ResumeButton
-                  key={idx}
+                  key={item}
                   target={item}
                   onClick={handleCategory}
                   selected={selectCategory}
