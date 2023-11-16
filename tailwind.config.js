@@ -73,6 +73,7 @@ module.exports = {
         upDisappear: 'upDisappear .2s ease-in forwards',
         slideRight: 'slideRight .55s ease-in-out forwards',
         skeletonUI: 'skeleton-gradient 1.5s infinite ease-in-out',
+        dim: 'dim 0.5s forwards ease-in-out',
         bounceCenterAndFadeOut: 'bounceCenterAndFadeOut 2s forwards ease-in-out',
       },
     },

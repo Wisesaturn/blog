@@ -73,7 +73,7 @@ export default function SearchContents(props: ISearchBar) {
   const SearchResultComponent = () => SearchResultCondition[isLoadingState];
 
   return (
-    <section className="absolute top-12 left-0 w-full bg-white z-9 shadow-md">
+    <section className="absolute top-12 left-0 w-full bg-white z-9 shadow-md z-[999]">
       {debouncedInput && <SearchResultComponent />}
     </section>
   );
