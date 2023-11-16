@@ -18,8 +18,6 @@ export default function ProfileSection() {
             </Link>
           </span>
         </div>
-        <hr className="my-2 w-full" />
-        <div className="flex gap-2 w-max"></div>
       </div>
     </section>
   );

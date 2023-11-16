@@ -2,15 +2,16 @@ import { Link, useLoaderData } from '@remix-run/react';
 import { SlArrowRight } from 'react-icons/sl';
 import { css } from '@emotion/react';
 import { Icon } from '@iconify/react';
+import { useRef } from 'react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
-import Header from '@components/Header';
+import Header, { HeaderElement } from '@components/Header';
 import Footer from '@components/Footer';
-import TitleSection from '@components/Title/Title';
 import Copyright from '@components/Footer/Copyright';
 import ProfileSection from '@components/Profile';
 import PostListSection from '@components/PostList';
+import SearchSection from '@components/Profile/SearchSection';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
 import type { CategoryType } from '@utils/constant/category';
@@ -25,14 +26,20 @@ export async function loader() {
 export const MainPage = () => {
   const headerData = [{ name: `📚 사툰사툰`, link: '/' }];
   const recentDB = useLoaderData();
+  const headerRef = useRef<HeaderElement | null>(null);
 
   const categoryClass = `flex gap-1 items-center justify-center px-3 py-0.5 md:py-1 md:px-4 rounded-lg border-2 before:hidden font-light duration-200`;
 
+  const onSearchClick = () => {
+    if (headerRef.current) headerRef.current.onToggleSearchBar();
+  };
+
   return (
     <>
-      <Header paths={headerData} />
+      <Header paths={headerData} ref={headerRef} />
       <main className="isWrapper min-h-screen flex flex-col">
         <ProfileSection />
+        <SearchSection onSearchClick={onSearchClick} />
         <section className="flex gap-2 whitespace-nowrap flex-wrap text-center mb-8">
           {CATEGORY_DATA.map((item: CategoryType) => {
             return (
