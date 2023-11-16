@@ -6,7 +6,7 @@ const activitiesSection = [AWARDS_아주톤];
 
 export default function Awards() {
   return (
-    <div className="flex pt-8 pb-4 gap-10 w-full flex-col">
+    <div className="flex pt-8 pb-4 gap-4 w-full flex-col">
       {activitiesSection.map((item, idx) => (
         <TextSection {...item} key={idx} />
       ))}

@@ -10,6 +10,7 @@ import Experiences from '@components/ResumeSection/Experiences';
 import Activities from '@components/ResumeSection/Activities';
 import TechStacks from '@components/ResumeSection/TechStacks';
 import Awards from '@components/ResumeSection/Awards';
+import Education from '@components/ResumeSection/Education';
 
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
@@ -22,7 +23,7 @@ const sectionArray = {
   Activities: <Activities />,
   'Tech Stacks': <TechStacks />,
   Awards: <Awards />,
-  Education: <></>,
+  Education: <Education />,
 };
 
 const disallowTitleSection = ['Contact', 'Profile'];
@@ -112,7 +113,7 @@ export default function ResumePage() {
           </div>
         )}
       </div>
-      <div className="w-full mb-60">
+      <div className="w-full mb-40">
         <h1 id="Profile" className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl">
           <span className="text-gray-200">{'<'}</span>
           <span className="text-gray-600">이력서</span>
