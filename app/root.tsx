@@ -52,8 +52,7 @@ export const meta: V2_MetaFunction = ({ params }) => {
 
   return [
     {
-      name: 'title',
-      content: isTitle,
+      title: isTitle,
     },
     {
       name: 'description',
