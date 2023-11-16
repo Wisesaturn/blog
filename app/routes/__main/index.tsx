@@ -32,7 +32,6 @@ export const MainPage = () => {
     <>
       <Header paths={headerData} />
       <main className="isWrapper min-h-screen flex flex-col">
-        <TitleSection isContent="사툰사툰" isSubContent="기록하고 싶은 것을 담아보았습니다" />
         <ProfileSection />
         <section className="flex gap-2 whitespace-nowrap flex-wrap text-center mb-8">
           {CATEGORY_DATA.map((item: CategoryType) => {

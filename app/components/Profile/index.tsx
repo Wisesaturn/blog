@@ -1,60 +1,25 @@
-import { AiFillInstagram, AiFillMail, AiFillGithub } from 'react-icons/ai';
-
-import profile from '@public/profile.webp';
-import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
+import { Link } from '@remix-run/react';
 
 export default function ProfileSection() {
   return (
-    <section className="flex flex-col gap-10 items-center w-full py-10 px-10 border-2 r shadow-md rounded-xl mb-4">
-      <div className="items-center bg-green-main flex w-40 h-40 overflow-hidden rounded-full shadow-xl">
-        <img
-          className="translate-y-1/2 w-full h-full object-cover scale-[200%]"
-          src={profile}
-          alt="프로필"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="text-xl md:text-2xl font-bold">송재한</div>
-        <p className="text-[16px] md:text-[18px] leading-normal">
-          안녕하세요! 깔끔한 애니메이션을 구현하는 걸 좋아하는{' '}
-          <b className="font-bold">예비 프론트엔드 엔지니어</b>
-          입니다.
-          <br />
-          UX 이론과 클린 코딩에 관심이 많아요!
-        </p>
-        <hr className="my-2" />
-        <div className="flex gap-2 w-max">
-          <span className={TWstyleIconWrapper}>
-            <a
-              target="_blank"
-              href="mailto:rfv1479@gmail.com?subject=[Blog Contact] "
-              rel="noreferrer"
-              aria-label="contact on email"
-            >
-              <AiFillMail className={TWstyleIcon} size="2.25rem" />
-            </a>
-          </span>
-          <span className={TWstyleIconWrapper}>
-            <a
-              target="_blank"
-              href="https://www.github.com/wisesaturn"
-              aria-label="follow my github"
-              rel="noreferrer"
-            >
-              <AiFillGithub className={TWstyleIcon} size="2.25rem" />
-            </a>
-          </span>
-          <span className={TWstyleIconWrapper}>
-            <a
-              target="_blank"
-              href="https://www.instagram.com/songjh_97"
-              aria-label="follow my instagram"
-              rel="noreferrer"
-            >
-              <AiFillInstagram className={TWstyleIcon} size="2.25rem" />
-            </a>
+    <section className="flex gap-10 items-center w-full rounded-xl mb-4">
+      <div className="flex flex-col gap-2 w-full">
+        <div className="text-4xl font-bold">송재한</div>
+        <div className="flex justify-between flex-col">
+          <p className="text-base md:text-lg leading-normal p-0">
+            정리하는 것을 좋아하는 프론트엔드 엔지니어입니다.
+          </p>
+          <p className="text-base md:text-lg leading-normal p-0">
+            <b>사툰사툰</b>이라는 공간에 저만의 경험과 기록을 담아두었습니다
+          </p>
+          <span className="text-gray-500 flex items-end hover:text-green-main w-max transition-colors py-2">
+            <Link to="/resume" className="w-max">
+              저에 대해서 궁금하시다면?
+            </Link>
           </span>
         </div>
+        <hr className="my-2 w-full" />
+        <div className="flex gap-2 w-max"></div>
       </div>
     </section>
   );

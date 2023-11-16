@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
-
 import { Link } from '@remix-run/react';
 
 import type { IFirebasePostReturn } from '@Types/post';
@@ -21,7 +19,7 @@ export default function PostCardSection(props: { data: IFirebasePostReturn[] }) 
                 : `${String(post.plain_title).replace(/\s+/g, '-')}`
             }`}
           >
-            <div className="hover:bg-gray-100 hidden-blur p-1 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row">
+            <div className="hover:bg-gray-100 transition-colors hidden-blur p-1 rounded-lg flex flex-col justify-between gap-6 md:gap-8 relative md:flex-row">
               <div className="overflow-hidden flex flex-col md:w-full">
                 <div className="flex justify-between">
                   <div className="flex gap-1 md:gap-3 md:flex-row flex-col">
