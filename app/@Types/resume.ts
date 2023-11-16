@@ -3,8 +3,8 @@ import React from 'react';
 interface ProjectInfo {
   teamName: string;
   date: string;
-  role: string;
-  position: string;
+  role?: string;
+  position?: string;
   description: string[];
   link?: string;
   linkAlt?: string;

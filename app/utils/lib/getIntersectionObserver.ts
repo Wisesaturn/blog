@@ -16,12 +16,12 @@ export const getIntersectionObserver = (setState: Dispatch<SetStateAction<Sectio
 
   const handleIntersection = (entry: IntersectionObserverEntry) => {
     const direction = checkScrollDirection(prevYposition);
-    console.log(entry.target.id, entry.isIntersecting, direction, entry.intersectionRatio);
+    // console.log(entry.target.id, entry.isIntersecting, direction, entry.intersectionRatio);
 
     if (entry.isIntersecting) {
       if (
-        (direction === 'up' && entry.intersectionRatio < 0.4) ||
-        (direction === 'down' && entry.intersectionRatio < 0.4)
+        (direction === 'up' && entry.intersectionRatio < 0.3) ||
+        (direction === 'down' && entry.intersectionRatio < 0.3)
       ) {
         setState(entry.target.id as SectionType);
       }
