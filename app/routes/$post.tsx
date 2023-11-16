@@ -1,5 +1,4 @@
 import { Outlet, useLoaderData } from '@remix-run/react';
-import { json } from '@remix-run/node';
 
 import Copyright from '@components/Footer/Copyright';
 import Header from '@components/Header';

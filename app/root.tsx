@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   Links,
   LiveReload,
@@ -19,42 +20,72 @@ import { Title } from '@components/Title';
 
 import { getEnv } from '@utils/firebase.server';
 
-import type { MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
+import type { V2_MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
 
-const metaSNS = {
-  'og:type': 'website',
-  'og:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
-  'og:locale': `ko_KR`,
-  'og:image:width': `1200`,
-  'og:image:height': `630`,
-};
+const metaSNS = [
+  { property: 'og:type', content: 'website' },
+  {
+    property: 'og:image',
+    content:
+      'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
+  },
+  { property: 'og:locale', content: 'ko_KR' },
+  { property: 'og:image:width', content: '1200' },
+  { property: 'og:image:height', content: '630' },
+];
 
-const metaTwitter = {
-  'twitter:card': 'summary',
-  'twitter:image': `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
-};
+const metaTwitter = [
+  { name: 'twitter:card', content: 'summary' },
+  {
+    name: 'twitter:image',
+    content:
+      'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
+  },
+];
 
-export const meta: MetaFunction = ({ params }) => {
+export const meta: V2_MetaFunction = ({ params }) => {
   const { post } = params;
 
   const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
   const isDescription = `기록하고 싶은 것들을 모아두었습니다`;
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
 
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
-    title: isTitle,
-    description: isDescription,
-    'og:url': isURL,
-    'og:title': isTitle,
-    'og:description': isDescription,
-    'twitter:url': isURL,
-    'twitter:title': isTitle,
-    'twitter:description': isDescription,
+  return [
+    {
+      name: 'title',
+      content: isTitle,
+    },
+    {
+      name: 'description',
+      content: isDescription,
+    },
+    {
+      property: 'og:url',
+      content: isURL,
+    },
+    {
+      property: 'og:title',
+      content: isTitle,
+    },
+    {
+      property: 'og:description',
+      content: isDescription,
+    },
+    {
+      name: 'twitter:url',
+      content: isURL,
+    },
+    {
+      name: 'twitter:title',
+      content: isTitle,
+    },
+    {
+      name: 'twitter:description',
+      content: isDescription,
+    },
     ...metaSNS,
     ...metaTwitter,
-  };
+  ];
 };
 
 export const links: LinksFunction = () => [
@@ -73,6 +104,11 @@ export const links: LinksFunction = () => [
     href: 'https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css',
   },
   { rel: 'stylesheet', type: 'text/css', href: styles },
+  {
+    rel: 'stylesheet',
+    type: 'text/css',
+    href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+  },
 ];
 
 export const loader: LoaderFunction = () => {
@@ -101,7 +137,9 @@ export default function App() {
     <html lang="ko">
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="naver-site-verification" content="379a5ac8e5c6d8d023affe7f0d558e14d67f66f4" />
+        <meta charSet="utf-8" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />

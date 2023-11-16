@@ -18,6 +18,6 @@
     "incremental": true
   },
   "extends": "./tsconfig.paths.json",
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/utils/constant/resume/work.tsx", "app/utils/constant/resume/project.tsx"],
   "exclude": ["node_modules"]
 }

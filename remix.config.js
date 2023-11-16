@@ -11,6 +11,10 @@ exports.appDirectory = 'app';
 exports.BuildDirectory = 'public/build';
 exports.publicPath = '/build/';
 
+exports.future = {
+  v2_meta: true,
+};
+
 exports.serverDependenciesToBundle = [
   'unified',
   'bail',

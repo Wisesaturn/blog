@@ -2,15 +2,15 @@ import { Outlet } from '@remix-run/react';
 
 import Footer from '@components/Footer';
 
-const WriteLayout = () => {
+const ResumeLayout = () => {
   return (
     <>
-      <article className="isWrapper relative flex justify-between min-h-screen">
+      <main className="isWrapper relative flex justify-between min-h-screen">
         <Outlet />
-      </article>
+      </main>
       <Footer />
     </>
   );
 };
 
-export default WriteLayout;
+export default ResumeLayout;
