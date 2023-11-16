@@ -24,7 +24,10 @@ export default function SearchContents(props: ISearchBar) {
     setIsLoadingState('loading');
     searchAllDB(5, env).then((res: any) => {
       const isFilteringData = res.filter((data: IFirebasePostReturn) => {
-        return data.plain_title.includes(debouncedInput);
+        const lowerCaseTitle = data.plain_title.toLowerCase();
+        const lowerCaseInput = debouncedInput.toLowerCase();
+
+        return lowerCaseTitle.includes(lowerCaseInput);
       });
 
       if (isFilteringData.length === 0) setIsLoadingState('empty');

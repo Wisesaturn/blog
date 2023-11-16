@@ -30,6 +30,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
 
   const onToggleSearchBar = () => {
     setToggleSearchBar(!toggleSearchBar);
+    setInputValue('');
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
