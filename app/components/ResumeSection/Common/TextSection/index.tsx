@@ -15,9 +15,9 @@ export default function TextSection({
   return (
     <div className="w-full flex h-auto flex-col">
       <h3 id={thumbnail}>{title}</h3>
-      <span className="text-base bg-gray-200 px-2 mb-1 w-max">{position}</span>
-      <span className="text-sm mb-1 w-max">{date}</span>
-      <a href={link} target="_blank" className="text-sm link">
+      <span className="text-base bg-gray-200 px-2 mb-1 w-max max-md:text-sm">{position}</span>
+      <span className="text-sm mb-1 w-max max-md:text-xs">{date}</span>
+      <a href={link} target="_blank" className="text-sm link max-md:text-xs">
         {linkAlt ?? link}
       </a>
       {(tasks || highlightTasks) && <hr className="my-2" />}

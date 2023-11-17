@@ -30,13 +30,13 @@ export default function ProjectSection({
       <div className="h-auto">
         <div className="flex items-center">
           <Ping isActive={isActive} />
-          <h3 id={thumbnail} className="text-xl font-semibold">
+          <h3 id={thumbnail} className="text-2xl font-semibold">
             {teamName}
             {isAwarded && <span className="pl-2">🏆</span>}
           </h3>
         </div>
         <div
-          className={`${infoClass} py-2 mt-2 sticky ml-0.5 px-7 border-l-2 h-auto w-60 max-w-60 bg-gray-50 max-md:w-screen max-md:max-w-full`}
+          className={`${infoClass} py-2 mt-2 sticky ml-0.5 px-7 max-md:p-4 border-l-2 h-auto w-60 max-w-60 bg-gray-50 max-md:w-screen max-md:max-w-full`}
         >
           <p className="p-0 text-sm">{date}</p>
           <p className="p-0 text-sm">{role}</p>
@@ -58,7 +58,7 @@ export default function ProjectSection({
 
           return (
             <div key={index} className="max-md:pt-4 max-md:py-2 w-full max-md:mt-2 h-auto">
-              <span className="font-bold text-[22px]">{title}</span>
+              <span className="font-bold text-lg">{title}</span>
               <ul className="p-0 m-0 pt-2">
                 {list.map((text, idx) => (
                   <li key={idx} className="text-sm">

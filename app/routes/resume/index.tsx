@@ -113,8 +113,8 @@ export default function ResumePage() {
           </div>
         )}
       </div>
-      <div className="w-full mb-40">
-        <h1 className="text-center max-md:py-10 font-light space-x-2 max-md:text-2xl">
+      <div className="w-full mb-40 max-md:mb-0">
+        <h1 className="text-center max-md:py-4 font-light space-x-2 max-md:text-2xl">
           <span className="text-gray-200">{'<'}</span>
           <span className="text-gray-600">이력서</span>
           <span className="text-gray-200">{'/>'}</span>

@@ -17,7 +17,7 @@ export default function MainProfile() {
 
   return (
     <>
-      <div className="max-md:flex-col flex items-center justify-center md:space-x-10 w-full pb-6">
+      <div className="max-md:flex-col flex items-center justify-center md:space-x-10 w-full pb-6 max-mad:pb-0">
         <img
           className="animate-skeletonUI inline-block min-w-[15rem] w-60 h-60 object-cover rounded-full"
           src={profile}

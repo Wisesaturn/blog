@@ -28,7 +28,7 @@ export const MainPage = () => {
   const recentDB = useLoaderData();
   const headerRef = useRef<HeaderElement | null>(null);
 
-  const categoryClass = `flex gap-1 items-center justify-center px-3 py-0.5 md:py-1 md:px-4 rounded-lg border-2 before:hidden font-light duration-200`;
+  const categoryClass = `flex gap-1 items-center justify-center py-1 px-4 max-md:text-sm max-md:px-2 max-md:py-1 rounded-lg border-2 before:hidden font-light duration-200`;
 
   const onSearchClick = () => {
     if (headerRef.current) headerRef.current.onToggleSearchBar();

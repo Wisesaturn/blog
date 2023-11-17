@@ -15,7 +15,7 @@ function Ping({
   return (
     <span
       className={`relative flex items-center justify-center ${small ? 'h-1 w-1 mr-1' : 'h-2 w-2'} ${
-        noMargin ? `` : 'mr-6'
+        noMargin ? `` : 'mr-6 max-md:mr-3'
       }`}
     >
       <span
