@@ -7,10 +7,10 @@ export default function ProfileSection() {
         <div className="text-4xl font-bold max-md:text-3xl">송재한</div>
         <div className="flex justify-between flex-col">
           <p className="text-base md:text-lg leading-normal p-0">
-            정리하는 것을 좋아하는 프론트엔드 엔지니어입니다.
+            꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다.
           </p>
           <p className="text-base md:text-lg leading-normal p-0">
-            <b>사툰사툰</b>이라는 공간에 저만의 경험과 기록을 담아두었습니다
+            저만의 경험과 기록을 담아두었습니다
           </p>
           <span className="text-gray-500 flex items-end hover:text-green-main w-max transition-colors py-2">
             <Link to="/resume" className="w-max">
