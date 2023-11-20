@@ -26,6 +26,7 @@ export const WORK_이지일렉트릭: ProjectItem = {
         'React에서 Next.js로 마이그레이션을 하면서 고도화 진행, 기술 스택의 차이 파악',
         '크로스 플랫폼 에러를 쉽게 테스트하기 위한 Playwright 도입, Github Action 으로 자동 E2E 테스트',
         'Sentry를 활용하여 서비스 장애 추적 및 문제 해결',
+        'Atomic Design Pattern에 Compound Component 방식을 도입하여 아키텍처 구조화',
       ],
     },
     {
