@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, memo } from 'react';
 
 import ResumeSection from '@components/Title/ResumeSection';
 import ResumeButton from '@components/Button/ResumeButton';
@@ -64,7 +64,7 @@ export default function ResumePage() {
   }, []);
 
   useEffect(() => {
-    const categoryObserver = getIntersectionObserver(setCategory, [0.05]);
+    const categoryObserver = getIntersectionObserver(setCategory, [0.05, 0.95]);
     const thumbnailObserver = getIntersectionObserver(setThumbnail, [0.7], '0% 0px -70% 0px');
 
     const categoryElements = Array.from(document.querySelectorAll('section'));

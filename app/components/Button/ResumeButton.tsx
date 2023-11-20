@@ -35,4 +35,4 @@ function ResumeButton(props: ResumeButtonProps) {
   );
 }
 
-export default ResumeButton;
+export default React.memo(ResumeButton);

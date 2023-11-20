@@ -1,8 +1,10 @@
+import React from 'react';
+
 import profile from '@public/profile-real.webp';
 
 import Contact from './Contact';
 
-export default function MainProfile() {
+function MainProfile() {
   const IntroduceSetences = [
     <>
       <strong>UX 이론</strong>과 <strong>클린 코딩</strong>에 관심이 많습니다.
@@ -41,3 +43,5 @@ export default function MainProfile() {
     </>
   );
 }
+
+export default React.memo(MainProfile);

@@ -2,13 +2,7 @@ import { ProjectItem } from '@Types/resume';
 
 import Ping from '@components/Ping';
 
-export default function ProjectSection({
-  data,
-  isActive,
-}: {
-  data: ProjectItem;
-  isActive?: boolean;
-}) {
+function ProjectSection({ data, isActive }: { data: ProjectItem; isActive?: boolean }) {
   const { content, info } = data;
   const {
     isAwarded,
@@ -73,3 +67,5 @@ export default function ProjectSection({
     </div>
   );
 }
+
+export default ProjectSection;

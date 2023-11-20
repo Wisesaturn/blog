@@ -1,8 +1,9 @@
 import { AiFillLinkedin, AiFillInstagram, AiFillMail, AiFillGithub } from 'react-icons/ai';
+import React from 'react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
-export default function Contact() {
+function Contact() {
   return (
     <div className="flex mx-auto gap-2 w-max py-2 border-b-2 border-green-main">
       <span className={TWstyleIconWrapper}>
@@ -48,3 +49,5 @@ export default function Contact() {
     </div>
   );
 }
+
+export default React.memo(Contact);

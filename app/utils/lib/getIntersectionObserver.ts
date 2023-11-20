@@ -7,7 +7,7 @@ export const getIntersectionObserver = (
 
   const observerOption = {
     threshold,
-    rootMargin: rootMargin ?? '0px 0px -65% -0px',
+    rootMargin: rootMargin ?? '0% 0px -65% -0px',
   };
 
   const checkScrollDirection = (prevY: number) => {
@@ -16,7 +16,7 @@ export const getIntersectionObserver = (
 
   const handleIntersection = (entry: IntersectionObserverEntry) => {
     const direction = checkScrollDirection(prevYposition);
-    // console.log(entry.target.id, entry.isIntersecting);
+    console.log(entry.target, entry.isIntersecting);
 
     if (entry.isIntersecting) {
       if (direction === 'up' || direction === 'down') {

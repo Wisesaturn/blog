@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ResumeSection({
+function ResumeSection({
   title,
   showTitle,
   children,
@@ -16,3 +16,5 @@ export default function ResumeSection({
     </section>
   );
 }
+
+export default React.memo(ResumeSection);
