@@ -74,6 +74,13 @@ export const TEAMPROJECT_언더바: ProjectItem = {
         '네트워크 에러 발생 시 정해진 횟수만큼 재시도 하도록 axios interceptor를 통해 네트워크 요청 모듈화',
         'Github Actions를 활용하여 CI/CD 자동화',
         'react-hook-form을 사용하여 쉽게 input 및 form 태그 상태 관리',
+        'PM2를 활용하여 무중단 배포 구현',
+      ],
+    },
+    {
+      title: '문제 해결',
+      list: [
+        '배포 당시 SSL 프로토콜 및 CORS 에러가 발생하여 서버 Header에 관련 설정 및 nginx 내부에 보안 인증서 추가',
       ],
     },
   ],
