@@ -23,10 +23,18 @@ export const WORK_이지일렉트릭: ProjectItem = {
       title: '프로젝트 설계',
       list: [
         'React-query를 사용하여 비동기 요청 체계화',
-        'React에서 Next.js로 마이그레이션을 하면서 고도화 진행, 기술 스택의 차이 파악',
-        '크로스 플랫폼 에러를 쉽게 테스트하기 위한 Playwright 도입, Github Action 으로 자동 E2E 테스트',
         'Sentry를 활용하여 서비스 장애 추적 및 문제 해결',
         'Atomic Design Pattern에 Compound Component 방식을 도입하여 아키텍처 구조화',
+        '크로스 플랫폼 에러를 쉽게 테스트하기 위한 Playwright 도입, Github Action 으로 자동 E2E 테스트',
+      ],
+    },
+    {
+      title: '마이그레이션',
+      list: [
+        'React에서 Next.js로 마이그레이션을 하면서 고도화 진행, 기술 스택의 차이 파악',
+        '레거시 코드 리팩토링 및 유지보수를 통해 코드량 30% 이상 축소',
+        '확장성 및 재사용을 고려하여 중복된 스타일링 및 비즈니스 로직 통일화, 디자인 시스템을 통해 컴포넌트 재설계',
+        'Context API를 통해 지역적으로 상태를 관리하도록 관심사 분리',
       ],
     },
     {
