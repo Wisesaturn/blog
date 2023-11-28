@@ -3,18 +3,21 @@ import { useLoaderData } from '@remix-run/react';
 import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createCookie, json } from '@remix-run/node';
 
 import styles from '@styles/vscode-prism.css';
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 import { PostTitle } from '@components/Title';
+import TOC from '@components/TOC';
 
 import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
 import sharePage from '@utils/lib/sharePage';
 import copyPageUrl from '@utils/lib/copyPageUrl';
+import getHeading from '@utils/lib/getHeading';
+import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
 
 import type { LoaderArgs, LinksFunction, V2_MetaFunction } from '@remix-run/node';
 import type { IFirebasePostReturn } from '@Types/post';
@@ -120,6 +123,8 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 export default function ReviewPage() {
   const { thumbnail, title, createdAt, tags, body, views } = useLoaderData();
   const [toastText, setToastText] = useState<string>('');
+  const [selectId, setSelectId] = useState('');
+  const Heading = getHeading(body);
 
   const handleCopyPage = () => {
     copyPageUrl();
@@ -130,15 +135,33 @@ export default function ReviewPage() {
     }, 2000);
   };
 
+  const setHeading = useCallback((id: string) => {
+    setSelectId(id);
+  }, []);
+
+  useEffect(() => {
+    const HeadingObserver = getIntersectionObserver(setHeading, [0.05, 0.95]);
+    const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h1,h2,h3'));
+
+    HeadingElements.forEach((head) => {
+      return HeadingObserver.observe(head);
+    });
+
+    return () => {
+      HeadingObserver.disconnect();
+    };
+  }, []);
+
   return (
     <>
       <PostTitle thumbnail={thumbnail} title={title} createdAt={createdAt} tags={tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-dark my-10" />
+      <TOC heading={Heading} selectId={selectId} />
       <article
         className="markdown-body pb-10 max-w-full"
         dangerouslySetInnerHTML={{ __html: body }}
       />
-      <aside className="flex justify-between">
+      <div className="flex justify-between">
         <div className="flex gap-1.5 text-gray-500 items-center justify-center">
           <AiFillEye size="1rem" />
           <span className="text-left text-lg">{views ?? 0}</span>
@@ -156,7 +179,7 @@ export default function ReviewPage() {
             <GiShare className={TWstyleIcon} size="2.25rem" />
           </span>
         </div>
-      </aside>
+      </div>
     </>
   );
 }

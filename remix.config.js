@@ -26,6 +26,7 @@ exports.serverDependenciesToBundle = [
   'parse-entities',
   'character-reference-invalid',
   'common',
+  /^mdast*/,
   /^refractor*/,
   /^is*/,
   /^unified*/,

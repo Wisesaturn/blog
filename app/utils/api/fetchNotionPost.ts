@@ -8,7 +8,6 @@ import rehypeStringify from 'rehype-stringify';
 import remarkMath from 'remark-math';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeMathjax from 'rehype-mathjax';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 
 import convertImageNotionToFirebase from '@utils/lib/convertImageNotionToFirebase';
@@ -49,13 +48,14 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
         const result = await unified()
           .use(remarkParse) // markdown을 mdast로 변환
           .use(remarkGfm) // remark가 GFM도 지원 가능하도록
-          .use(remarkBreaks) // remark가 line-break도 지원 가능하도록
+          .use(remarkBreaks) // remark가 line-break도 지원 가능하도록 (마크다운 문법 줄바꿈이 아닌 자연스럽게)
           .use(remarkMath) // math 기호 구분
           .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
           .use(rehypeSlug) // Header에 Id 값 붙이기
           .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
           .use(rehypeMathjax) // math 구문 강조용
           .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
+
           .process(mdString.parent);
 
         const createdTime = new Date(selectedPost[0].created_time);
