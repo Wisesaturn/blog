@@ -17,6 +17,12 @@
   --blue-bright: #54aeff;
   --blue-darker: #033d8b;
   --strong: var(--black);
+  --strong-callout: var(--black);
+  --bg-thead: #f2f2f2;
+  --bg-callout: rgb(187, 250, 203, 0.5);
+  --border-table: #ddd;
+
+  accent-color: var(--green-main);
 }
 
 :root[color-theme*='dark'] {
@@ -34,6 +40,12 @@
   --blue-main: #54aeff;
   --blue-bright: #94ccfd;
   --strong: var(--green-darker);
+  --strong-callout: var(--black);
+  --bg-thead: #393939;
+  --bg-callout: rgba(16, 77, 31, 0.5);
+  --border-table: #191919;
+
+  accent-color: var(--green-main);
 }
 
 /* initial settings */
@@ -252,11 +264,11 @@
 
   table {
     margin: 1rem 0;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-table);
   }
 
   thead {
-    background-color: #f2f2f2;
+    background-color: var(--bg-thead);
     padding: 0.75rem 2.5rem;
     margin-bottom: 10px;
   }
@@ -611,8 +623,8 @@
   color: #979797;
 }
 
-.markdown-body blockquote > b {
-  color: var(--green-main);
+.markdown-body blockquote strong {
+  color: var(--strong-callout);
 }
 
 .markdown-body p > u > em {
@@ -631,7 +643,7 @@
 }
 
 .markdown-body blockquote {
-  background-color: rgb(187, 250, 203, 0.5);
+  background-color: var(--bg-callout);
 }
 
 .markdown-body img {

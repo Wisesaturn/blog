@@ -3,7 +3,7 @@ export default function SearchSection({ onSearchClick }: { onSearchClick: () => 
     <div className="pb-4">
       <input
         placeholder="게시물을 검색하세요"
-        className="border-2 rounded-md w-full p-3"
+        className="border-2 rounded-md w-full p-3 text-black"
         onFocus={onSearchClick}
         onChange={onSearchClick}
         value=""

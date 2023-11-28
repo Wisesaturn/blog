@@ -141,7 +141,7 @@ export const SelectedPostPage = () => {
         <div className="flex gap-4">
           <input
             ref={inputRef}
-            className="w-full border-2 border-gray-300 px-4 rounded-md"
+            className="w-full border-2 border-gray-300 px-4 rounded-md text-black"
             placeholder="Search할 게시물을 입력해주세요"
           />
           <Button
