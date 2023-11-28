@@ -6,37 +6,43 @@ type IsSelectedType = '' | 'all' | 'resume';
 function Footer() {
   const location = useLocation();
   const isSelected = location.pathname.split('/')[1] as IsSelectedType;
-  const iconStyle = `active:animate-push justify-between rounded-2xl flex px-10 gap-1 md:gap-0.5 flex-col items-center hover:cursor-pointer`;
+  const iconStyle = `active:animate-push-light active:dark:animate-push-dark justify-between rounded-2xl flex px-10 gap-1 md:gap-0.5 flex-col items-center hover:cursor-pointer`;
 
-  const onToggleStyle = (input: IsSelectedType) => {
-    if (isSelected === input) {
+  const selectTextClass = `text-green-darker dark:text-green-bright text-xs md:text-sm`;
+  const nonSelectTextClass = `text-black dark:text-white text-xs md:text-sm`;
+
+  const selectIconClass = `fill-[#166534] dark:fill-[#bbfacb]`;
+
+  const onToggleStyle = (path: string) => {
+    if (path === isSelected) {
       return {
-        icon: '#166534',
-        text: 'text-green-800',
+        text: selectTextClass,
+        icon: selectIconClass,
       };
     }
+
     return {
-      icon: '#333',
-      text: 'text-[#333]',
+      text: nonSelectTextClass,
+      icon: '',
     };
   };
 
   return (
     <>
-      <div className="h-[3.6875rem]" />
-      <div className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1 z-10">
+      <div className="h-[3.5rem]" />
+      <div className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1 z-10 dark:bg-[#232323]">
         <div className="flex mx-auto max-w-layout justify-around items-center">
           <Link reloadDocument className={iconStyle} to="/resume">
-            <GiPapers color={`${onToggleStyle('resume').icon}`} size="1.2rem" />
-            <span className={`${onToggleStyle('resume').text} text-xs md:text-sm`}>이력서</span>
+            <GiPapers className={onToggleStyle('resume').icon} size="1.2rem" />
+            <span className={onToggleStyle('resume').text}>이력서</span>
           </Link>
           <Link className={iconStyle} to="/">
-            <GiHouse color={`${onToggleStyle('').icon}`} size="1.2rem" />
-            <span className={`${onToggleStyle('').text} text-xs md:text-sm`}>홈</span>
+            <GiHouse className={onToggleStyle('').icon} size="1.2rem" />
+            <span className={onToggleStyle('').text}>홈</span>
           </Link>
           <Link className={iconStyle} to="/all">
-            <GiNotebook color={`${onToggleStyle('all').icon}`} size="1.2rem" />
-            <span className={`${onToggleStyle('all').text} text-xs md:text-sm`}>포스트</span>
+            <GiNotebook className={onToggleStyle('all').icon} size="1.2rem" />
+            <span className={onToggleStyle('all').text}>포스트</span>
           </Link>
         </div>
       </div>

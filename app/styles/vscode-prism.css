@@ -1,3 +1,11 @@
+:root[color-theme*='light'] {
+  --bg-code: #1e1e1e;
+}
+
+:root[color-theme*='dark'] {
+  --bg-code: #343434;
+}
+
 pre[class*='language-'],
 code[class*='language-'] {
   color: #d4d4d4;
@@ -24,6 +32,7 @@ code[class*='language-']::selection,
 pre[class*='language-'] *::selection,
 code[class*='language-'] *::selection {
   text-shadow: none;
+  color: #333;
   background-color: #bdecb6;
 }
 
@@ -38,7 +47,7 @@ pre[class*='language-'] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
-  background: #1e1e1e;
+  background: var(--bg-code);
 }
 
 :not(pre) > code[class*='language-'] {

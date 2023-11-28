@@ -25,9 +25,17 @@ module.exports = {
         pretandard: ['Pretandard', 'sans-serif'],
       },
       keyframes: {
-        push: {
+        'push-light': {
           to: {
             backgroundColor: 'rgba(233, 233, 233, 0.3)',
+            transform: 'scale(94.25%)',
+            brightness: '65%',
+            opacity: '0.8',
+          },
+        },
+        'push-dark': {
+          to: {
+            backgroundColor: 'rgba(13,13,13, 0.3)',
             transform: 'scale(94.25%)',
             brightness: '65%',
             opacity: '0.8',
@@ -70,7 +78,8 @@ module.exports = {
         },
       },
       animation: {
-        push: 'push .15s ease-out forwards',
+        'push-light': 'push-light .15s ease-out forwards',
+        'push-dark': 'push-dark .15s ease-out forwards',
         upDisappear: 'upDisappear .2s ease-in forwards',
         slideRight: 'slideRight .55s ease-in-out forwards',
         skeletonUI: 'skeleton-gradient 1.5s infinite ease-in-out',

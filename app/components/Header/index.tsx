@@ -17,7 +17,7 @@ export interface HeaderElement {
   onToggleSearchBar: () => void;
 }
 
-type Darkmode = 'dark' | 'light';
+export type Darkmode = 'dark' | 'light';
 
 const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>) => {
   const { paths } = props;
@@ -32,7 +32,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const inputRef = useRef<HTMLInputElement | null>(null);
   // style for scroll
   const { isScrollTop, isScrollDirection } = useScroll();
-  const isDefaultStyle = `glassMorphism flex z-[9999] bg-white fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
+  const isDefaultStyle = `glassMorphism flex z-[9999] bg-white dark:bg-[#232323] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
 
   const onToggleSearchBar = () => {
     setToggleSearchBar(!toggleSearchBar);
@@ -94,9 +94,9 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
 
   // style
   const styleIcon =
-    'fill-gray-300 hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100';
+    'fill-gray-300 dark:fill-gray-200 hover:dark:fill-white hover:fill-gray-600 dark:fill-black rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100 hover:dark:bg-[#111]';
   const styleIconWrapper =
-    'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100';
+    'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover:dark:bg-[#222]';
 
   return (
     <>
@@ -107,7 +107,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
             <input
               ref={inputRef}
               onChange={handleInputChange}
-              className="placeholder:text-gray-500 px-8 focus:outline-none focus:border-green-main w-full border-r-2 h-max"
+              className="placeholder:text-gray-500 px-8 bg-inherit focus:outline-none focus:border-green-main w-full border-r-2 h-max"
               placeholder="검색어를 입력해주세요"
             />
             <SearchContents input={inputValue} />
@@ -158,7 +158,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
       <div className="h-[3rem]" />
       {toggleSearchBar && (
         <div
-          className="animate-dim bg-gray-700 opacity-30 w-screen h-screen fixed top-0 left-0 z-[998]"
+          className="animate-dim dark:animate-dim-dark bg-gray-700 opacity-30 dark:opacity-80 dark:bg-[#000] w-screen h-screen fixed top-0 left-0 z-[998]"
           onClick={onToggleSearchBar}
         />
       )}

@@ -14,8 +14,8 @@ interface Props {
 
 export default function TOC(props: Props) {
   const { heading, selectId } = props;
-  const selectClass = `text-black border-l-slate-500`;
-  const nonSelectClass = `text-gray-500 border-l-slate-200 hover:bg-slate-100 hover:border-l-slate-500 hover:text-black`;
+  const selectClass = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
+  const nonSelectClass = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;
 
   const onClickRow = (e: React.MouseEvent<HTMLSpanElement>) => {
     const targetId = e.currentTarget.id;

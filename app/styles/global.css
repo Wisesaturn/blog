@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root[color-theme*='light'] {
-  --black: #333333;
+  --black: #222;
   --white: #fff;
   --green-dark: #326e3e;
   --green-darker: #449454;
@@ -16,11 +16,12 @@
   --blue-main: #0969da;
   --blue-bright: #54aeff;
   --blue-darker: #033d8b;
+  --strong: var(--black);
 }
 
 :root[color-theme*='dark'] {
   --black: #efefef;
-  --white: #333;
+  --white: #222;
   --green-dark: #326e3e;
   --green-darker: #449454;
   --green-main: #50ad63;
@@ -29,9 +30,10 @@
   --yellow: #fffa82;
   --gray-main: #b7b7b7;
   --gray-darker: #777;
-  --blue-main: #0969da;
-  --blue-bright: #54aeff;
-  --blue-darker: #033d8b;
+  --blue-darker: #0969da;
+  --blue-main: #54aeff;
+  --blue-bright: #94ccfd;
+  --strong: var(--green-darker);
 }
 
 /* initial settings */
@@ -85,12 +87,12 @@
   /* Drag Selection */
   ::selection {
     background-color: var(--green-bright);
-    color: var(--black);
+    color: #333;
   }
 
   ::-moz-selection {
     background-color: var(--green-bright);
-    color: var(--black);
+    color: #333;
   }
 
   /* selected Drag */
@@ -199,7 +201,7 @@
     font-size: 0.85rem;
     padding: 0.1rem 0.35rem;
     white-space: normal;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     color: black;
   }
 
@@ -229,7 +231,7 @@
     font-size: 0.85rem;
     padding: 0.1rem 0.35rem;
     white-space: normal;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     color: black;
   }
 
@@ -457,6 +459,15 @@
       opacity: 0.3;
     }
   }
+
+  @keyframes dim-dark {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.7;
+    }
+  }
   /* mobile */
   @media only screen and (max-width: 768px) {
     summary {
@@ -565,7 +576,7 @@
 
 .markdown-body strong {
   font-weight: bold;
-  color: #333;
+  color: var(--strong);
 }
 
 .markdown-body li > code {
@@ -575,7 +586,7 @@
   font-size: 0.85rem;
   padding: 0.1rem 0.35rem;
   white-space: normal;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   color: var(--black);
 }
 
@@ -592,7 +603,7 @@
   font-size: 0.85rem;
   padding: 0.1rem 0.35rem;
   white-space: normal;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   color: var(--black);
 }
 
