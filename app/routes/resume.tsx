@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { Outlet } from '@remix-run/react';
 import { V2_MetaFunction } from '@remix-run/node';
+import { useEffect } from 'react';
 
 import Footer from '@components/Footer';
 
@@ -78,6 +79,15 @@ export const meta: V2_MetaFunction = () => {
 };
 
 const ResumeLayout = () => {
+  useEffect(() => {
+    const memorizeTheme = localStorage.getItem('color-theme');
+    localStorage.setItem('color-theme', 'light');
+
+    return () => {
+      localStorage.setItem('color-theme', String(memorizeTheme));
+    };
+  }, []);
+
   return (
     <>
       <main className="isWrapper relative flex justify-between min-h-screen">

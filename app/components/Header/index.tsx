@@ -46,6 +46,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const handleDarkmode = () => {
     if (isDarkmode === 'light') {
       setIsDarkmode('dark');
+      // document.documentElement.classList.add('dark');
       document.documentElement.setAttribute('color-theme', 'dark');
       localStorage.setItem('color-theme', 'dark');
     } else {
