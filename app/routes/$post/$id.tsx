@@ -21,11 +21,20 @@ import type { IFirebasePostReturn } from '@Types/post';
 
 export const meta: V2_MetaFunction = ({ data, params }) => {
   const { post, id } = params;
-  const { description, thumbnail } = data! as IFirebasePostReturn;
+  const { description, thumbnail, tags } = data! as IFirebasePostReturn;
   const isTitle = `${id?.replace(/-/g, ' ')} :: 📚 사툰사툰`;
-  const isDescription = `${description}`;
+  const isDescription = `${description} | ${tags.map((tag) => tag.name).join(' ')}`;
   const isURL = `https://jaehan.blog/${post}/${id}`;
   const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
+
+  const metaSNS = [
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'ko_KR' },
+    { property: 'og:image:width', content: '1200' },
+    { property: 'og:image:height', content: '630' },
+  ];
+
+  const metaTwitter = [{ name: 'twitter:card', content: 'summary' }];
 
   return [
     {
@@ -72,6 +81,8 @@ export const meta: V2_MetaFunction = ({ data, params }) => {
       rel: 'canonical',
       href: isURL,
     },
+    ...metaSNS,
+    ...metaTwitter,
   ];
 };
 
