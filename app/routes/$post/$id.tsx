@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import { useLoaderData } from '@remix-run/react';
-import styles from 'highlight.js/styles/atom-one-dark-reasonable.css';
 import { GiShare } from 'react-icons/gi';
 import { IoCopy } from 'react-icons/io5';
 import { AiFillEye } from 'react-icons/ai';
 import { useState } from 'react';
 import { createCookie, json } from '@remix-run/node';
 
+import styles from '@styles/vscode-prism.css';
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
 
 import { PostTitle } from '@components/Title';
