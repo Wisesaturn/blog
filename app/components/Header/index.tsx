@@ -1,6 +1,7 @@
 import { Link } from '@remix-run/react';
-import React, { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import { AiFillGithub, AiOutlineSearch } from 'react-icons/ai';
+import { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md';
 
 import useScroll from '@hooks/useScroll';
 
@@ -16,12 +17,17 @@ export interface HeaderElement {
   onToggleSearchBar: () => void;
 }
 
+type Darkmode = 'dark' | 'light';
+
 const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>) => {
   const { paths } = props;
   const [hasDisabled, setHasDisabled] = useState<string>('');
   const [hasShadow, setHasShadow] = useState<string>('');
   const [toggleSearchBar, setToggleSearchBar] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
+  const [isDarkmode, setIsDarkmode] = useState<Darkmode>(
+    document.documentElement.getAttribute('color-theme') as Darkmode,
+  );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   // style for scroll
@@ -37,8 +43,34 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
     setInputValue(event.target.value);
   };
 
+  const handleDarkmode = () => {
+    if (isDarkmode === 'light') {
+      setIsDarkmode('dark');
+      document.documentElement.setAttribute('color-theme', 'dark');
+      localStorage.setItem('color-theme', 'dark');
+    } else {
+      setIsDarkmode('light');
+      document.documentElement.setAttribute('color-theme', 'light');
+      localStorage.setItem('color-theme', 'light');
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const hasThemeStorage = localStorage.getItem('color-theme') as Darkmode;
+
+    if (hasThemeStorage) {
+      setIsDarkmode(hasThemeStorage);
+      document.documentElement.setAttribute('color-theme', hasThemeStorage);
+    } else {
+      const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+      setIsDarkmode(isBrowserDarkTheme);
+      document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
+      localStorage.setItem('color-theme', isBrowserDarkTheme);
+    }
   }, []);
 
   useEffect(() => {
@@ -103,16 +135,23 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
           </div>
         )}
         <div className="flex py-2 px-3 gap-3 items-center">
-          <span className={styleIconWrapper} onClick={onToggleSearchBar}>
-            <AiOutlineSearch className={styleIcon} size="32" />
-          </span>
-          <a
+          <button
+            type="button"
+            aria-label="search button"
             className={styleIconWrapper}
-            href="https://www.github.com/wisesaturn"
-            aria-label="follow my github"
+            onClick={onToggleSearchBar}
           >
-            <AiFillGithub className={styleIcon} size="32" />
-          </a>
+            <AiOutlineSearch className={styleIcon} size="32" />
+          </button>
+          <button
+            type="button"
+            className={styleIconWrapper}
+            aria-label="darkmode button"
+            onClick={handleDarkmode}
+          >
+            {isDarkmode === 'light' && <MdOutlineDarkMode className={styleIcon} size="32" />}
+            {isDarkmode === 'dark' && <MdDarkMode className={styleIcon} size="32" />}
+          </button>
         </div>
       </header>
       <div className="h-[3rem]" />
