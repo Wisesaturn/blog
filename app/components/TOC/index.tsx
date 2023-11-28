@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from '@emotion/react';
 
 export interface Heading {
   level: number;
@@ -29,15 +30,18 @@ export default function TOC(props: Props) {
   };
 
   return (
-    <aside className="fixed flex flex-col top-[10rem] right-0 px-10 w-96 z-10">
+    <aside className="fixed flex flex-col right-0 px-10 w-96 z-10">
       {heading.map((head) => {
         const choiceClass = `${selectId === head.id ? selectClass : nonSelectClass}`;
 
         return (
           <span
             id={head.id}
-            className={`border-l-2 transition-colors py-1 px-4 hover:cursor-pointer ${choiceClass}`}
+            className={`border-l-2 text-sm transition-colors py-1 pr-4 hover:cursor-pointer ${choiceClass}`}
             onClick={onClickRow}
+            css={css`
+              padding-left: calc(1rem + ${head.level} * 0.5rem);
+            `}
           >
             {head.text}
           </span>
