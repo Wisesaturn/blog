@@ -19,13 +19,13 @@ export default function PostTitle(props: PostTitleProps) {
             {subTitle}
           </span>
         )}
-        <h2 className="text-[17px] md:text-[2rem] px-4 max-w-[290px] md:max-w-[700px] flex">
+        <div className="text-[17px] md:text-[2rem] px-4 max-w-[290px] md:max-w-[700px] flex items-center gap-2 max-md:gap-1">
           <span className="text-gray-400">{'<'}</span>
-          <span className="px-1 overflow-x-hidden text-ellipsis w-full whitespace-nowrap">
-            <span>{mainTitle}</span>
-          </span>
+          <h1 className="text-[17px] md:text-[2rem] leading-none overflow-hidden px-1 overflow-x-hidden text-ellipsis w-full whitespace-nowrap">
+            {mainTitle}
+          </h1>
           <span className="text-gray-400">{'/>'}</span>
-        </h2>
+        </div>
         <div className="flex items-center md:text-[0.875rem] text-[12px] justify-center flex-col">
           <div className="inline-block align-sub text-gray-300">{createdAt}</div>
           <div className="pt-3 flex flex-wrap items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4">
