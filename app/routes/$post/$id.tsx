@@ -144,7 +144,7 @@ export default function ReviewPage() {
     const FooterObserver = getIntersectionObserver(setHeading, [0.5], '0% 0px -10% -0px');
     const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h1,h2'));
     const PostTitleElement = document.querySelectorAll('#mainTitle');
-    const FooterElement = document.querySelectorAll('#footer');
+    const FooterElement = document.querySelectorAll('footer');
 
     HeadingElements.forEach((head) => {
       return Observer.observe(head);
@@ -169,7 +169,7 @@ export default function ReviewPage() {
         dangerouslySetInnerHTML={{ __html: body }}
       />
       <div className="flex justify-between">
-        <div className="flex gap-1.5 text-gray-500 items-center justify-center">
+        <div className="flex gap-1.5 text-gray-500 dark:text-gray-200 items-center justify-center">
           <AiFillEye size="1rem" />
           <span className="text-left text-lg">{views ?? 0}</span>
         </div>

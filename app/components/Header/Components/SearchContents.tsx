@@ -52,7 +52,7 @@ export default function SearchContents(props: ISearchBar) {
             >
               <div
                 key={idx}
-                className="p-2 px-4 border-t-2 border-gray-100 w-full text-ellipsis overflow-x-hidden whitespace-nowrap hover:bg-gray-100 duration-200 hover:border-gray-100"
+                className="p-2 px-4 border-t-2 text-black border-gray-100 w-full text-ellipsis overflow-x-hidden whitespace-nowrap hover:bg-gray-100 duration-200 hover:border-gray-100"
               >
                 {data.title}
               </div>
@@ -67,7 +67,7 @@ export default function SearchContents(props: ISearchBar) {
       </div>
     ),
     empty: (
-      <span className="p-2 block border-t-2 w-full px-4 border-green-main">
+      <span className="p-2 block text-black border-t-2 w-full px-4 border-green-main">
         검색결과가 없습니다
       </span>
     ),

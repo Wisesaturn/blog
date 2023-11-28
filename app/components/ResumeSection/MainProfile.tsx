@@ -29,6 +29,7 @@ function MainProfile() {
           <span className="block py-4">
             <strong className="block text-3xl">송재한</strong>
             <p className="block text-xl">Frontend Developer</p>
+            <Contact />
           </span>
           {IntroduceSetences.map((item, idx) => (
             <p key={idx} className="before:content-['💬'] before:pr-2 inline-block max-md:text-sm">
@@ -39,7 +40,6 @@ function MainProfile() {
       </div>
       {/* Thumbnail Observer용 (프로필에선 Thumbnail 안 나오게) */}
       <h3 id="" />
-      <Contact />
     </>
   );
 }

@@ -29,7 +29,7 @@ export const MainPage = () => {
   const recentDB = useLoaderData();
   const headerRef = useRef<HeaderElement | null>(null);
 
-  const categoryClass = `flex gap-1 items-center justify-center py-1 px-4 max-md:text-sm max-md:px-2 max-md:py-1 rounded-lg border-2 before:hidden font-light duration-200`;
+  const categoryClass = `flex gap-1 items-center justify-center py-1 px-4 max-md:text-sm max-md:px-2 max-md:py-1 rounded-lg border-2 text-white border-white dark:border-[#222] before:hidden font-light duration-200`;
 
   const onSearchClick = () => {
     if (headerRef.current) headerRef.current.onToggleSearchBar();
@@ -48,8 +48,6 @@ export const MainPage = () => {
                 <div
                   css={css`
                     background-color: ${item.color || '#333'};
-                    color: white;
-                    border-color: white;
                     :hover {
                       border-color: ${item.color || '#333'};
                       color: ${item.color || '#333'};
