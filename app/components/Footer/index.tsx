@@ -24,7 +24,7 @@ function Footer() {
   return (
     <>
       <div className="h-[3.6875rem]" />
-      <footer className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1 z-10">
+      <div className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1 z-10">
         <div className="flex mx-auto max-w-layout justify-around items-center">
           <Link reloadDocument className={iconStyle} to="/resume">
             <GiPapers color={`${onToggleStyle('resume').icon}`} size="1.2rem" />
@@ -39,7 +39,7 @@ function Footer() {
             <span className={`${onToggleStyle('all').text} text-xs md:text-sm`}>포스트</span>
           </Link>
         </div>
-      </footer>
+      </div>
     </>
   );
 }

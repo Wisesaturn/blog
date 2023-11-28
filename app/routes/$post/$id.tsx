@@ -144,7 +144,7 @@ export default function ReviewPage() {
     const FooterObserver = getIntersectionObserver(setHeading, [0.5], '0% 0px -10% -0px');
     const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h1,h2'));
     const PostTitleElement = document.querySelectorAll('#mainTitle');
-    const FooterElement = document.querySelectorAll('#footer');
+    const FooterElement = document.querySelectorAll('footer');
 
     HeadingElements.forEach((head) => {
       return Observer.observe(head);
