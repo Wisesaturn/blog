@@ -16,7 +16,6 @@ export const getIntersectionObserver = (
 
   const handleIntersection = (entry: IntersectionObserverEntry) => {
     const direction = checkScrollDirection(prevYposition);
-    console.log(entry.target, entry.isIntersecting);
 
     if (entry.isIntersecting) {
       if (direction === 'up' || direction === 'down') {

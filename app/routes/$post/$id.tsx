@@ -140,15 +140,22 @@ export default function ReviewPage() {
   }, []);
 
   useEffect(() => {
-    const HeadingObserver = getIntersectionObserver(setHeading, [0.05, 0.95]);
-    const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h1,h2,h3'));
+    const Observer = getIntersectionObserver(setHeading, [0.5], '0% 0px -65% -0px');
+    const FooterObserver = getIntersectionObserver(setHeading, [0.5], '0% 0px -10% -0px');
+    const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h1,h2'));
+    const PostTitleElement = document.querySelectorAll('#mainTitle');
+    const FooterElement = document.querySelectorAll('#footer');
 
     HeadingElements.forEach((head) => {
-      return HeadingObserver.observe(head);
+      return Observer.observe(head);
     });
 
+    Observer.observe(PostTitleElement[0]);
+    FooterObserver.observe(FooterElement[0]);
+
     return () => {
-      HeadingObserver.disconnect();
+      Observer.disconnect();
+      FooterObserver.disconnect();
     };
   }, []);
 

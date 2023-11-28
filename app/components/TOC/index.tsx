@@ -40,7 +40,7 @@ export default function TOC(props: Props) {
             className={`border-l-2 text-sm transition-colors py-1 pr-4 hover:cursor-pointer ${choiceClass}`}
             onClick={onClickRow}
             css={css`
-              padding-left: calc(1rem + ${head.level} * 0.5rem);
+              padding-left: calc(${head.level} * 1rem);
             `}
           >
             {head.text}
