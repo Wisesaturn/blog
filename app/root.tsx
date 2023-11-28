@@ -19,36 +19,28 @@ import Footer from '@components/Footer';
 import { Title } from '@components/Title';
 
 import { getEnv } from '@utils/firebase.server';
+import { CATEGORY_DATA } from '@utils/constant/category';
 
 import type { V2_MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
 
 const metaSNS = [
   { property: 'og:type', content: 'website' },
-  {
-    property: 'og:image',
-    content:
-      'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
-  },
   { property: 'og:locale', content: 'ko_KR' },
   { property: 'og:image:width', content: '1200' },
   { property: 'og:image:height', content: '630' },
 ];
 
-const metaTwitter = [
-  { name: 'twitter:card', content: 'summary' },
-  {
-    name: 'twitter:image',
-    content:
-      'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
-  },
-];
+const metaTwitter = [{ name: 'twitter:card', content: 'summary' }];
 
 export const meta: V2_MetaFunction = ({ params }) => {
   const { post } = params;
 
   const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
-  const isDescription = `기록하고 싶은 것들을 모아두었습니다`;
+  const isDescription = `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | ${CATEGORY_DATA.map(
+    (category) => category.name,
+  ).join(' ')}`;
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
+  const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
 
   return [
     {
@@ -59,12 +51,20 @@ export const meta: V2_MetaFunction = ({ params }) => {
       content: isDescription,
     },
     {
+      property: 'og:type',
+      content: 'website',
+    },
+    {
       property: 'og:url',
       content: isURL,
     },
     {
       property: 'og:title',
       content: isTitle,
+    },
+    {
+      property: 'og:image',
+      content: defaultThumbnail,
     },
     {
       property: 'og:description',
@@ -77,6 +77,10 @@ export const meta: V2_MetaFunction = ({ params }) => {
     {
       name: 'twitter:title',
       content: isTitle,
+    },
+    {
+      property: 'twitter:image',
+      content: defaultThumbnail,
     },
     {
       name: 'twitter:description',

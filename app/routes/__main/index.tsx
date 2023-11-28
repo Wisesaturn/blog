@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Link, useLoaderData } from '@remix-run/react';
 import { SlArrowRight } from 'react-icons/sl';
 import { css } from '@emotion/react';
