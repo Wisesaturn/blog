@@ -19,12 +19,10 @@ const uploadImageToFirebase = async (srcUrl: string, category: string, title: st
       .shift()!,
   );
   const metadata = { contentType: `image/${ext}` };
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-  const milliseconds = now.getMilliseconds();
-  const hashTime = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+  const hashTime = new Intl.DateTimeFormat('ko', {
+    dateStyle: 'medium',
+    timeStyle: 'medium',
+  }).format(new Date());
 
   const postRef = ref(storage, `post/${category}/${title}/${filename}-${hashTime}.${ext}`);
   const ImgUrl = await uploadBytes(postRef, data, metadata).then(async () => {
