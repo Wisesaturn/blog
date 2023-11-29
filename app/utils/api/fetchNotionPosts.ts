@@ -32,16 +32,20 @@ export default async function fetchNotionPosts(document: string) {
         const blogPagesMap = blogPageIdList
           .map((post: any): Partial<IFirebasePostReturn> => {
             const createdTime = new Date(post.created_time);
+            const lastEditedTime = new Date(post.last_edited_time);
             createdTime.setHours(createdTime.getHours() + 9);
-
-            const formattedDate = `${createdTime.getUTCFullYear()}. ${
-              createdTime.getUTCMonth() + 1
-            }. ${createdTime.getUTCDate()}.`;
 
             // JSON //
             const category = post.properties.category.select.name;
-            const last_editedAt = new Date(post.last_edited_time);
-            const createdAt = formattedDate;
+            const last_editedAt = lastEditedTime;
+            const lastmod = new Intl.DateTimeFormat('fr-CA', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric',
+            }).format(lastEditedTime);
+            const createdAt = new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
+              createdTime,
+            );
             const plain_title = `${post.properties.이름.title[0].plain_text}`;
             const title = `${post.icon?.emoji ? `${post.icon.emoji} ` : ''} ${
               post.properties.이름.title[0].plain_text
@@ -57,6 +61,7 @@ export default async function fetchNotionPosts(document: string) {
               plain_title,
               title,
               thumbnail,
+              lastmod,
               createdAt,
               category,
               tags,

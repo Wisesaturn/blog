@@ -59,11 +59,8 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
           .process(mdString.parent);
 
         const createdTime = new Date(selectedPost[0].created_time);
+        const lastEditedTime = new Date(selectedPost[0].last_edited_time);
         createdTime.setHours(createdTime.getHours() + 9);
-
-        const formattedDate = `${createdTime.getUTCFullYear()}. ${
-          createdTime.getUTCMonth() + 1
-        }. ${createdTime.getUTCDate()}.`;
 
         // ////////////////// data /////////////////// //
         const plain_title = `${selectedPost[0].properties.이름.title[0].plain_text}`;
@@ -79,11 +76,19 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
           category,
           title,
         );
-        const createdAt = formattedDate;
+        const createdAt = new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
+          createdTime,
+        );
+        const lastmod = new Intl.DateTimeFormat('fr-CA', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        }).format(lastEditedTime);
         const tags = selectedPost[0].properties.tags.multi_select;
         const index = selectedPost[0].id;
         const description = selectedPost[0].properties.description.rich_text[0]?.plain_text ?? '';
-        const last_editedAt = new Date(selectedPost[0].last_edited_time);
+
+        const last_editedAt = lastEditedTime;
         const body = await convertImageNotionToFirebase(result.value, category, title);
         // ////////////////// data /////////////////// //
 
@@ -91,6 +96,7 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
           plain_title,
           title,
           category,
+          lastmod,
           thumbnail,
           createdAt,
           tags,
