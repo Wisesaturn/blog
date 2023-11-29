@@ -2,6 +2,10 @@ import { AiFillLinkedin, AiFillInstagram, AiFillMail, AiFillGithub } from 'react
 import React from 'react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
+import IconLinkedIn from '@components/Assets/IconLinkedIn';
+import IconEmail from '@components/Assets/IconEmail';
+import IconGithub from '@components/Assets/IconGithub';
+import IconInstagram from '@components/Assets/IconInstagram';
 
 function Contact() {
   return (
@@ -13,7 +17,7 @@ function Contact() {
           aria-label="follow my github"
           rel="noreferrer"
         >
-          <AiFillLinkedin className={TWstyleIcon} size="2rem" />
+          <IconLinkedIn />
         </a>
       </span>
       <span className={TWstyleIconWrapper}>
@@ -23,7 +27,7 @@ function Contact() {
           rel="noreferrer"
           aria-label="contact on email"
         >
-          <AiFillMail className={TWstyleIcon} size="2rem" />
+          <IconEmail />
         </a>
       </span>
       <span className={TWstyleIconWrapper}>
@@ -33,7 +37,7 @@ function Contact() {
           aria-label="follow my github"
           rel="noreferrer"
         >
-          <AiFillGithub className={TWstyleIcon} size="2rem" />
+          <IconGithub />
         </a>
       </span>
       <span className={TWstyleIconWrapper}>
@@ -43,7 +47,7 @@ function Contact() {
           aria-label="follow my instagram"
           rel="noreferrer"
         >
-          <AiFillInstagram className={TWstyleIcon} size="2rem" />
+          <IconInstagram />
         </a>
       </span>
     </div>

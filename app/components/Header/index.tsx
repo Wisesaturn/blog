@@ -5,6 +5,9 @@ import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md';
 
 import useScroll from '@hooks/useScroll';
 
+import IconDarkMode from '@components/Assets/IconDarkMode';
+import IconSearch from '@components/Assets/IconSearch';
+
 import type { CategoryType } from '@utils/constant/category';
 
 import SearchContents from './Components/SearchContents';
@@ -133,7 +136,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
 
   // style
   const styleIcon =
-    'fill-gray-300 dark:fill-gray-200 hover:dark:fill-white hover:fill-gray-600 dark:fill-black rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100 hover:dark:bg-[#111]';
+    'fill-gray-300 dark:fill-gray-200 hover:dark:fill-white hover:fill-gray-600 rounded p-1 active:bg-gray-200 duration-200 hover:bg-gray-100 hover:dark:bg-[#111]';
   const styleIconWrapper =
     'hover:cursor-pointer rounded active:bg-gray-200 duration-200 hover:bg-gray-100 hover:dark:bg-[#222]';
 
@@ -182,7 +185,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
             className={styleIconWrapper}
             onClick={onToggleSearchBar}
           >
-            <AiOutlineSearch className={styleIcon} size="32" />
+            <IconSearch />
           </button>
           <button
             type="button"
@@ -190,8 +193,8 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
             aria-label="darkmode button"
             onClick={handleDarkmode}
           >
-            {isDarkmode === 'light' && <MdOutlineDarkMode className={styleIcon} size="32" />}
-            {isDarkmode === 'dark' && <MdDarkMode className={styleIcon} size="32" />}
+            {isDarkmode === 'light' && <IconDarkMode />}
+            {isDarkmode === 'dark' && <IconDarkMode />}
           </button>
         </div>
       </header>

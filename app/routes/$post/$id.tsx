@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 import { useLoaderData } from '@remix-run/react';
-import { GiShare } from 'react-icons/gi';
-import { IoCopy } from 'react-icons/io5';
-import { AiFillEye } from 'react-icons/ai';
 import { useCallback, useEffect, useState } from 'react';
 import { createCookie, json } from '@remix-run/node';
 
 import styles from '@styles/vscode-prism.css';
-import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
+import { TWstyleIconWrapper } from '@styles/config';
 
 import { PostTitle } from '@components/Title';
 import TOC from '@components/TOC';
+import IconView from '@components/Assets/IconView';
+import IconCopy from '@components/Assets/IconCopy';
+import IconShare from '@components/Assets/IconShare';
 
 import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
@@ -170,7 +170,7 @@ export default function ReviewPage() {
       />
       <div className="flex justify-between">
         <div className="flex gap-1.5 text-gray-500 dark:text-gray-200 items-center justify-center">
-          <AiFillEye size="1rem" />
+          <IconView />
           <span className="text-left text-lg">{views ?? 0}</span>
         </div>
         <div className="flex gap-2 w-min relative">
@@ -180,10 +180,10 @@ export default function ReviewPage() {
             </span>
           )}
           <span className={TWstyleIconWrapper} onClick={handleCopyPage}>
-            <IoCopy className={TWstyleIcon} size="2.25rem" />
+            <IconCopy />
           </span>
           <span className={TWstyleIconWrapper} onClick={sharePage}>
-            <GiShare className={TWstyleIcon} size="2.25rem" />
+            <IconShare />
           </span>
         </div>
       </div>
