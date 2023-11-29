@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react';
-import { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import { useEffect, useState, forwardRef, useImperativeHandle, useRef, KeyboardEvent } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md';
 
@@ -25,11 +25,14 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const [hasShadow, setHasShadow] = useState<string>('');
   const [toggleSearchBar, setToggleSearchBar] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
+  const [searchFocusRow, setSerachFocusRow] = useState(-1);
   const [isDarkmode, setIsDarkmode] = useState<Darkmode>(
     document.documentElement.getAttribute('color-theme') as Darkmode,
   );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const searchSectionRef = useRef<HTMLElement | null>(null);
+
   // style for scroll
   const { isScrollTop, isScrollDirection } = useScroll();
   const isDefaultStyle = `glassMorphism flex z-[9999] bg-white dark:bg-[#232323] fixed ease-in-out transition duration-200 justify-between w-full mx-auto h-min items-center transition top-0 ${hasDisabled} ${hasShadow}`;
@@ -41,6 +44,40 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleInputKeyDown = (event: KeyboardEvent) => {
+    const childElementCount = searchSectionRef.current?.childElementCount || 0;
+    if (childElementCount < 1) return;
+    if (childElementCount === 1 && searchSectionRef.current?.className.includes('no-search'))
+      return;
+
+    const getFocusHref =
+      (searchFocusRow > 0 &&
+        searchSectionRef.current?.children[searchFocusRow].getAttribute('href')) ||
+      '';
+
+    switch (event.key) {
+      case 'ArrowDown':
+        setSerachFocusRow((prev) => prev + 1);
+        if (searchSectionRef.current?.childElementCount === searchFocusRow + 1)
+          setSerachFocusRow(0);
+        break;
+      case 'ArrowUp':
+        setSerachFocusRow((prev) => prev - 1);
+        if (searchFocusRow <= 0) {
+          setSerachFocusRow(-1);
+        }
+        break;
+      case 'Escape':
+        setSerachFocusRow(-1);
+        break;
+      case 'Enter':
+        window.location.href = getFocusHref;
+        break;
+      default:
+        setSerachFocusRow(-1);
+    }
   };
 
   const handleDarkmode = () => {
@@ -107,10 +144,11 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
             <input
               ref={inputRef}
               onChange={handleInputChange}
+              onKeyDown={handleInputKeyDown}
               className="placeholder:text-gray-500 px-8 bg-inherit focus:outline-none focus:border-green-main w-full border-r-2 h-max"
               placeholder="검색어를 입력해주세요"
             />
-            <SearchContents input={inputValue} />
+            <SearchContents ref={searchSectionRef} input={inputValue} focusIdx={searchFocusRow} />
           </>
         ) : (
           <div className="flex gap-2 ml-3 items-center hidden-last-arrow whitespace-nowrap md:w-full w-2/3 overflow-hidden">

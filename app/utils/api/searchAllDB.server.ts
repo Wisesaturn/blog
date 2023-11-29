@@ -6,7 +6,7 @@ import { CATEGORY_DATA } from '@utils/constant/category';
 import countDB from './countDB';
 
 import type { DocumentData } from 'firebase/firestore';
-import type { IPost } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
 export default async function searchAllDB(size?: number, title?: string) {
   const allSearchData = await Promise.all(
@@ -35,5 +35,5 @@ export default async function searchAllDB(size?: number, title?: string) {
 
   const slicedData = combinedData.searchData.slice(0, size || (await countDB()));
 
-  return slicedData as IPost[];
+  return slicedData as IFirebasePostReturn[];
 }

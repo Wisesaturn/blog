@@ -39,7 +39,7 @@
   --blue-darker: #0969da;
   --blue-main: #54aeff;
   --blue-bright: #94ccfd;
-  --strong: var(--green-darker);
+  --strong: var(--green-bright);
   --strong-callout: var(--black);
   --bg-thead: #393939;
   --bg-callout: rgba(16, 77, 31, 0.5);
@@ -149,6 +149,7 @@
     width: max-content;
     transition: 0.15s ease-in-out;
     padding: 0.15rem 0.5rem;
+    color: var(--black);
   }
 
   summary:hover {
@@ -484,7 +485,6 @@
   @media only screen and (max-width: 768px) {
     summary {
       font-weight: semiboid;
-      color: #333;
     }
 
     .markdown-body pre > code > span {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, forwardRef, Ref } from 'react';
 import { Link } from '@remix-run/react';
 
 import { EnvContext } from '@app/root';
@@ -11,10 +11,11 @@ import type { IFirebasePostReturn } from '@Types/post';
 
 interface ISearchBar {
   input?: string;
+  focusIdx: number;
 }
 
-export default function SearchContents(props: ISearchBar) {
-  const { input = '' } = props;
+const SearchContents = forwardRef((props: ISearchBar, ref: Ref<HTMLElement>) => {
+  const { input = '', focusIdx } = props;
   const [isLoadingState, setIsLoadingState] = useState<LoadingT>('loading');
   const debouncedInput = useDebounce(input, 450);
   const [postData, setPostData] = useState<IFirebasePostReturn[]>([]);
@@ -22,13 +23,15 @@ export default function SearchContents(props: ISearchBar) {
 
   useEffect(() => {
     setIsLoadingState('loading');
-    searchAllDB(5, env).then((res: any) => {
-      const isFilteringData = res.filter((data: IFirebasePostReturn) => {
-        const lowerCaseTitle = data.plain_title.toLowerCase();
-        const lowerCaseInput = debouncedInput.toLowerCase();
+    searchAllDB({ env }).then((res: IFirebasePostReturn[]) => {
+      const isFilteringData = res
+        .filter((data: IFirebasePostReturn) => {
+          const lowerCaseTitle = data.plain_title.toLowerCase();
+          const lowerCaseInput = debouncedInput.toLowerCase();
 
-        return lowerCaseTitle.includes(lowerCaseInput);
-      });
+          return lowerCaseTitle.includes(lowerCaseInput);
+        })
+        .slice(0, 5);
 
       if (isFilteringData.length === 0) setIsLoadingState('empty');
       else setIsLoadingState('none');
@@ -40,6 +43,7 @@ export default function SearchContents(props: ISearchBar) {
     none: (
       <>
         {postData.map((data: IFirebasePostReturn, idx) => {
+          const focusClass = idx === focusIdx ? 'bg-gray-200' : '';
           return (
             <Link
               reloadDocument
@@ -52,7 +56,7 @@ export default function SearchContents(props: ISearchBar) {
             >
               <div
                 key={idx}
-                className="p-2 px-4 border-t-2 text-black border-gray-100 w-full text-ellipsis overflow-x-hidden whitespace-nowrap hover:bg-gray-100 duration-200 hover:border-gray-100"
+                className={`p-2 px-4 border-t-2 text-black border-gray-100 w-full text-ellipsis overflow-x-hidden whitespace-nowrap hover:bg-gray-100 duration-200 hover:border-gray-100 ${focusClass}`}
               >
                 {data.title}
               </div>
@@ -67,7 +71,7 @@ export default function SearchContents(props: ISearchBar) {
       </div>
     ),
     empty: (
-      <span className="p-2 block text-black border-t-2 w-full px-4 border-green-main">
+      <span className="p-2 block text-black border-t-2 w-full px-4 border-green-main no-search">
         검색결과가 없습니다
       </span>
     ),
@@ -76,8 +80,10 @@ export default function SearchContents(props: ISearchBar) {
   const SearchResultComponent = () => SearchResultCondition[isLoadingState];
 
   return (
-    <section className="absolute top-12 left-0 w-full bg-white z-9 shadow-md z-[999]">
+    <section ref={ref} className="absolute top-12 left-0 w-full bg-white z-9 shadow-md z-[999]">
       {debouncedInput && <SearchResultComponent />}
     </section>
   );
-}
+});
+
+export default SearchContents;

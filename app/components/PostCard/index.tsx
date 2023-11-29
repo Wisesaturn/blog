@@ -45,10 +45,10 @@ export default function PostCardSection(props: {
                   </h2>
                   <span className="space-x-2 inline-block text-xs text-gray-400 font-light whitespace-nowrap">
                     {subTitle && (
-                      <span className="text-black dark:text-gray-500 font-bold">{subTitle}</span>
+                      <span className="text-black dark:text-gray-300 font-bold">{subTitle}</span>
                     )}
                     {showCategory && (
-                      <span className="text-xs text-green-main leading-normal">
+                      <span className="text-xs text-green-main dark:text-green-bright leading-normal">
                         {post.category.replace(/^\w/, (c) => c.toUpperCase())}
                       </span>
                     )}

@@ -4,9 +4,9 @@ import setClientFirebase from '@utils/firebase.client';
 import { CATEGORY_DATA } from '@utils/constant/category';
 
 import type { DocumentData } from 'firebase/firestore';
-import type { IPost } from '@Types/post';
+import type { IFirebasePostReturn } from '@Types/post';
 
-export default async function searchAllDB(size?: number, env?: any) {
+export default async function searchAllDB({ size, env }: { size?: number; env?: any }) {
   const { db } = setClientFirebase(env);
 
   const allSearchData = await Promise.all(
@@ -32,7 +32,7 @@ export default async function searchAllDB(size?: number, env?: any) {
     return dateA < dateB ? 1 : -1;
   });
 
-  const slicedData = combinedData.searchData.slice(0, 5 || size);
+  const slicedData = size ? combinedData.searchData.slice(size) : combinedData.searchData;
 
-  return slicedData as IPost[];
+  return slicedData as IFirebasePostReturn[];
 }
