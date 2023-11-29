@@ -27,7 +27,9 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const [inputValue, setInputValue] = useState<string>('');
   const [searchFocusRow, setSerachFocusRow] = useState(-1);
   const [isDarkmode, setIsDarkmode] = useState<Darkmode>(
-    document.documentElement.getAttribute('color-theme') as Darkmode,
+    typeof window !== 'undefined'
+      ? (document.documentElement.getAttribute('color-theme') as Darkmode)
+      : 'light',
   );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
