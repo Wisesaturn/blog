@@ -108,8 +108,9 @@ export async function loader({ params, request }: LoaderArgs) {
 
   if (refetch) {
     await fetchNotionPost('', title.replace(/\s+/g, '-'))
-      .then((notionRes) => {
-        postDB(chooseCategory[0].link, title.replace(/\s+/g, '-'), notionRes);
+      .then(async (notionRes) => {
+        await postDB(chooseCategory[0].link, title.replace(/\s+/g, '-'), notionRes);
+        console.log(`------------- post Done! : ${title}`);
       })
       .catch((err) => {
         console.log('[refetch error]');

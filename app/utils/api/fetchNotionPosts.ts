@@ -73,14 +73,20 @@ export default async function fetchNotionPosts(document: string) {
               .then((res) => {
                 if (last_editedAt === res.last_editedAt) return;
 
-                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
-                  postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
-                });
+                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then(
+                  async (notionRes) => {
+                    await postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
+                    console.log(`------------- post Done! : ${plain_title}`);
+                  },
+                );
               })
               .catch(() => {
-                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then((notionRes) => {
-                  postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
-                });
+                fetchNotionPost(document, plain_title.replace(/\s+/g, '-')).then(
+                  async (notionRes) => {
+                    await postDB(category, plain_title.replace(/\s+/g, '-'), notionRes);
+                    console.log(`------------- post Done! : ${plain_title}`);
+                  },
+                );
               });
 
             return postDataJSON;

@@ -55,7 +55,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
       return;
 
     const getFocusHref =
-      (searchFocusRow > 0 &&
+      (searchFocusRow >= 0 &&
         searchSectionRef.current?.children[searchFocusRow].getAttribute('href')) ||
       '';
 
