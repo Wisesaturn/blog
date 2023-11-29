@@ -51,4 +51,4 @@ build.index.js.map
 /api/metafile.*
 /app/styles/tailwind.css
 
-api/
+api/_assets

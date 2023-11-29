@@ -94,6 +94,7 @@ export const meta: V2_MetaFunction = ({ data, params }) => {
 
 export async function loader({ params, request }: LoaderArgs) {
   const { post } = params;
+
   const url = new URL(request.url);
   const refetch = Boolean(url.searchParams.get('refetch'));
   const title = String(url.searchParams.get('title'));
@@ -123,6 +124,7 @@ export async function loader({ params, request }: LoaderArgs) {
 
 export const SelectedPostPage = () => {
   const { chooseCategory, data, post } = useLoaderData<typeof loader>();
+
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const updatePost = async () => {

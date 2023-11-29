@@ -176,7 +176,7 @@ export function ErrorBoundary({ error }: any) {
   return (
     <html>
       <head>
-        <title>Error 😥</title>
+        <title>{`Error 😥`}</title>
         <Meta />
         <Links />
       </head>

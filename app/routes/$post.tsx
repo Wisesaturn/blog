@@ -44,7 +44,7 @@ const PostLayout = () => {
   if (!Array.isArray(data)) {
     return (
       <>
-        <span>포스팅 요청 성공</span>
+        <div>포스팅 요청 성공!</div>
       </>
     );
   }
