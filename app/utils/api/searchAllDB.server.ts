@@ -1,7 +1,7 @@
 import { collection, query, getDocs, where } from 'firebase/firestore';
 
 import { db } from '@utils/firebase.server';
-import { CATEGORY_DATA } from '@utils/constant/category';
+import { PRODUCTION_CATEGORY_DATA } from '@utils/constant/category';
 
 import countDB from './countDB';
 
@@ -10,7 +10,7 @@ import type { IFirebasePostReturn } from '@Types/post';
 
 export default async function searchAllDB(size?: number, title?: string) {
   const allSearchData = await Promise.all(
-    CATEGORY_DATA.map(async (cur) => {
+    PRODUCTION_CATEGORY_DATA.map(async (cur) => {
       const q = title
         ? query(collection(db, cur.link), where('plain_title', '==', title))
         : query(collection(db, cur.link));

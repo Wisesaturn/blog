@@ -4,6 +4,7 @@ export const loader = () => {
   const robotText = `
     User-agent: *
     Allow: /
+    Disallow: /19D0364CBBC3C83B6DE272A5814D55E42BB336B27D8458AC91882BE1262A36D3330DB3F7E027CB9290A06749DAAF96D55377E5267F52B163D104A93088009B55/
 
     Sitemap: https://jaehan.blog/sitemap.xml
     `;

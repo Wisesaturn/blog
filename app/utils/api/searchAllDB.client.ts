@@ -1,7 +1,7 @@
 import { collection, query, getDocs } from 'firebase/firestore';
 
 import setClientFirebase from '@utils/firebase.client';
-import { CATEGORY_DATA } from '@utils/constant/category';
+import { PRODUCTION_CATEGORY_DATA } from '@utils/constant/category';
 
 import type { DocumentData } from 'firebase/firestore';
 import type { IFirebasePostReturn } from '@Types/post';
@@ -10,7 +10,7 @@ export default async function searchAllDB({ size, env }: { size?: number; env?: 
   const { db } = setClientFirebase(env);
 
   const allSearchData = await Promise.all(
-    CATEGORY_DATA.map(async (cur) => {
+    PRODUCTION_CATEGORY_DATA.map(async (cur) => {
       const q = query(collection(db, cur.link));
 
       const querySnapshot = await getDocs(q);

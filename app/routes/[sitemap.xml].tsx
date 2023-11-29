@@ -2,7 +2,7 @@
 import { IFirebasePostReturn } from '@Types/post';
 
 import searchAllDB from '@utils/api/searchAllDB.server';
-import { CATEGORY_DATA } from '@utils/constant/category';
+import { PRODUCTION_CATEGORY_DATA } from '@utils/constant/category';
 
 interface ISitemap {
   loc: string;
@@ -23,7 +23,7 @@ export const loader = async () => {
   ];
 
   // Category Siteamp
-  CATEGORY_DATA.forEach((category) => {
+  PRODUCTION_CATEGORY_DATA.forEach((category) => {
     sitePost.push({ loc: `${HOST_URL}/${category.link}` });
   });
 
