@@ -3,14 +3,20 @@ import { Outlet, useLoaderData } from '@remix-run/react';
 import Copyright from '@components/Footer/Copyright';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
+import { HeaderProps } from '@components/Header/types';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
+import updateNotionPost from '@utils/api/updateNotionPost';
 
 import type { LoaderArgs } from '@remix-run/node';
 
 export async function loader({ params }: LoaderArgs) {
   try {
     const { post, id } = params;
+
+    if (post === process.env.POST_UPDATE_URL) {
+      return updateNotionPost() as unknown;
+    }
 
     const category = CATEGORY_DATA.filter((ele) => {
       return ele.link === post;
@@ -26,7 +32,7 @@ export async function loader({ params }: LoaderArgs) {
         link: `/${category[0].link}/${id ? decodeURI(id!) : ''}`,
       },
     ];
-    return data;
+    return data as HeaderProps['paths'];
   } catch (err) {
     throw new Error('페이지를 찾을 수 없습니다.');
   }
@@ -34,6 +40,14 @@ export async function loader({ params }: LoaderArgs) {
 
 const PostLayout = () => {
   const data = useLoaderData<typeof loader>();
+
+  if (!Array.isArray(data)) {
+    return (
+      <>
+        <span>포스팅 요청 성공</span>
+      </>
+    );
+  }
 
   return (
     <>

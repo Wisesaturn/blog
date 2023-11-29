@@ -1,3 +1,9 @@
+// 새로 카테고리 수정할시 'utils/constant/category.ts' 에서 Category 추가
+import { IFirebasePostReturn } from '@Types/post';
+
+import searchAllDB from '@utils/api/searchAllDB.server';
+import { PRODUCTION_CATEGORY_DATA } from '@utils/constant/category';
+
 interface ISitemap {
   loc: string;
   lastmod?: string;
@@ -6,30 +12,31 @@ interface ISitemap {
 
 const HOST_URL = `https://jaehan.blog`;
 
-// 새로 카테고리 수정할시 'utils/constant/category.ts' 에서 Category 추가
-const sitePost: ISitemap[] = [
-  { loc: HOST_URL, lastmod: '2023-07-05', priority: '1.0' },
-  { loc: `${HOST_URL}/typescript/함수-타입-선언하기`, lastmod: '2023-06-27' },
-  { loc: `${HOST_URL}/frontend/쌩-npm으로-MFE-구축하기-(1)-:-개념`, lastmod: `2023-07-05` },
-  {
-    loc: `${HOST_URL}/react/Loading-Chunk-Failed-:-청크-로드-에러-해결하기`,
-    lastmod: `2023-09-15`,
-  },
-  {
-    loc: `${HOST_URL}/nextjs/Hydration-Error-:-Minified-React-Error-해결하기`,
-    lastmod: `2023-11-09`,
-  },
-  { loc: `${HOST_URL}/frontend` },
-  { loc: `${HOST_URL}/react` },
-  { loc: `${HOST_URL}/nextjs` },
-  { loc: `${HOST_URL}/typescript` },
-  { loc: `${HOST_URL}/resume` },
-  { loc: `${HOST_URL}/all` },
-];
-
-export const loader = () => {
+export const loader = async () => {
+  const getAllPost: IFirebasePostReturn[] = await searchAllDB();
   // handle "GET" request
   // separating xml content from Response to keep clean code.
+  const sitePost: ISitemap[] = [
+    { loc: HOST_URL, priority: '1.0' },
+    { loc: `${HOST_URL}/resume` },
+    { loc: `${HOST_URL}/all` },
+  ];
+
+  // Category Siteamp
+  PRODUCTION_CATEGORY_DATA.forEach((category) => {
+    sitePost.push({ loc: `${HOST_URL}/${category.link}` });
+  });
+
+  // Post Sitemap
+  getAllPost.forEach((post) => {
+    const title = post.title.replaceAll(' ', '-');
+
+    sitePost.push({
+      loc: `${HOST_URL}/${post.category}/${title}`,
+      lastmod: post.lastmod,
+    });
+  });
+
   const content = `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${sitePost
