@@ -13,7 +13,7 @@ export default function ProfileSection() {
             저만의 경험과 기록을 담아두었습니다
           </p>
           <span className="text-gray-500 flex items-end hover:text-green-main w-max transition-colors py-2">
-            <Link to="/resume" className="w-max">
+            <Link reloadDocument to="/resume" className="w-max">
               저에 대해서 궁금하시다면?
             </Link>
           </span>
