@@ -194,7 +194,7 @@ export function ErrorBoundary({ error }: any) {
   return (
     <html>
       <head>
-        <title>{`Error 😥`}</title>
+        <title>{`Error :: 사툰사툰`}</title>
         <Meta />
         <Links />
       </head>
