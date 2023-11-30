@@ -62,7 +62,6 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
 
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
-        createdTime.setHours(createdTime.getHours() + 9);
 
         // ////////////////// data /////////////////// //
         const plain_title = `${selectedPost[0].properties.이름.title[0].plain_text}`;

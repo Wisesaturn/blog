@@ -35,7 +35,6 @@ export default async function fetchNotionPosts(document: string) {
           .map((post: any): Partial<IFirebasePostReturn> => {
             const createdTime = new Date(post.created_time);
             const lastEditedTime = new Date(post.last_edited_time);
-            createdTime.setHours(createdTime.getHours() + 9);
 
             // JSON //
             const category = post.properties.category.select.name;
