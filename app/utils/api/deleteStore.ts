@@ -2,6 +2,7 @@
 import { deleteObject, ref, listAll } from 'firebase/storage';
 
 import { storage } from '@utils/firebase.server';
+import DeleteFailedError from '@utils/error/DeleteFailedError';
 
 export default async function deleteStore(category: string, title: string) {
   const listRef = ref(storage, `post/${category}/${title}`);
@@ -17,7 +18,7 @@ export default async function deleteStore(category: string, title: string) {
       })
       .catch((error) => {
         console.log(error);
-        throw new Error(`${item.name} 삭제에 실패하였습니다`);
+        throw new DeleteFailedError(item.name);
       });
   });
 }

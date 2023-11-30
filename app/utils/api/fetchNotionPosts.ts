@@ -1,6 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 
+import FetchFailedError from '@utils/error/FetchFailedError';
+import NotCategoryError from '@utils/error/NotCategoryError';
+
 import fetchDB from './fetchDB';
 import postDB from './postDB';
 import fetchNotionPost from './fetchNotionPost';
@@ -26,8 +29,7 @@ export default async function fetchNotionPosts(document: string) {
           return e.object === 'page' && e.properties.category.select.name === document;
         });
 
-        if (blogPageIdList.length === 0)
-          throw new Error(`"${document}" 카테고리가 존재하지 않습니다.`);
+        if (blogPageIdList.length === 0) throw new NotCategoryError(document);
 
         const blogPagesMap = blogPageIdList
           .map((post: any): Partial<IFirebasePostReturn> => {
@@ -100,6 +102,6 @@ export default async function fetchNotionPosts(document: string) {
 
     return blogPages;
   } catch (err: any) {
-    throw new Error('게시물 목록을 불러오는데 실패하였습니다.');
+    throw new FetchFailedError();
   }
 }

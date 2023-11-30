@@ -12,6 +12,8 @@ import rehypeSlug from 'rehype-slug';
 
 import convertImageNotionToFirebase from '@utils/lib/convertImageNotionToFirebase';
 import uploadImageToFirebase from '@utils/lib/uploadImageToFirebase';
+import NotFoundPostError from '@utils/error/NotFoundPostError';
+import FetchFailedError from '@utils/error/FetchFailedError';
 
 import deleteStore from './deleteStore';
 
@@ -39,7 +41,7 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
         });
 
         if (selectedPost.length === 0) {
-          throw new Error('게시물을 찾을 수 없습니다.');
+          throw new NotFoundPostError();
         }
 
         const mdblocks = await n2m.pageToMarkdown(selectedPost[0].id);
@@ -109,7 +111,6 @@ export default async function fetchNotionPost(document: string, inputTitle: stri
 
     return blogPage;
   } catch (err) {
-    console.log(err);
-    throw new Error('게시물을 불러오는데 실패하였습니다.');
+    throw new FetchFailedError();
   }
 }

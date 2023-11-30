@@ -11,7 +11,7 @@ import {
 } from '@remix-run/react';
 import { Suspense, createContext, useEffect } from 'react';
 import { json } from '@remix-run/node';
-
+import { isRouteErrorResponse, useRouteError } from '@remix-run/react';
 import styles from '@styles/tailwind.css';
 
 import Header from '@components/Header';
@@ -22,6 +22,7 @@ import { getEnv } from '@utils/firebase.server';
 import { CATEGORY_DATA } from '@utils/constant/category';
 
 import type { V2_MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
+import CustomError from '@utils/error/CustomError';
 
 const metaSNS = [
   { property: 'og:type', content: 'website' },
@@ -182,7 +183,8 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }: any) {
+export function ErrorBoundary() {
+  const error = useRouteError();
   const ErrorData = [
     { name: `📚 사툰사툰`, link: '/' },
     {
@@ -191,21 +193,52 @@ export function ErrorBoundary({ error }: any) {
     },
   ];
 
-  return (
-    <html>
-      <head>
-        <title>{`Error :: 사툰사툰`}</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Header paths={ErrorData} />
-        <div className="w-full h-full flex flex-col justify-start items-center gap-2">
-          <Title isContent="ERROR" isSubContent={`${error.message}`} />
-        </div>
-        <Footer />
-        <Scripts />
-      </body>
-    </html>
-  );
+  if (isRouteErrorResponse(error)) {
+    return (
+      <html>
+        <head>
+          <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+          <meta charSet="utf-8" />
+          <title>{error.status} : 사툰사툰</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Header paths={ErrorData} />
+          <div className="w-full h-full flex flex-col justify-start items-center gap-2">
+            <Title isContent={error.statusText} isSubContent={`${error.data}`} />
+          </div>
+          <Footer />
+          <Scripts />
+        </body>
+      </html>
+    );
+  } else if (error instanceof CustomError) {
+    return (
+      <html>
+        <head>
+          <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+          <meta charSet="utf-8" />
+          <title>{error.name} : 사툰사툰</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Header paths={ErrorData} />
+          <div className="w-full h-full flex flex-col justify-start items-center gap-2">
+            <Title
+              isContent={String(error.statusCode)}
+              isSubContent={`${error.message} (${
+                process.env.NODE_ENV === 'development' ? error.name : ''
+              })`}
+            />
+          </div>
+          <Footer />
+          <Scripts />
+        </body>
+      </html>
+    );
+  }
 }

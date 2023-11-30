@@ -2,6 +2,10 @@ import { PRODUCTION_CATEGORY_DATA } from '@utils/constant/category';
 
 import fetchNotionPosts from './fetchNotionPosts';
 
+/**
+ *
+ * @deprecated 전체 노션 포스트 업데이트 (추후 고려)
+ */
 export default async function updateNotionPost() {
   try {
     await Promise.all(PRODUCTION_CATEGORY_DATA.map((category) => fetchNotionPosts(category.link)));

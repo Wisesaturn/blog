@@ -1,6 +1,7 @@
 import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
 
 import { db } from '@utils/firebase.server';
+import UploadFailedError from '@utils/error/UploadFailedError';
 
 import type { IFirebasePostReturn } from '@Types/post';
 
@@ -19,6 +20,6 @@ export default async function postDB(
       await setDoc(docRef, data);
     }
   } catch (err: any) {
-    throw new Error(`게시물을 업로드하는데 실패하였습니다 ${err.message}`);
+    throw new UploadFailedError();
   }
 }
