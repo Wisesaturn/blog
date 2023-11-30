@@ -211,6 +211,7 @@ export function ErrorBoundary() {
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta charSet="utf-8" />
+        <meta name="robots" content="noindex, nofollow" />
         <title>Error :: 사툰사툰</title>
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
