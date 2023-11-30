@@ -14,6 +14,7 @@ import {
 import { Suspense, createContext, useEffect } from 'react';
 import { json } from '@remix-run/node';
 
+import tossface from '@styles/tossface.css';
 import styles from '@styles/tailwind.css';
 
 import Header from '@components/Header';
@@ -106,9 +107,9 @@ export const links: LinksFunction = () => [
     as: 'style',
     crossOrigin: 'anonymous',
     type: 'text/css',
-    href: 'https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css',
+    href: tossface,
   },
-  { rel: 'stylesheet', type: 'text/css', href: styles },
+  { rel: 'stylesheet', as: 'style', crossOrigin: 'anonymous', type: 'text/css', href: styles },
   {
     rel: 'stylesheet',
     type: 'text/css',
