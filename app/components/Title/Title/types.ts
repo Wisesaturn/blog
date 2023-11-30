@@ -1,5 +1,7 @@
+import React from 'react';
+
 export interface TitleProps {
   isContent?: string;
   isSubContent?: string;
-  isContentIcon?: string;
+  Icon?: React.ReactNode;
 }

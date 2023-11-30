@@ -139,7 +139,10 @@ export const SelectedPostPage = () => {
 
   return (
     <>
-      <Title isContent={chooseCategory.name} isContentIcon={chooseCategory.icon} />
+      <Title
+        isContent={chooseCategory.name}
+        Icon={CATEGORY_DATA.find((category) => category.name === chooseCategory.name)?.icon || ''}
+      />
       {process.env.NODE_ENV === 'development' && (
         <div className="flex gap-4">
           <input
