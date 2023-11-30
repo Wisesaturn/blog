@@ -4,7 +4,7 @@ import fetchNotionPosts from './fetchNotionPosts';
 
 /**
  *
- * @deprecated 전체 노션 포스트 업데이트 (추후 고려)
+ * @example 전체 노션 포스트 업데이트 (추후 고려)
  */
 export default async function updateNotionPost() {
   try {

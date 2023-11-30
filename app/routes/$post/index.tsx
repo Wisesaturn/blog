@@ -14,6 +14,7 @@ import type { CategoryType } from '@utils/constant/category';
 import searchDB from '@utils/api/searchDB';
 import postDB from '@utils/api/postDB';
 import fetchNotionPost from '@utils/api/fetchNotionPost';
+import updateNotionPost from '@utils/api/updateNotionPost';
 
 import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node';
 
@@ -97,6 +98,7 @@ export async function loader({ params, request }: LoaderArgs) {
 
   const url = new URL(request.url);
   const refetch = Boolean(url.searchParams.get('refetch'));
+  const update = Boolean(url.searchParams.get('update'));
   const title = String(url.searchParams.get('title'));
   const chooseCategory = CATEGORY_DATA.filter((item: CategoryType) => {
     return item.link === post;
@@ -104,6 +106,10 @@ export async function loader({ params, request }: LoaderArgs) {
 
   if (post === undefined || title === undefined) {
     throw new Error('Wrong State : development');
+  }
+
+  if (update) {
+    await updateNotionPost();
   }
 
   if (refetch) {
@@ -130,7 +136,12 @@ export const SelectedPostPage = () => {
 
   const updatePost = async () => {
     const title = inputRef.current?.value;
-    window.location.href = `${post}?refetch=true&title=${title}`;
+
+    if (title === 'update') {
+      window.location.href = `${post}?update=true`;
+    } else {
+      window.location.href = `${post}?refetch=true&title=${title}`;
+    }
 
     setTimeout(() => {
       window.location.replace(`${post}`);
