@@ -12,7 +12,9 @@ const uploadImageToFirebase = async (srcUrl: string, category: string, title: st
   const response = await fetch(isSrcUrl);
   const data = await response.arrayBuffer();
 
-  const ext = String(isSrcUrl.split('.').pop()).split('?').shift();
+  const ext = isSrcUrl.includes('unsplash')
+    ? String(isSrcUrl.split('fm=').pop()).split('&').shift()
+    : String(isSrcUrl.split('.').pop()).split('?').shift();
   const filename = decodeURIComponent(
     String(String(isSrcUrl.split('/').pop()).split('?').shift())
       .split('.')
