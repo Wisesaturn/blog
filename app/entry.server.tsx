@@ -22,12 +22,11 @@ export default async function handleRequest(
   const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
   const { version } = remixContext.manifest; // get the build version
 
-  responseHeaders.append('X-Content-Type-Options', 'nosniff');
-  responseHeaders.append(
-    'Cache-Control',
-    'public, s-maxage=604800, max-age=0, stale-while-revalidate=31556952',
-  );
-  responseHeaders.append('Vercel-CDN-Cache-Control', 'public, s-maxage=604800, max-age=0');
+  // responseHeaders.append('X-Content-Type-Options', 'nosniff');
+  // responseHeaders.append(
+  //   'Cache-Control',
+  //   'public, s-maxage=604800, max-age=1800, stale-while-revalidate=31556952',
+  // );
 
   // Add new headers to the response
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
