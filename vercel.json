@@ -4,8 +4,39 @@
       "source": "/public/(.*)",
       "headers": [
         {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "immutable, s-max-age=31556952"
+          "key": "Cache-Control",
+          "value": "immutable, max-age=31556952, s-maxage=31556952"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(svg|jpg|png|gif|webp|ico|woff2|woff|ttf|eot|webmanifest)",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "public, max-age=31556952, s-maxage=31556952, immutable"
+        },
+        {
+          "key": "cache-control",
+          "value": "public, max-age=31556952, s-maxage=31556952, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, stale-while-revalidate=604800"
         }
       ]
     },
@@ -13,8 +44,16 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "public, s-max-age=604800, max-age=0 stale-while-revalidate=604800"
+          "key": "x-content-type-options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1;mode=block"
         }
       ]
     }
