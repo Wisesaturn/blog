@@ -56,7 +56,7 @@ export const MainPage = () => {
                   `}
                   className={categoryClass}
                 >
-                  {item.icon && <Icon icon={item.icon} />}
+                  {item.icon && item.icon}
                   {item.name}
                 </div>
               </Link>

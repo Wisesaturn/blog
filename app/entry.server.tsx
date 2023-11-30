@@ -1,8 +1,16 @@
 import { RemixServer } from '@remix-run/react';
 import { renderToString } from 'react-dom/server';
 import { createCookie } from '@remix-run/node';
+import { CacheProvider } from '@emotion/react';
+import createEmotionServer from '@emotion/server/create-instance';
+import createCache from '@emotion/cache';
 
 import type { EntryContext } from '@remix-run/node';
+
+// set emotion server
+const key = 'css';
+const cache = createCache({ key });
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
 
 // help us create the string for the Cache-Control header
 
@@ -19,20 +27,22 @@ export default async function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
-  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
-  const { version } = remixContext.manifest; // get the build version
+  const markup = renderToString(
+    <CacheProvider value={cache}>
+      <RemixServer context={remixContext} url={request.url} />
+    </CacheProvider>,
+  );
 
-  // responseHeaders.append('X-Content-Type-Options', 'nosniff');
-  // responseHeaders.append(
-  //   'Cache-Control',
-  //   'public, s-maxage=604800, max-age=1800, stale-while-revalidate=31556952',
-  // );
+  const chunks = extractCriticalToChunks(markup);
+  const styles = constructStyleTagsFromChunks(chunks);
+
+  const { version } = remixContext.manifest; // get the build version
 
   // Add new headers to the response
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
   responseHeaders.set('Content-Type', 'text/html');
 
-  return new Response(`<!DOCTYPE html>${markup}`, {
+  return new Response(`<!DOCTYPE html>${markup}${styles}`, {
     headers: responseHeaders,
     status: responseStatusCode,
   });
