@@ -9,7 +9,7 @@ import {
   useLoaderData,
   useTransition,
 } from '@remix-run/react';
-import { Suspense, createContext } from 'react';
+import { Suspense, createContext, useEffect } from 'react';
 import { json } from '@remix-run/node';
 
 import styles from '@styles/tailwind.css';
@@ -36,7 +36,7 @@ export const meta: V2_MetaFunction = ({ params }) => {
   const { post } = params;
 
   const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
-  const isDescription = `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | ${CATEGORY_DATA.map(
+  const isDescription = `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
     (category) => category.name,
   ).join(' ')}`;
   const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
@@ -136,6 +136,20 @@ export default function App() {
     </div>
   );
 
+  useEffect(() => {
+    const googleTag = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-3F4JB1BK0P');
+    `;
+
+    const script = document.createElement('script');
+    script.appendChild(document.createTextNode(googleTag));
+    document.head.appendChild(script);
+  }, []);
+
   return (
     <html lang="ko">
       <head>
@@ -145,9 +159,11 @@ export default function App() {
         <meta charSet="utf-8" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <Links />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3F4JB1BK0P" />
       </head>
       <body>
         <Suspense fallback={<LoadingSpinner />}>

@@ -4,7 +4,7 @@ export default function ProfileSection() {
   return (
     <section className="flex gap-10 items-center w-full rounded-xl mb-4">
       <div className="flex flex-col gap-2 w-full">
-        <div className="text-4xl font-bold max-md:text-3xl">송재한</div>
+        <h1 className="text-4xl font-bold max-md:text-3xl">송재한</h1>
         <div className="flex justify-between flex-col">
           <p className="text-base md:text-lg leading-normal p-0">
             꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다.
