@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "immutable, max-age=604800"
+          "value": "immutable, max-age=31556952, s-maxage=31556952"
         }
       ]
     },
@@ -14,11 +14,11 @@
       "headers": [
         {
           "key": "cache-control",
-          "value": "public, max-age=604800, immutable"
+          "value": "public, max-age=31556952, s-maxage=31556952, immutable"
         },
         {
           "key": "cache-control",
-          "value": "public, max-age=604800, immutable"
+          "value": "public, max-age=31556952, s-maxage=31556952, immutable"
         }
       ]
     },
@@ -32,11 +32,24 @@
       ]
     },
     {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
           "key": "x-content-type-options",
           "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
         },
         {
           "key": "X-XSS-Protection",
