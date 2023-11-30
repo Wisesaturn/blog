@@ -156,10 +156,12 @@ export default function App() {
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="naver-site-verification" content="379a5ac8e5c6d8d023affe7f0d558e14d67f66f4" />
+        <meta name="apple-mobile-web-app-title" content="사툰사툰" />
         <meta charSet="utf-8" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <Links />
