@@ -8,10 +8,12 @@ import {
   ScrollRestoration,
   useLoaderData,
   useTransition,
+  isRouteErrorResponse,
+  useRouteError,
 } from '@remix-run/react';
 import { Suspense, createContext, useEffect } from 'react';
 import { json } from '@remix-run/node';
-import { isRouteErrorResponse, useRouteError } from '@remix-run/react';
+
 import styles from '@styles/tailwind.css';
 
 import Header from '@components/Header';
@@ -188,6 +190,7 @@ export function ErrorBoundary() {
 
   const ErrorTitle = isRouteErrorResponse(error) ? `${error.status}` : 'Error';
 
+  // eslint-disable-next-line no-nested-ternary
   const ErrorMessage = isRouteErrorResponse(error)
     ? `${error.data}${process.env.NODE_ENV === 'development' ? ` (${error.statusText})` : ''}`
     : error instanceof Error
