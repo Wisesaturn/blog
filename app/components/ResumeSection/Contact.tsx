@@ -1,7 +1,7 @@
-import { AiFillLinkedin, AiFillInstagram, AiFillMail, AiFillGithub } from 'react-icons/ai';
 import React from 'react';
 
-import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
+import { TWstyleIconWrapper } from '@styles/config';
+
 import IconLinkedIn from '@components/Assets/IconLinkedIn';
 import IconEmail from '@components/Assets/IconEmail';
 import IconGithub from '@components/Assets/IconGithub';

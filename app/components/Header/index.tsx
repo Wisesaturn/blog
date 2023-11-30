@@ -1,7 +1,5 @@
 import { Link } from '@remix-run/react';
 import { useEffect, useState, forwardRef, useImperativeHandle, useRef, KeyboardEvent } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md';
 
 import useScroll from '@hooks/useScroll';
 
@@ -15,6 +13,7 @@ import { ProgressBar } from './Components/ProgressBar';
 
 import type { ChangeEvent, ForwardedRef } from 'react';
 import type { HeaderProps } from './types';
+import IconLightMode from '@components/Assets/IconLightMode';
 
 export interface HeaderElement {
   onToggleSearchBar: () => void;
@@ -193,8 +192,7 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
             aria-label="darkmode button"
             onClick={handleDarkmode}
           >
-            {isDarkmode === 'light' && <IconDarkMode />}
-            {isDarkmode === 'dark' && <IconDarkMode />}
+            {isDarkmode === 'dark' ? <IconDarkMode /> : <IconLightMode />}
           </button>
         </div>
       </header>

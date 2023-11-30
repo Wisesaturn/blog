@@ -2,7 +2,6 @@
 import { Link, useLoaderData } from '@remix-run/react';
 import { SlArrowRight } from 'react-icons/sl';
 import { css } from '@emotion/react';
-import { Icon } from '@iconify/react';
 import { useRef } from 'react';
 
 import { TWstyleIcon, TWstyleIconWrapper } from '@styles/config';
