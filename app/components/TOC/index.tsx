@@ -36,6 +36,7 @@ export default function TOC(props: Props) {
 
         return (
           <span
+            key={head.id}
             id={head.id}
             className={`border-l-2 text-sm transition-colors py-1 pr-4 hover:cursor-pointer ${choiceClass}`}
             onClick={onClickRow}
