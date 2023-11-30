@@ -32,7 +32,7 @@ function Footer({ reloadDocument }: { reloadDocument?: boolean }) {
       <div className="h-[3.5rem]" />
       <div className="glassMorphism whitespace-nowrap shadow-invert fixed bottom-0 w-full pt-2 pb-1 z-10 dark:bg-[#232323]">
         <div className="flex mx-auto max-w-layout justify-around items-center">
-          <Link reloadDocument={reloadDocument} className={iconStyle} to="/resume">
+          <Link reloadDocument className={iconStyle} to="/resume">
             <GiPapers className={onToggleStyle('resume').icon} size="1.2rem" />
             <span className={onToggleStyle('resume').text}>이력서</span>
           </Link>
