@@ -1,8 +1,4 @@
-export default class CustomError extends Error {
-  statusCode: number;
-
-  name: string;
-
+export default class CustomError extends Response {
   constructor({
     message,
     name,
@@ -12,8 +8,6 @@ export default class CustomError extends Error {
     name: string;
     statusCode: number;
   }) {
-    super(message);
-    this.name = name;
-    this.statusCode = statusCode;
+    super(message, { status: statusCode, statusText: name });
   }
 }

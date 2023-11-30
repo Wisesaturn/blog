@@ -13,6 +13,7 @@ exports.publicPath = '/build/';
 
 exports.future = {
   v2_meta: true,
+  v2_errorBoundary: true,
 };
 
 exports.serverDependenciesToBundle = [

@@ -22,7 +22,6 @@ import { getEnv } from '@utils/firebase.server';
 import { CATEGORY_DATA } from '@utils/constant/category';
 
 import type { V2_MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
-import CustomError from '@utils/error/CustomError';
 
 const metaSNS = [
   { property: 'og:type', content: 'website' },
@@ -183,62 +182,54 @@ export default function App() {
   );
 }
 
+// Remix v2 Error Handling
 export function ErrorBoundary() {
   const error = useRouteError();
+
+  const ErrorTitle = isRouteErrorResponse(error) ? `${error.status}` : 'Error';
+
+  const ErrorMessage = isRouteErrorResponse(error)
+    ? `${error.data}${process.env.NODE_ENV === 'development' ? ` (${error.statusText})` : ''}`
+    : error instanceof Error
+    ? `${error.message}`
+    : '알 수 없는 오류가 발생했습니다';
+
   const ErrorData = [
     { name: `📚 사툰사툰`, link: '/' },
     {
-      name: `😥 ERROR`,
+      name: ErrorTitle,
       link: `error`,
     },
   ];
 
-  if (isRouteErrorResponse(error)) {
-    return (
-      <html>
-        <head>
-          <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-          <meta charSet="utf-8" />
-          <title>{error.status} : 사툰사툰</title>
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Header paths={ErrorData} />
-          <div className="w-full h-full flex flex-col justify-start items-center gap-2">
-            <Title isContent={error.statusText} isSubContent={`${error.data}`} />
-          </div>
-          <Footer />
-          <Scripts />
-        </body>
-      </html>
-    );
-  } else if (error instanceof CustomError) {
-    return (
-      <html>
-        <head>
-          <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-          <meta charSet="utf-8" />
-          <title>{error.name} : 사툰사툰</title>
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Header paths={ErrorData} />
-          <div className="w-full h-full flex flex-col justify-start items-center gap-2">
-            <Title
-              isContent={String(error.statusCode)}
-              isSubContent={`${error.message} (${
-                process.env.NODE_ENV === 'development' ? error.name : ''
-              })`}
-            />
-          </div>
-          <Footer />
-          <Scripts />
-        </body>
-      </html>
-    );
-  }
+  return (
+    <html lang="ko">
+      <head>
+        <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta charSet="utf-8" />
+        <title>Error :: 사툰사툰</title>
+        <Meta />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+        <link rel="icon" type="image/ico" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <Links />
+      </head>
+      <body>
+        <Header paths={ErrorData} />
+        <div className="w-full h-full flex flex-col justify-start items-center gap-2">
+          <Title isContent={ErrorTitle} isSubContent={ErrorMessage} />
+          {error instanceof Error && (
+            <p className="mx-auto w-1/2 border-2 bg-slate-50 shadow-md p-4 text-left text-sm">
+              {error.stack}
+            </p>
+          )}
+        </div>
+        <Footer reloadDocument />
+        <Scripts />
+      </body>
+    </html>
+  );
 }

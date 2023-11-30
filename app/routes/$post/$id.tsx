@@ -121,7 +121,8 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ReviewPage() {
-  const { thumbnail, title, createdAt, tags, body, views } = useLoaderData();
+  const { thumbnail, title, createdAt, tags, body, views } = useLoaderData<IFirebasePostReturn>();
+
   const [toastText, setToastText] = useState<string>('');
   const [selectId, setSelectId] = useState('');
   const Heading = getHeading(body);
