@@ -6,9 +6,9 @@ import Footer from '@components/Footer';
 import { HeaderProps } from '@components/Header/types';
 
 import { CATEGORY_DATA } from '@utils/constant/category';
+import NotFoundError from '@utils/error/NotFoundError';
 
 import type { LoaderArgs } from '@remix-run/node';
-import NotFoundError from '@utils/error/NotFoundError';
 
 export async function loader({ params }: LoaderArgs) {
   try {

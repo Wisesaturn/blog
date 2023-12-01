@@ -128,7 +128,7 @@ export default function ResumePage() {
         </div>
       </div>
       <aside className="hidden xl:block whitespace-nowrap">
-        <div className="fixed m-8 flex-col flex gap-3 items-baseline text-lg leading-relaxed">
+        <div className="fixed m-8 flex-col flex gap-3 items-baseline text-lg leading-none">
           {Object.keys(sectionArray).map((item) => {
             if (isSectionType(item)) {
               return (

@@ -2,57 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-:root[color-theme*='light'] {
-  --black: #222;
-  --white: #fff;
-  --green-dark: #326e3e;
-  --green-darker: #449454;
-  --green-main: #50ad63;
-  --green-brighter: #73fa8e;
-  --green-bright: #bbfacb;
-  --yellow: #fffa82;
-  --gray-main: #b7b7b7;
-  --gray-darker: #777;
-  --blue-main: #0969da;
-  --blue-bright: #54aeff;
-  --blue-darker: #033d8b;
-  --strong: var(--black);
-  --strong-callout: var(--black);
-  --bg-thead: #f2f2f2;
-  --bg-callout: rgb(187, 250, 203, 0.5);
-  --border-table: #ddd;
-
-  accent-color: var(--green-main);
-}
-
-:root[color-theme*='dark'] {
-  --black: #efefef;
-  --white: #222;
-  --green-dark: #326e3e;
-  --green-darker: #449454;
-  --green-main: #50ad63;
-  --green-brighter: #73fa8e;
-  --green-bright: #bbfacb;
-  --yellow: #fffa82;
-  --gray-main: #b7b7b7;
-  --gray-darker: #777;
-  --blue-darker: #0969da;
-  --blue-main: #54aeff;
-  --blue-bright: #94ccfd;
-  --strong: var(--green-bright);
-  --strong-callout: var(--black);
-  --bg-thead: #393939;
-  --bg-callout: rgba(16, 77, 31, 0.5);
-  --border-table: #191919;
-
-  accent-color: var(--green-main);
-}
-
 /* initial settings */
 @layer base {
   * {
     margin: 0;
     padding: 0;
+  }
+
+  :root[color-theme*='light'] {
+    --black: #222;
+    --white: #fff;
+    --green-dark: #326e3e;
+    --green-darker: #449454;
+    --green-main: #50ad63;
+    --green-brighter: #73fa8e;
+    --green-bright: #bbfacb;
+    --yellow: #fffa82;
+    --gray-main: #b7b7b7;
+    --gray-darker: #777;
+    --blue-main: #0969da;
+    --blue-bright: #54aeff;
+    --blue-darker: #033d8b;
+    --strong: var(--black);
+    --strong-callout: var(--black);
+    --bg-thead: #f2f2f2;
+    --bg-callout: rgb(187, 250, 203, 0.5);
+    --border-table: #ddd;
+
+    accent-color: var(--green-main);
+  }
+
+  :root[color-theme*='dark'] {
+    --black: #efefef;
+    --white: #222;
+    --green-dark: #326e3e;
+    --green-darker: #449454;
+    --green-main: #50ad63;
+    --green-brighter: #73fa8e;
+    --green-bright: #bbfacb;
+    --yellow: #fffa82;
+    --gray-main: #b7b7b7;
+    --gray-darker: #777;
+    --blue-darker: #0969da;
+    --blue-main: #54aeff;
+    --blue-bright: #94ccfd;
+    --strong: var(--green-bright);
+    --strong-callout: var(--black);
+    --bg-thead: #393939;
+    --bg-callout: rgba(16, 77, 31, 0.5);
+    --border-table: #191919;
+
+    accent-color: var(--green-main);
   }
 
   html,

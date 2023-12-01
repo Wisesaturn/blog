@@ -82,9 +82,11 @@ const ResumeLayout = () => {
   useEffect(() => {
     const memorizeTheme = localStorage.getItem('color-theme');
     localStorage.setItem('color-theme', 'light');
+    document.documentElement.setAttribute('color-theme', 'light');
 
     return () => {
       localStorage.setItem('color-theme', String(memorizeTheme));
+      document.documentElement.setAttribute('color-theme', String(memorizeTheme));
     };
   }, []);
 
