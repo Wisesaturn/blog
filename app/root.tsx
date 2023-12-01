@@ -110,11 +110,6 @@ export const links: LinksFunction = () => [
     href: tossface,
   },
   { rel: 'stylesheet', as: 'style', crossOrigin: 'anonymous', type: 'text/css', href: styles },
-  {
-    rel: 'stylesheet',
-    type: 'text/css',
-    href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
-  },
 ];
 
 export const loader: LoaderFunction = () => {
