@@ -5,6 +5,7 @@ import useScroll from '@hooks/useScroll';
 
 import IconDarkMode from '@components/Assets/IconDarkMode';
 import IconSearch from '@components/Assets/IconSearch';
+import IconLightMode from '@components/Assets/IconLightMode';
 
 import type { CategoryType } from '@utils/constant/category';
 
@@ -13,7 +14,6 @@ import { ProgressBar } from './Components/ProgressBar';
 
 import type { ChangeEvent, ForwardedRef } from 'react';
 import type { HeaderProps } from './types';
-import IconLightMode from '@components/Assets/IconLightMode';
 
 export interface HeaderElement {
   onToggleSearchBar: () => void;

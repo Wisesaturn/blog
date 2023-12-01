@@ -43,7 +43,7 @@ export const MainPage = () => {
         <section className="flex gap-2 whitespace-nowrap flex-wrap text-center mb-8">
           {CATEGORY_DATA.map((item: CategoryType) => {
             return (
-              <Link key={item.name} prefetch="none" reloadDocument to={item.link}>
+              <Link key={item.name} prefetch="none" to={item.link}>
                 <div
                   css={css`
                     background-color: ${item.color || '#333'};
