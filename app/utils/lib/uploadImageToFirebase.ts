@@ -20,7 +20,10 @@ const uploadImageToFirebase = async (srcUrl: string, category: string, title: st
       .split('.')
       .shift()!,
   );
-  const metadata = { contentType: `image/${ext}` };
+  const metadata = {
+    cacheControl: 'public, max-age=31556952, s-maxage=31556952, immutable',
+    contentType: `image/${ext}`,
+  };
   const hashTime = new Intl.DateTimeFormat('ko', {
     dateStyle: 'medium',
     timeStyle: 'medium',
