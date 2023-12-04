@@ -8,6 +8,7 @@ import IconSearch from '@components/Assets/IconSearch';
 import IconLightMode from '@components/Assets/IconLightMode';
 
 import type { CategoryType } from '@utils/constant/category';
+import createDarkmode from '@utils/lib/createDarkmode';
 
 import SearchContents from './Components/SearchContents';
 import { ProgressBar } from './Components/ProgressBar';
@@ -87,13 +88,14 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const handleDarkmode = () => {
     if (isDarkmode === 'light') {
       setIsDarkmode('dark');
-      // document.documentElement.classList.add('dark');
       document.documentElement.setAttribute('color-theme', 'dark');
       localStorage.setItem('color-theme', 'dark');
+      createDarkmode('dark');
     } else {
       setIsDarkmode('light');
       document.documentElement.setAttribute('color-theme', 'light');
       localStorage.setItem('color-theme', 'light');
+      createDarkmode('light');
     }
   };
 
@@ -105,11 +107,13 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
     if (hasThemeStorage) {
       setIsDarkmode(hasThemeStorage);
       document.documentElement.setAttribute('color-theme', hasThemeStorage);
+      createDarkmode(hasThemeStorage);
     } else {
       const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light';
       setIsDarkmode(isBrowserDarkTheme);
+      createDarkmode(isBrowserDarkTheme);
       document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
       localStorage.setItem('color-theme', isBrowserDarkTheme);
     }
