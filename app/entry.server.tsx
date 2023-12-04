@@ -35,9 +35,12 @@ export default async function handleRequest(
     </CacheProvider>,
   );
 
+  const requestUrl = request.url;
   const cookieHeader = request.headers.get('cookie');
   const darkmode = getCookieValue(cookieHeader, 'color-theme') || 'light';
-  const themeMarkup = markup.replace('<html', `<html color-theme="${darkmode}"`);
+  const themeMarkup = requestUrl.split('/')[3].includes('resume')
+    ? markup
+    : markup.replace('<html', `<html color-theme="${darkmode}"`);
 
   const chunks = extractCriticalToChunks(markup);
   const styles = constructStyleTagsFromChunks(chunks);

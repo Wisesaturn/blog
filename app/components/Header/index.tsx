@@ -1,7 +1,16 @@
 import { Link } from '@remix-run/react';
-import { useEffect, useState, forwardRef, useImperativeHandle, useRef, KeyboardEvent } from 'react';
+import {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  KeyboardEvent,
+  useContext,
+} from 'react';
 
 import useScroll from '@hooks/useScroll';
+import { EnvContext } from '@app/root';
 
 import IconDarkMode from '@components/Assets/IconDarkMode';
 import IconSearch from '@components/Assets/IconSearch';
@@ -9,6 +18,7 @@ import IconLightMode from '@components/Assets/IconLightMode';
 
 import type { CategoryType } from '@utils/constant/category';
 import createDarkmode from '@utils/lib/createDarkmode';
+import getCookieValue from '@utils/lib/getCookieValue';
 
 import SearchContents from './Components/SearchContents';
 import { ProgressBar } from './Components/ProgressBar';
@@ -24,16 +34,13 @@ export type Darkmode = 'dark' | 'light';
 
 const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>) => {
   const { paths } = props;
+  const { darkmode } = useContext(EnvContext);
   const [hasDisabled, setHasDisabled] = useState<string>('');
   const [hasShadow, setHasShadow] = useState<string>('');
   const [toggleSearchBar, setToggleSearchBar] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [searchFocusRow, setSerachFocusRow] = useState(-1);
-  const [isDarkmode, setIsDarkmode] = useState<Darkmode>(
-    typeof window !== 'undefined'
-      ? (document.documentElement.getAttribute('color-theme') as Darkmode)
-      : 'light',
-  );
+  const [isDarkmode, setIsDarkmode] = useState<Darkmode>(darkmode);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchSectionRef = useRef<HTMLElement | null>(null);
@@ -88,26 +95,24 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   const handleDarkmode = () => {
     if (isDarkmode === 'light') {
       setIsDarkmode('dark');
-      document.documentElement.setAttribute('color-theme', 'dark');
-      localStorage.setItem('color-theme', 'dark');
       createDarkmode('dark');
+      document.documentElement.setAttribute('color-theme', 'dark');
     } else {
       setIsDarkmode('light');
-      document.documentElement.setAttribute('color-theme', 'light');
-      localStorage.setItem('color-theme', 'light');
       createDarkmode('light');
+      document.documentElement.setAttribute('color-theme', 'light');
     }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const hasThemeStorage = localStorage.getItem('color-theme') as Darkmode;
+    const hasThemeStorage = getCookieValue(document.cookie, 'color-theme') as Darkmode;
+    console.log(hasThemeStorage);
 
     if (hasThemeStorage) {
       setIsDarkmode(hasThemeStorage);
-      document.documentElement.setAttribute('color-theme', hasThemeStorage);
       createDarkmode(hasThemeStorage);
+      document.documentElement.setAttribute('color-theme', hasThemeStorage);
     } else {
       const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
@@ -115,7 +120,6 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
       setIsDarkmode(isBrowserDarkTheme);
       createDarkmode(isBrowserDarkTheme);
       document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
-      localStorage.setItem('color-theme', isBrowserDarkTheme);
     }
   }, []);
 

@@ -19,7 +19,7 @@ const SearchContents = forwardRef((props: ISearchBar, ref: Ref<HTMLElement>) => 
   const [isLoadingState, setIsLoadingState] = useState<LoadingT>('loading');
   const debouncedInput = useDebounce(input, 450);
   const [postData, setPostData] = useState<IFirebasePostReturn[]>([]);
-  const env = useContext(EnvContext);
+  const { ENV: env } = useContext(EnvContext);
 
   useEffect(() => {
     setIsLoadingState('loading');

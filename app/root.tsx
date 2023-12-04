@@ -17,12 +17,13 @@ import { json } from '@remix-run/node';
 import tossface from '@styles/tossface.css';
 import styles from '@styles/tailwind.css';
 
-import Header from '@components/Header';
+import Header, { Darkmode } from '@components/Header';
 import Footer from '@components/Footer';
 import { Title } from '@components/Title';
 
 import { getEnv } from '@utils/firebase.server';
 import { CATEGORY_DATA } from '@utils/constant/category';
+import getCookieValue from '@utils/lib/getCookieValue';
 
 import type { V2_MetaFunction, LinksFunction, LoaderFunction } from '@remix-run/node';
 
@@ -112,18 +113,23 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', as: 'style', crossOrigin: 'anonymous', type: 'text/css', href: styles },
 ];
 
-export const loader: LoaderFunction = () => {
+export const loader: LoaderFunction = ({ request }) => {
+  const cookieHeader = request.headers.get('cookie');
+  const darkmode = getCookieValue(cookieHeader, 'color-theme');
+
   return json({
     ENV: getEnv(),
+    darkmode,
   });
 };
 
 export const EnvContext = createContext({
   ENV: {},
+  darkmode: '' as Darkmode,
 });
 
 export default function App() {
-  const { ENV } = useLoaderData();
+  const { ENV, darkmode } = useLoaderData();
   const transition = useTransition();
 
   const isLoading = transition.state === ('loading' || 'submitting');
@@ -168,7 +174,7 @@ export default function App() {
       <body>
         <Suspense fallback={<LoadingSpinner />}>
           {isLoading && <LoadingSpinner />}
-          <EnvContext.Provider value={ENV}>
+          <EnvContext.Provider value={{ ENV, darkmode }}>
             <Outlet />
           </EnvContext.Provider>
         </Suspense>
@@ -222,7 +228,7 @@ export function ErrorBoundary() {
         <div className="w-full h-full flex flex-col justify-start items-center gap-2">
           <Title isContent={ErrorTitle} isSubContent={ErrorMessage} />
           {error instanceof Error && (
-            <p className="mx-auto w-1/2 border-2 bg-slate-50 shadow-md p-4 text-left text-sm">
+            <p className="mx-auto w-1/2 border-2 bg-slate-50 shadow-md p-4 text-left text-sm dark:bg-[#121212] dark:text-white">
               {error.stack}
             </p>
           )}
