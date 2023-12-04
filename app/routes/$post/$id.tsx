@@ -145,7 +145,6 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 export default function ReviewPage() {
   const { thumbnail, title, createdAt, tags, body, views, category } =
     useLoaderData<IFirebasePostReturn>();
-  const navigate = useNavigate();
 
   const [toastText, setToastText] = useState<string>('');
   const [selectId, setSelectId] = useState('');
@@ -161,7 +160,7 @@ export default function ReviewPage() {
   };
 
   const updatePost = async () => {
-    navigate({ pathname: `/${category}/${title}`, search: `?refetch=true` });
+    window.location.href = `${decodeURIComponent(`/${category}/${title}?refetch=true`)}`;
   };
 
   const setHeading = useCallback((id: string) => {

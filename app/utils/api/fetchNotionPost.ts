@@ -25,6 +25,20 @@ const notion = new Client({
 });
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
+// embed settings (codepen)
+n2m.setCustomTransformer('embed', async (block: any) => {
+  const { embed } = block;
+  if (!embed?.url) return '';
+  if (embed.url.includes('codepen')) {
+    const dataSlug = embed.url.split('/')[5].split('?')[0];
+    return `<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash=${dataSlug} data-user="Wisesaturn"
+    style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+    </p>
+    <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>`;
+  }
+
+  return '';
+});
 
 export default async function fetchNotionPost(document: string, inputTitle: string) {
   try {

@@ -10,7 +10,7 @@ export default function PostListSection(props: { data: IFirebasePostReturn[] }) 
       {data.map((post: IFirebasePostReturn) => {
         return (
           <Link
-            prefetch="render"
+            prefetch="none"
             className="w-full"
             key={post.index}
             to={`${
