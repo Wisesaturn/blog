@@ -107,7 +107,6 @@ const Header = forwardRef((props: HeaderProps, ref: ForwardedRef<HeaderElement>)
   useEffect(() => {
     window.scrollTo(0, 0);
     const hasThemeStorage = getCookieValue(document.cookie, 'color-theme') as Darkmode;
-    console.log(hasThemeStorage);
 
     if (hasThemeStorage) {
       setIsDarkmode(hasThemeStorage);

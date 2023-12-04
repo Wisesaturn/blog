@@ -30,7 +30,7 @@ export default function TOC(props: Props) {
   };
 
   return (
-    <aside className="fixed flex flex-col right-0 px-10 w-96 z-10 rounded-xl max-2xl:hidden">
+    <aside className="fixed flex flex-col right-0 px-10 w-96 z-10 rounded-xl max-[1400px]:hidden">
       {heading.map((head) => {
         const choiceClass = `${selectId === head.id ? selectClass : nonSelectClass}`;
 

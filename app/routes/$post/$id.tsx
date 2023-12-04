@@ -2,6 +2,7 @@
 import { useLoaderData } from '@remix-run/react';
 import { useCallback, useEffect, useState } from 'react';
 import { createCookie, json } from '@remix-run/node';
+import { useNavigate } from '@remix-run/react';
 
 import styles from '@styles/vscode-prism.css';
 import { TWstyleIconWrapper } from '@styles/config';
@@ -11,6 +12,7 @@ import TOC from '@components/TOC';
 import IconView from '@components/Assets/IconView';
 import IconCopy from '@components/Assets/IconCopy';
 import IconShare from '@components/Assets/IconShare';
+import Button from '@components/Button';
 
 import fetchDB from '@utils/api/fetchDB';
 import postDB from '@utils/api/postDB';
@@ -18,6 +20,7 @@ import sharePage from '@utils/lib/sharePage';
 import copyPageUrl from '@utils/lib/copyPageUrl';
 import getHeading from '@utils/lib/getHeading';
 import { getIntersectionObserver } from '@utils/lib/getIntersectionObserver';
+import fetchNotionPost from '@utils/api/fetchNotionPost';
 
 import type { LoaderArgs, LinksFunction, V2_MetaFunction } from '@remix-run/node';
 import type { IFirebasePostReturn } from '@Types/post';
@@ -93,6 +96,25 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const { post, id } = params;
+  const url = new URL(request.url);
+  const refetch = Boolean(url.searchParams.get('refetch'));
+
+  // refetching development
+  if (refetch) {
+    const updateDB = await fetchNotionPost('', String(id))
+      .then(async (notionRes) => {
+        await postDB(String(post).replace(/\s+/g, '-'), String(id).replace(/\s+/g, '-'), notionRes);
+        console.log(`------------- post Done! : ${id}`);
+        return notionRes;
+      })
+      .catch((err) => {
+        console.log('[refetch error]');
+        console.log(err);
+      });
+    return updateDB;
+  }
+
+  // fetching post
   const isFetchDB = await fetchDB(post!, id!);
 
   const hasUserVisited = createCookie(`${isFetchDB.index}`, {
@@ -121,7 +143,9 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ReviewPage() {
-  const { thumbnail, title, createdAt, tags, body, views } = useLoaderData<IFirebasePostReturn>();
+  const { thumbnail, title, createdAt, tags, body, views, category } =
+    useLoaderData<IFirebasePostReturn>();
+  const navigate = useNavigate();
 
   const [toastText, setToastText] = useState<string>('');
   const [selectId, setSelectId] = useState('');
@@ -134,6 +158,10 @@ export default function ReviewPage() {
     setTimeout(() => {
       setToastText('');
     }, 2000);
+  };
+
+  const updatePost = async () => {
+    navigate({ pathname: `/${category}/${title}`, search: `?refetch=true` });
   };
 
   const setHeading = useCallback((id: string) => {
@@ -162,6 +190,11 @@ export default function ReviewPage() {
 
   return (
     <>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed left-10 top-1/4 shadow-md w-[5rem] max-[1400px]:hidden">
+          <Button content="새로고침" onClick={updatePost} />
+        </div>
+      )}
       <PostTitle thumbnail={thumbnail} title={title} createdAt={createdAt} tags={tags} />
       <div className="w-[4rem] rounded-full h-1 mx-auto bg-green-dark my-10" />
       <TOC heading={Heading} selectId={selectId} />
