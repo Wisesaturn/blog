@@ -5,6 +5,8 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import createCache from '@emotion/cache';
 
+import getCookieValue from '@utils/lib/getCookieValue';
+
 import type { EntryContext } from '@remix-run/node';
 
 // set emotion server
@@ -33,6 +35,10 @@ export default async function handleRequest(
     </CacheProvider>,
   );
 
+  const cookieHeader = request.headers.get('cookie');
+  const darkmode = getCookieValue(cookieHeader, 'color-theme') || 'light';
+  const themeMarkup = markup.replace('<html', `<html color-theme="${darkmode}"`);
+
   const chunks = extractCriticalToChunks(markup);
   const styles = constructStyleTagsFromChunks(chunks);
 
@@ -42,7 +48,7 @@ export default async function handleRequest(
   responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
   responseHeaders.set('Content-Type', 'text/html');
 
-  return new Response(`<!DOCTYPE html>${markup}${styles}`, {
+  return new Response(`<!DOCTYPE html>${themeMarkup}${styles}`, {
     headers: responseHeaders,
     status: responseStatusCode,
   });

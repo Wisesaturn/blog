@@ -2,7 +2,7 @@ import { Link } from '@remix-run/react';
 
 import type { IFirebasePostReturn } from '@Types/post';
 
-export default function PostCardSection(props: { data: IFirebasePostReturn[] }) {
+export default function PostListSection(props: { data: IFirebasePostReturn[] }) {
   const { data } = props;
 
   return (
@@ -10,7 +10,7 @@ export default function PostCardSection(props: { data: IFirebasePostReturn[] }) 
       {data.map((post: IFirebasePostReturn) => {
         return (
           <Link
-            prefetch="none"
+            prefetch="render"
             className="w-full"
             key={post.index}
             to={`${

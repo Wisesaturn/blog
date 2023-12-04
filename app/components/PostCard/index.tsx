@@ -21,7 +21,6 @@ export default function PostCardSection(props: {
         return (
           <Link
             prefetch="none"
-            reloadDocument
             className="w-full"
             key={post.index}
             to={`${
