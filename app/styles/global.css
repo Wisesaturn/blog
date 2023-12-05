@@ -557,6 +557,10 @@
       padding-top: 1.25rem;
       padding-bottom: 0.25rem;
     }
+
+    .markdown-body .cp_embed_wrapper {
+      padding-bottom: 1rem;
+    }
   }
 }
 
@@ -660,6 +664,10 @@
 .markdown-body p > a:hover {
   transition: 0.35s ease-in-out;
   color: var(--blue-darker);
+}
+
+.markdown-body .cp_embed_wrapper {
+  padding-bottom: 1.5rem;
 }
 
 /* spinner */
