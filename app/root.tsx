@@ -141,6 +141,8 @@ export default function App() {
   );
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
+
     const googleTag = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -169,7 +171,9 @@ export default function App() {
         <link rel="icon" type="image/ico" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <Links />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3F4JB1BK0P" />
+        {process.env.NODE_ENV === 'production' && (
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-3F4JB1BK0P" />
+        )}
       </head>
       <body>
         <Suspense fallback={<LoadingSpinner />}>
