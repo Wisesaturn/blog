@@ -565,10 +565,6 @@
 }
 
 /* custom markdown */
-.markdown-body img {
-  max-width: 500px;
-}
-
 .markdown-body pre {
   padding: 1rem 0;
 }
@@ -651,17 +647,27 @@
 }
 
 .markdown-body img {
+  max-width: 500px;
   margin: 0 auto;
   width: 100%;
-
-  padding: 1.25rem 0;
+  margin-top: 1.25rem;
 }
 
-.markdown-body p > a {
+.markdown-body .image-caption {
+  font-size: 0.8125rem;
+  color: var(--gray-main);
+  line-height: 1.2;
+  width: max-content;
+  margin: 0 auto;
+
+  padding: 0.35rem 1.25rem;
+}
+
+.markdown-body :is(.image-caption, p) > a {
   color: var(--blue-main);
 }
 
-.markdown-body p > a:hover {
+.markdown-body :is(.image-caption, p) > a:hover {
   transition: 0.35s ease-in-out;
   color: var(--blue-darker);
 }
