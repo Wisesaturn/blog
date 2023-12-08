@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import path from 'path';
+
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -38,6 +40,35 @@ n2m.setCustomTransformer('embed', async (block: any) => {
   }
 
   return '';
+});
+
+// image settings
+n2m.setCustomTransformer('image', async (block: any) => {
+  const { image } = block;
+  const caption =
+    image.caption
+      .map((cap: any) => {
+        if (cap.href !== null) {
+          return `<a href=${cap.href}>${cap.plain_text}</a>`;
+        }
+
+        return `${cap.plain_text}`;
+      })
+      .join('') || '';
+  const plainCaption = image.caption.map((cap: any) => cap.plain_text).join('');
+
+  if (image.type === 'external') {
+    const { url } = image.external;
+    const alt = plainCaption || 'image';
+    return `<img loading="lazy" width="500" height="500" src="${url}" alt="${alt}" />
+  <div class="image-caption">${caption}</div>`;
+  }
+
+  const { url = '' } = image.file;
+  const alt = plainCaption || decodeURIComponent(path.basename(url)).split('?').shift();
+
+  return `<img loading="lazy" width="500" height="500" src="${url}" alt="${alt}" />
+  <div class="image-caption">${caption}</div>`;
 });
 
 export default async function fetchNotionPost(document: string, inputTitle: string) {

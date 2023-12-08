@@ -20,12 +20,9 @@ export default async function convertImageNotionToFirebase(
       }),
     );
 
-    // lazy loading get higher LCP Time
-    const settingRes = res.replace(/<img/g, '<img loading="lazy" width="500" height="500"');
-
     const modifiedRes = await imgSrcArray.reduce((acc, imgSrc, index) => {
       return acc.replace(imgSrc, convertImgSrcArray[index]);
-    }, settingRes);
+    }, res);
 
     return modifiedRes;
   } catch (err) {
