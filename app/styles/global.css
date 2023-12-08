@@ -655,7 +655,7 @@
 
 .markdown-body .image-caption {
   font-size: 0.8125rem;
-  color: var(--gray-main);
+  color: var(--gray-darker);
   line-height: 1.2;
   width: max-content;
   margin: 0 auto;
