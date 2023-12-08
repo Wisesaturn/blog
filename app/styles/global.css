@@ -561,6 +561,15 @@
     .markdown-body .cp_embed_wrapper {
       padding-bottom: 1rem;
     }
+
+    .markdown-body img {
+      margin-top: 1.25rem;
+    }
+
+    .markdown-body .image-caption {
+      font-size: 0.75rem;
+      padding: 0.35rem 0 1.25rem;
+    }
   }
 }
 
@@ -650,7 +659,7 @@
   max-width: 500px;
   margin: 0 auto;
   width: 100%;
-  margin-top: 1.25rem;
+  margin-top: 1.75rem;
 }
 
 .markdown-body .image-caption {
@@ -660,7 +669,7 @@
   width: max-content;
   margin: 0 auto;
 
-  padding: 0.35rem 1.25rem;
+  padding: 0.35rem 0 1.75rem;
 }
 
 .markdown-body :is(.image-caption, p) > a {

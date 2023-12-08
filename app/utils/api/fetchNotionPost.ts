@@ -55,19 +55,24 @@ n2m.setCustomTransformer('image', async (block: any) => {
         return `${cap.plain_text}`;
       })
       .join('') || '';
-  const plainCaption = image.caption.map((cap: any) => cap.plain_text).join('');
+  const plainCaption = image.caption
+    .map((cap: any) => cap.plain_text)
+    .join('')
+    .replace(/&nbsp;/g, ' ');
 
   if (image.type === 'external') {
     const { url } = image.external;
     const alt = plainCaption || 'image';
-    return `<img loading="lazy" width="500" height="500" src="${url}" alt="${alt}" />
+    const plainAlt = alt.replace(/&nbsp;/g, ' ');
+    return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
   <div class="image-caption">${caption}</div>`;
   }
 
   const { url = '' } = image.file;
   const alt = plainCaption || decodeURIComponent(path.basename(url)).split('?').shift();
+  const plainAlt = alt.replace(/&nbsp;/g, ' ');
 
-  return `<img loading="lazy" width="500" height="500" src="${url}" alt="${alt}" />
+  return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
   <div class="image-caption">${caption}</div>`;
 });
 
