@@ -55,7 +55,10 @@ n2m.setCustomTransformer('image', async (block: any) => {
         return `${cap.plain_text}`;
       })
       .join('') || '';
-  const plainCaption = image.caption.map((cap: any) => cap.plain_text).join('');
+  const plainCaption = image.caption
+    .map((cap: any) => cap.plain_text)
+    .join('')
+    .replace(/&nbsp;/g, ' ');
 
   if (image.type === 'external') {
     const { url } = image.external;
