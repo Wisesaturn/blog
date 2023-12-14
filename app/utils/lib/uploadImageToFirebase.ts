@@ -24,10 +24,7 @@ const uploadImageToFirebase = async (srcUrl: string, category: string, title: st
     cacheControl: 'public, max-age=31556952, s-maxage=31556952, immutable',
     contentType: `image/${ext}`,
   };
-  const hashTime = new Intl.DateTimeFormat('ko', {
-    dateStyle: 'medium',
-    timeStyle: 'medium',
-  }).format(new Date());
+  const hashTime = new Date().getTime();
 
   const postRef = ref(storage, `post/${category}/${title}/${filename}-${hashTime}.${ext}`);
   const ImgUrl = await uploadBytes(postRef, data, metadata).then(async () => {
