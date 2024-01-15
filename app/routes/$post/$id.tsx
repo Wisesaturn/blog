@@ -2,7 +2,6 @@
 import { useLoaderData } from '@remix-run/react';
 import { useCallback, useEffect, useState } from 'react';
 import { createCookie, json } from '@remix-run/node';
-import { useNavigate } from '@remix-run/react';
 
 import styles from '@styles/vscode-prism.css';
 import { TWstyleIconWrapper } from '@styles/config';
@@ -45,6 +44,10 @@ export const meta: V2_MetaFunction = ({ data, params }) => {
   return [
     {
       title: isTitle,
+    },
+    {
+      name: 'thumbnail',
+      content: thumbnail === '' ? defaultThumbnail : thumbnail,
     },
     {
       name: 'description',
