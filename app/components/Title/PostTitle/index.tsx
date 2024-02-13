@@ -31,7 +31,7 @@ export default function PostTitle(props: PostTitleProps) {
         </div>
         <div className="flex items-center md:text-[0.875rem] text-[12px] justify-center flex-col">
           <div className="inline-block align-sub text-gray-300">{createdAt}</div>
-          <div className="pt-3 flex flex-wrap items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4">
+          <div className="pt-3 flex flex-wrap items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 leading-none">
             {tags.map((tag: ITags, idx: number) => {
               return (
                 <span className="text-gray-400 font-bold rounded-sm" key={idx}>
