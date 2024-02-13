@@ -36,8 +36,7 @@ n2m.setCustomTransformer('embed', async (block: any) => {
     const dataSlug = embed.url.split('/')[5].split('?')[0];
     return `<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash=${dataSlug} data-user="Wisesaturn"
     style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-    </p>
-    <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>`;
+    </p>`;
   }
 
   return '';

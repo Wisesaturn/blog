@@ -153,6 +153,7 @@ export default function ReviewPage() {
   const [selectId, setSelectId] = useState('');
   const Heading = getHeading(body);
 
+  // Post URL Copy
   const handleCopyPage = () => {
     copyPageUrl();
     setToastText('복사 완료!');
@@ -170,6 +171,7 @@ export default function ReviewPage() {
     setSelectId(id);
   }, []);
 
+  // TOC Intersection Observer
   useEffect(() => {
     const Observer = getIntersectionObserver(setHeading, [0.5], '0% 0px -65% -0px');
     const FooterObserver = getIntersectionObserver(setHeading, [0.5], '0% 0px -10% -0px');
@@ -188,6 +190,15 @@ export default function ReviewPage() {
       Observer.disconnect();
       FooterObserver.disconnect();
     };
+  }, []);
+
+  // codepen load
+  useEffect(() => {
+    const codepenScript = `https://cpwebassets.codepen.io/assets/embed/ei.js`;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = codepenScript;
+    document.body.appendChild(script);
   }, []);
 
   return (
