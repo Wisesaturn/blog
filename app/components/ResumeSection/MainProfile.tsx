@@ -7,13 +7,20 @@ import Contact from './Contact';
 function MainProfile() {
   const IntroduceSetences = [
     <>
-      <strong>UX 이론</strong>과 <strong>클린 코딩</strong>에 관심이 많습니다.
+      모두가 편할 수 있도록 끊임없이 <strong>개선</strong>합니다.
     </>,
     <>
-      <strong>깔끔한 인터페이스</strong>와 <strong>애니메이션</strong>을 구현하는 것을 좋아합니다.
+      <b>UX 이론</b>과 <b>클린 코딩</b>에 대해 관심이 많습니다.
     </>,
     <>
-      서비스의 가치는 <strong>피드백</strong>으로부터 나온다고 믿습니다.
+      사용한 기술을 <strong>왜 사용하는지</strong>에 대해 꾸준히 고민합니다.
+    </>,
+    <>
+      팀원 간 <strong>커뮤니케이션을 중시</strong>하며 테스트 코드를 작성하고 문서화합니다.
+    </>,
+    <>
+      트러블 슈팅 중 맞닥뜨린 <b>이슈와 실패 원인을 분명하게 파악</b>할 수 있도록 <b>글을 작성</b>
+      하며 개념 정의를 명료화 합니다.
     </>,
   ];
 

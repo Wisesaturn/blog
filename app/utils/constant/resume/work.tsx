@@ -25,7 +25,8 @@ export const WORK_이지일렉트릭: ProjectItem = {
         'React-query를 사용하여 비동기 요청 체계화',
         'Sentry를 활용하여 서비스 장애 추적 및 문제 해결',
         'Atomic Design Pattern에 Compound Component 방식을 도입하여 아키텍처 구조화',
-        '크로스 플랫폼 에러를 쉽게 테스트하기 위한 Playwright 도입, Github Action 으로 자동 E2E 테스트',
+        '크로스 플랫폼 에러를 쉽게 테스트하기 위해 Playwright 도입, Github Action 으로 자동 E2E 테스트',
+        'JSDoc를 활용하여 함수 및 컴포넌트별로 요구 사항과 설명 작성',
       ],
     },
     {
