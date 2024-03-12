@@ -1,8 +1,9 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
+import { MemoryRouter } from 'react-router'
 
 import '$shared/styles/global.css';
-import { MemoryRouter } from 'react-router'
+import '$shared/styles/tossface.css';
 
 const preview: Preview = {
   parameters: {
