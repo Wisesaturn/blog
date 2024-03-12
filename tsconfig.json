@@ -1,0 +1,24 @@
+{
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "src/shared/ui/atoms/icons/index.mdx"],
+  "exclude": ["node_modules"],
+  "parserOptions": {
+    "project" : "./tsconfig.json"
+  },
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2022",
+    "strict": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
+  },
+  "extends": "./tsconfig.paths.json",
+}

@@ -1,0 +1,33 @@
+@tailwind components;
+@layer components {
+  .absolute-center {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .skeleton {
+    width: 100%;
+    height: 100%;
+    background: #f2f2f2;
+    animation: skeleton 1.25s infinite ease-in-out;
+    border-radius : .5rem;
+
+  }
+
+  @keyframes skeleton {
+    0% {
+      background: rgb(165 165 165 / 10%);
+    }
+
+    50% {
+      background: rgb(165 165 165 / 50%);
+    }
+
+    100% {
+      background: rgb(165 165 165 / 10%);
+    }
+  }
+}
