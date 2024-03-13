@@ -1,15 +1,22 @@
 import { MemoryRouter } from 'react-router';
 
-import Contact from './index';
+import Copyright from './index';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'shared/profile/Contact',
-  component: Contact,
+  title: 'shared/layout/Copyright',
+  component: Copyright,
+  tags: ['autodocs'],
   parameters: {
-    layout: 'padded',
+    layout: 'fullscreen',
   },
+} satisfies Meta<typeof Copyright>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   decorators: [
     (StoryChlidren) => (
       <MemoryRouter initialEntries={['/']}>
@@ -17,10 +24,4 @@ const meta = {
       </MemoryRouter>
     ),
   ],
-  args: {},
-} satisfies Meta<typeof Contact>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
+};

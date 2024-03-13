@@ -3,7 +3,7 @@ import Spinner from './index';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Shared/indicator/Spinner',
+  title: 'shared/indicator/Spinner',
   component: Spinner,
   tags: ['autodocs'],
   parameters: {

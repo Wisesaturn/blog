@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 type HeaderPropsAndCustomArgs = React.ComponentProps<typeof Header> & IHeader;
 
 const meta = {
-  title: 'Shared/layout/Header',
+  title: 'shared/layout/Header',
   component: Header,
   tags: ['autodocs'],
   parameters: {
@@ -58,20 +58,20 @@ export const About: Story = {
   ],
 };
 
-export const Post: Story = {
+export const Posts: Story = {
   decorators: [
     (StoryChlidren) => (
-      <MemoryRouter initialEntries={['/post']}>
+      <MemoryRouter initialEntries={['/posts']}>
         <StoryChlidren />
       </MemoryRouter>
     ),
   ],
 };
 
-export const Project: Story = {
+export const Projects: Story = {
   decorators: [
     (StoryChlidren) => (
-      <MemoryRouter initialEntries={['/project']}>
+      <MemoryRouter initialEntries={['/projects']}>
         <StoryChlidren />
       </MemoryRouter>
     ),

@@ -7,6 +7,9 @@ module.exports = {
       maxWidth: {
         layout: '65.5rem;',
       },
+      minHeight: {
+        screen: 'calc(100vh - 64px);',
+      },
       boxShadow: {
         invert: '0 -1px 6px 3.5px rgb(0 0 0 / 0.15);',
       },

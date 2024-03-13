@@ -108,9 +108,7 @@ export const loader: LoaderFunction = ({ request }) => {
 
   return json({
     env: '',
-    darkmode: '',
     // env: getEnv(),
-    // darkmode,
   });
 };
 

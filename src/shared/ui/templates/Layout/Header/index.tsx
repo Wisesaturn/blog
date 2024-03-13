@@ -12,13 +12,14 @@ const Header = () => {
   const { header } = layout;
 
   // style
-  const headerClass = `flex h-12 md:h-16 items-center max-w-layout justify-between z-[9998] align-middle bg-white dark:bg-[#232323] ease-in-out transition duration-200 justify-between w-full top-0 py-2 mx-auto relative`;
-  const headerContainerClass = `border-b-[1px]`;
+  const headerClass = `flex h-12 md:h-16 items-center max-w-layout justify-between z-[9998] align-middle bg-white dark:bg-[#232323] ease-in-out transition duration-200 justify-between w-full py-2 mx-auto relative`;
+  const headerContainerClass = `fixed top-0 w-full bg-white border-b-[1px]`;
 
   return (
     <>
-      <ProgressBar />
+      <div className="md:h-16 h-12" />
       <div className={headerContainerClass}>
+        <ProgressBar />
         <header className={headerClass}>
           <Responsive>
             <Responsive.Desktop>

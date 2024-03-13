@@ -1,7 +1,9 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
-  ignoredRouteFiles: ['**/*.css', '**/*.ts'],
+  ignoredRouteFiles: ['**/*.css', '**/*.ts', '**/*.stories.ts', '**/*.stories.tsx'],
+  cacheDirectory: '.cache',
   appDirectory: 'src/app',
+  watchPaths: 'src',
   tailwind: true,
   postcss: false,
   assetsBuildDirectory: 'public/build',
