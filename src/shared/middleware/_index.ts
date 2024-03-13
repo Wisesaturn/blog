@@ -1,15 +1,13 @@
 import { createContext } from 'react';
 
-import { Darkmode } from '$shared/types/style';
-
 export interface IMiddleware {
   env: Record<string, string>;
-  darkmode: Darkmode;
 }
 
-const MiddlewareContext = createContext<IMiddleware>({
+export const DEFAULT_MIDDLEWARE_VALUE: IMiddleware = {
   env: {},
-  darkmode: 'light',
-});
+};
+
+const MiddlewareContext = createContext<IMiddleware>(DEFAULT_MIDDLEWARE_VALUE);
 
 export default MiddlewareContext;

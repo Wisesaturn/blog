@@ -2,7 +2,7 @@ const HoverClass = `fill-gray-300 dark:fill-gray-200 hover:cursor-pointer hover:
 
 const Theme = {
   HoverClass,
-  IconClass: `flex items-center p-1 md:w-[28px] md:h-[28px] w-[24px] h-[24px] ${HoverClass}`,
+  IconClass: `flex items-center p-1 md:w-[28px] md:h-[28px] w-[24px] h-[24px] border-[1px] ${HoverClass}`,
 };
 
 export default Theme;

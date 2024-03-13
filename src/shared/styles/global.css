@@ -2,7 +2,9 @@
 @import './tailwind/base.css';
 @import './tailwind/utilities.css';
 
- /* layout */
- @import './layout/index.css';
- /* color */
- @import './color/index.css';
+/* layout */
+@import './layout/index.css';
+/* color */
+@import './color/index.css';
+/* font */
+@import './font/index.css';

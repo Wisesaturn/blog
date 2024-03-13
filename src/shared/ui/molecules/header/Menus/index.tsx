@@ -11,7 +11,7 @@ export default function Menus(props: MenusProps) {
   const { pathname } = useLocation();
 
   const selectedClass = `text-green-main border-b-2 border-green-main`;
-  const MenuClass = `${Theme.HoverClass} px-3 md:py-0 py-1.5 rounded-b-none md:text-lg text-xs`;
+  const MenuClass = `${Theme.HoverClass} md:px-3 md:py-1.5 px-2 py-1 rounded-b-none md:text-sm text-xs`;
 
   return (
     <div className="flex">

@@ -10,14 +10,14 @@ export default function useScroll() {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   const [percent, setPercent] = useState<number>(0);
-  const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
+  const [isTop, setIsTop] = useState<boolean>(true);
   const [direction, setDirection] = useState<ScrollDirection>('up');
 
   const [hideHeight, setHideHeight] = useState<number>(0);
 
   const updateScroll = () => {
     setPercent((scrollPosition / hideHeight) * 100);
-    setIsScrollTop(scrollPosition < 1);
+    setIsTop(scrollPosition < 1);
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
     setHideHeight(document.documentElement.scrollHeight - document.documentElement.clientHeight);
   };
@@ -42,5 +42,5 @@ export default function useScroll() {
     };
   }, [scrollPosition]);
 
-  return { isScrollTop, direction, percent };
+  return { isTop, direction, percent };
 }

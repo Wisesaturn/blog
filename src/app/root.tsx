@@ -11,7 +11,7 @@ import {
 } from '@remix-run/react';
 import { Suspense } from 'react';
 
-import EnvContext, { IMiddleware } from '$shared/middleware/_index';
+import { IMiddleware } from '$shared/middleware/_index';
 import tossface from '$shared/styles/tossface.css';
 import globalStyles from '$shared/styles/global.css';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
@@ -35,20 +35,22 @@ const metaTwitter = [{ name: 'twitter:card', content: 'summary' }];
 export const meta: MetaFunction = ({ params }) => {
   const { post } = params;
 
-  const isTitle = `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`;
-  const isDescription = `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
-    (category) => category.name,
-  ).join(' ')}`;
-  const isURL = `https://jaehan.blog/${post === undefined ? '' : post}`;
-  const defaultThumbnail = `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`;
+  const metadata = {
+    title: `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`,
+    description: `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
+      (category) => category.name,
+    ).join(' ')}`,
+    url: `https://jaehan.blog/${post === undefined ? '' : post}`,
+    thumbnail: `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
+  };
 
   return [
     {
-      title: isTitle,
+      title: metadata.title,
     },
     {
       name: 'description',
-      content: isDescription,
+      content: metadata.description,
     },
     {
       property: 'og:type',
@@ -56,35 +58,35 @@ export const meta: MetaFunction = ({ params }) => {
     },
     {
       property: 'og:url',
-      content: isURL,
+      content: metadata.url,
     },
     {
       property: 'og:title',
-      content: isTitle,
+      content: metadata.title,
     },
     {
       property: 'og:image',
-      content: defaultThumbnail,
+      content: metadata.thumbnail,
     },
     {
       property: 'og:description',
-      content: isDescription,
+      content: metadata.description,
     },
     {
       name: 'twitter:url',
-      content: isURL,
+      content: metadata.url,
     },
     {
       name: 'twitter:title',
-      content: isTitle,
+      content: metadata.title,
     },
     {
       property: 'twitter:image',
-      content: defaultThumbnail,
+      content: metadata.thumbnail,
     },
     {
       name: 'twitter:description',
-      content: isDescription,
+      content: metadata.description,
     },
     ...metaSNS,
     ...metaTwitter,
@@ -113,7 +115,7 @@ export const loader: LoaderFunction = ({ request }) => {
 };
 
 export default function App() {
-  const { env, darkmode } = useLoaderData<IMiddleware>();
+  const data = useLoaderData<IMiddleware>();
   const isLoading = useLoading();
   useInitialScript();
 
@@ -139,11 +141,9 @@ export default function App() {
       <body>
         <Suspense fallback={<Spinner layout="full" />}>
           {isLoading && <Spinner layout="full" />}
-          <EnvContext.Provider value={{ env, darkmode }}>
-            <Layout>
-              <Outlet />
-            </Layout>
-          </EnvContext.Provider>
+          <Layout data={data}>
+            <Outlet />
+          </Layout>
         </Suspense>
         <ScrollRestoration />
         <Scripts />

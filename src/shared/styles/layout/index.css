@@ -4,7 +4,7 @@
 }
 
 html {
-  display : block;
+  display: block;
   padding: 0;
   width: 100%;
   height: 100vh;
@@ -46,9 +46,8 @@ html {
 body {
   scroll-behavior: smooth;
   box-sizing: border-box;
-  width : 100%;
-  max-width : 65.5rem;
-  margin : 0 auto;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* Hidden Scrollbar */
