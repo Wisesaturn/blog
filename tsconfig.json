@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "src/shared/ui/atoms/icons/index.mdx"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"],
   "parserOptions": {
     "project" : "./tsconfig.json"
