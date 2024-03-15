@@ -5,10 +5,13 @@ import useScroll from '$shared/hooks/useScroll';
 export default function ProgressBar() {
   const { percent } = useScroll();
   const progressBarRef = useRef<HTMLDivElement>(null);
+
+  /* [Action] scroll */
   const setProgress = () => {
     progressBarRef.current!.style.width = `${percent}%`;
   };
 
+  /* [Business] add event */
   useEffect(() => {
     window.addEventListener('scroll', setProgress);
     return () => {

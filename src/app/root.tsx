@@ -53,10 +53,6 @@ export const meta: MetaFunction = ({ params }) => {
       content: metadata.description,
     },
     {
-      property: 'og:type',
-      content: 'website',
-    },
-    {
       property: 'og:url',
       content: metadata.url,
     },
