@@ -24,10 +24,10 @@ function Nav({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="py-1 fixed bottom-0 border-t-[1px] w-full">
+    <div className="fixed bottom-0 border-t-[1px] w-full bg-white">
       <Responsive>
         <Responsive.Mobile>
-          <div className="w-full flex items-center justify-around">{children}</div>
+          <div className="py-1.5 w-full flex items-center justify-around">{children}</div>
         </Responsive.Mobile>
       </Responsive>
     </div>

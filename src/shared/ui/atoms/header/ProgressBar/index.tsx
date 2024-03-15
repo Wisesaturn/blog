@@ -18,8 +18,8 @@ export default function ProgressBar() {
 
   return (
     <>
-      <div ref={progressBarRef} className={`z-[10000] fixed h-1 bg-green-dark left-0`} />
-      <div className="w-full z-[9999] fixed h-1 left-0" />
+      <div ref={progressBarRef} className={`z-[10000] fixed h-0.5 bg-green-dark left-0`} />
+      <div className="w-full z-[9999] fixed h-0.5 left-0" />
     </>
   );
 }
