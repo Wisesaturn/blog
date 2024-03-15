@@ -1,7 +1,7 @@
 // export async function loader() {
 //   const searchAllData = await searchAllDB(5);
 
-import IntroduceSection from '$features/home/ui/organisms/Section/Introduce';
+import IntroduceSection from '$features/home/ui/organisms/introduce-section';
 
 //   return searchAllData;
 // }

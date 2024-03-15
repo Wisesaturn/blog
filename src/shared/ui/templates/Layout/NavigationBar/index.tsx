@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLocation } from '@remix-run/react';
 
-import NavButton from '$shared/ui/atoms/navigationBar/_Button';
+import NavButton from '$shared/ui/atoms/navigation-bar/_Button';
 import Responsive from '$shared/ui/templates/Responsive';
-import HomeIcon from '$shared/ui/atoms/icons/navigationBar/home';
-import PostIcon from '$shared/ui/atoms/icons/navigationBar/post';
-import ProfileIcon from '$shared/ui/atoms/icons/navigationBar/profile';
-import PortfolioIcon from '$shared/ui/atoms/icons/navigationBar/portfolio';
+import HomeIcon from '$shared/ui/atoms/icons/navigation-bar/home';
+import PostIcon from '$shared/ui/atoms/icons/navigation-bar/post';
+import ProfileIcon from '$shared/ui/atoms/icons/navigation-bar/profile';
+import PortfolioIcon from '$shared/ui/atoms/icons/navigation-bar/portfolio';
 
 /**
  * Only Use Navigation Bar

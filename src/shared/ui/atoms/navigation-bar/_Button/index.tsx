@@ -22,5 +22,6 @@ export default function NavButton(props: NavButtonProps) {
   const modifiedChildren = React.cloneElement(children, {
     className: `${Theme.PURE_ICON_CLASS} ${isSelected ? SELECTED_CLASS : ''}`,
   });
+
   return <Link to={to}> {modifiedChildren}</Link>;
 }
