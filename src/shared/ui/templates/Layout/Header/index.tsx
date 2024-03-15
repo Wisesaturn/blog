@@ -1,9 +1,9 @@
 import ProgressBar from '$shared/ui/atoms/header/ProgressBar';
 import Logo from '$shared/ui/atoms/header/Logo';
-import Icons from '$shared/ui/atoms/icons';
 import Menus from '$shared/ui/molecules/header/Menus';
 import useLayout from '$shared/hooks/useLayout';
 import Responsive from '$shared/ui/templates/Responsive';
+import DarkmodeButton from '$shared/ui/atoms/header/DarkmodeButton';
 
 import { HeaderMenu } from './constant';
 
@@ -12,8 +12,8 @@ const Header = () => {
   const { header } = layout;
 
   // style
-  const HEADER_CLASS = `flex h-12 md:h-16 items-center max-w-layout z-[9998] align-middle bg-white dark:bg-[#232323] ease-in-out transition duration-200 justify-between w-full py-2 px-4 mx-auto relative`;
-  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full bg-white border-b-[1px]`;
+  const HEADER_CLASS = `flex h-12 md:h-16 items-center max-w-layout z-[9998] align-middle glassmorphism ease-in-out transition duration-200 justify-between w-full py-2 px-4 mx-auto relative`;
+  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full`;
 
   return (
     <>
@@ -28,8 +28,7 @@ const Header = () => {
                 <Menus data={HeaderMenu} />
               </Responsive.Desktop>
             </Responsive>
-            {/* // TODO : 다크모드 기능 추가 필요 */}
-            <Icons.Light />
+            <DarkmodeButton />
           </div>
         </header>
       </div>

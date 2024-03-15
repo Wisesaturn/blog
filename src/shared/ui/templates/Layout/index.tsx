@@ -1,4 +1,4 @@
-import MiddlewareContext, { IMiddleware } from '$shared/middleware/_index';
+import MiddlewareContext from '$shared/middleware/_index';
 import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '$shared/middleware/layout';
 
 import Copyright from './Copyright';
@@ -10,11 +10,11 @@ export default function Layout({
   data,
 }: {
   children: React.ReactNode;
-  data: IMiddleware;
+  data: GlobalLoaderData;
 }) {
   return (
-    <MiddlewareContext.Provider value={data}>
-      <LayoutProvider initialLayout={DEFAULT_LAYOUT_VALUE}>
+    <MiddlewareContext.Provider value={data.middleware}>
+      <LayoutProvider initialLayout={{ ...DEFAULT_LAYOUT_VALUE, ...data.layout }}>
         <Header />
         {children}
         <NavigationBar />

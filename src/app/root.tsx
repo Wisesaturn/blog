@@ -11,15 +11,15 @@ import {
 } from '@remix-run/react';
 import { Suspense } from 'react';
 
-import { IMiddleware } from '$shared/middleware/_index';
 import tossface from '$shared/styles/etc/tossface.css';
 import globalStyles from '$shared/styles/global.css';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
-import getStyleSheet from '$shared/lib/getStyleSheet';
+import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import useLoading from '$shared/hooks/useLoading';
 import useInitialScript from '$shared/hooks/useInitialScript';
 import { CATEGORY_DATA } from '$shared/constant/category';
 import Layout from '$shared/ui/templates/Layout';
+import getCookie from '$shared/lib/getCookieOnHeader';
 
 import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 
@@ -94,26 +94,28 @@ export const meta: MetaFunction = ({ params }) => {
 };
 
 export const links: LinksFunction = () => [
-  getStyleSheet(
+  formatStyleSheet(
     'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.7/dist/web/variable/pretendardvariable-dynamic-subset.css',
   ),
-  getStyleSheet(tossface),
-  getStyleSheet(globalStyles),
+  formatStyleSheet(tossface),
+  formatStyleSheet(globalStyles),
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
 export const loader: LoaderFunction = ({ request }) => {
   const cookieHeader = request.headers.get('cookie');
-  // const darkmode = getCookieValue(cookieHeader, "color-theme");
+  const darkmode = getCookie(cookieHeader, 'color-theme');
 
   return json({
-    env: '',
+    layout: {
+      darkmode,
+    },
     // env: getEnv(),
   });
 };
 
 export default function App() {
-  const data = useLoaderData<IMiddleware>();
+  const data = useLoaderData<GlobalLoaderData>();
   const isLoading = useLoading();
   useInitialScript();
 

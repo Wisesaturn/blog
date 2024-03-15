@@ -23,5 +23,5 @@ export default function NavButton(props: NavButtonProps) {
     className: `${Theme.PURE_ICON_CLASS} ${isSelected ? SELECTED_CLASS : ''}`,
   });
 
-  return <Link to={to}> {modifiedChildren}</Link>;
+  return <Link to={to}>{modifiedChildren}</Link>;
 }

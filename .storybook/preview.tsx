@@ -1,9 +1,8 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MemoryRouter } from 'react-router'
 
 import '$shared/styles/global.css';
-import '$shared/styles/tossface.css';
+import '$shared/styles/etc/tossface.css';
 
 const preview: Preview = {
   parameters: {
@@ -14,11 +13,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <Story />
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 };
 
 export default preview;

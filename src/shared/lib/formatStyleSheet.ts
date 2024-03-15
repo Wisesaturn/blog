@@ -1,11 +1,11 @@
 import { LinkDescriptor } from '@remix-run/node';
 
 /**
- * @summary link 태그에 stylesheet를 담기 위한 함수
+ * @summary link 태그의 stylesheet 포맷을 추출하는 함수
  * @param href
  * @returns
  */
-export default function getStyleSheet(href: string): LinkDescriptor {
+export default function formatStyleSheet(href: string): LinkDescriptor {
   return {
     rel: 'stylesheet',
     as: 'style',

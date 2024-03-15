@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
+  "include": ["remix.env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"],
   "parserOptions": {
     "project" : "./tsconfig.json"

@@ -9,7 +9,7 @@ export interface ILayout {
 
 export interface ILayoutContext {
   layout: ILayout;
-  updateLayout: (layout: ILayout) => void;
+  updateLayout: (layout: Partial<ILayout>) => void;
 }
 
 interface LayoutProviderProps {
@@ -33,8 +33,8 @@ const LayoutContext = createContext<ILayoutContext>({
 export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, children }) => {
   const [layout, setLayout] = useState(initialLayout);
 
-  const updateLayout = useCallback((newLayout: ILayout) => {
-    setLayout(newLayout);
+  const updateLayout = useCallback((newLayout: Partial<ILayout>) => {
+    setLayout((prev) => ({ ...prev, ...newLayout }));
   }, []);
 
   return (

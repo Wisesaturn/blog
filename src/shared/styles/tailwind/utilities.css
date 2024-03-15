@@ -1,8 +1,8 @@
 @tailwind utilities;
 @layer utilities {
-  .glassMorphism {
-    background: rgba(255, 255, 255, 0.8);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
+  .glassmorphism {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    @apply bg-[rgba(255,255,255,0.8)] dark:bg-[rgba(32,32,32,0.8)];
   }
 }

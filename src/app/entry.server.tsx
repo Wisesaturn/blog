@@ -7,14 +7,23 @@
 
 import { PassThrough } from 'node:stream';
 
-import { createReadableStreamFromReadable } from '@remix-run/node';
+import { createCookie, createReadableStreamFromReadable } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
 import { isbot } from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
 
+import getCookie from '$shared/lib/getCookieOnHeader';
+
 import type { AppLoadContext, EntryContext } from '@remix-run/node';
 
 const ABORT_DELAY = 5_000;
+
+const versionCookie = createCookie('version', {
+  path: '/', // make sure the cookie we receive the request on every path
+  secure: true, // enable this in prod
+  httpOnly: true, // only for server-side usage
+  maxAge: 60 * 60 * 24 * 365, // keep the cookie for a year
+});
 
 function handleBotRequest(
   request: Request,
@@ -70,18 +79,40 @@ function handleBrowserRequest(
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
+    const { version } = remixContext.manifest; // get the build version
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />,
       {
-        onShellReady() {
+        async onShellReady() {
           shellRendered = true;
           const body = new PassThrough();
           const stream = createReadableStreamFromReadable(body);
 
+          /* darkmode set */
+          const cookieHeader = request.headers.get('cookie');
+          const darkmode = getCookie(cookieHeader, 'color-theme') || 'light';
+
+          // Create a pipe line for stream transformation
+          const transformStream = new TransformStream({
+            transform(chunk, controller) {
+              // Manipulate and modify the data
+              const modifiedChunk = chunk
+                .toString()
+                .replace('<html', `<html color-theme="${darkmode}"`);
+              controller.enqueue(modifiedChunk);
+            },
+          });
+
+          // Transform the stream and create a new stream
+          const modifiedStream = stream.pipeThrough(transformStream);
+          /* darkmode set */
+
+          // set version on cookie
+          responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
           responseHeaders.set('Content-Type', 'text/html');
 
           resolve(
-            new Response(stream, {
+            new Response(modifiedStream, {
               headers: responseHeaders,
               status: responseStatusCode,
             }),
