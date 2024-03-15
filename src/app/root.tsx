@@ -12,7 +12,7 @@ import {
 import { Suspense } from 'react';
 
 import { IMiddleware } from '$shared/middleware/_index';
-import tossface from '$shared/styles/tossface.css';
+import tossface from '$shared/styles/etc/tossface.css';
 import globalStyles from '$shared/styles/global.css';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import getStyleSheet from '$shared/lib/getStyleSheet';

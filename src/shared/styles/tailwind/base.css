@@ -1,5 +1,142 @@
 @tailwind base;
-/* initial settings */
+
+/** color */
 @layer base {
- 
+  /** light theme */
+  :root[color-theme*='light'] {
+    --black: #222;
+    --white: #fff;
+    --green-dark: #365314;
+    --green-darker: #4d7c0f;
+    --green-main: #84cc16;
+    --green-brighter: #a3e635;
+    --green-bright: #d9f99d;
+    --yellow: #fffa82;
+    --gray-main: #b7b7b7;
+    --gray-darker: #777;
+    --blue-main: #0969da;
+    --blue-bright: #54aeff;
+    --blue-darker: #033d8b;
+    --strong: var(--black);
+    --strong-callout: var(--black);
+    --bg-thead: #f2f2f2;
+    --bg-callout: rgb(187, 250, 203, 0.5);
+    --border-table: #ddd;
+
+    accent-color: var(--green-main);
+  }
+
+  /** dark theme */
+  :root[color-theme*='dark'] {
+    --black: #efefef;
+    --white: #222;
+    --green-dark: #365314;
+    --green-darker: #4d7c0f;
+    --green-main: #84cc16;
+    --green-brighter: #a3e635;
+    --green-bright: #d9f99d;
+    --yellow: #fffa82;
+    --gray-main: #b7b7b7;
+    --gray-darker: #777;
+    --blue-darker: #0969da;
+    --blue-main: #54aeff;
+    --blue-bright: #94ccfd;
+    --strong: var(--green-bright);
+    --strong-callout: var(--black);
+    --bg-thead: #393939;
+    --bg-callout: rgba(16, 77, 31, 0.5);
+    --border-table: #191919;
+
+    accent-color: var(--green-main);
+  }
+}
+
+/** layout */
+@layer base {
+  html {
+    display: block;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    color: var(--black);
+    background-color: var(--white);
+    line-height: 180%;
+
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      Tossface,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
+    /* Blocked IOS touch interactions */
+    -webkit-tap-highlight-color: transparent;
+
+    /* Hidden Scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    /* Blocked Drag */
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  body {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Hidden Scrollbar */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Drag Selection */
+  ::selection {
+    background-color: var(--green-bright);
+    color: #333;
+  }
+
+  ::-moz-selection {
+    background-color: var(--green-bright);
+    color: #333;
+  }
+}
+
+/** font */
+@layer base {
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+
+  p {
+    @apply text-base;
+  }
+
+  span {
+    @apply text-xs;
+  }
 }
