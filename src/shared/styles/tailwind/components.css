@@ -13,8 +13,7 @@
     height: 100%;
     background: #f2f2f2;
     animation: skeleton 1.25s infinite ease-in-out;
-    border-radius : .5rem;
-
+    border-radius: 0.5rem;
   }
 
   @keyframes skeleton {

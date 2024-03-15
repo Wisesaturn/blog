@@ -7,7 +7,7 @@ export default function DarkIcon() {
       fill="currentColor"
       strokeWidth="0"
       viewBox="0 0 24 24"
-      className={Theme.IconClass}
+      className={Theme.ICON_CLASS}
       height="32"
       width="32"
       xmlns="http://www.w3.org/2000/svg"

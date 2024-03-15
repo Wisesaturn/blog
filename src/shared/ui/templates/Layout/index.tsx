@@ -3,6 +3,7 @@ import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '$shared/middleware/layout'
 
 import Copyright from './Copyright';
 import Header from './Header';
+import NavigationBar from './NavigationBar';
 
 export default function Layout({
   children,
@@ -16,6 +17,7 @@ export default function Layout({
       <LayoutProvider initialLayout={DEFAULT_LAYOUT_VALUE}>
         <Header />
         {children}
+        <NavigationBar />
         <Copyright />
       </LayoutProvider>
     </MiddlewareContext.Provider>

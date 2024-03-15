@@ -16,11 +16,11 @@ function Responsive({ children }: { children: React.ReactNode }) {
 }
 
 Responsive.Desktop = function DesktopContainer({ children }: { children: React.ReactNode }) {
-  return <div className="md:block hidden mx-0">{children}</div>;
+  return <div className="max-md:hidden px-0">{children}</div>;
 };
 
 Responsive.Mobile = function MobileContainer({ children }: { children: React.ReactNode }) {
-  return <div className="block md:hidden mx-4">{children}</div>;
+  return <div className="md:hidden px-4">{children}</div>;
 };
 
 export default Responsive;

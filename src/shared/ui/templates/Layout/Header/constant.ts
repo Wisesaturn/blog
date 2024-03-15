@@ -1,3 +1,3 @@
-export const HeaderMenu = ['about', 'posts', 'projects'];
+export const HeaderMenu = ['posts', 'projects', 'about'];
 
 export default { HeaderMenu };

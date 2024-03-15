@@ -6,7 +6,7 @@ export default function MenuIcon() {
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
-      className={Theme.IconClass}
+      className={Theme.ICON_CLASS}
       width="28"
       height="28"
       viewBox="0 0 24 24"

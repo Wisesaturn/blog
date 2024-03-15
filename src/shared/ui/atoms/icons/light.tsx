@@ -6,7 +6,7 @@ export default function LightIcon() {
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
-      className={Theme.IconClass}
+      className={Theme.ICON_CLASS}
       xmlns="http://www.w3.org/2000/svg"
       width="32"
       height="32"

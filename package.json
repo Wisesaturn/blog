@@ -62,6 +62,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "node-sass": "^9.0.0",
     "postcss": "^8.4.27",
     "prettier": "^3.0.1",
     "rehype-mathjax": "^4.0.3",
