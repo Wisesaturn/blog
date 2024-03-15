@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import useLayout from '$shared/hooks/useLayout';
 import { Darkmode } from '$shared/types/middleware';
 import Icons from '$shared/ui/atoms/icons';

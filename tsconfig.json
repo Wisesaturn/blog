@@ -1,6 +1,9 @@
 {
   "include": ["remix.env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"],
+   "files": [
+    "src/shared/types/global.d.ts"
+  ],
   "parserOptions": {
     "project" : "./tsconfig.json"
   },
@@ -18,7 +21,8 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node"],
   },
   "extends": "./tsconfig.paths.json",
 }

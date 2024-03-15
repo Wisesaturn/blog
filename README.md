@@ -6,8 +6,6 @@
 <h3 align="center">🎉 개인용 블로그 🎉</h3>
 <p align="center">기록하고 싶은 것들을 모아두었습니다</p>
 
-- widgets : UI 컴포넌트
-- features : 
 
 
 ## Stack
@@ -18,3 +16,14 @@
 <img src="https://img.shields.io/badge/Firebase-FFA611?style=for-the-badge&logo=Firebase&logoColor=white"/>&nbsp;&nbsp;
 <img src="https://img.shields.io/badge/Notion_API-EFEFEF?style=for-the-badge&logo=Notion&logoColor=333333"/>&nbsp;&nbsp;
 </p>
+
+### Architecture
+- FSD 기반 폴더 구조를 나누었습니다
+- app, (routes = pages), features, shared
+
+### Convention
+- Function : camelCase
+- Domain : kebab-case
+- Component : PascalCase
+- Variable : PascalCase
+- Constant : SNAKE_CASE

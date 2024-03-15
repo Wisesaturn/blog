@@ -1,5 +1,9 @@
 import { Meta, Title, IconGallery, IconItem } from '@storybook/blocks';
 
+import HomeIcon from './navigation-bar/home';
+import PortfolioIcon from './navigation-bar/portfolio';
+import ProfileIcon from './navigation-bar/profile';
+import PostIcon from './navigation-bar/post';
 import Icons from './index';
 import SearchIcon from './search';
 
@@ -8,6 +12,8 @@ import SearchIcon from './search';
 # Icons
 
 <br />
+
+## Common
 
 <IconGallery>
   <IconItem name="search">
@@ -33,5 +39,24 @@ import SearchIcon from './search';
   </IconItem>
   <IconItem name="menu">
     <Icons.Menu />
+  </IconItem>
+</IconGallery>
+
+## Navigation Bar
+
+<br />
+
+<IconGallery>
+  <IconItem name="home">
+    <HomeIcon />
+  </IconItem>
+  <IconItem name="about">
+    <ProfileIcon />
+  </IconItem>
+  <IconItem name="projects">
+    <PortfolioIcon />
+  </IconItem>
+  <IconItem name="post">
+    <PostIcon />
   </IconItem>
 </IconGallery>

@@ -110,7 +110,7 @@ export const loader: LoaderFunction = ({ request }) => {
     layout: {
       darkmode,
     },
-    // env: getEnv(),
+    // middleware: getEnv(),
   });
 };
 
