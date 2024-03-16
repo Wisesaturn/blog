@@ -1,16 +1,16 @@
 /**
  * @access Only Use Navigation Bar
  */
-export default function ProfileIcon({ className }: { className?: string }) {
+export default function ProfileIcon(props: IconProps) {
   return (
     <svg
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
       viewBox="0 0 24 24"
-      className={className}
-      height="1.75rem"
-      width="1.75rem"
+      className={props.className}
+      height="2rem"
+      width="2rem"
     >
       <path
         fillRule="evenodd"

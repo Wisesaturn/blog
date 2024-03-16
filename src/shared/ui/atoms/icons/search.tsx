@@ -1,13 +1,11 @@
-import Theme from '$shared/styles/color/theme';
-
-export default function SearchIcon() {
+export default function SearchIcon(props: IconProps) {
   return (
     <svg
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
+      className={props.className}
       viewBox="0 0 1024 1024"
-      className={Theme.ICON_CLASS}
       height="32"
       width="32"
       xmlns="http://www.w3.org/2000/svg"

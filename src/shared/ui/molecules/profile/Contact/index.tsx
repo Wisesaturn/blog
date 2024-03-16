@@ -12,7 +12,7 @@ function Contact() {
         aria-label="follow my linkedIn"
         rel="noreferrer"
       >
-        <Icons.LinkedIn />
+        <Icons.LinkedIn type="border" />
       </Link>
       <Link
         target="_blank"
@@ -20,7 +20,7 @@ function Contact() {
         rel="noreferrer"
         aria-label="contact on email"
       >
-        <Icons.Email />
+        <Icons.Email type="border" />
       </Link>
       <Link
         target="_blank"
@@ -28,7 +28,7 @@ function Contact() {
         aria-label="follow my github"
         rel="noreferrer"
       >
-        <Icons.Github />
+        <Icons.Github type="border" />
       </Link>
       <Link
         target="_blank"
@@ -36,7 +36,7 @@ function Contact() {
         aria-label="follow my instagram"
         rel="noreferrer"
       >
-        <Icons.Instagram />
+        <Icons.Instagram type="border" />
       </Link>
     </div>
   );

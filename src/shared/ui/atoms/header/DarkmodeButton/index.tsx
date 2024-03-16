@@ -29,7 +29,7 @@ export default function DarkmodeButton() {
 
   return (
     <button type="button" onClick={handleDarkmode}>
-      {layout.darkmode === 'dark' ? <Icons.Dark /> : <Icons.Light />}
+      {layout.darkmode === 'dark' ? <Icons.Dark type="border" /> : <Icons.Light type="border" />}
     </button>
   );
 }

@@ -12,7 +12,7 @@ const Header = () => {
   const { header } = layout;
 
   // style
-  const HEADER_CLASS = `flex h-12 md:h-16 items-center max-w-layout z-[9998] align-middle glassmorphism ease-in-out transition duration-200 justify-between w-full py-2 px-4 mx-auto relative`;
+  const HEADER_CLASS = `flex h-12 md:h-16 items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
   const HEADER_CONTAINER_CLASS = `fixed top-0 w-full`;
 
   return (

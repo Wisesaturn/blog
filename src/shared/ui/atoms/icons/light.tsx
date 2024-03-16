@@ -1,12 +1,10 @@
-import Theme from '$shared/styles/color/theme';
-
-export default function LightIcon() {
+export default function LightIcon(props: IconProps) {
   return (
     <svg
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
-      className={Theme.ICON_CLASS}
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       width="32"
       height="32"

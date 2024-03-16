@@ -5,9 +5,9 @@ export default function Logo({ title, category }: { title?: string; category?: s
     <Link to="/">
       {/* 기본 타이틀 */}
       {title === '' && (
-        <h1 className="md:text-2xl text-base p-2 font-semibold hover:cursor-pointer w-fit">
+        <p className="md:text-2xl text-base p-2 font-semibold hover:cursor-pointer w-fit">
           사툰사툰
-        </h1>
+        </p>
       )}
       {/* 커스텀 타이틀 */}
       {title !== '' && (

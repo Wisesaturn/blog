@@ -4,14 +4,14 @@ import { Link } from '@remix-run/react';
 import Theme from '$shared/styles/color/theme';
 
 interface NavButtonProps {
-  children: React.ReactElement;
+  children: IconElement;
   isSelected: boolean;
   to: string;
 }
 
 /**
+ * @private
  * @summary Navigation Bar에 내부 Icon Button
- * @param props
  * @returns
  */
 export default function NavButton(props: NavButtonProps) {

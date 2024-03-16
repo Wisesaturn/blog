@@ -1,6 +1,7 @@
 import { MemoryRouter } from 'react-router';
 
-import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
+import MiddlewareContext, { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
+import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '$shared/middleware/layout';
 
 import Layout from './index';
 
@@ -19,12 +20,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { children: <></>, data: DEFAULT_MIDDLEWARE_VALUE },
+  args: {
+    children: <></>,
+    data: { layout: DEFAULT_LAYOUT_VALUE, middleware: DEFAULT_MIDDLEWARE_VALUE },
+  },
   decorators: [
-    (StoryChlidren) => (
-      <MemoryRouter initialEntries={['/']}>
-        <StoryChlidren />
-      </MemoryRouter>
+    (StoryChlidren, props) => (
+      <MiddlewareContext.Provider value={{ ...props.middleware }}>
+        <LayoutProvider initialLayout={{ ...props.layout }}>
+          <MemoryRouter initialEntries={['/']}>
+            <StoryChlidren />
+          </MemoryRouter>
+        </LayoutProvider>
+      </MiddlewareContext.Provider>
     ),
   ],
 };

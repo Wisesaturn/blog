@@ -1,12 +1,10 @@
-import Theme from '$shared/styles/color/theme';
-
-export default function MenuIcon() {
+export default function MenuIcon(props: IconProps) {
   return (
     <svg
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
-      className={Theme.ICON_CLASS}
+      className={props.className}
       width="28"
       height="28"
       viewBox="0 0 24 24"

@@ -1,13 +1,11 @@
-import Theme from '$shared/styles/color/theme';
-
-export default function DarkIcon() {
+export default function DarkIcon(props: IconProps) {
   return (
     <svg
       stroke="currentColor"
       fill="currentColor"
       strokeWidth="0"
+      className={props.className}
       viewBox="0 0 24 24"
-      className={Theme.ICON_CLASS}
       height="32"
       width="32"
       xmlns="http://www.w3.org/2000/svg"
