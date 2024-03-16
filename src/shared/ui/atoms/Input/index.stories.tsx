@@ -15,10 +15,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {
-  args: { type: 'normal' },
+  args: { inputType: 'normal' },
 };
 
 export const Search: Story = {
   // eslint-disable-next-line no-alert
-  args: { type: 'search', handleSearch: (v: string) => alert(`Search Value : ${v}`) },
+  args: { inputType: 'search', handleSearch: (v: string) => alert(`Search Value : ${v}`) },
 };

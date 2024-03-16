@@ -1,3 +1,4 @@
+import Input from '$shared/ui/atoms/Input';
 import Title from '$shared/ui/atoms/Title';
 
 export default function PostsPage() {
@@ -7,6 +8,7 @@ export default function PostsPage() {
         title="Post"
         subtitle="개발을 하며 걸어온 발자취와 문제를 해결하며 얻은 경험들을 담은 공간입니다"
       />
+      <Input inputType="search" className="mt-4 mb-8" />
     </main>
   );
 }

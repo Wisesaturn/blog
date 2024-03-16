@@ -12,7 +12,7 @@ export default function Title(props: TitleProps) {
   return (
     <div className="mt-8">
       <h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl">{title}</h1>
-      <h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight">
+      <h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight max-md:pt-1">
         {subtitle}
       </h2>
     </div>

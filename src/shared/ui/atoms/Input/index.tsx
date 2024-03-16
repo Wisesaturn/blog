@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import Theme from '$shared/styles/color/theme';
 import useDebounce from '$shared/hooks/useDebounce';
@@ -7,13 +7,13 @@ import Icons from '../icons';
 
 type InputType = 'normal' | 'search';
 interface InputProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
-  type?: InputType;
+  inputType?: InputType;
   handleSearch?: (value: string) => void;
   handleChange?: (value: string) => void;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { type = 'normal', handleSearch, handleChange, ...rest } = props;
+  const { className, inputType = 'normal', handleSearch, handleChange, ...rest } = props;
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce(value, 300);
 
@@ -49,7 +49,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   };
 
   return (
-    <div className="flex gap-2 h-[42px] max-md:h-[38px]">
+    <div className={`flex gap-2 h-[42px] max-md:h-[38px] ${className}`}>
       <div className="border-[1px] rounded-md flex w-full items-center justify-between">
         <input
           tabIndex={0}
@@ -66,7 +66,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           </button>
         )}
       </div>
-      {type === 'search' && (
+      {inputType === 'search' && (
         <button tabIndex={0} type="button" onClick={handleSearchClick}>
           <Icons.Search
             className={`${Theme.PURE_ICON_CLASS} w-[42px] max-md:w-[38px] max-md:p-2 p-1.5 border-[1px] rounded-md h-full`}
