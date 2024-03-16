@@ -6,4 +6,9 @@ declare global {
     layout: ILayout;
     middleware: IMiddleware;
   }
+  interface GlobalAnimation {
+    animation?: {
+      variants: AnimationProps['variants'];
+    };
+  }
 }

@@ -121,22 +121,22 @@
 /** font */
 @layer base {
   h1 {
-    @apply text-3xl font-bold;
+    @apply text-3xl font-bold break-keep;
   }
 
   h2 {
-    @apply text-2xl font-semibold;
+    @apply text-2xl font-semibold break-keep;
   }
 
   h3 {
-    @apply text-xl font-semibold;
+    @apply text-xl font-semibold break-keep;
   }
 
   p {
-    @apply text-base;
+    @apply text-base break-keep;
   }
 
   span {
-    @apply text-xs;
+    @apply text-xs break-keep;
   }
 }

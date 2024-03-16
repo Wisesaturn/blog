@@ -1,19 +1,22 @@
 import { forwardRef, useState } from 'react';
+import { AnimationProps, motion } from 'framer-motion';
 
 import Theme from '$shared/styles/color/theme';
 import useDebounce from '$shared/hooks/useDebounce';
 
-import Icons from '../icons';
+import Icons from '../../atoms/icons';
 
 type InputType = 'normal' | 'search';
-interface InputProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+interface InputProps
+  extends GlobalAnimation,
+    Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
   inputType?: InputType;
   handleSearch?: (value: string) => void;
   handleChange?: (value: string) => void;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, inputType = 'normal', handleSearch, handleChange, ...rest } = props;
+  const { animation, className, inputType = 'normal', handleSearch, handleChange, ...rest } = props;
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce(value, 300);
 
@@ -49,7 +52,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   };
 
   return (
-    <div className={`flex gap-2 h-[42px] max-md:h-[38px] ${className}`}>
+    <motion.div
+      variants={animation?.variants}
+      className={`flex gap-2 h-[42px] max-md:h-[38px] ${className}`}
+    >
       <div className="border-[1px] rounded-md flex w-full items-center justify-between">
         <input
           tabIndex={0}
@@ -73,7 +79,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           />
         </button>
       )}
-    </div>
+    </motion.div>
   );
 });
 

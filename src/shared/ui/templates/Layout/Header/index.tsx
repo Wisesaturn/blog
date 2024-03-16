@@ -12,8 +12,8 @@ const Header = () => {
   const { header } = layout;
 
   // style
-  const HEADER_CLASS = `flex h-12 md:h-16 items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
-  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full`;
+  const HEADER_CLASS = `flex bg-white h-12 md:h-16 items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
+  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full z-[9998]`;
 
   return (
     <>

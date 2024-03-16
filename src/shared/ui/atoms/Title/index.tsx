@@ -1,4 +1,6 @@
-interface TitleProps {
+import { motion, AnimationProps } from 'framer-motion';
+
+interface TitleProps extends GlobalAnimation {
   title: string;
   subtitle?: string;
 }
@@ -8,13 +10,16 @@ interface TitleProps {
  * @returns
  */
 export default function Title(props: TitleProps) {
-  const { title, subtitle } = props;
+  const { title, subtitle, animation } = props;
+
   return (
-    <div className="mt-8">
-      <h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl">{title}</h1>
-      <h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight max-md:pt-1">
+    <motion.div variants={animation?.variants} className="mt-8">
+      <motion.h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl">
+        {title}
+      </motion.h1>
+      <motion.h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight max-md:pt-1">
         {subtitle}
-      </h2>
-    </div>
+      </motion.h2>
+    </motion.div>
   );
 }

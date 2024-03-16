@@ -1,14 +1,30 @@
-import Input from '$shared/ui/atoms/Input';
+import { motion } from 'framer-motion';
+
+import PostList from '$features/post/ui/organsims/PostList';
+import Categories from '$features/post/ui/molecules/Categories';
+
+import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
+import { FADE_IN_UP_CONTAINER, FADE_IN_UP_ITEM } from '$shared/constant/animation';
 
 export default function PostsPage() {
   return (
-    <main className="layout">
+    <motion.main
+      initial="hidden"
+      animate="show"
+      variants={FADE_IN_UP_CONTAINER}
+      className="layout min-h-screen"
+    >
       <Title
+        animation={{
+          variants: FADE_IN_UP_ITEM,
+        }}
         title="Post"
-        subtitle="개발을 하며 걸어온 발자취와 문제를 해결하며 얻은 경험들을 담은 공간입니다"
+        subtitle="문제를 해결하며 얻은 경험들을 담은 공간입니다"
       />
-      <Input inputType="search" className="mt-4 mb-8" />
-    </main>
+      <Input animation={{ variants: FADE_IN_UP_ITEM }} inputType="search" className="mt-4 mb-8" />
+      <Categories animation={{ variants: FADE_IN_UP_ITEM }} />
+      <PostList animation={{ variants: FADE_IN_UP_ITEM }} />
+    </motion.main>
   );
 }
