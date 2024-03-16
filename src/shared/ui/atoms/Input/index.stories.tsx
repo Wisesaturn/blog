@@ -14,6 +14,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
+export const Normal: Story = {
+  args: { type: 'normal' },
+};
+
+export const Search: Story = {
+  // eslint-disable-next-line no-alert
+  args: { type: 'search', handleSearch: (v: string) => alert(`Search Value : ${v}`) },
 };

@@ -10,6 +10,7 @@ import LightIcon from './light';
 import LinkedInIcon from './linkedin';
 import MenuIcon from './menu';
 import SearchIcon from './search';
+import CancelIcon from './cancel';
 
 // global type
 declare global {
@@ -58,6 +59,8 @@ class Icons {
   static Menu = Icons.createIcon(MenuIcon);
 
   static Instagram = Icons.createIcon(InstagramIcon);
+
+  static Cancel = Icons.createIcon(CancelIcon);
 }
 
 export default Icons;
