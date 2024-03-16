@@ -1,27 +1,15 @@
-import React, { useRef, useEffect } from 'react';
-
-import useScroll from '$shared/hooks/useScroll';
+import { useSpring, motion, useScroll } from 'framer-motion';
 
 export default function ProgressBar() {
-  const { percent } = useScroll();
-  const progressBarRef = useRef<HTMLDivElement>(null);
-
-  /* [Action] scroll */
-  const setProgress = () => {
-    progressBarRef.current!.style.width = `${percent}%`;
-  };
-
-  /* [Business] add event */
-  useEffect(() => {
-    window.addEventListener('scroll', setProgress);
-    return () => {
-      window.removeEventListener('scroll', setProgress);
-    };
-  });
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress);
 
   return (
     <>
-      <div ref={progressBarRef} className={`z-[10000] fixed h-0.5 bg-green-dark left-0`} />
+      <motion.div
+        className={`z-[10000] w-full fixed h-0.5 bg-green-dark left-0`}
+        style={{ transformOrigin: 'left', scaleX }}
+      />
       <div className="w-full z-[9999] fixed h-0.5 left-0" />
     </>
   );

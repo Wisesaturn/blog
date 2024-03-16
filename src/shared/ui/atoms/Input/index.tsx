@@ -57,7 +57,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           value={value}
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
-          className="w-full h-full p-4"
+          className="w-full h-full p-4 dark:bg-transparent"
           {...rest}
         />
         {value !== '' && (

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 type ScrollDirection = 'up' | 'down';
 
 /**
+ * @deprecated Framer Motion으로 대체하였습니다
  * @summary 사용자의 스크롤에 관한 결과를 추출하는 hook
  * @returns
  */
