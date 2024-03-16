@@ -9,6 +9,7 @@ export default function Copyright() {
         © 2024 Copyright <span className="text-gray-500 dark:text-white">사툰사툰</span>, based on{' '}
         <span className="text-gray-500 dark:text-white">remix</span>
       </span>
+      <div className="max-md:h-[44px] hidden max-md:block" />
     </footer>
   );
 }

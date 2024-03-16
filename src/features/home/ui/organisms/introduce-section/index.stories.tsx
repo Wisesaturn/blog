@@ -5,7 +5,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta = {
   title: 'features/home/section/Introduce',
   component: IntroduceSection,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },

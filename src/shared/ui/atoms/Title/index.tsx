@@ -1,4 +1,4 @@
-import { motion, AnimationProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface TitleProps extends GlobalAnimation {
   title: string;

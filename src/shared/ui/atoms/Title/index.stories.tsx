@@ -1,3 +1,5 @@
+import { FADE_IN_UP_ITEM } from '$shared/constant/animation';
+
 import Title from '.';
 
 import type { Meta, StoryObj } from '@storybook/react';

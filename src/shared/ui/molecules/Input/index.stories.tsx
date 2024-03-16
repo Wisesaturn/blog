@@ -15,10 +15,40 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {
-  args: { inputType: 'normal' },
+  args: { inputType: 'normal', placeholder: 'answer the question' },
 };
 
 export const Search: Story = {
-  // eslint-disable-next-line no-alert
-  args: { inputType: 'search', handleSearch: (v: string) => alert(`Search Value : ${v}`) },
+  args: {
+    inputType: 'search',
+    placeholder: 'answer the question',
+    // eslint-disable-next-line no-alert
+    handleSearch: (v: string) => alert(`Search Value : ${v}`),
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    inputType: 'normal',
+    label: 'Label',
+    placeholder: 'answer the question',
+  },
+};
+
+export const WithDescription: Story = {
+  args: {
+    inputType: 'normal',
+    placeholder: 'answer the question',
+    description: 'This is a input component',
+  },
+};
+
+export const SearchWithLabel: Story = {
+  args: {
+    inputType: 'search',
+    label: 'Label',
+    placeholder: 'answer the question',
+    // eslint-disable-next-line no-alert
+    handleSearch: (v: string) => alert(`Search Value : ${v}`),
+  },
 };

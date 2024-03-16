@@ -11,6 +11,7 @@ import LinkedInIcon from './linkedin';
 import MenuIcon from './menu';
 import SearchIcon from './search';
 import CancelIcon from './cancel';
+import TypescriptIcon from './category/typescript';
 
 // global type
 declare global {
@@ -19,7 +20,6 @@ declare global {
     className?: string;
     type?: IconType;
   }
-  type IconElement = React.ReactElement;
 }
 
 // Icon Class
@@ -37,7 +37,7 @@ function getIconClass(props: IconProps) {
 
 // Data
 class Icons {
-  static createIcon(Component: React.ComponentType<IconProps>) {
+  private static createIcon(Component: React.ComponentType<IconProps>) {
     return (props: IconProps) => {
       const iconClass = getIconClass(props);
       return <Component className={iconClass} />;
@@ -61,6 +61,12 @@ class Icons {
   static Instagram = Icons.createIcon(InstagramIcon);
 
   static Cancel = Icons.createIcon(CancelIcon);
+
+  static Typescript = Icons.createIcon(TypescriptIcon);
+}
+
+declare global {
+  type IconElement = keyof typeof Icons;
 }
 
 export default Icons;

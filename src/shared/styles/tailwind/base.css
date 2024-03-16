@@ -116,6 +116,11 @@
     background-color: var(--green-bright);
     color: #333;
   }
+
+  input {
+    outline: 0;
+    border: 0;
+  }
 }
 
 /** font */

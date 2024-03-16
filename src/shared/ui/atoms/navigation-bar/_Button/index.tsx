@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react';
 import Theme from '$shared/styles/color/theme';
 
 interface NavButtonProps {
-  children: IconElement;
+  children: React.ReactElement;
   isSelected: boolean;
   to: string;
 }

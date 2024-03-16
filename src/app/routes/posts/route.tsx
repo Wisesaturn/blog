@@ -22,7 +22,12 @@ export default function PostsPage() {
         title="Post"
         subtitle="문제를 해결하며 얻은 경험들을 담은 공간입니다"
       />
-      <Input animation={{ variants: FADE_IN_UP_ITEM }} inputType="search" className="mt-4 mb-8" />
+      <Input
+        placeholder="검색어를 입력하세요"
+        animation={{ variants: FADE_IN_UP_ITEM }}
+        inputType="search"
+        className="my-4"
+      />
       <Categories animation={{ variants: FADE_IN_UP_ITEM }} />
       <PostList animation={{ variants: FADE_IN_UP_ITEM }} />
     </motion.main>
