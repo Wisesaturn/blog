@@ -11,7 +11,6 @@ import LinkedInIcon from './linkedin';
 import MenuIcon from './menu';
 import SearchIcon from './search';
 import CancelIcon from './cancel';
-import TypescriptIcon from './category/typescript';
 
 // global type
 declare global {
@@ -61,8 +60,6 @@ class Icons {
   static Instagram = Icons.createIcon(InstagramIcon);
 
   static Cancel = Icons.createIcon(CancelIcon);
-
-  static Typescript = Icons.createIcon(TypescriptIcon);
 }
 
 declare global {

@@ -12,3 +12,12 @@ declare global {
     };
   }
 }
+
+/**
+ * @summary sitemap interface
+ */
+export interface ISitemap {
+  loc: string;
+  lastmod?: string;
+  priority?: string;
+}

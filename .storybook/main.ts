@@ -10,9 +10,9 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
+    '@storybook/addon-themes',
     '@chromatic-com/storybook',
     '@storybook/addon-viewport',
-    'storybook-dark-mode',
     '@storybook/addon-interactions',
     // set tailwindCSS and postCSS, CSS Loader
     {

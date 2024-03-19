@@ -5,7 +5,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta = {
   title: 'features/post/Categories',
   component: Categories,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },
