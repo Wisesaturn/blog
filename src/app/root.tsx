@@ -37,7 +37,7 @@ export const meta: MetaFunction = ({ params }) => {
 
   const metadata = {
     title: `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`,
-    description: `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
+    description: `송재한, 꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
       (category) => category.name,
     ).join(' ')}`,
     url: `https://jaehan.blog/${post === undefined ? '' : post}`,
