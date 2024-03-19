@@ -5,7 +5,7 @@
 export const ANIMATE_FADE_UP_CONTAINER = {
   show: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.125,
     },
   },
 };
@@ -15,7 +15,7 @@ export const ANIMATE_FADE_UP_CONTAINER = {
  * @field item
  */
 export const ANIMATE_FADE_UP_ITEM = {
-  hidden: { opacity: 0, transform: 'translateY(15px)' },
+  hidden: { opacity: 0, transform: 'translateY(10px)' },
   show: {
     opacity: 1,
     transform: 'translateY(0px)',
