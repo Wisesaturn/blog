@@ -1,26 +1,21 @@
 import { MemoryRouter } from 'react-router';
 
-import useSelectedParams from '$features/post/hooks/useSelectedParams';
-
-import Categories from '.';
+import PostList from '.';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'features/post/Categories',
-  component: Categories,
+  title: 'features/post/PostList',
+  component: PostList,
   parameters: {
     layout: 'padded',
   },
-} satisfies Meta<typeof Categories>;
+} satisfies Meta<typeof PostList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const args = useSelectedParams();
-
 export const Default: Story = {
-  args,
   decorators: [
     (StoryChlidren) => (
       <MemoryRouter initialEntries={['/']}>

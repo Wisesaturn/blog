@@ -2,7 +2,6 @@ import { forwardRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import Theme from '$shared/styles/color/theme';
-import useDebounce from '$shared/hooks/useDebounce';
 import Icons from '$shared/ui/atoms/icons';
 
 type InputType = 'normal' | 'search';
@@ -13,6 +12,8 @@ interface InputProps
   placeholder: string;
   description?: string;
   inputType?: InputType;
+  initialValue?: string;
+  handleEsc?: () => void;
   handleSearch?: (value: string) => void;
   handleChange?: (value: string) => void;
 }
@@ -25,15 +26,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     className,
     inputType = 'normal',
     placeholder,
+    initialValue,
+    handleEsc,
     handleSearch,
     handleChange,
     ...rest
   } = props;
-  const [value, setValue] = useState('');
-  const debouncedValue = useDebounce(value, 300);
+  const [value, setValue] = useState(initialValue || '');
 
   // Reset input value
   const resetInput = () => {
+    if (handleEsc) {
+      handleEsc();
+    }
     setValue('');
   };
 
@@ -41,14 +46,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (handleChange) {
-      handleChange(debouncedValue); // Notify parent component of value change
+      handleChange(value); // Notify parent component of value change
     }
   };
 
   // Callback function to handle search
   const handleSearchClick = () => {
     if (handleSearch) {
-      handleSearch(debouncedValue); // Notify parent component of search with debounced value
+      handleSearch(value); // Notify parent component of search with debounced value
     }
   };
 
