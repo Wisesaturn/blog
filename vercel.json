@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    { "source": "/react/:path*", "destination": "/posts/react/:path*", "permanent": true },
+    { "source": "/nextjs/:path*", "destination": "/posts/nextjs/:path*", "permanent": true },
+    { "source": "/frontend/:path*", "destination": "/posts/frontend/:path*", "permanent": true },
+    { "source": "/typescript/:path*", "destination": "/posts/typescript/:path*", "permanent": true },
+    { "source": "/all", "destination": "/posts", "permanent": true },
+    { "source": "/resume", "destination": "/about", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/public/(.*)",
