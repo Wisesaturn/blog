@@ -7,7 +7,7 @@ const meta = {
   component: Spinner,
   tags: ['autodocs'],
   parameters: {
-    layout: 'padded',
+    layout: 'fullscreen',
   },
   args: {},
 } satisfies Meta<typeof Spinner>;

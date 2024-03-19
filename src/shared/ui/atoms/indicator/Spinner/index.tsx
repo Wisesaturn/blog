@@ -9,8 +9,10 @@ export default function Spinner(props: SpinnerProps) {
   return (
     <>
       {layout === 'full' ? (
-        <div className="fixed top-0 left-0 bg-gray-300 dark:bg-[#111] dark:bg-opacity-25 h-full translate-1/2 z-[10000] bg-opacity-25 w-full py-10 flex items-center justify-center">
-          <div className={styles.spinner}></div>
+        <div className="fixed top-10 left-1/2 w-full h-full z-[10000]">
+          <div className="border-[1px] w-fit px-8 py-4 rounded-md shadow-md bg-white dark:bg-green-dark -translate-x-1/2 -translate-y-1/2">
+            <div className={styles.spinner}></div>
+          </div>
         </div>
       ) : (
         <div className={styles.spinner}></div>
