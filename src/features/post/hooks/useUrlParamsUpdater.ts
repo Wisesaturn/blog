@@ -4,9 +4,10 @@ import { useSearchParams } from '@remix-run/react';
 
 /**
  * @summary URL Parameter에 특정 데이터를 추가 및 삭제하는 훅
+ * @dsecription isToggle로 토글 여부를 결정합니다
  * @returns
  */
-export default function useSelectedParams() {
+export default function useUrlParamsUpdater() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSelectedParams = useCallback(

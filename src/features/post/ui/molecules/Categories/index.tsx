@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
 
-import useSelectedParams from '$features/post/hooks/useSelectedParams';
+import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import CategoryChip from '$features/post/ui/atoms/CategoryChip';
 
 import { CATEGORY_DATA } from '$shared/constant/category';
 
-interface CategoriesProps extends GlobalAnimation, ReturnType<typeof useSelectedParams> {}
+interface CategoriesProps extends GlobalAnimation {}
 
 function Categories(props: CategoriesProps) {
-  const { animation, searchParams, setSelectedParams } = props;
+  const { animation } = props;
+  const { searchParams, setSelectedParams } = useUrlParamsUpdater();
 
   return (
     <motion.div variants={animation?.variants} className="flex gap-2 flex-wrap">
