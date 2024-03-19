@@ -2,10 +2,9 @@ import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
 
 import FilterRow from '$features/post/ui/atoms/FilterRow';
+import { POST_SORT_FILTER } from '$features/post/constant';
 
 interface PostFilterProps extends GlobalAnimation {}
-
-const SORT_FILTER = ['최신순', '정렬순'];
 
 export default function PostFilter(props: PostFilterProps) {
   const { animation } = props;
@@ -26,8 +25,8 @@ export default function PostFilter(props: PostFilterProps) {
       </button>
       {clicked && (
         <div className="flex flex-col w-full items-start">
-          {SORT_FILTER.map((text, idx) => (
-            <FilterRow text={text} handleClick={() => {}} key={idx} />
+          {POST_SORT_FILTER.map((text, idx) => (
+            <FilterRow text={text} key={idx} />
           ))}
         </div>
       )}

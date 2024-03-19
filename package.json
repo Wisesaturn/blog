@@ -22,6 +22,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@vercel/analytics": "^1.0.1",
     "@vercel/node": "^2.15.8",
+    "firebase": "^10.7.2",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

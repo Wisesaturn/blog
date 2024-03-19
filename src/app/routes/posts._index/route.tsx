@@ -1,14 +1,32 @@
 import { motion } from 'framer-motion';
+import { LoaderFunctionArgs, json } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import qs from 'qs';
 
 import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
+import { PostsOrderBy } from '$features/post/types/post';
+import getPosts from '$features/post/api/getPosts';
 
 import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const params = qs.parse(request.url.split('?')[1]);
+  const searchParams = {
+    keyword: String(params.keyword || ''),
+    categories: params.category ? String(params.category).split(',') : [],
+    orderBy: String(params.orderby || 'desc') as PostsOrderBy,
+  };
+  const posts = await getPosts(searchParams);
+
+  return json({ posts });
+}
+
 export default function PostsPage() {
+  const { posts } = useLoaderData<typeof loader>();
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
 
   return (
@@ -29,13 +47,13 @@ export default function PostsPage() {
         inputType="search"
         className="my-4"
         placeholder="검색어를 입력하세요"
-        initialValue={searchParams.get('search') || ''}
+        initialValue={searchParams.get('keyword') || ''}
         animation={{ variants: ANIMATE_FADE_UP_ITEM }}
-        handleEsc={() => setSelectedParams('search', '', false)}
-        handleSearch={(_v) => setSelectedParams('search', _v, false)}
+        handleEsc={() => setSelectedParams('keyword', '', false)}
+        handleSearch={(_v) => setSelectedParams('keyword', _v, false)}
       />
       <Categories animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <PostList animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <PostList posts={posts} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }
