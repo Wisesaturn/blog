@@ -32,44 +32,6 @@
 }
 
 @layer components {
-  .layout-all {
-    @apply layout-border layout-hover-pure layout-rounded layout-bg layout-text layout-text-color;
-  }
-
-  .layout-hover {
-    @apply hover:border-green-darker dark:hover:border-green-bright layout-hover-pure;
-  }
-
-  .layout-hover-pure {
-    @apply hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors duration-200;
-  }
-
-  .layout-rounded {
-    @apply rounded-md max-md:rounded-sm;
-  }
-
-  .layout-bg {
-    @apply bg-white dark:bg-black;
-  }
-
-  .layout-text {
-    @apply text-sm max-md:text-xs font-light;
-  }
-
-  .layout-text-color {
-    @apply text-black dark:text-white;
-  }
-
-  .layout-border {
-    @apply border-[1px] layout-border-color;
-  }
-
-  .layout-border-color {
-    @apply border-gray-200 duration-200 transition-colors hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-400;
-  }
-}
-
-@layer components {
   .icons {
     @apply border-[1px] icons-size-medium icons-pure;
   }
@@ -84,6 +46,10 @@
 
   .icons-border {
     @apply dark:border-gray-600 active:bg-gray-200;
+  }
+
+  .icons-size-large {
+    @apply md:w-[42px] md:h-[42px] w-[32px] h-[32px];
   }
 
   .icons-size-medium {

@@ -11,6 +11,10 @@ import SearchIcon from './search';
 import CancelIcon from './cancel';
 import ArrowDownIcon from './arrowDown';
 import ViewIcon from './view';
+import ClockIcon from './clock';
+import ShareIcon from './share';
+import CopyIcon from './copy';
+import DateIcon from './date';
 
 // global type
 declare global {
@@ -74,6 +78,14 @@ class Icons {
   static ArrowDown = Icons.createIcon(ArrowDownIcon);
 
   static View = Icons.createIcon(ViewIcon);
+
+  static Clock = Icons.createIcon(ClockIcon);
+
+  static Share = Icons.createIcon(ShareIcon);
+
+  static Copy = Icons.createIcon(CopyIcon);
+
+  static Date = Icons.createIcon(DateIcon);
 }
 
 declare global {

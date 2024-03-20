@@ -30,11 +30,11 @@
   :root[color-theme*='dark'] {
     --black: #efefef;
     --white: #222;
-    --green-dark: #365314;
-    --green-darker: #4d7c0f;
+    --green-dark: #d9f99d;
+    --green-darker: #a3e635;
     --green-main: #84cc16;
-    --green-brighter: #a3e635;
-    --green-bright: #d9f99d;
+    --green-brighter: #4d7c0f;
+    --green-bright: #365314;
     --yellow: #fffa82;
     --gray-main: #b7b7b7;
     --gray-darker: #777;
@@ -143,5 +143,205 @@
 
   span {
     @apply text-xs break-keep;
+  }
+}
+
+/** layout */
+@layer base {
+  .layout-all {
+    @apply layout-border layout-hover-pure layout-rounded layout-bg layout-text layout-text-color;
+  }
+
+  .layout-hover {
+    @apply hover:border-green-darker dark:hover:border-green-bright layout-hover-pure;
+  }
+
+  .layout-hover-pure {
+    @apply hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors duration-200;
+  }
+
+  .layout-rounded {
+    @apply rounded-md max-md:rounded-sm;
+  }
+
+  .layout-bg {
+    @apply bg-white dark:bg-black;
+  }
+
+  .layout-text {
+    @apply text-base max-md:text-xs font-light;
+  }
+
+  .layout-text-color {
+    @apply text-black dark:text-white;
+  }
+
+  .layout-border {
+    @apply border-[1px] layout-border-color;
+  }
+
+  .layout-border-color {
+    @apply border-gray-200 duration-200 transition-colors hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-400;
+  }
+}
+
+/** markdown-body */
+@layer base {
+  .markdown-body {
+    h1 {
+      @apply pt-16;
+    }
+
+    h2 {
+      @apply pt-12;
+    }
+
+    h3 {
+      position: relative;
+      width: max-content;
+      z-index: 2;
+
+      @apply pt-8;
+    }
+
+    h3:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0%;
+      background-color: var(--green-main);
+      opacity: 50%;
+      z-index: 1;
+
+      @apply py-1 mt-5 max-md:mt-4;
+    }
+
+    /* code */
+    :not(pre[class*='language-']) code {
+      @apply bg-gray-200 dark:bg-[#111] font-bold layout-text-color tracking-tight;
+    }
+
+    p {
+      @apply pt-5 leading-relaxed;
+
+      strong {
+        position: relative;
+        width: max-content;
+        z-index: 2;
+      }
+
+      strong:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        left: 0%;
+        background-color: var(--green-main);
+        opacity: 50%;
+        z-index: 1;
+
+        @apply py-0.5 pt-0.5 mt-5 max-md:mt-4;
+      }
+    }
+
+    hr {
+      @apply mt-8 pb-8;
+    }
+
+    details {
+      @apply pb-4;
+    }
+
+    summary {
+      ~ * {
+        @apply pt-0 pl-4;
+      }
+    }
+
+    table {
+      @apply mt-8;
+    }
+
+    ul {
+      @apply pt-8;
+
+      list-style-type: disc;
+      padding-left: 1rem;
+
+      li {
+        padding-left: 0.35rem;
+        line-height: 200%;
+
+        &::marker {
+          color: var(--gray-darker);
+        }
+
+        ul {
+          @apply pt-0;
+        }
+      }
+    }
+
+    ol {
+      @apply pt-8;
+
+      list-style-type: decimal;
+      padding-left: 1rem;
+
+      li {
+        padding-left: 0.35rem;
+        line-height: 200%;
+
+        &::marker {
+          color: var(--gray-darker);
+        }
+      }
+    }
+
+    blockquote {
+      @apply bg-green-bright dark:bg-green-dark layout-rounded p-4 mt-8;
+
+      p {
+        @apply pt-0;
+
+        > strong:after {
+          display: none;
+        }
+      }
+    }
+
+    /* code snippets */
+    pre[class*='language-'] {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+
+      @apply mt-8 rounded-lg max-md:rounded-md;
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      height: 4px; /* 스크롤바의 너비 */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--green-dark); /* 스크롤바 트랙의 배경색 */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--green-bright); /* 스크롤바 썸의 배경색 */
+      border-radius: 10px; /* 스크롤바 썸의 모서리를 둥글게 만듭니다 */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gray-main); /* 스크롤바 썸에 마우스를 올려놓았을 때의 배경색 */
+    }
+
+    img {
+      @apply mt-8 mx-auto w-full rounded-3xl max-md:rounded-xl;
+    }
+
+    div[class='image-caption'] {
+      @apply text-sm max-md:text-xs py-1 text-gray-500 dark:text-gray-300 font-light mx-auto w-full text-center;
+    }
   }
 }
