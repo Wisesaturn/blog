@@ -5,7 +5,7 @@ import getPosts from '$features/post/api/getPosts';
 import convertString from '$shared/lib/convertString';
 import { ISitemap } from '$shared/types/global';
 
-const HOST_URL = `https://jaehan.blog`;
+export const HOST_URL = `https://jaehan.blog`;
 
 export const loader = async () => {
   const posts = await getPosts({ keyword: '', categories: [] });
@@ -15,6 +15,7 @@ export const loader = async () => {
     { loc: HOST_URL, priority: '1.0' },
     { loc: `${HOST_URL}/about`, priority: '0.8' },
     { loc: `${HOST_URL}/posts`, priority: '0.5' },
+    { loc: `${HOST_URL}/snippets`, priority: '0.5' },
     { loc: `${HOST_URL}/projects`, priority: '0.2' },
   ];
 

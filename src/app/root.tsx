@@ -17,77 +17,13 @@ import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import useLoading from '$shared/hooks/useLoading';
 import useInitialScript from '$shared/hooks/useInitialScript';
-import { CATEGORY_DATA } from '$shared/constant/category';
 import Layout from '$shared/ui/templates/Layout';
 import getCookie from '$shared/lib/getCookieOnHeader';
+import formatHeadTags from '$shared/lib/formatHeadTags';
 
 import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 
-const metaSNS = [
-  { property: 'og:type', content: 'website' },
-  { property: 'og:locale', content: 'ko_KR' },
-  { property: 'og:image:width', content: '1200' },
-  { property: 'og:image:height', content: '630' },
-];
-
-const metaTwitter = [{ name: 'twitter:card', content: 'summary' }];
-
-export const meta: MetaFunction = ({ params }) => {
-  const { post } = params;
-
-  const metadata = {
-    title: `${post === undefined ? '' : `${post} :: `}📚 사툰사툰`,
-    description: `송재한, 꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | error ${CATEGORY_DATA.map(
-      (category) => category.name,
-    ).join(' ')}`,
-    url: `https://jaehan.blog/${post === undefined ? '' : post}`,
-    thumbnail: `https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png`,
-  };
-
-  return [
-    {
-      title: metadata.title,
-    },
-    {
-      name: 'description',
-      content: metadata.description,
-    },
-    {
-      property: 'og:url',
-      content: metadata.url,
-    },
-    {
-      property: 'og:title',
-      content: metadata.title,
-    },
-    {
-      property: 'og:image',
-      content: metadata.thumbnail,
-    },
-    {
-      property: 'og:description',
-      content: metadata.description,
-    },
-    {
-      name: 'twitter:url',
-      content: metadata.url,
-    },
-    {
-      name: 'twitter:title',
-      content: metadata.title,
-    },
-    {
-      property: 'twitter:image',
-      content: metadata.thumbnail,
-    },
-    {
-      name: 'twitter:description',
-      content: metadata.description,
-    },
-    ...metaSNS,
-    ...metaTwitter,
-  ];
-};
+export const meta: MetaFunction = (args) => formatHeadTags(args);
 
 export const links: LinksFunction = () => [
   formatStyleSheet(
@@ -106,7 +42,6 @@ export const loader: LoaderFunction = ({ request }) => {
     layout: {
       darkmode,
     },
-    // middleware: getEnv(),
   });
 };
 

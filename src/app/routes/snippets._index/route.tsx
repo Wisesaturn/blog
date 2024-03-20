@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion';
+import { MetaFunction } from '@remix-run/node';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import Title from '$shared/ui/atoms/Title';
+import formatHeadTags from '$shared/lib/formatHeadTags';
+
+// meta
+export const meta: MetaFunction = (args) => {
+  const url = 'https://jaehan.blog/snippets';
+  return formatHeadTags({ url, ...args });
+};
 
 export default function SnippetsPage() {
   return (

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { LoaderFunctionArgs, json } from '@remix-run/node';
+import { LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import qs from 'qs';
 
@@ -12,7 +12,15 @@ import getPosts from '$features/post/api/getPosts';
 import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
+import formatHeadTags from '$shared/lib/formatHeadTags';
 
+// meta
+export const meta: MetaFunction = (args) => {
+  const url = 'https://jaehan.blog/posts';
+  return formatHeadTags({ url, ...args });
+};
+
+// loader
 export async function loader({ request }: LoaderFunctionArgs) {
   const params = qs.parse(request.url.split('?')[1]);
   const searchParams = {
@@ -25,6 +33,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({ posts });
 }
 
+// page
 export default function PostsPage() {
   const { posts } = useLoaderData<typeof loader>();
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
