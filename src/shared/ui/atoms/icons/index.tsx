@@ -11,6 +11,7 @@ import LinkedInIcon from './linkedin';
 import MenuIcon from './menu';
 import SearchIcon from './search';
 import CancelIcon from './cancel';
+import ArrowDownIcon from './arrowDown';
 
 // global type
 declare global {
@@ -60,6 +61,8 @@ class Icons {
   static Instagram = Icons.createIcon(InstagramIcon);
 
   static Cancel = Icons.createIcon(CancelIcon);
+
+  static ArrowDown = Icons.createIcon(ArrowDownIcon);
 }
 
 declare global {

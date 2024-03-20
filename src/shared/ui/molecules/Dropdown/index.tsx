@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import Icons from '$shared/ui/atoms/icons';
+
 interface DropdownProps<T extends string | number> {
   label: T;
   items: T[];
@@ -24,28 +26,35 @@ export default function Dropdown<T extends string | number>(props: DropdownProps
   };
 
   return (
-    <div className="w-fit min-w-[10rem] text-left flex flex-col gap-1">
-      <button
-        className="w-full border-[1px] py-2 rounded-md text-base"
-        type="button"
+    <div className="w-fit min-w-[10rem] max-md:min-w-[8rem] text-left flex flex-col gap-1 text-base max-md:text-xs font-light">
+      <div
+        role="presentation"
+        className="flex justify-between items-center w-full bg-white dark:bg-black hover:bg-gray-50 hover:dark:bg-[#1a1a1a] border-[1px] hover:cursor-pointer py-2 max-md:py-1.5 rounded-md max-md:rounded-sm px-2.5 max-md:px-2"
+        onKeyDown={handleLabelClick}
         onClick={handleLabelClick}
       >
-        {selectedItem}
-      </button>
+        <div>{selectedItem}</div>
+        <Icons.ArrowDown
+          type="none"
+          className="w-[20px] h-[20px] max-md:w-[16px] max-md:h-[16px] fill-black"
+        />
+      </div>
       {opened && (
-        <div className="flex min-w-[10rem] flex-col gap-1 rounded-md border-[1px]">
+        <div className="flex flex-col w-full hover:cursor-pointer rounded-md max-md:rounded-sm border-[1px]">
           {items.map((item, index) => {
-            const commonClass = `py-2 text-base`;
-            const selectedClass = `${selectedItem === item ? 'bg-gray-100 text-black' : 't'}`;
+            const commonClass = `bg-white dark:bg-black py-2 max-md:py-1.5 pl-4 max-md:pl-2`;
+            const selectedClass = `${selectedItem === item ? 'bg-green-bright text-black dark:bg-green-dark dark:text-white' : 'hover:bg-gray-50 hover:dark:bg-[#1a1a1a]'}`;
+            const borderClass = `${index !== 0 ? 'border-t-[1px]' : 'max-md:rounded-t-sm rounded-t-md'} ${index === items.length - 1 ? 'max-md:rounded-b-sm rounded-b-md' : ''}`;
             return (
-              <button
-                className={`${commonClass} ${selectedClass}`}
-                type="button"
+              <div
+                className={`${commonClass} ${selectedClass} ${borderClass}`}
+                role="presentation"
                 onClick={() => handleItemClick(item)}
+                onKeyDown={() => handleItemClick(item)}
                 key={index}
               >
                 {item}
-              </button>
+              </div>
             );
           })}
         </div>
