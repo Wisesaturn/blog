@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { LoaderFunctionArgs, json } from '@remix-run/node';
+import { LoaderFunctionArgs, createCookie, json } from '@remix-run/node';
 import { MetaFunction, useLoaderData } from '@remix-run/react';
 
 import getPost from '$features/post/api/getPost';
+import updatePost from '$features/post/api/updatePost';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -14,13 +15,45 @@ export const meta: MetaFunction = (args) => {
 };
 
 // loader
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const { category, title } = params;
-
   if (!category || !title) throw new Error();
+
   const post = await getPost({ category, title });
 
-  return json({ post });
+  // cookie settings
+  const hasUserVisited = createCookie(`${post.index}`, {
+    path: '/',
+    secure: true,
+    httpOnly: true,
+    maxAge: 60 * 60 * 0.5,
+  });
+  const cookieHeader = request.headers.get('Cookie');
+  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
+
+  // ignore create cookie if it's development or alreeady has cookie
+  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+    return json({ post });
+  }
+
+  const views = post.views ? post.views + 1 : 1;
+  post.views = views;
+
+  // update view
+  await updatePost({
+    category,
+    title,
+    data: { views },
+  });
+
+  return json(
+    { post },
+    {
+      headers: {
+        'Set-Cookie': await hasUserVisited.serialize({}),
+      },
+    },
+  );
 }
 
 // page
