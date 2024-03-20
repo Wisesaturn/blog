@@ -22,7 +22,9 @@ export default function PostTitle(props: PostTitleProps) {
         className="pt-4 pb-2 mb-12 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"
         variants={animation?.variants}
       >
-        <span className="font-bold text-green-darker dark:text-green-brighter">{category}</span>
+        <span className="font-bold text-base max-md:text-sm text-green-darker dark:text-green-brighter">
+          {category.toLocaleUpperCase()}
+        </span>
         <h1 className="text-4xl max-md:text-3xl">{title}</h1>
         <h2 className="text-xl max-md:text-base font-light">{description}</h2>
         <div className="flex justify-between items-end">
