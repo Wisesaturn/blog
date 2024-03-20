@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
-import { DocumentSnapshot, getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getFunctions } from 'firebase/functions';
 import dotenv from 'dotenv';
 
@@ -27,12 +27,6 @@ const functions = getFunctions(app);
 export function getEnv() {
   return firebaseConfig;
 }
-
-// This helper function pipes your types through a firestore converter
-const converter = <T>() => ({
-  toFirestore: (data: Partial<T>) => data,
-  fromFirestore: (snap: DocumentSnapshot) => snap.data() as T,
-});
 
 // Subsequent queries will use persistence, if it was enabled successfully
 

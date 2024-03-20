@@ -1,21 +1,24 @@
-import { SORT_FILTER_MAP } from '$features/post/constant';
+import { POST_FILTER_TO_ORDER_BY } from '$features/post/constant';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import { PostsFilter } from '$features/post/types/post';
 
 interface FilterRowProps {
   text: PostsFilter;
+  selected: boolean;
+  handleClick: () => void;
 }
 
 export default function FilterRow(props: FilterRowProps) {
-  const { text } = props;
+  const { text, selected, handleClick } = props;
   const { setSelectedParams } = useUrlParamsUpdater();
 
-  const handleClick = () => {
-    setSelectedParams('orderby', SORT_FILTER_MAP[text], false);
+  const handleFilterRowClick = () => {
+    setSelectedParams('orderby', POST_FILTER_TO_ORDER_BY[text], false);
+    handleClick();
   };
 
   return (
-    <button type="button" onClick={handleClick}>
+    <button className="" type="button" onClick={handleFilterRowClick}>
       {text}
     </button>
   );

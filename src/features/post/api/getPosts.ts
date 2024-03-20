@@ -1,6 +1,6 @@
 import { collection, query, getDocs, where } from 'firebase/firestore';
 
-import { IPost, PostsOrderBy } from '$features/post/types/post';
+import { IPost } from '$features/post/types/post';
 
 import { db } from '$shared/middleware/firebase';
 import { CATEGORY_DATA } from '$shared/constant/category';
@@ -10,11 +10,10 @@ import type { DocumentData } from 'firebase/firestore';
 interface GetPostsProps {
   keyword: string;
   categories: string[];
-  orderBy: PostsOrderBy;
 }
 
 export default async function getPosts(props: GetPostsProps) {
-  const { keyword, categories, orderBy = 'desc' } = props;
+  const { keyword, categories } = props;
 
   let SEARCH_CATEGORY = CATEGORY_DATA;
 
@@ -46,32 +45,6 @@ export default async function getPosts(props: GetPostsProps) {
 
     return acc;
   });
-
-  if (orderBy === 'asc') {
-    posts.data.sort((a: DocumentData, b: DocumentData) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      return dateA < dateB ? -1 : 1;
-    });
-  } else if (orderBy === 'mostView') {
-    posts.data.sort((a: DocumentData, b: DocumentData) => {
-      const viewA = a.views || 0;
-      const viewB = b.views || 0;
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      if (viewA === viewB) {
-        return dateA < dateB ? 1 : -1;
-      }
-      return viewA < viewB ? 1 : -1;
-    });
-  } else {
-    // default desc
-    posts.data.sort((a: DocumentData, b: DocumentData) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      return dateA < dateB ? 1 : -1;
-    });
-  }
 
   return posts.data as IPost[];
 }

@@ -1,6 +1,6 @@
 import { ITag } from '../types/post';
 
-export const DUMMY_POSTS = [
+const DUMMY_POSTS = [
   {
     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     category: 'Technology',
