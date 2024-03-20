@@ -13,10 +13,10 @@ export default function PostTitle(props: PostTitleProps) {
   return (
     <>
       <motion.div
-        className="pb-10 max-md:pb-5 rounded-3xl max-md:rounded-xl"
+        className="pb-8 max-md:pb-5 w-full rounded-3xl max-md:rounded-xl"
         variants={animation?.variants}
       >
-        <img className="rounded-3xl max-md:rounded-xl" src={thumbnail} alt={title} />
+        <img className="rounded-3xl w-full max-md:rounded-xl" src={thumbnail} alt={title} />
       </motion.div>
       <motion.section
         className="pt-4 pb-2 mb-12 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"

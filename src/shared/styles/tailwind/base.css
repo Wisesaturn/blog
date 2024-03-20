@@ -325,7 +325,7 @@
       overflow-y: hidden;
       white-space: nowrap;
 
-      @apply mt-8 rounded-lg max-md:rounded-md;
+      @apply mt-8 rounded-lg max-md:rounded-md max-w-layout;
 
       span {
         @apply text-base max-md:text-sm;
@@ -334,7 +334,7 @@
 
     /* scrollbar */
     ::-webkit-scrollbar {
-      height: 4px; /* 스크롤바의 너비 */
+      height: 10px; /* 스크롤바의 너비 */
     }
 
     ::-webkit-scrollbar-track {

@@ -83,6 +83,8 @@ export default function ArticlePage() {
         <motion.article className="markdown-body" dangerouslySetInnerHTML={{ __html: body }} />
         <motion.aside>TOC 영역입니다</motion.aside>
       </motion.div>
+      <motion.div variants={ANIMATE_FADE_UP_ITEM}>푸터 버튼 영역입니다</motion.div>
+      <motion.div variants={ANIMATE_FADE_UP_ITEM}>댓글 영역입니다</motion.div>
     </motion.main>
   );
 }
