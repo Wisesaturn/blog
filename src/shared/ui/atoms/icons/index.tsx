@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Theme from '$shared/styles/color/theme';
-
 import DarkIcon from './dark';
 import EmailIcon from './email';
 import GithubIcon from './github';
@@ -12,27 +10,38 @@ import MenuIcon from './menu';
 import SearchIcon from './search';
 import CancelIcon from './cancel';
 import ArrowDownIcon from './arrowDown';
+import ViewIcon from './view';
 
 // global type
 declare global {
   type IconType = 'none' | 'normal' | 'border';
+  type IconSize = 'small' | 'medium' | 'large';
   interface IconProps {
     className?: string;
+    size?: IconSize;
     type?: IconType;
   }
 }
 
 // Icon Class
 function getIconClass(props: IconProps) {
-  const { type = 'none', className } = props;
+  const { size = 'medium', type = 'none', className } = props;
 
-  const IconClassMap = {
-    border: Theme.ICON_CLASS,
-    normal: Theme.PURE_ICON_CLASS,
+  const IconTypeClassMap = {
+    border: 'icons',
+    normal: 'icons-pure',
     none: 'block',
   };
 
-  return className || IconClassMap[type] || 'block';
+  const IconSizeClassMap = {
+    small: 'icons-size-small',
+    medium: 'icons-size-medium',
+    large: 'icons-size-large',
+  };
+
+  return (
+    className || `${IconTypeClassMap[type]} ${IconSizeClassMap[size]}` || 'block icons-size-medium'
+  );
 }
 
 // Data
@@ -63,6 +72,8 @@ class Icons {
   static Cancel = Icons.createIcon(CancelIcon);
 
   static ArrowDown = Icons.createIcon(ArrowDownIcon);
+
+  static View = Icons.createIcon(ViewIcon);
 }
 
 declare global {

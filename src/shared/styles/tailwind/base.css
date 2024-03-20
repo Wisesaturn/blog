@@ -126,19 +126,19 @@
 /** font */
 @layer base {
   h1 {
-    @apply text-3xl font-bold break-keep;
+    @apply text-3xl max-md:text-2xl font-bold break-keep;
   }
 
   h2 {
-    @apply text-2xl font-semibold break-keep;
+    @apply text-2xl max-md:text-xl font-semibold break-keep;
   }
 
   h3 {
-    @apply text-xl font-semibold break-keep;
+    @apply text-xl max-md:text-base font-semibold break-keep;
   }
 
   p {
-    @apply text-base break-keep;
+    @apply text-base max-md:text-sm break-keep;
   }
 
   span {

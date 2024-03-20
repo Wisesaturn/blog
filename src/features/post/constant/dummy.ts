@@ -1,6 +1,6 @@
-import { ITag } from '../types/post';
+import { IPost, ITag } from '../types/post';
 
-const DUMMY_POSTS = [
+const DUMMY_POSTS: IPost[] = [
   {
     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     category: 'Technology',

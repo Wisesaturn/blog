@@ -28,7 +28,7 @@ export default function PostFilter(props: PostFilterProps) {
   );
 
   return (
-    <motion.div className="w-fit" variants={animation?.variants}>
+    <motion.div className="w-fit absolute z-10" variants={animation?.variants}>
       <Dropdown
         label={selectedFilter}
         items={POST_SORT_FILTER}

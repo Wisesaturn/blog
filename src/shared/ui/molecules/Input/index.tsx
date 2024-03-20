@@ -1,7 +1,6 @@
 import { forwardRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-import Theme from '$shared/styles/color/theme';
 import Icons from '$shared/ui/atoms/icons';
 
 type InputType = 'normal' | 'search';
@@ -76,7 +75,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         </label>
       )}
       <div className={`flex gap-2 h-[42px] max-md:h-[38px] ${className}`}>
-        <div className="border-[1px] border-gray-300 rounded-md flex w-full items-center justify-between focus-within:border-black dark:focus-within:border-white">
+        <div className="layout-border rounded-md flex w-full items-center justify-between focus-within:border-black dark:focus-within:border-green-main">
           <input
             id={label}
             tabIndex={0}
@@ -85,19 +84,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             onKeyDown={handleKeyDown}
             onChange={handleInputChange}
             placeholder={placeholder}
-            className="w-full h-full p-4 dark:bg-transparent rounded-md"
+            className="w-full h-full p-4 rounded-md placeholder-gray-400 focus:placeholder-gray-400 dark:bg-[#222]"
             {...rest}
           />
           {value !== '' && (
             <button tabIndex={0} type="button" onClick={resetInput} className="w-fit h-full">
-              <Icons.Cancel className={`h-full w-fit p-1.5 ${Theme.PURE_ICON_CLASS}`} />
+              <Icons.Cancel className={`h-full w-fit p-1.5 icons-pure dark:fill-green-main`} />
             </button>
           )}
         </div>
         {inputType === 'search' && (
           <button tabIndex={0} type="button" onClick={handleSearchClick}>
             <Icons.Search
-              className={`${Theme.PURE_ICON_CLASS} w-[42px] max-md:w-[38px] max-md:p-2 p-1.5 border-[1px] rounded-md h-full`}
+              className={`icons-pure w-[42px] max-md:w-[38px] max-md:p-2 p-1.5 border-[1px] rounded-md h-full`}
             />
           </button>
         )}
