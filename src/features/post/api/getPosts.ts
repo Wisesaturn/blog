@@ -5,8 +5,6 @@ import { IPost } from '$features/post/types/post';
 import { db } from '$shared/middleware/firebase';
 import { CATEGORY_DATA } from '$shared/constant/category';
 
-import type { DocumentData } from 'firebase/firestore';
-
 interface GetPostsProps {
   keyword: string;
   categories: string[];
