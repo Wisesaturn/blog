@@ -25,7 +25,7 @@ export default function ArticleTitle(props: ArticleTitleProps) {
       </motion.div>
       <motion.section
         id="article-title"
-        className="pt-4 pb-2 mb-12 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"
+        className="pt-4 pb-2 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"
         variants={animation?.variants}
       >
         <span className="font-bold text-base max-md:text-sm text-green-darker dark:text-green-brighter">

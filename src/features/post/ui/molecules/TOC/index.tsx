@@ -24,23 +24,28 @@ export default function TOC(props: TOCProps) {
   };
 
   return (
-    <motion.aside className="sticky w-full max-md:max-w-layout max-w-80 md:ml-10">
-      {Heading.map((head, idx) => {
-        const selectedClass = `${selectId === head.id ? selectedStyleClass : nonSelectedStyleClass}`;
-        let hierarchyClass = `pl-3`;
+    <motion.aside className="w-full max-md:max-w-layout max-w-64 md:ml-10 pt-6">
+      <div className="md:top-24 md:sticky max-md:block">
+        <h3 className="leading-relaxed pb-2">목차</h3>
+        <div className="overflow-y-auto max-h-96">
+          {Heading.map((head, idx) => {
+            const selectedClass = `${selectId === head.id ? selectedStyleClass : nonSelectedStyleClass}`;
+            let hierarchyClass = `pl-3`;
 
-        if (head.level === 3) hierarchyClass = 'pl-6';
-        else if (head.level === 4) hierarchyClass = 'pl-9';
+            if (head.level === 3) hierarchyClass = 'pl-6';
+            else if (head.level === 4) hierarchyClass = 'pl-9';
 
-        return (
-          <TOCRow
-            key={idx}
-            handleClick={handleRowClick}
-            className={`${selectedClass} ${hierarchyClass}`}
-            {...head}
-          />
-        );
-      })}
+            return (
+              <TOCRow
+                key={idx}
+                handleClick={handleRowClick}
+                className={`${selectedClass} ${hierarchyClass}`}
+                {...head}
+              />
+            );
+          })}
+        </div>
+      </div>
     </motion.aside>
   );
 }

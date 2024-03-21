@@ -4,8 +4,8 @@
   position: relative;
   width: 9.6px;
   height: 9.6px;
-  background: #84cc16;
-  color: #84cc16;
+  background: theme(colors.green.main);
+  color: theme(colors.green.main);
   border-radius: 50%;
   box-shadow:
     16px 0,

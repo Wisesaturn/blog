@@ -36,8 +36,8 @@
     --green-brighter: theme(colors.green.darker);
     --green-bright: theme(colors.green.dark);
     --yellow: #fffa82;
-    --gray-main: #b7b7b7;
-    --gray-darker: #777;
+    --gray-main: #777;
+    --gray-darker: #b7b7b7;
     --blue-darker: #0969da;
     --blue-main: #54aeff;
     --blue-bright: #94ccfd;
@@ -82,7 +82,7 @@
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
-    /* Hidden Scrollbar */
+    /* HTML Hidden Scrollbar */
     -ms-overflow-style: none;
     scrollbar-width: none;
 
@@ -94,16 +94,35 @@
   }
 
   body {
+    @apply antialiased;
+
     scroll-behavior: smooth;
     box-sizing: border-box;
+    overflow-y: scroll;
     width: 100%;
     margin: 0 auto;
   }
 
-  /* Hidden Scrollbar */
+  /* Body Hidden Scrollbar */
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--gray-main); /* 스크롤바 트랙의 배경색 */
+    border-radius: 5px; /* 스크롤바 썸의 모서리를 둥글게 만듭니다 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--gray-darker); /* 스크롤바 썸의 배경색 */
+    border-radius: 5px; /* 스크롤바 썸의 모서리를 둥글게 만듭니다 */
   }
 
   /* Drag Selection */
@@ -224,28 +243,15 @@
     a {
       text-decoration-line: underline;
 
-      @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700;
+      @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700 break-keep;
     }
 
     p {
       @apply pt-5 leading-loose;
 
       strong {
-        position: relative;
-        width: max-content;
-        z-index: 2;
-      }
-
-      strong:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        left: 0%;
-        background-color: var(--green-main);
-        opacity: 50%;
-        z-index: 1;
-
-        @apply py-1 pt-0.5 mt-5 max-md:mt-[1.125rem];
+        background-color: var(--green-bright);
+        color: var(--black);
       }
     }
 
@@ -331,9 +337,13 @@
       }
     }
 
+    img {
+      @apply mt-16 mx-auto w-full rounded-3xl max-md:rounded-xl;
+    }
+
     /* code snippets */
     pre[class*='language-'] {
-      overflow-x: scroll;
+      overflow-x: auto;
       overflow-y: hidden;
       white-space: nowrap;
 
@@ -344,28 +354,7 @@
       }
     }
 
-    /* scrollbar */
-    ::-webkit-scrollbar {
-      height: 10px; /* 스크롤바의 너비 */
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--green-dark); /* 스크롤바 트랙의 배경색 */
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--green-bright); /* 스크롤바 썸의 배경색 */
-      border-radius: 10px; /* 스크롤바 썸의 모서리를 둥글게 만듭니다 */
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--gray-main); /* 스크롤바 썸에 마우스를 올려놓았을 때의 배경색 */
-    }
-
-    img {
-      @apply mt-16 mx-auto w-full rounded-3xl max-md:rounded-xl;
-    }
-
+    /* image caption */
     div[class='image-caption'] {
       @apply text-sm max-md:text-xs py-1 text-gray-500 dark:text-gray-300 font-light mx-auto w-full text-center;
     }

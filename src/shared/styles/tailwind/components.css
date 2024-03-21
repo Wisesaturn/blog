@@ -53,7 +53,7 @@
   }
 
   .icons-size-medium {
-    @apply md:w-[28px] md:h-[28px] w-[24px] h-[24px];
+    @apply md:w-[32px] md:h-[32px] w-[28px] h-[28px];
   }
 
   .icons-size-small {
