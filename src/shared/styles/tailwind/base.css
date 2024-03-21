@@ -6,11 +6,11 @@
   :root[color-theme*='light'] {
     --black: #222;
     --white: #fff;
-    --green-dark: #365314;
-    --green-darker: #4d7c0f;
-    --green-main: #84cc16;
-    --green-brighter: #a3e635;
-    --green-bright: #d9f99d;
+    --green-dark: theme(colors.green.dark);
+    --green-darker: theme(colors.green.darker);
+    --green-main: theme(colors.green.main);
+    --green-brighter: theme(colors.green.brighter);
+    --green-bright: theme(colors.green.bright);
     --yellow: #fffa82;
     --gray-main: #b7b7b7;
     --gray-darker: #777;
@@ -30,11 +30,11 @@
   :root[color-theme*='dark'] {
     --black: #efefef;
     --white: #222;
-    --green-dark: #d9f99d;
-    --green-darker: #a3e635;
-    --green-main: #84cc16;
-    --green-brighter: #4d7c0f;
-    --green-bright: #365314;
+    --green-dark: theme(colors.green.bright);
+    --green-darker: theme(colors.green.brighter);
+    --green-main: theme(colors.green.main);
+    --green-brighter: theme(colors.green.darker);
+    --green-bright: theme(colors.green.dark);
     --yellow: #fffa82;
     --gray-main: #b7b7b7;
     --gray-darker: #777;
@@ -109,12 +109,12 @@
   /* Drag Selection */
   ::selection {
     background-color: var(--green-bright);
-    color: #333;
+    color: var(--black);
   }
 
   ::-moz-selection {
     background-color: var(--green-bright);
-    color: #333;
+    color: var(--black);
   }
 
   input {
@@ -213,7 +213,7 @@
       opacity: 50%;
       z-index: 1;
 
-      @apply py-1 mt-5 max-md:mt-4;
+      @apply py-0.5 mt-7 max-md:mt-6;
     }
 
     /* code */
@@ -245,7 +245,7 @@
         opacity: 50%;
         z-index: 1;
 
-        @apply py-0.5 pt-0.5 mt-5 max-md:mt-4;
+        @apply py-1 pt-0.5 mt-5 max-md:mt-[1.125rem];
       }
     }
 
@@ -258,6 +258,8 @@
     }
 
     summary {
+      @apply hover:cursor-pointer;
+
       ~ * {
         @apply pt-0 pl-4;
       }
@@ -316,6 +318,16 @@
         code {
           @apply bg-green-brighter dark:bg-green-darker;
         }
+      }
+
+      ::selection {
+        background-color: var(--green-darker);
+        color: var(--white);
+      }
+
+      ::-moz-selection {
+        background-color: var(--green-darker);
+        color: var(--white);
       }
     }
 

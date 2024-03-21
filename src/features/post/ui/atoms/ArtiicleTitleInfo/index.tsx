@@ -1,11 +1,11 @@
 import Icons from '$shared/ui/atoms/icons';
 
-interface PostTitleInfo {
+interface ArticleTitleInfo {
   createdAt: string;
   views: number;
 }
 
-export default function PostTitleInfo(props: PostTitleInfo) {
+export default function ArticleTitleInfo(props: ArticleTitleInfo) {
   const { views, createdAt } = props;
   return (
     <div className="flex gap-3 items-center align-middle text-gray-500 dark:text-gray-400">

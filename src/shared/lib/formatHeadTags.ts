@@ -1,6 +1,6 @@
 import { ServerRuntimeMetaArgs, ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime';
 
-import { IPost, isIPost } from '$features/post/types/post';
+import { IPost } from '$features/post/types/post';
 
 import { CATEGORY_DATA } from '$shared/constant/category';
 

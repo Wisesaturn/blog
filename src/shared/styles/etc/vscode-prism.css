@@ -1,8 +1,10 @@
 :root[color-theme*='light'] {
+  --bg-selection: theme(colors.green.bright);
   --bg-code: #1e1e1e;
 }
 
 :root[color-theme*='dark'] {
+  --bg-selection: theme(colors.green.dark);
   --bg-code: #343434;
 }
 
@@ -32,8 +34,7 @@ code[class*='language-']::selection,
 pre[class*='language-'] *::selection,
 code[class*='language-'] *::selection {
   text-shadow: none;
-  color: #333;
-  background-color: #bdecb6;
+  background-color: var(--bg-selection);
 }
 
 @media print {

@@ -1,10 +1,5 @@
 import { POST_SORT_FILTER, POST_SORT_ORDER_BY } from '../constant';
-
-export interface ITag {
-  color: string;
-  id: string;
-  name: string;
-}
+import { ITag } from './article';
 
 export interface IPost {
   body: string;

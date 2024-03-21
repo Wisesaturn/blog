@@ -10,6 +10,9 @@ import { useSearchParams } from '@remix-run/react';
 export default function useUrlParamsUpdater() {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  /**
+   * key-value를 입력하고, 토글 여부를 전달합니다
+   */
   const handleSelectedParams = useCallback(
     (key: string, value: string, isToggle = true) => {
       const keyParams = searchParams.get(key)?.split(',') || [];
@@ -21,7 +24,7 @@ export default function useUrlParamsUpdater() {
       if (isToggle) {
         updatedParams = isSelected
           ? keyParams.filter((param) => param !== value)
-          : keyParams.concat(value); // 기존 배열에 추가
+          : keyParams.concat(value);
       }
 
       // delete param if it's empty

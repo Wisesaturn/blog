@@ -3,12 +3,12 @@
 import { motion } from 'framer-motion';
 
 import { IPost } from '$features/post/types/post';
-import PostTitleInfo from '$features/post/ui/atoms/PostTitleInfo';
+import ArticleTitleInfo from '$features/post/ui/atoms/ArtiicleTitleInfo';
 
-interface PostTitleProps extends GlobalAnimation, Omit<IPost, 'body'> {}
+interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags'> {}
 
-export default function PostTitle(props: PostTitleProps) {
-  const { animation, description, createdAt, thumbnail, views, category, tags, title } = props;
+export default function ArticleTitle(props: ArticleTitleProps) {
+  const { animation, description, createdAt, thumbnail, views, category, title } = props;
 
   return (
     <>
@@ -16,9 +16,15 @@ export default function PostTitle(props: PostTitleProps) {
         className="pb-8 max-md:pb-5 w-full rounded-3xl max-md:rounded-xl"
         variants={animation?.variants}
       >
-        <img className="rounded-3xl w-full max-md:rounded-xl" src={thumbnail} alt={title} />
+        <img
+          loading="eager"
+          className="rounded-3xl w-full max-md:rounded-xl"
+          src={thumbnail}
+          alt={title}
+        />
       </motion.div>
       <motion.section
+        id="article-title"
         className="pt-4 pb-2 mb-12 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"
         variants={animation?.variants}
       >
@@ -28,7 +34,7 @@ export default function PostTitle(props: PostTitleProps) {
         <h1 className="text-4xl max-md:text-3xl">{title}</h1>
         <h2 className="text-xl max-md:text-base font-light">{description}</h2>
         <div className="flex justify-between items-end">
-          <PostTitleInfo createdAt={createdAt} views={views} />
+          <ArticleTitleInfo createdAt={createdAt} views={views} />
         </div>
       </motion.section>
     </>
