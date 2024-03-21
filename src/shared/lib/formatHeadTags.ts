@@ -25,6 +25,7 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   const { title, description, url, urlPrefix, thumbnail, ...args } = props;
   const { data, params } = args;
 
+  // calculate data
   const HOST_URL = `https://jaehan.blog/${urlPrefix || ''}`;
   const convertTitle = params.title ? params.title : title;
   const convertDescription =
@@ -42,6 +43,7 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
     }
   }
 
+  // metadata object
   const metadata = {
     title: convertTitle || '📚 사툰사툰',
     description:

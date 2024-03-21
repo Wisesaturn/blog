@@ -4,6 +4,7 @@ import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '$shared/middleware/layout'
 import Copyright from './Copyright';
 import Header from './Header';
 import NavigationBar from './NavigationBar';
+import TopButton from './TopButton';
 
 export default function Layout({
   children,
@@ -17,6 +18,7 @@ export default function Layout({
       <LayoutProvider initialLayout={{ ...DEFAULT_LAYOUT_VALUE, ...data.layout }}>
         <Header />
         {children}
+        <TopButton />
         <NavigationBar />
         <Copyright />
       </LayoutProvider>

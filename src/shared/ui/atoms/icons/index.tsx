@@ -15,6 +15,7 @@ import ClockIcon from './clock';
 import ShareIcon from './share';
 import CopyIcon from './copy';
 import DateIcon from './date';
+import ArrowUpIcon from './arrowUp';
 
 // global type
 declare global {
@@ -76,6 +77,8 @@ class Icons {
   static Cancel = Icons.createIcon(CancelIcon);
 
   static ArrowDown = Icons.createIcon(ArrowDownIcon);
+
+  static ArrowUp = Icons.createIcon(ArrowUpIcon);
 
   static View = Icons.createIcon(ViewIcon);
 

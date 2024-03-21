@@ -224,7 +224,7 @@
     a {
       text-decoration-line: underline;
 
-      @apply text-blue-500 transition-colors duration-200 hover:text-blue-700;
+      @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700;
     }
 
     p {

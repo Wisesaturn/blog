@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 
 import { IPost } from '$features/post/types/post';
-import ArticleTitleInfo from '$features/post/ui/atoms/ArtiicleTitleInfo';
+import ArticleTitleInfo from '$features/post/ui/atoms/ArticleTitleInfo';
 
 interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags'> {}
 

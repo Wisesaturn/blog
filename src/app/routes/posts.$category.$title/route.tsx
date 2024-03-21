@@ -84,7 +84,7 @@ export default function ArticlePage() {
       >
         <motion.article
           variants={ANIMATE_FADE_UP_ITEM}
-          className="markdown-body"
+          className="markdown-body md:w-3/4 w-full"
           dangerouslySetInnerHTML={{ __html: body }}
         />
         <TOC {...TOCElement} />
