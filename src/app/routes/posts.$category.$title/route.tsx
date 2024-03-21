@@ -82,7 +82,11 @@ export default function ArticlePage() {
         variants={ANIMATE_FADE_UP_ITEM}
         className="flex w-full max-w-layout max-md:flex-col-reverse"
       >
-        <motion.article className="markdown-body" dangerouslySetInnerHTML={{ __html: body }} />
+        <motion.article
+          variants={ANIMATE_FADE_UP_ITEM}
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
         <TOC {...TOCElement} />
       </motion.div>
       <motion.div variants={ANIMATE_FADE_UP_ITEM}>

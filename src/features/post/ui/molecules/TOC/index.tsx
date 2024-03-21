@@ -4,7 +4,9 @@ import useTOC from '$features/post/hooks/useTOC';
 
 import TOCRow from '../../atoms/TOCRow';
 
-export default function TOC(props: ReturnType<typeof useTOC>) {
+interface TOCProps extends ReturnType<typeof useTOC> {}
+
+export default function TOC(props: TOCProps) {
   const { Heading, selectId } = props;
 
   const selectedStyleClass = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
