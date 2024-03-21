@@ -4,7 +4,8 @@ import { MetaFunction, useLoaderData } from '@remix-run/react';
 
 import getPost from '$features/post/api/getPost';
 import updatePost from '$features/post/api/updatePost';
-import PostTitle from '$features/post/ui/molecules/ArticleTitle';
+import ArticleTitle from '$features/post/ui/molecules/ArticleTitle';
+import ArticleComments from '$features/post/ui/atoms/ArticleComments';
 import useTOC from '$features/post/hooks/useTOC';
 import TOC from '$features/post/ui/molecules/TOC';
 
@@ -77,7 +78,7 @@ export default function ArticlePage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <PostTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ArticleTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <motion.div
         variants={ANIMATE_FADE_UP_ITEM}
         className="flex w-full max-w-layout max-md:flex-col-reverse"
@@ -99,7 +100,7 @@ export default function ArticlePage() {
           ))}
         </div>
       </motion.div>
-      <motion.div variants={ANIMATE_FADE_UP_ITEM}>댓글 영역입니다</motion.div>
+      <ArticleComments />
     </motion.main>
   );
 }

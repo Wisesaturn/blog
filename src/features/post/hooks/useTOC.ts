@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import getHeading from '../lib/getHeading';
-import getIntersectionObserver from '../lib/getIntersectionObserver';
+import getHeading from '$features/post/lib/getHeading';
+import getIntersectionObserver from '$features/post/lib/getIntersectionObserver';
 
 /**
  * @summary TOC 컴포넌트에서 사용하는 훅

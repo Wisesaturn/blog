@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 import useTOC from '$features/post/hooks/useTOC';
 
-import TOCRow from '../../atoms/TOCRow';
+import TOCRow from '$features/post/ui/atoms/TOCRow';
 
 interface TOCProps extends ReturnType<typeof useTOC> {}
 
