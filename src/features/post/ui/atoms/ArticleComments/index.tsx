@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import Giscus from '@giscus/react';
 
+import useLayout from '$shared/hooks/useLayout';
+
 export default function ArticleComments(props: GlobalAnimation) {
+  const { layout } = useLayout();
+
   return (
     <motion.div className="pt-20" variants={props.animation?.variants}>
       <Giscus
@@ -14,7 +18,7 @@ export default function ArticleComments(props: GlobalAnimation) {
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
-        theme="preferred_color_scheme"
+        theme={layout.darkmode}
         lang="ko"
       />
     </motion.div>
