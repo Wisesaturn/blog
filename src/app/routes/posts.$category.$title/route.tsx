@@ -8,6 +8,7 @@ import ArticleTitle from '$features/post/ui/molecules/ArticleTitle';
 import ArticleComments from '$features/post/ui/atoms/ArticleComments';
 import useTOC from '$features/post/hooks/useTOC';
 import TOC from '$features/post/ui/molecules/TOC';
+import useCodePen from '$features/post/hooks/useCodePen';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -70,6 +71,7 @@ export default function ArticlePage() {
   const { post } = useLoaderData<typeof loader>();
   const { body, tags, ...rest } = post;
   const TOCElement = useTOC(body);
+  useCodePen();
 
   return (
     <motion.main
