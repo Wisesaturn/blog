@@ -90,7 +90,6 @@ class Icons {
 
   static Date = Icons.createIcon(DateIcon);
 }
-
 declare global {
   type IconElement = keyof typeof Icons;
 }

@@ -5,14 +5,13 @@ import TopButton from './index';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'shared/TopButton',
+  title: 'shared/Layout/TopButton',
   component: TopButton,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
 } satisfies Meta<typeof TopButton>;
-
 export default meta;
 type Story = StoryObj<typeof meta>;
 

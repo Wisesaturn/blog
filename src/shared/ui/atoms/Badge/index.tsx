@@ -2,6 +2,11 @@ interface BadgeProps {
   children: string;
 }
 
+/**
+ * @summary Badge 모양의 컴포넌트
+ * @param props
+ * @returns
+ */
 export default function Badge(props: BadgeProps) {
   const { children } = props;
   return (

@@ -95,7 +95,7 @@ export default function ArticlePage() {
         <TOC {...TOCElement} />
       </motion.div>
       <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ArticleShareButton />
+      <ArticleShareButton animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );

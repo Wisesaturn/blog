@@ -147,6 +147,9 @@ module.exports = {
     {
       files: ['**/*.stories.{ts,tsx}'],
       extends: ['plugin:storybook/recommended'],
+      rules: {
+        'no-alert': 'off',
+      },
     },
 
     // Typescript

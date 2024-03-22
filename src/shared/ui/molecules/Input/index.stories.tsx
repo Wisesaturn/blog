@@ -22,7 +22,6 @@ export const Search: Story = {
   args: {
     inputType: 'search',
     placeholder: 'answer the question',
-    // eslint-disable-next-line no-alert
     handleSearch: (v: string) => alert(`Search Value : ${v}`),
   },
 };
