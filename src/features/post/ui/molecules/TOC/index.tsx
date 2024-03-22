@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 
 import useTOC from '$features/post/hooks/useTOC';
-
 import TOCRow from '$features/post/ui/atoms/TOCRow';
 
 interface TOCProps extends ReturnType<typeof useTOC> {}
@@ -9,13 +8,15 @@ interface TOCProps extends ReturnType<typeof useTOC> {}
 export default function TOC(props: TOCProps) {
   const { Heading, selectId } = props;
 
-  const selectedStyleClass = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
-  const nonSelectedStyleClass = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;
+  const SELECTED_STYLE_CLASS = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
+  const NON_SELECTED_STYLE_CLASS = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;
 
   const handleRowClick = (targetId: string) => {
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
+      // target scroll 상대적인 위치 (top : 현재 위치에서 위에 있으면 -, 아래에 있으면 +)
       const rect = targetElement.getBoundingClientRect();
+      // 현재 viewport의 scroll height
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const offset = window.innerWidth < 786 ? -16 : -32;
       const targetOffsetTop = rect.top + scrollTop + offset;
@@ -29,7 +30,7 @@ export default function TOC(props: TOCProps) {
         <h3 className="leading-relaxed pb-2">목차</h3>
         <div className="overflow-y-auto max-h-96">
           {Heading.map((head, idx) => {
-            const selectedClass = `${selectId === head.id ? selectedStyleClass : nonSelectedStyleClass}`;
+            const SELECTED_CLASS = `${selectId === head.id ? SELECTED_STYLE_CLASS : NON_SELECTED_STYLE_CLASS}`;
             let hierarchyClass = `pl-3`;
 
             if (head.level === 3) hierarchyClass = 'pl-6';
@@ -39,7 +40,7 @@ export default function TOC(props: TOCProps) {
               <TOCRow
                 key={idx}
                 handleClick={handleRowClick}
-                className={`${selectedClass} ${hierarchyClass}`}
+                className={`${SELECTED_CLASS} ${hierarchyClass}`}
                 {...head}
               />
             );

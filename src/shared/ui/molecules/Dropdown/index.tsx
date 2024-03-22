@@ -29,7 +29,7 @@ export default function Dropdown<T extends string | number>(props: DropdownProps
     <div className="w-fit min-w-[10rem] max-md:min-w-[8rem] text-left flex flex-col gap-1 layout-text layout-text-color">
       <div
         role="presentation"
-        className="flex justify-between items-center w-full layout-bg hover:bg-gray-50 hover:dark:bg-[#1a1a1a] layout-border hover:cursor-pointer py-2 max-md:py-1.5 px-4 max-md:px-2 layout-rounded"
+        className="flex justify-between items-center w-full layout-bg hover:bg-gray-50 hover:dark:bg-[#1a1a1a] layout-border hover:cursor-pointer py-2 px-4 max-md:px-2 layout-rounded"
         onKeyDown={handleLabelClick}
         onClick={handleLabelClick}
       >
@@ -42,7 +42,7 @@ export default function Dropdown<T extends string | number>(props: DropdownProps
       {opened && (
         <div className="shadow-lg dark:shadow-2xl flex flex-col w-full hover:cursor-pointer layout-rounded layout-border">
           {items.map((item, index) => {
-            const commonClass = `layout-bg py-2 max-md:py-1.5 pl-4 max-md:pl-2 dark:border-gray-600`;
+            const commonClass = `layout-bg py-2 pl-4 max-md:pl-2 dark:border-gray-600`;
             const selectedClass = `${selectedItem === item ? 'bg-green-bright dark:bg-green-dark' : 'hover:bg-gray-50 hover:dark:bg-[#1a1a1a]'}`;
             const borderClass = `${index !== 0 ? 'border-t-[1px]' : 'max-md:rounded-t-sm rounded-t-md'} ${index === items.length - 1 ? 'max-md:rounded-b-sm rounded-b-md' : ''}`;
             return (

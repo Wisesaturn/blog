@@ -51,7 +51,7 @@
   }
 }
 
-/** layout */
+/** base */
 @layer base {
   html {
     display: block;
@@ -188,7 +188,7 @@
   }
 
   .layout-text {
-    @apply text-base max-md:text-xs font-light;
+    @apply text-base max-md:text-sm font-light;
   }
 
   .layout-text-color {

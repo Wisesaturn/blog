@@ -9,6 +9,8 @@ import ArticleComments from '$features/post/ui/atoms/ArticleComments';
 import useTOC from '$features/post/hooks/useTOC';
 import TOC from '$features/post/ui/molecules/TOC';
 import useCodePen from '$features/post/hooks/useCodePen';
+import ArticleTags from '$features/post/ui/atoms/ArticleTags';
+import ArticleShareButton from '$features/post/ui/atoms/ArticleShareButton';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -92,17 +94,9 @@ export default function ArticlePage() {
         />
         <TOC {...TOCElement} />
       </motion.div>
-      <motion.div variants={ANIMATE_FADE_UP_ITEM}>
-        <div className="flex gap-2">
-          {tags.map((tag, idx) => (
-            <span
-              className="layout-text text-gray-600 dark:text-gray-300"
-              key={idx}
-            >{`#${tag.name}`}</span>
-          ))}
-        </div>
-      </motion.div>
-      <ArticleComments />
+      <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ArticleShareButton />
+      <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }

@@ -21,7 +21,7 @@ export default function PostList(props: PostListProps) {
   return (
     <div className="relative pt-10 top-0">
       <PostFilter animation={{ variants: animation?.variants }} />
-      <motion.div className="pt-12 max-md:pt-10 flex gap-2 flex-col" variants={animation?.variants}>
+      <motion.div className="pt-12 flex gap-2 flex-col" variants={animation?.variants}>
         {sortedPosts.length > 0 && sortedPosts.map((post, idx) => <PostRow key={idx} {...post} />)}
         {sortedPosts.length === 0 && <PostEmptyRow />}
       </motion.div>
