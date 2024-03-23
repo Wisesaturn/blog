@@ -6,7 +6,6 @@ import qs from 'qs';
 import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import { PostsOrderBy } from '$features/post/types/post';
 import getPosts from '$features/post/api/getPosts';
 
 import Input from '$shared/ui/molecules/Input';
@@ -26,7 +25,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const searchParams = {
     keyword: String(params.keyword || ''),
     categories: params.category ? String(params.category).split(',') : [],
-    orderBy: String(params.orderby || 'desc') as PostsOrderBy,
   };
   const posts = await getPosts(searchParams);
 

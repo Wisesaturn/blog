@@ -67,6 +67,7 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "framer-motion": "^11.0.14",
     "node-sass": "^9.0.0",
+    "notion-to-md": "^3.1.1",
     "postcss": "^8.4.27",
     "prettier": "^3.0.1",
     "rehype-mathjax": "^4.0.3",

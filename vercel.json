@@ -1,11 +1,15 @@
 {
   "redirects": [
+    { "source": "/all", "destination": "/posts", "permanent": true },
+    { "source": "/resume", "destination": "/about", "permanent": true },
+    { "source": "/react", "destination": "/posts?category=react", "permanent": true },
+    { "source": "/nextjs", "destination": "/posts?category=nextjs", "permanent": true },
+    { "source": "/frontend", "destination": "/posts?category=frontend", "permanent": true },
+    { "source": "/typescript", "destination": "/posts?category=typescript", "permanent": true },
     { "source": "/react/:path*", "destination": "/posts/react/:path*", "permanent": true },
     { "source": "/nextjs/:path*", "destination": "/posts/nextjs/:path*", "permanent": true },
     { "source": "/frontend/:path*", "destination": "/posts/frontend/:path*", "permanent": true },
-    { "source": "/typescript/:path*", "destination": "/posts/typescript/:path*", "permanent": true },
-    { "source": "/all", "destination": "/posts", "permanent": true },
-    { "source": "/resume", "destination": "/about", "permanent": true }
+    { "source": "/typescript/:path*", "destination": "/posts/typescript/:path*", "permanent": true }
   ],
   "headers": [
     {
