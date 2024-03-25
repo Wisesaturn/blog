@@ -54,7 +54,7 @@ export const loader: LoaderFunction = ({ request }) => {
 
 export default function App() {
   const data = useLoaderData<GlobalLoaderData>();
-  const isLoading = useLoading();
+
   useInitialScript();
 
   return (
@@ -78,7 +78,6 @@ export default function App() {
       </head>
       <body>
         <Suspense fallback={<Spinner layout="full" />}>
-          {isLoading && <Spinner layout="full" />}
           <Layout data={data}>
             <Outlet />
           </Layout>

@@ -10,16 +10,24 @@ import Icons from '$shared/ui/atoms/icons';
 import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';
 import convertString from '$shared/lib/convertString';
+import useLayout from '$shared/hooks/useLayout';
 
 export default function PostCreater() {
   const { env } = useMiddleware();
+  const { updateLayout } = useLayout();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleCreatePost = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
+    updateLayout({
+      loading: true,
+    });
     const { category, plain_title }: IPost = await instance.post('create', { title: inputValue });
+    updateLayout({
+      loading: false,
+    });
     navigate(`/posts/${category}/${convertString(plain_title, 'spaceToDash')}`);
   };
 

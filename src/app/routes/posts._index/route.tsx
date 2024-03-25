@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { ActionFunction, LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { useActionData, useLoaderData } from '@remix-run/react';
 import qs from 'qs';
+import { useEffect } from 'react';
 
 import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
@@ -12,6 +13,7 @@ import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
+import useLayout from '$shared/hooks/useLayout';
 
 // meta
 export const meta: MetaFunction = (args) => {
@@ -20,7 +22,7 @@ export const meta: MetaFunction = (args) => {
 };
 
 // action (refresh post callback)
-export const action: ActionFunction = async () => json({});
+export const action: ActionFunction = async () => json({ refetch: true });
 
 // loader
 export async function loader({ request }: LoaderFunctionArgs) {

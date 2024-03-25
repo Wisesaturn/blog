@@ -1,9 +1,13 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useState, startTransition } from 'react';
 
 import { Darkmode, IHeader } from '$shared/types/layout';
+import Spinner from '$shared/ui/atoms/indicator/Spinner';
+import useLoading from '$shared/hooks/useLoading';
+import useDebounce from '$shared/hooks/useDebounce';
 
 export interface ILayout {
   header: IHeader;
+  loading: boolean;
   darkmode: Darkmode;
 }
 
@@ -19,6 +23,7 @@ interface LayoutProviderProps {
 
 export const DEFAULT_LAYOUT_VALUE: ILayout = {
   darkmode: 'light',
+  loading: false,
   header: {
     title: '',
     category: '',
@@ -32,13 +37,20 @@ const LayoutContext = createContext<ILayoutContext>({
 
 export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, children }) => {
   const [layout, setLayout] = useState(initialLayout);
+  const debouncedLayoutLoading = useDebounce(layout.loading, 1000);
+  const isLoading = useLoading();
 
-  const updateLayout = useCallback((newLayout: Partial<ILayout>) => {
-    setLayout((prev) => ({ ...prev, ...newLayout }));
-  }, []);
+  const updateLayout = (newLayout: Partial<ILayout>) => {
+    startTransition(() => {
+      setLayout((prev) => ({ ...prev, ...newLayout }));
+    });
+  };
 
   return (
-    <LayoutContext.Provider value={{ layout, updateLayout }}>{children}</LayoutContext.Provider>
+    <>
+      {(debouncedLayoutLoading || isLoading) && <Spinner layout="full" />}
+      <LayoutContext.Provider value={{ layout, updateLayout }}>{children}</LayoutContext.Provider>
+    </>
   );
 };
 
