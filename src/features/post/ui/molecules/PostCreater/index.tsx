@@ -1,19 +1,26 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable camelcase */
 import { useRef } from 'react';
-import { Form } from '@remix-run/react';
+import { Form, useNavigate } from '@remix-run/react';
+
+import { IPost } from '$features/post/types/post';
 
 import useMiddleware from '$shared/hooks/useMiddleware';
 import Icons from '$shared/ui/atoms/icons';
 import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';
+import convertString from '$shared/lib/convertString';
 
 export default function PostCreater() {
   const { env } = useMiddleware();
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleCreatePost = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
-    await instance.post('create', { title: inputValue });
+    const { category, plain_title }: IPost = await instance.post('create', { title: inputValue });
+    navigate(`/posts/${category}/${convertString(plain_title, 'spaceToDash')}`);
   };
 
   return (

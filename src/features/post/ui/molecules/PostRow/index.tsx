@@ -19,7 +19,7 @@ export default function PostRow(props: IPost) {
       <p className="text-green-main dark:text-green-brighter font-semibold">
         {category.toLocaleUpperCase()}
       </p>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
       <div className="flex justify-between items-end">
         <h3 className="layout-text text-gray-500 dark:text-gray-300">{description}</h3>
         <div className="flex gap-2 dark:text-gray-300">

@@ -123,6 +123,7 @@ export default async function createPost(title: string) {
 
         // replace heading
         const value = replaceBodyHeadings(result.value as string);
+
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
 
@@ -163,15 +164,18 @@ export default async function createPost(title: string) {
           });
 
           postData.thumbnail = customThumbnail;
+        } else {
+          console.log(chalk.gray(`[INFO] 기본 썸네일 설정`));
         }
 
         // upload image on firebase
         if (value) {
-          await replaceBodyImages({
+          const replaceBody = await replaceBodyImages({
             body: value,
             category: postData.category,
             title: convertString(postData.plain_title, 'spaceToDash'),
           });
+          postData.body = replaceBody;
         }
 
         console.log(chalk.green(`[SCCCESS] ${title} 게시물을 생성하였습니다.`));

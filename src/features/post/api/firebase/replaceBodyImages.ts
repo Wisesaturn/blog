@@ -36,14 +36,14 @@ export default async function replaceBodyImages(props: Props): Promise<string> {
       }),
     );
 
-    const modifiedRes = imgSrcArray.reduce(
+    const modifiedBody = imgSrcArray.reduce(
       (acc, imgSrc, index) => acc.replace(imgSrc, convertImgSrcArray[index]),
       body,
     );
 
     console.log(chalk.green(`[SUCCESS] 이미지 업로드에 성공하였습니다.`));
 
-    return modifiedRes;
+    return modifiedBody;
   } catch (err) {
     console.log(chalk.red(`[ERROR] 이미지 업로드에 실패하였습니다.`));
     throw err;

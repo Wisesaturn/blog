@@ -19,10 +19,8 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ url, ...args });
 };
 
-export const action: ActionFunction = async ({ request, context }) => {
-  console.log(context);
-  return json({});
-};
+// action (refresh post callback)
+export const action: ActionFunction = async () => json({});
 
 // loader
 export async function loader({ request }: LoaderFunctionArgs) {
