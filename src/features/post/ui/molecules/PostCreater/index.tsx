@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Form } from '@remix-run/react';
 
 import useMiddleware from '$shared/hooks/useMiddleware';
 import Icons from '$shared/ui/atoms/icons';
@@ -12,19 +13,20 @@ export default function PostCreater() {
   const handleCreatePost = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
-    const post = await instance.post('create', { title: inputValue });
-    console.log(post);
+    await instance.post('create', { title: inputValue });
   };
 
   return (
     <>
       {env.NODE_ENV === 'development' && (
-        <div className="flex w-fit gap-2 justify-center items-center">
-          <Input ref={inputRef} placeholder="게시물 제목을 입력하세요" />
-          <button onClick={handleCreatePost}>
-            <Icons.Refresh type="border" size="large" />
-          </button>
-        </div>
+        <Form method="post" action="/posts">
+          <div className="flex w-fit gap-2 justify-center items-center">
+            <Input ref={inputRef} placeholder="게시물 제목을 입력하세요" />
+            <button type="submit" onClick={handleCreatePost}>
+              <Icons.Refresh type="border" size="large" />
+            </button>
+          </div>
+        </Form>
       )}
     </>
   );

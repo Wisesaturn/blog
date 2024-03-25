@@ -27,6 +27,6 @@ export default async function deleteStore(category: string, title: string) {
   if (res.items.length === 0) {
     console.log(chalk.yellow(`[WARN] ${category}/${title}에 저장된 파일이 없습니다.`));
   } else {
-    console.log(chalk.green(`[INFO] ${category}/${title}의 모든 파일 삭제가 완료되었습니다.`));
+    console.log(chalk.green(`[SUCCESS] ${category}/${title}의 모든 파일 삭제가 완료되었습니다.`));
   }
 }

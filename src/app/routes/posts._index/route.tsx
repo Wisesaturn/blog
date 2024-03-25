@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
+import { ActionFunction, LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import qs from 'qs';
 
@@ -17,6 +17,11 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 export const meta: MetaFunction = (args) => {
   const url = 'https://jaehan.blog/posts';
   return formatHeadTags({ url, ...args });
+};
+
+export const action: ActionFunction = async ({ request, context }) => {
+  console.log(context);
+  return json({});
 };
 
 // loader

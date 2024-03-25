@@ -22,6 +22,7 @@ export default async function updatePost(props: UpdatePostProps) {
     } else {
       await setDoc(docRef, data);
     }
+    console.log(chalk.green(`[SUCCESS] ${category}/${title}에 게시물을 업데이트하였습니다.`));
   } catch (err) {
     console.log(chalk.red(`[ERROR] ${category}/${title}에 해당하는 게시물이 없습니다`));
     throw err;

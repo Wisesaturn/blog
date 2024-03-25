@@ -27,7 +27,7 @@ export default function TOC(props: TOCProps) {
   return (
     <motion.aside className="w-full max-md:max-w-layout max-w-64 md:ml-10 pt-6">
       <div className="md:top-24 md:sticky max-md:block">
-        <h3 className="leading-relaxed pb-2">목차</h3>
+        <h4 className="leading-relaxed pb-2">목차</h4>
         <div className="overflow-y-auto max-h-96">
           {Heading.map((head, idx) => {
             const SELECTED_CLASS = `${selectId === head.id ? SELECTED_STYLE_CLASS : NON_SELECTED_STYLE_CLASS}`;

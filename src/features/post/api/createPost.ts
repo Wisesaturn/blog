@@ -20,6 +20,9 @@ import convertString from '$shared/lib/convertString';
 import { IPost } from '../types/post';
 import { DEFAULT_THUMBNAIL } from '../constant';
 import deleteStore from './deleteStore';
+import uploadImage from './firebase/uploadImage';
+import replaceBodyImages from './firebase/replaceBodyImages';
+import replaceBodyHeadings from '../lib/replaceBodyHeadings';
 
 const require = createRequire(import.meta.url);
 
@@ -118,6 +121,8 @@ export default async function createPost(title: string) {
           .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
           .process(mdString.parent);
 
+        // replace heading
+        const value = replaceBodyHeadings(result.value as string);
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
 
@@ -128,7 +133,7 @@ export default async function createPost(title: string) {
             selectedPost[0].properties.이름.title[0].plain_text
           }`,
           category: selectedPost[0].properties.category.select.name,
-          body: result.value as string,
+          body: value,
           description: selectedPost[0].properties.description.rich_text[0]?.plain_text || '',
           index: selectedPost[0].id,
           createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
@@ -147,29 +152,36 @@ export default async function createPost(title: string) {
         // ////////////////// data /////////////////// //
 
         // delete previous storage
-        deleteStore(postData.category, postData.title);
+        await deleteStore(postData.category, convertString(postData.plain_title, 'spaceToDash'));
 
-        // upload image on firsbase
+        // upload thumbnail on firsbase
         if (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) {
-          // const uploadThumbnail = await uploadImageToFirebase(
-          //   selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
-          //   postData.category,
-          //   postData.title,
-          // );
+          const customThumbnail = await uploadImage({
+            src: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
+            category: postData.category,
+            title: convertString(postData.plain_title, 'spaceToDash'),
+          });
+
+          postData.thumbnail = customThumbnail;
         }
 
-        // if (result.value) {
-        //   await convertImageNotionToFirebase(result.value, category, title);
-        // }
+        // upload image on firebase
+        if (value) {
+          await replaceBodyImages({
+            body: value,
+            category: postData.category,
+            title: convertString(postData.plain_title, 'spaceToDash'),
+          });
+        }
 
-        console.log(chalk.green(`[SCCCESS] ${title} 게시물을 업데이트하였습니다.`));
+        console.log(chalk.green(`[SCCCESS] ${title} 게시물을 생성하였습니다.`));
 
         return postData;
       });
 
     return post;
   } catch (err) {
-    console.log(chalk.red(`[ERROR] ${title} 게시물 생성을 실패했습니다`));
+    console.log(chalk.red(`[ERROR] ${title} 게시물 생성에 실패했습니다`));
     throw err;
   }
 }

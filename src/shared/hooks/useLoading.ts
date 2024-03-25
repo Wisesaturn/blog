@@ -1,4 +1,5 @@
 import { useNavigation } from '@remix-run/react';
+import { useEffect } from 'react';
 
 import useDebounce from './useDebounce';
 
@@ -7,6 +8,10 @@ import useDebounce from './useDebounce';
  */
 export default function useLoading(): boolean {
   const { state } = useNavigation();
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   const debouncedState = useDebounce(state, 500);
   return debouncedState === ('loading' || 'submitting');
 }

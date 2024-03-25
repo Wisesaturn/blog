@@ -145,15 +145,19 @@
 /** font */
 @layer base {
   h1 {
-    @apply text-3xl max-md:text-2xl font-bold break-keep;
+    @apply text-4xl max-md:text-3xl font-bold break-keep;
   }
 
   h2 {
-    @apply text-2xl max-md:text-xl font-semibold break-keep;
+    @apply text-3xl max-md:text-2xl font-bold break-keep;
   }
 
   h3 {
-    @apply text-xl max-md:text-base font-semibold break-keep;
+    @apply text-2xl max-md:text-xl font-semibold break-keep;
+  }
+
+  h4 {
+    @apply text-xl max-md:text-lg font-semibold break-keep;
   }
 
   p {
@@ -207,15 +211,15 @@
 /** markdown-body */
 @layer base {
   .markdown-body {
-    h1 {
+    h2 {
       @apply pt-16;
     }
 
-    h2 {
+    h3 {
       @apply pt-12;
     }
 
-    h3 {
+    h4 {
       position: relative;
       width: max-content;
       z-index: 2;
@@ -223,7 +227,7 @@
       @apply pt-8;
     }
 
-    h3:after {
+    h4:after {
       content: '';
       position: absolute;
       width: 100%;
