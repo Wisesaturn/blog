@@ -9,6 +9,23 @@ export default {
   assetsBuildDirectory: 'public/build',
   publicPath: '/build/',
   serverPlatform: 'node',
+  browserNodeBuiltinsPolyfill: {
+    modules: {
+      crypto: true,
+      path: true,
+      module: true,
+      util: true, // Provide a JSPM polyfill
+      stream: true, // Provide an empty polyfill
+      https: true, // Provide an empty polyfill
+      url: true, // Provide an empty polyfill
+      os: true, // Provide an empty polyfill
+      buffer: true, // Provide a JSPM polyfill
+      fs: 'empty', // Provide an empty polyfill
+    },
+    globals: {
+      Buffer: true,
+    },
+  },
   serverDependenciesToBundle: [
     'unified',
     'bail',

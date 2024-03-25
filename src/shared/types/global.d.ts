@@ -20,4 +20,5 @@ export interface ISitemap {
   loc: string;
   lastmod?: string;
   priority?: string;
+  changeFreq?: 'daily' | 'weekly' | 'monthly' | 'hourly' | 'yearly' | 'always' | 'never';
 }

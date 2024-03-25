@@ -1,4 +1,5 @@
 import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
+import chalk from 'chalk';
 
 import { db } from '$shared/middleware/firebase';
 
@@ -22,6 +23,7 @@ export default async function updatePost(props: UpdatePostProps) {
       await setDoc(docRef, data);
     }
   } catch (err) {
-    throw new Error();
+    console.log(chalk.red(`[ERROR] ${category}/${title}에 해당하는 게시물이 없습니다`));
+    throw err;
   }
 }

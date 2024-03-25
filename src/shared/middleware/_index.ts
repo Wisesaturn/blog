@@ -5,7 +5,9 @@ export interface IMiddleware {
 }
 
 export const DEFAULT_MIDDLEWARE_VALUE: IMiddleware = {
-  env: {},
+  env: {
+    NODE_ENV: 'production',
+  },
 };
 
 const MiddlewareContext = createContext<IMiddleware>(DEFAULT_MIDDLEWARE_VALUE);

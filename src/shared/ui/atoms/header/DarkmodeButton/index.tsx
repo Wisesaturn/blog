@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import useLayout from '$shared/hooks/useLayout';
-import { Darkmode } from '$shared/types/middleware';
+import { Darkmode } from '$shared/types/layout';
 import Icons from '$shared/ui/atoms/icons';
 import createDarkmodeCookie from '$shared/lib/createDarkmodeCookie';
 

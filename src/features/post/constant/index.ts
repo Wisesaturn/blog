@@ -15,3 +15,6 @@ export const ORDER_BY_TO_POST_FILTER: Record<PostsOrderBy, PostsFilter> = {
   asc: '오래된순',
   mostView: '조회수',
 };
+
+export const DEFAULT_THUMBNAIL =
+  'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png';

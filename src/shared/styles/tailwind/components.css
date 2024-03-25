@@ -49,7 +49,7 @@
   }
 
   .icons-size-large {
-    @apply md:w-[42px] md:h-[42px] w-[32px] h-[32px];
+    @apply md:p-1.5 p-2 md:w-[42px] md:h-[42px] w-[38px] h-[38px];
   }
 
   .icons-size-medium {

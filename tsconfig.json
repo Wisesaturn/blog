@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "module": "ES2022",
     "jsxImportSource": "@emotion/react",
     "moduleResolution": "node",
     "resolveJsonModule": true,

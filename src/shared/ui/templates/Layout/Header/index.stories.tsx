@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router';
 
 import { LayoutProvider, DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
-import { IHeader } from '$shared/types/middleware';
+import { IHeader } from '$shared/types/layout';
 
 import Header from './index';
 

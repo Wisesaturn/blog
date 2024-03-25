@@ -1,6 +1,6 @@
 import { createContext, useCallback, useState } from 'react';
 
-import { Darkmode, IHeader } from '$shared/types/middleware';
+import { Darkmode, IHeader } from '$shared/types/layout';
 
 export interface ILayout {
   header: IHeader;

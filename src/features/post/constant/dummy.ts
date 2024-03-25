@@ -1,4 +1,5 @@
-import { IPost, ITag } from '../types/post';
+import { IPost } from '../types/post';
+import { Tag } from '../types/article';
 
 const DUMMY_POSTS: IPost[] = [
   {
@@ -21,7 +22,7 @@ const DUMMY_POSTS: IPost[] = [
         id: '2',
         name: 'Tag 2',
       },
-    ] as ITag[],
+    ] as Tag[],
     thumbnail: 'https://example.com/thumbnail1.jpg',
     title: 'Dummy Post 1',
     views: 100,
@@ -41,7 +42,7 @@ const DUMMY_POSTS: IPost[] = [
         id: '3',
         name: 'Tag 3',
       },
-    ] as ITag[],
+    ] as Tag[],
     thumbnail: 'https://example.com/thumbnail2.jpg',
     title: 'Dummy Post 2',
     views: 150,
