@@ -25,6 +25,8 @@ import replaceBodyImages from './firebase/replaceBodyImages';
 import replaceBodyHeadings from '../lib/replaceBodyHeadings';
 
 const require = createRequire(import.meta.url);
+// const { Client } = createRequire(import.meta.url)('../node_modules/@notionhq/client');
+// const { NotionToMarkdown } = createRequire(import.meta.url)('../node_modules/notion-to-md');
 
 const { Client } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');

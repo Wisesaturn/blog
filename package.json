@@ -1,7 +1,7 @@
 {
   "name": "jaehan-blog",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": true,
   "type": "module",
   "version": "2.0.0",
   "scripts": {
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
+    "@notionhq/client": "^2.2.10",
     "@remix-run/css-bundle": "^2.8.0",
     "@remix-run/node": "^2.8.0",
     "@remix-run/react": "^2.8.0",
@@ -24,6 +25,7 @@
     "@vercel/node": "^2.15.8",
     "firebase": "^10.7.2",
     "isbot": "^4.1.0",
+    "notion-to-md": "^3.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -32,7 +34,6 @@
     "@chromatic-com/storybook": "^1.2.18",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
-    "@notionhq/client": "^2.2.10",
     "@remix-run/dev": "^2.8.0",
     "@storybook/addon-essentials": "^8.0.0",
     "@storybook/addon-interactions": "^8.0.0",
@@ -54,6 +55,7 @@
     "@vercel/analytics": "^1.2.2",
     "autoprefixer": "^10.4.14",
     "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.0.0",
@@ -68,7 +70,6 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "framer-motion": "^11.0.14",
     "node-sass": "^9.0.0",
-    "notion-to-md": "^3.1.1",
     "postcss": "^8.4.27",
     "prettier": "^3.0.1",
     "rehype-mathjax": "^4.0.3",
