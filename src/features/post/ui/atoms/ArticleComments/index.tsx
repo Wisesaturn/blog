@@ -14,7 +14,7 @@ export default function ArticleComments(props: GlobalAnimation) {
         category="Posts Comments"
         categoryId="DIC_kwDOHa92pM4CeIrA"
         mapping="title"
-        term="Welcome to @giscus/react component!"
+        term={`${layout.header.title || 'jaehan.blog'} comments`}
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
