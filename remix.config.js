@@ -11,6 +11,7 @@ export default {
   serverPlatform: 'node',
   browserNodeBuiltinsPolyfill: {
     modules: {
+      process: true,
       crypto: true,
       path: true,
       module: true,
@@ -22,6 +23,12 @@ export default {
       buffer: true, // Provide a JSPM polyfill
       fs: 'empty', // Provide an empty polyfill
     },
+    globals: {
+      process: true,
+      Buffer: true,
+    },
+  },
+  serverNodeBuiltinsPolyfill: {
     globals: {
       Buffer: true,
     },
