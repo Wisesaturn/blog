@@ -14,16 +14,13 @@ interface PostListProps extends GlobalAnimation {
 
 export default function PostList(props: PostListProps) {
   const { animation, posts } = props;
-  const { searchParams } = useUrlParamsUpdater();
-
-  const sortedPosts = sortPosts(posts, searchParams.get('orderby') as PostsOrderBy);
 
   return (
     <div className="relative pt-10 top-0">
       <PostFilter animation={{ variants: animation?.variants }} />
       <motion.div className="pt-12 flex gap-2 flex-col" variants={animation?.variants}>
-        {sortedPosts.length > 0 && sortedPosts.map((post, idx) => <PostRow key={idx} {...post} />)}
-        {sortedPosts.length === 0 && <PostEmptyRow />}
+        {posts.length > 0 && posts.map((post) => <PostRow key={post.index} {...post} />)}
+        {posts.length === 0 && <PostEmptyRow />}
       </motion.div>
     </div>
   );

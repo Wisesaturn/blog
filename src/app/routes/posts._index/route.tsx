@@ -7,6 +7,8 @@ import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import getPosts from '$features/post/api/getPosts';
+import { PostsOrderBy } from '$features/post/types/post';
+import sortPosts from '$features/post/lib/sortPosts';
 
 import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
@@ -30,8 +32,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
     categories: params.category ? String(params.category).split(',') : [],
   };
   const posts = await getPosts(searchParams);
+  const sortedPosts = sortPosts(posts, params.orderby as PostsOrderBy);
 
-  return json({ posts });
+  return json({ posts: sortedPosts });
 }
 
 // page
