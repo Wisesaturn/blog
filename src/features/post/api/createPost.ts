@@ -33,7 +33,7 @@ export default async function createPost(title: string) {
   try {
     const post: IPost = await notion.databases
       .query({
-        database_id: process.env.NOTION_DATABASE_KEY,
+        database_id: process.env.NOTION_DATABASE_POSTS_KEY,
       })
       .then(async (data: any) => {
         const selectedPost = data.results.filter(
