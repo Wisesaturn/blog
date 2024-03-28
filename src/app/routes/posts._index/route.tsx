@@ -15,8 +15,8 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {
-  const url = 'https://jaehan.blog/posts';
-  return formatHeadTags({ url, ...args });
+  const urlPrefix = 'posts';
+  return formatHeadTags({ urlPrefix, ...args });
 };
 
 // action (refresh post callback)

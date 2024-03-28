@@ -5,7 +5,6 @@ import { Form, useNavigate } from '@remix-run/react';
 
 import { IPost } from '$features/post/types/post';
 
-import useMiddleware from '$shared/hooks/useMiddleware';
 import Icons from '$shared/ui/atoms/icons';
 import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';
@@ -13,7 +12,6 @@ import convertString from '$shared/lib/convertString';
 import useLayout from '$shared/hooks/useLayout';
 
 export default function PostCreater() {
-  const { env } = useMiddleware();
   const { updateLayout } = useLayout();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -33,7 +31,7 @@ export default function PostCreater() {
 
   return (
     <>
-      {env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === 'development' && (
         <Form method="post" action="/posts">
           <div className="flex w-fit gap-2 justify-center items-center">
             <Input ref={inputRef} placeholder="게시물 제목을 입력하세요" />

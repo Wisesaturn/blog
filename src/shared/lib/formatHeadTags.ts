@@ -7,7 +7,6 @@ import { CATEGORY_DATA } from '$shared/constant/category';
 interface HeadTagFormat extends ServerRuntimeMetaArgs {
   title?: string;
   description?: string;
-  url?: string;
   thumbnail?: string;
   urlPrefix?: string;
 }
@@ -22,7 +21,7 @@ function isPost(obj: unknown): obj is { post: IPost } {
  * @returns
  */
 export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaDescriptor[] {
-  const { title, description, url, urlPrefix, thumbnail, ...args } = props;
+  const { title, description, urlPrefix, thumbnail, ...args } = props;
   const { data, params } = args;
 
   // calculate data
@@ -30,10 +29,10 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   const convertTitle = params.title ? params.title : title;
   const convertDescription =
     isPost(data) && data.post.description && data.post.tags
-      ? `${data.post.description} | ${data.post.tags.map((tag) => tag.name).join(' ')}`
+      ? `${data.post.description} | ${data.post.tags.map((tag) => tag).join(' ')}`
       : description;
   const convertThumbnail = isPost(data) && data.post.thumbnail ? data.post.thumbnail : thumbnail;
-  let convertUrl = url || HOST_URL;
+  let convertUrl = HOST_URL;
 
   if (params.category) {
     if (params.title) {
@@ -45,13 +44,13 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
 
   // metadata object
   const metadata = {
-    title: convertTitle || '📚 사툰사툰',
+    title: convertTitle || '사툰사툰',
     description:
       convertDescription ||
       `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | Error ${CATEGORY_DATA.map(
         (category) => category.name,
       ).join(' ')}`,
-    url: convertUrl || HOST_URL,
+    url: convertUrl,
     thumbnail:
       convertThumbnail ||
       'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',

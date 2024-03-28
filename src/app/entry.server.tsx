@@ -98,7 +98,7 @@ function handleBrowserRequest(
               // Manipulate and modify the data
               const modifiedChunk = chunk
                 .toString()
-                .replace('<html', `<html color-theme="${darkmode}"`);
+                .replace('<html>', `<html lang="ko" color-theme="${darkmode}>"`);
               controller.enqueue(modifiedChunk);
             },
           });

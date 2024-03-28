@@ -41,13 +41,6 @@ export const loader: LoaderFunction = ({ request }) => {
     layout: {
       darkmode,
     },
-    middleware: {
-      env: {
-        NOTION_KEY: process.env.NOTION_KEY,
-        NOTION_DATABASE_KEY: process.env.NOTION_DATABASE_KEY,
-        NODE_ENV: process.env.NODE_ENV,
-      },
-    },
   });
 };
 

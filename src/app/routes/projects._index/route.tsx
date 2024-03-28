@@ -7,8 +7,8 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {
-  const url = 'https://jaehan.blog/projects';
-  return formatHeadTags({ url, ...args });
+  const urlPrefix = 'projects';
+  return formatHeadTags({ urlPrefix, ...args });
 };
 
 export default function ProjectsPage() {

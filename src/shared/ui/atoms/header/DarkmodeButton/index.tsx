@@ -21,9 +21,14 @@ export default function DarkmodeButton() {
     const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light';
-    updateLayout({ darkmode: isBrowserDarkTheme });
-    createDarkmodeCookie(isBrowserDarkTheme);
-    document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
+    if (isBrowserDarkTheme === 'dark') {
+      updateLayout({ darkmode: isBrowserDarkTheme });
+      createDarkmodeCookie(isBrowserDarkTheme);
+      document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
+    } else {
+      createDarkmodeCookie(layout.darkmode);
+      document.documentElement.setAttribute('color-theme', layout.darkmode);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

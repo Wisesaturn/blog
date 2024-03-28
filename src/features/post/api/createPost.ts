@@ -48,7 +48,6 @@ export default async function createPost(title: string) {
         }
 
         const mdString = await getMarkdown(selectedPost[0].id);
-        console.log(mdString);
 
         const result = await unified()
           .use(remarkParse) // markdown을 mdast로 변환
