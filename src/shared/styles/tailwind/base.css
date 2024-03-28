@@ -165,7 +165,7 @@
   }
 
   span {
-    @apply text-xs break-keep;
+    @apply max-md:text-xs text-sm break-keep;
   }
 }
 
@@ -246,8 +246,28 @@
 
     a {
       text-decoration-line: underline;
+      position: relative;
 
       @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700 break-keep;
+    }
+
+    a:after {
+      --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5'/%3E%3C/svg%3E");
+      content: '';
+      position: absolute;
+      width: 1.2rem;
+      height: 1.2rem;
+      display: inline-block;
+      background-color: currentColor;
+      -webkit-mask-image: var(--svg);
+      mask-image: var(--svg);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      right: -1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     p {
@@ -264,11 +284,11 @@
     }
 
     details {
-      @apply pb-4;
+      @apply pt-4 layout-text;
     }
 
     summary {
-      @apply hover:cursor-pointer;
+      @apply hover:cursor-pointer layout-text;
 
       ~ * {
         @apply pt-0 pl-4;
@@ -280,7 +300,7 @@
     }
 
     ul {
-      @apply pt-8;
+      @apply pt-8 layout-text;
 
       list-style-type: disc;
       padding-left: 1rem;
@@ -300,7 +320,7 @@
     }
 
     ol {
-      @apply pt-8;
+      @apply pt-8 layout-text;
 
       list-style-type: decimal;
       padding-left: 1rem;
@@ -312,6 +332,23 @@
         &::marker {
           color: var(--gray-darker);
         }
+      }
+    }
+
+    table {
+      @apply pt-8 layout-text;
+
+      thead {
+        @apply bg-gray-200 dark:bg-[#111] font-bold;
+      }
+
+      tbody {
+        @apply font-normal;
+      }
+
+      th,
+      td {
+        @apply px-6 py-2.5 border-[1px];
       }
     }
 
@@ -361,6 +398,14 @@
     /* image caption */
     div[class='image-caption'] {
       @apply text-sm max-md:text-xs py-1 text-gray-500 dark:text-gray-300 font-light mx-auto w-full text-center;
+    }
+
+    /* code block title */
+    h5[class='code-title'] {
+      @apply text-sm max-md:text-xs no-underline bg-gray-300 dark:bg-[#111] w-full py-2 px-4 translate-y-8 rounded-t-md;
+      + pre {
+        @apply rounded-t-none;
+      }
     }
   }
 }

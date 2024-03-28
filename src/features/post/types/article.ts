@@ -1,16 +1,16 @@
 /**
  * <h> interface
  */
-export interface Heading {
+export interface IHeading {
   level: number;
   text: string;
   id: string;
 }
 
 /**
- * post tag interface
+ * notion tag interface
  */
-export interface Tag {
+export interface INotionTag {
   color: string;
   id: string;
   name: string;

@@ -1,5 +1,4 @@
 import { POST_SORT_FILTER, POST_SORT_ORDER_BY } from '../constant';
-import { Tag } from './article';
 
 export interface IPost {
   body: string;
@@ -10,7 +9,7 @@ export interface IPost {
   lastmod: string;
   last_editedAt: Date | string;
   plain_title: string;
-  tags: Tag[];
+  tags: string[];
   thumbnail: string;
   title: string;
   views: number;

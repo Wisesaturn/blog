@@ -28,6 +28,8 @@ export default async function getPosts(props: GetPostsProps) {
             collection(db, category.link),
             where('plain_title', '>=', keyword),
             where('plain_title', '<=', `${keyword}\uf8ff`),
+            // TODO : 추후에 모든 게시물 tag가 바뀌면 추가
+            // where('tags', 'array-contains', keyword),
           )
         : query(collection(db, category.link));
 

@@ -11,5 +11,9 @@ export default function useCodePen() {
     script.async = true;
     script.src = codepenScript;
     document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 }

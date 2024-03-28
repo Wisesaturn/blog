@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
-import path from 'path';
-import { createRequire } from 'module';
 
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
@@ -16,77 +14,18 @@ import rehypeSlug from 'rehype-slug';
 import chalk from 'chalk';
 
 import convertString from '$shared/lib/convertString';
+import notion from '$shared/middleware/notion';
 
 import { IPost } from '../types/post';
 import { DEFAULT_THUMBNAIL } from '../constant';
 import deleteStore from './deleteStore';
 import uploadImage from './firebase/uploadImage';
 import replaceBodyImages from './firebase/replaceBodyImages';
-import replaceBodyHeadings from '../lib/replaceBodyHeadings';
-
-const { Client } = createRequire(import.meta.url)(
-  path.join(process.cwd(), 'node_modules/@notionhq/client'),
-);
-const { NotionToMarkdown } = createRequire(import.meta.url)(
-  path.join(process.cwd(), 'node_modules/notion-to-md'),
-);
-
-const notion = new Client({
-  auth: process.env.NOTION_KEY,
-});
-
-const n2m = new NotionToMarkdown({ notionClient: notion, convertImagesToBase64: true });
-
-// ---------- embed settings (codepen)
-n2m.setCustomTransformer('embed', async (block: any) => {
-  const { embed } = block;
-  if (!embed?.url) return '';
-  if (embed.url.includes('codepen')) {
-    const dataSlug = embed.url.split('/')[5].split('?')[0];
-    return `<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash=${dataSlug} data-user="Wisesaturn"
-    style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-    </p>`;
-  }
-
-  return '';
-});
-
-// ---------- image settings
-n2m.setCustomTransformer('image', async (block: any) => {
-  const { image } = block;
-  const caption =
-    image.caption
-      .map((cap: any) => {
-        if (cap.href !== null) {
-          return `<a href=${cap.href}>${cap.plain_text}</a>`;
-        }
-
-        return `${cap.plain_text}`;
-      })
-      .join('') || '';
-  const plainCaption = image.caption
-    .map((cap: any) => cap.plain_text)
-    .join('')
-    .replace(/&nbsp;/g, ' ');
-
-  if (image.type === 'external') {
-    const { url } = image.external;
-    const alt = plainCaption || 'image';
-    const plainAlt = alt.replace(/&nbsp;/g, ' ');
-    return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
-  <div class="image-caption">${caption}</div>`;
-  }
-
-  const { url = '' } = image.file;
-  const alt = plainCaption || decodeURIComponent(path.basename(url)).split('?').shift();
-  const plainAlt = alt.replace(/&nbsp;/g, ' ');
-
-  return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
-  <div class="image-caption">${caption}</div>`;
-});
+import getMarkdown from '../lib/getMarkdown';
+import { INotionTag } from '../types/article';
 
 /**
- * @summary Notion에서 작성한 포스트를 'notion-to-md'를 활용하여 markdown 문법으로 변환하는 함수
+ * @summary Notion에서 작성한 포스트를 마크다운으로 변환하여 게시물을 생성하는 함수
  * @param title
  * @returns
  */
@@ -108,8 +47,8 @@ export default async function createPost(title: string) {
           throw new Error(`${title}를 찾을 수 없습니다`);
         }
 
-        const mdblocks = await n2m.pageToMarkdown(selectedPost[0].id);
-        const mdString = n2m.toMarkdownString(mdblocks);
+        const mdString = await getMarkdown(selectedPost[0].id);
+        console.log(mdString);
 
         const result = await unified()
           .use(remarkParse) // markdown을 mdast로 변환
@@ -121,11 +60,9 @@ export default async function createPost(title: string) {
           .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
           .use(rehypeMathjax) // math 구문 강조용
           .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
-          .process(mdString.parent);
+          .process(mdString);
 
-        // replace heading
-        const value = replaceBodyHeadings(result.value as string);
-
+        const value = result.value as string;
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
 
@@ -150,7 +87,9 @@ export default async function createPost(title: string) {
           }).format(lastEditedTime),
           thumbnail: DEFAULT_THUMBNAIL,
           views: 0,
-          tags: selectedPost[0].properties.tags.multi_select,
+          tags: selectedPost[0].properties.tags.multi_select.map(
+            (keyword: INotionTag) => keyword.name,
+          ),
         };
         // ////////////////// data /////////////////// //
 
@@ -188,6 +127,7 @@ export default async function createPost(title: string) {
     return post;
   } catch (err) {
     console.log(chalk.red(`[ERROR] ${title} 게시물 생성에 실패했습니다`));
+    console.log(chalk.red(`[ERROR]`, err));
     throw err;
   }
 }

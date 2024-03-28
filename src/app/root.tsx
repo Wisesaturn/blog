@@ -15,7 +15,6 @@ import tossface from '$shared/styles/etc/tossface.css';
 import globalStyles from '$shared/styles/global.css';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
-import useLoading from '$shared/hooks/useLoading';
 import useInitialScript from '$shared/hooks/useInitialScript';
 import Layout from '$shared/ui/templates/Layout';
 import getCookie from '$shared/lib/getCookieOnHeader';
