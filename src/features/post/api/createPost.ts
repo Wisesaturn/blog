@@ -47,21 +47,7 @@ export default async function createPost(title: string) {
           throw new Error(`${title}를 찾을 수 없습니다`);
         }
 
-        const mdString = await getMarkdown(selectedPost[0].id);
-
-        const result = await unified()
-          .use(remarkParse) // markdown을 mdast로 변환
-          .use(remarkGfm) // remark가 GFM도 지원 가능하도록
-          .use(remarkBreaks) // remark가 line-break도 지원 가능하도록 (마크다운 문법 줄바꿈이 아닌 자연스럽게)
-          .use(remarkMath) // math 기호 구분
-          .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
-          .use(rehypeSlug) // Header에 Id 값 붙이기
-          .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
-          .use(rehypeMathjax) // math 구문 강조용
-          .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
-          .process(mdString);
-
-        const value = result.value as string;
+        // post date format
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
 
@@ -72,7 +58,7 @@ export default async function createPost(title: string) {
             selectedPost[0].properties.이름.title[0].plain_text
           }`,
           category: selectedPost[0].properties.category.select.name,
-          body: value,
+          body: '',
           description: selectedPost[0].properties.description.rich_text[0]?.plain_text || '',
           index: selectedPost[0].id,
           createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
@@ -92,10 +78,28 @@ export default async function createPost(title: string) {
         };
         // ////////////////// data /////////////////// //
 
-        // delete previous storage
+        // 1. delete previous storage
         await deleteStore(postData.category, convertString(postData.plain_title, 'spaceToDash'));
 
-        // upload thumbnail on firsbase
+        // 2. get markdown
+        const mdString = await getMarkdown(selectedPost[0].id);
+
+        const result = await unified()
+          .use(remarkParse) // markdown을 mdast로 변환
+          .use(remarkGfm) // remark가 GFM도 지원 가능하도록
+          .use(remarkBreaks) // remark가 line-break도 지원 가능하도록 (마크다운 문법 줄바꿈이 아닌 자연스럽게)
+          .use(remarkMath) // math 기호 구분
+          .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
+          .use(rehypeSlug) // Header에 Id 값 붙이기
+          .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
+          .use(rehypeMathjax) // math 구문 강조용
+          .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
+          .process(mdString);
+
+        const value = result.value as string;
+        postData.body = value;
+
+        // 3. upload thumbnail on firsbase
         if (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) {
           const customThumbnail = await uploadImage({
             src: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
@@ -108,7 +112,7 @@ export default async function createPost(title: string) {
           console.log(chalk.gray(`[INFO] 기본 썸네일 설정`));
         }
 
-        // upload image on firebase
+        // 4. upload image on firebase
         if (value) {
           const replaceBody = await replaceBodyImages({
             body: value,

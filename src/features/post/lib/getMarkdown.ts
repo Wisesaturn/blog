@@ -8,9 +8,16 @@ const { NotionToMarkdown } = createRequire(import.meta.url)(
   path.join(process.cwd(), 'node_modules/notion-to-md'),
 );
 
-const n2m = new NotionToMarkdown({ notionClient: notion, convertImagesToBase64: true });
+const n2m = new NotionToMarkdown({
+  notionClient: notion,
+  config: {
+    convertImagesToBase64: true,
+  },
+});
 
-// ---------- embed settings (codepen)
+/**
+ * embed settings (codepen)
+ */
 n2m.setCustomTransformer('embed', async (block: any) => {
   const { embed } = block;
   if (!embed?.url) return '';
@@ -23,8 +30,9 @@ n2m.setCustomTransformer('embed', async (block: any) => {
 
   return '';
 });
-
-// ---------- image settings
+/**
+ * image settings
+ */
 n2m.setCustomTransformer('image', async (block: any) => {
   const { image } = block;
   const caption =
@@ -58,7 +66,9 @@ n2m.setCustomTransformer('image', async (block: any) => {
   <div class="image-caption">${caption}</div>`;
 });
 
-// ---------- heading settings
+/**
+ * heading settings
+ */
 n2m.setCustomTransformer('heading_1', async (block: any) => {
   const text = block.heading_1.rich_text[0].plain_text;
   return `## ${text}`;
@@ -74,7 +84,9 @@ n2m.setCustomTransformer('heading_3', async (block: any) => {
   return `#### ${text}`;
 });
 
-// ---------- code block settings
+/**
+ * code block settings
+ */
 n2m.setCustomTransformer('code', async (block: any) => {
   const { language } = block.code;
   const title = block.code.caption ? block.code.caption[0]?.plain_text : '';
