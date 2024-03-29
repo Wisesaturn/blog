@@ -18,3 +18,5 @@ export const CATEGORY_DATA: ICategory[] = PRODUCTION_CATEGORY_DATA.concat(
       ]
     : [],
 );
+
+export const PROJECTS_DATA: ICategory[] = [{ name: '유클러버스', link: '유클러버스' }];

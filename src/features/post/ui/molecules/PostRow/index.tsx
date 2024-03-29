@@ -5,7 +5,7 @@ import { IPost } from '$features/post/types/post';
 import Icons from '$shared/ui/atoms/icons';
 import convertString from '$shared/lib/convertString';
 
-export default function PostRow(props: IPost) {
+export default function PostRow(props: Omit<IPost, 'body'>) {
   // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
   const { createdAt, title, description, category, views, plain_title } = props;
 

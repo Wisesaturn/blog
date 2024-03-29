@@ -7,7 +7,7 @@ import PostRow from '$features/post/ui/molecules/PostRow';
 import PostEmptyRow from '../../atoms/PostEmptyRow';
 
 interface PostListProps extends GlobalAnimation {
-  posts: IPost[];
+  posts: Omit<IPost, 'body'>[];
 }
 
 export default function PostList(props: PostListProps) {

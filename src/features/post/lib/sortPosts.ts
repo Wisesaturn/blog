@@ -8,7 +8,7 @@ import { IPost, PostsOrderBy } from '../types/post';
  * @param orderBy
  * @returns
  */
-export default function sortPosts(posts: IPost[], orderBy: PostsOrderBy) {
+export default function sortPosts(posts: Omit<IPost, 'body'>[], orderBy: PostsOrderBy) {
   if (orderBy === 'asc') {
     posts.sort((a: DocumentData, b: DocumentData) => {
       const dateA = new Date(a.createdAt);

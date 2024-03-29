@@ -6,12 +6,12 @@ import Logger from '$shared/helper/logger';
 
 import { IPost } from '../types/post';
 
-interface GetPostProps {
+interface Props {
   category: string;
   title: string;
 }
 
-export default async function getPost(props: GetPostProps) {
+export default async function getPost(props: Props) {
   const { category, title } = props;
   const convertTitle = convertString(title, 'spaceToDash');
   const docRef = doc(db, category, convertTitle);

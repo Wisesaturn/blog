@@ -5,12 +5,12 @@ import { IPost } from '$features/post/types/post';
 import { db } from '$shared/middleware/firebase';
 import { CATEGORY_DATA } from '$shared/constant/category';
 
-interface GetPostsProps {
+interface Props {
   keyword: string;
   categories: string[];
 }
 
-export default async function getPosts(props: GetPostsProps) {
+export default async function getPosts(props: Props) {
   const { keyword, categories } = props;
 
   let SEARCH_CATEGORY = CATEGORY_DATA;

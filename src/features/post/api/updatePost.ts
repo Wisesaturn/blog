@@ -5,13 +5,13 @@ import Logger from '$shared/helper/logger';
 
 import { IPost } from '../types/post';
 
-interface UpdatePostProps {
+interface Props {
   category: string;
   title: string;
   data: Partial<IPost>;
 }
 
-export default async function updatePost(props: UpdatePostProps) {
+export default async function updatePost(props: Props) {
   const { category, title, data } = props;
   try {
     const docRef = doc(db, category, title);

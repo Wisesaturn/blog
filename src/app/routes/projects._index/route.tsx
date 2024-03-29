@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { MetaFunction } from '@remix-run/node';
+import { MetaFunction, json } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 
 import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
+import getProjects from '$features/project/api/getProjects';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import Title from '$shared/ui/atoms/Title';
@@ -13,7 +15,16 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ urlPrefix, ...args });
 };
 
+// loader
+export async function loader() {
+  const projects = await getProjects();
+
+  return json({ projects });
+}
+
 export default function ProjectsPage() {
+  const { projects } = useLoaderData<typeof loader>();
+
   return (
     <motion.main
       initial="hidden"
