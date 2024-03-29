@@ -6,12 +6,3 @@ export interface IHeading {
   text: string;
   id: string;
 }
-
-/**
- * notion tag interface
- */
-export interface INotionTag {
-  color: string;
-  id: string;
-  name: string;
-}

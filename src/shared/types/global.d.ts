@@ -22,3 +22,12 @@ export interface ISitemap {
   priority?: string;
   changeFreq?: 'daily' | 'weekly' | 'monthly' | 'hourly' | 'yearly' | 'always' | 'never';
 }
+
+/**
+ * @summary firestore interface
+ */
+export interface IFireStore {
+  collection: string;
+  category: string;
+  title: string;
+}

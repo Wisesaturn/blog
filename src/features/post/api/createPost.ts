@@ -1,19 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { unified } from 'unified';
-import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
-import remarkMath from 'remark-math';
-import rehypePrism from 'rehype-prism-plus';
-import rehypeMathjax from 'rehype-mathjax';
-import rehypeSlug from 'rehype-slug';
-
 import convertString from '$shared/lib/convertString';
 import notion from '$shared/middleware/notion';
 import Logger from '$shared/helper/logger';
+import { INotionList, NotionPage } from '$shared/types/notion';
 
 import { IPost } from '../types/post';
 import { DEFAULT_THUMBNAIL } from '../constant';
@@ -21,7 +9,7 @@ import deleteStore from './deleteStore';
 import uploadImage from './firebase/uploadImage';
 import replaceBodyImages from './firebase/replaceBodyImages';
 import getMarkdown from '../lib/getMarkdown';
-import { INotionTag } from '../types/article';
+import getHtml from '../lib/getHtml';
 
 /**
  * @summary Notion에서 작성한 포스트를 마크다운으로 변환하여 게시물을 생성하는 함수
@@ -34,11 +22,11 @@ export default async function createPost(title: string) {
       .query({
         database_id: process.env.NOTION_DATABASE_POSTS_KEY,
       })
-      .then(async (data: any) => {
+      .then(async (data: INotionList<'post'>) => {
         const selectedPost = data.results.filter(
-          (e: any) =>
-            e.object === 'page' &&
-            e.properties.이름.title[0].plain_text === convertString(title, 'dashToSpace'),
+          (page: NotionPage<'post'>) =>
+            page.object === 'page' &&
+            page.properties.이름.title[0].plain_text === convertString(title, 'dashToSpace'),
         );
 
         if (selectedPost.length === 0) {
@@ -46,6 +34,8 @@ export default async function createPost(title: string) {
         } else {
           Logger.log(`${selectedPost[0].id}/${title}를 찾았습니다`);
         }
+
+        console.log(selectedPost[0]);
 
         // post date format
         const createdTime = new Date(selectedPost[0].created_time);
@@ -72,37 +62,29 @@ export default async function createPost(title: string) {
           }).format(lastEditedTime),
           thumbnail: DEFAULT_THUMBNAIL,
           views: 0,
-          tags: selectedPost[0].properties.tags.multi_select.map(
-            (keyword: INotionTag) => keyword.name,
-          ),
+          tags: selectedPost[0].properties.tags.multi_select.map((keyword) => keyword.name),
         };
         // ////////////////// data /////////////////// //
 
         // 1. delete previous storage
-        await deleteStore(postData.category, convertString(postData.plain_title, 'spaceToDash'));
+        await deleteStore({
+          collection: 'post',
+          category: postData.category,
+          title: convertString(postData.plain_title, 'spaceToDash'),
+        });
 
         // 2. get markdown
         const mdString = await getMarkdown(selectedPost[0].id);
 
-        const result = await unified()
-          .use(remarkParse) // markdown을 mdast로 변환
-          .use(remarkGfm) // remark가 GFM도 지원 가능하도록
-          .use(remarkBreaks) // remark가 line-break도 지원 가능하도록 (마크다운 문법 줄바꿈이 아닌 자연스럽게)
-          .use(remarkMath) // math 기호 구분
-          .use(remarkRehype, { allowDangerousHtml: true }) // mdast를 hast로 변환
-          .use(rehypeSlug) // Header에 Id 값 붙이기
-          .use(rehypeStringify, { allowDangerousHtml: true }) // hast를 html 변환
-          .use(rehypeMathjax) // math 구문 강조용
-          .use(rehypePrism) // code 강조용 (Highlight에서 Prism으로 교체)
-          .process(mdString);
-
-        const value = result.value as string;
-        postData.body = value;
+        // 3. get html tag
+        const htmlBody = await getHtml(mdString);
+        postData.body = htmlBody;
 
         // 3. upload thumbnail on firsbase
         if (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) {
           const customThumbnail = await uploadImage({
-            src: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url,
+            collection: 'post',
+            src: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url || '',
             category: postData.category,
             title: convertString(postData.plain_title, 'spaceToDash'),
           });
@@ -113,9 +95,10 @@ export default async function createPost(title: string) {
         }
 
         // 4. upload image on firebase
-        if (value) {
+        if (postData.body) {
           const replaceBody = await replaceBodyImages({
-            body: value,
+            collection: 'post',
+            body: postData.body,
             category: postData.category,
             title: convertString(postData.plain_title, 'spaceToDash'),
           });

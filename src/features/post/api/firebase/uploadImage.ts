@@ -2,11 +2,10 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { storage } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
+import { IFireStore } from '$shared/types/global';
 
-interface Props {
+interface Props extends IFireStore {
   src: string;
-  category: string;
-  title: string;
 }
 
 /**
@@ -15,7 +14,7 @@ interface Props {
  * @returns
  */
 export default async function uploadImage(props: Props): Promise<string> {
-  const { src, category, title } = props;
+  const { src, collection, category, title } = props;
   if (!src) {
     const WrongSrcError = new Error('이미지 주소가 올바르지 않습니다.');
     Logger.error(WrongSrcError);
@@ -41,10 +40,13 @@ export default async function uploadImage(props: Props): Promise<string> {
   };
   const hashTime = new Date().getTime();
 
-  const postRef = ref(storage, `post/${category}/${title}/${filename}-${hashTime}.${ext}`);
-  const ImgUrl = await uploadBytes(postRef, data, metadata).then(async () => {
+  const collectionRef = ref(
+    storage,
+    `${collection}/${category}/${title}/${filename}-${hashTime}.${ext}`,
+  );
+  const ImgUrl = await uploadBytes(collectionRef, data, metadata).then(async () => {
     Logger.update(`${filename}-${hashTime}.${ext}`);
-    const url = await getDownloadURL(postRef);
+    const url = await getDownloadURL(collectionRef);
     return url;
   });
 

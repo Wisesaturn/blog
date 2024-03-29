@@ -1,12 +1,11 @@
 import Logger from '$shared/helper/logger';
+import { IFireStore } from '$shared/types/global';
 
 import uploadImage from './uploadImage';
 import filterNotionUrl from '../../lib/filterNotionUrl';
 
-interface Props {
+interface Props extends IFireStore {
   body: string;
-  category: string;
-  title: string;
 }
 
 /**
@@ -15,7 +14,7 @@ interface Props {
  * @returns
  */
 export default async function replaceBodyImages(props: Props): Promise<string> {
-  const { body, category, title } = props;
+  const { body, collection, category, title } = props;
   // find base url
   const imgSrcArray = filterNotionUrl(body);
 
@@ -28,6 +27,7 @@ export default async function replaceBodyImages(props: Props): Promise<string> {
     const convertImgSrcArray = await Promise.all(
       imgSrcArray.map(async (src) => {
         const convertSrc = await uploadImage({
+          collection,
           src,
           category,
           title,
