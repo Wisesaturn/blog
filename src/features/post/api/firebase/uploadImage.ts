@@ -1,7 +1,7 @@
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import chalk from 'chalk';
 
 import { storage } from '$shared/middleware/firebase';
+import Logger from '$shared/helper/logger';
 
 interface Props {
   src: string;
@@ -17,8 +17,9 @@ interface Props {
 export default async function uploadImage(props: Props): Promise<string> {
   const { src, category, title } = props;
   if (!src) {
-    console.log(chalk.red(`[ERROR] 이미지 주소가 올바르지 않습니다`));
-    throw new Error('이미지 주소가 올바르지 않습니다.');
+    const WrongSrcError = new Error('이미지 주소가 올바르지 않습니다.');
+    Logger.error(WrongSrcError);
+    throw WrongSrcError;
   }
 
   const isSrc = src.replace(/#x26;/g, '&');
@@ -42,7 +43,7 @@ export default async function uploadImage(props: Props): Promise<string> {
 
   const postRef = ref(storage, `post/${category}/${title}/${filename}-${hashTime}.${ext}`);
   const ImgUrl = await uploadBytes(postRef, data, metadata).then(async () => {
-    console.log(chalk.gray(`[UPDATE] ${filename}-${hashTime}.${ext}`));
+    Logger.update(`${filename}-${hashTime}.${ext}`);
     const url = await getDownloadURL(postRef);
     return url;
   });

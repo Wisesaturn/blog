@@ -1,7 +1,7 @@
 import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
-import chalk from 'chalk';
 
 import { db } from '$shared/middleware/firebase';
+import Logger from '$shared/helper/logger';
 
 import { IPost } from '../types/post';
 
@@ -22,9 +22,12 @@ export default async function updatePost(props: UpdatePostProps) {
     } else {
       await setDoc(docRef, data);
     }
-    console.log(chalk.green(`[SUCCESS] ${category}/${title}에 게시물을 업데이트하였습니다.`));
+    Logger.success(`${category}/${title}에 게시물을 업데이트하였습니다.`);
   } catch (err) {
-    console.log(chalk.red(`[ERROR] ${category}/${title}에 해당하는 게시물이 없습니다`));
+    if (err instanceof Error) {
+      Logger.error(new Error(`${category}/${title}에 해당하는 게시물이 없습니다`));
+      Logger.error(err);
+    }
     throw err;
   }
 }

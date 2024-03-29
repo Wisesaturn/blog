@@ -10,7 +10,7 @@ interface GetPostsProps {
   categories: string[];
 }
 
-export default async function getPosts(props: GetPostsProps) {
+export default async function getProjects(props: GetPostsProps) {
   const { keyword, categories } = props;
 
   let SEARCH_CATEGORY = CATEGORY_DATA;

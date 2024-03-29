@@ -4,10 +4,10 @@ export interface IPost {
   body: string;
   category: string;
   createdAt: string;
+  last_editedAt: Date | string;
   description: string;
   index: string;
   lastmod: string;
-  last_editedAt: Date | string;
   plain_title: string;
   tags: string[];
   thumbnail: string;

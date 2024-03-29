@@ -1,8 +1,8 @@
 /* eslint-disable array-callback-return */
 import { deleteObject, ref, listAll } from 'firebase/storage';
-import chalk from 'chalk';
 
 import { storage } from '$shared/middleware/firebase';
+import Logger from '$shared/helper/logger';
 
 export default async function deleteStore(category: string, title: string) {
   const listRef = ref(storage, `post/${category}/${title}`);
@@ -16,17 +16,20 @@ export default async function deleteStore(category: string, title: string) {
 
       try {
         await deleteObject(itemRef);
-        console.log(chalk.gray(`[DELETE] ${category}/${title}/${item.name}`));
+        Logger.delete(`${category}/${title}/${item.name}`);
       } catch (error) {
-        console.log(chalk.red(`[ERROR] ${item.name}을 삭제할 수 없습니다.`));
+        if (error instanceof Error) {
+          Logger.error(new Error(`${item.name}을 삭제할 수 없습니다.`));
+          Logger.error(error);
+        }
         throw error;
       }
     }),
   );
 
   if (res.items.length === 0) {
-    console.log(chalk.yellow(`[WARN] ${category}/${title}에 저장된 파일이 없습니다.`));
+    Logger.warn(`${category}/${title}에 저장된 파일이 없습니다.`);
   } else {
-    console.log(chalk.green(`[SUCCESS] ${category}/${title}의 모든 파일 삭제가 완료되었습니다.`));
+    Logger.success(`${category}/${title}의 모든 파일 삭제가 완료되었습니다.`);
   }
 }

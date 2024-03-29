@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import Logger from '$shared/helper/logger';
 
 import uploadImage from './uploadImage';
 import filterNotionUrl from '../../lib/filterNotionUrl';
@@ -21,7 +21,7 @@ export default async function replaceBodyImages(props: Props): Promise<string> {
 
   try {
     if (imgSrcArray.length === 0) {
-      console.log(chalk.yellow(`[WARN] 업로드할 이미지 파일이 존재하지 않습니다.`));
+      Logger.warn(`업로드할 이미지 파일이 존재하지 않습니다.`);
       return body;
     }
 
@@ -41,11 +41,14 @@ export default async function replaceBodyImages(props: Props): Promise<string> {
       body,
     );
 
-    console.log(chalk.green(`[SUCCESS] 이미지 업로드에 성공하였습니다.`));
+    Logger.success('이미지 업로드에 성공하였습니다.');
 
     return modifiedBody;
   } catch (err) {
-    console.log(chalk.red(`[ERROR] 이미지 업로드에 실패하였습니다.`));
+    if (err instanceof Error) {
+      Logger.error(new Error('이미지 업로드에 실패하였습니다.'));
+      Logger.error(err);
+    }
     throw err;
   }
 }

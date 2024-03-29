@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable camelcase */
 
 import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
@@ -11,10 +10,10 @@ import remarkMath from 'remark-math';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeMathjax from 'rehype-mathjax';
 import rehypeSlug from 'rehype-slug';
-import chalk from 'chalk';
 
 import convertString from '$shared/lib/convertString';
 import notion from '$shared/middleware/notion';
+import Logger from '$shared/helper/logger';
 
 import { IPost } from '../types/post';
 import { DEFAULT_THUMBNAIL } from '../constant';
@@ -43,8 +42,9 @@ export default async function createPost(title: string) {
         );
 
         if (selectedPost.length === 0) {
-          console.log(chalk.red(`[ERROR] ${title}를 찾을 수 없습니다`));
           throw new Error(`${title}를 찾을 수 없습니다`);
+        } else {
+          Logger.log(`${selectedPost[0].id}/${title}를 찾았습니다`);
         }
 
         // post date format
@@ -109,7 +109,7 @@ export default async function createPost(title: string) {
 
           postData.thumbnail = customThumbnail;
         } else {
-          console.log(chalk.gray(`[INFO] 기본 썸네일 설정`));
+          Logger.log('기본 썸네일 설정');
         }
 
         // 4. upload image on firebase
@@ -122,15 +122,17 @@ export default async function createPost(title: string) {
           postData.body = replaceBody;
         }
 
-        console.log(chalk.green(`[SCCCESS] ${title} 게시물을 생성하였습니다.`));
+        Logger.success(`${title} 게시물을 생성하였습니다.`);
 
         return postData;
       });
 
     return post;
   } catch (err) {
-    console.log(chalk.red(`[ERROR] ${title} 게시물 생성에 실패했습니다`));
-    console.log(chalk.red(`[ERROR]`, err));
+    if (err instanceof Error) {
+      Logger.error(new Error(`${title} 게시물 생성에 실패하였습니다.`));
+      Logger.error(err);
+    }
     throw err;
   }
 }

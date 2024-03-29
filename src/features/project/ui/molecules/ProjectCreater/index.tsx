@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useNavigate } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
-import { IPost } from '$features/post/types/post';
+import { IProject } from '$features/project/types/project';
 
 import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';
@@ -18,8 +18,8 @@ export default function ProjectCreater(props: GlobalAnimation) {
   const handleCreateProject = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
-    const { plain_title }: IPost = await instance.post('project', { title: inputValue });
-    navigate(`/projects/${convertString(plain_title, 'spaceToDash')}`);
+    const { plainTitle }: IProject = await instance.post('project', { title: inputValue });
+    navigate(`/projects/${convertString(plainTitle, 'spaceToDash')}`);
   };
 
   return (
