@@ -1,9 +1,10 @@
-import { createContext, useCallback, useState, startTransition } from 'react';
+import { createContext, useState, startTransition } from 'react';
 
 import { Darkmode, IHeader } from '$shared/types/layout';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import useLoading from '$shared/hooks/useLoading';
 import useDebounce from '$shared/hooks/useDebounce';
+import instance from '$shared/api/instance';
 
 export interface ILayout {
   header: IHeader;
@@ -45,6 +46,8 @@ export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, c
       setLayout((prev) => ({ ...prev, ...newLayout }));
     });
   };
+
+  instance.setUpdateLayout(updateLayout);
 
   return (
     <>

@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
 
-import { IPost, PostsOrderBy } from '$features/post/types/post';
+import { IPost } from '$features/post/types/post';
 import PostFilter from '$features/post/ui/molecules/PostFilter';
-import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import sortPosts from '$features/post/lib/sortPosts';
 import PostRow from '$features/post/ui/molecules/PostRow';
 
 import PostEmptyRow from '../../atoms/PostEmptyRow';
