@@ -17,7 +17,7 @@ export default function PostCreater() {
   const handleCreatePost = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
-    const { category, plain_title }: IPost = await instance.post('article', { title: inputValue });
+    const { category, plain_title } = await instance.post('article', { title: inputValue });
     navigate(`/posts/${category}/${convertString(plain_title, 'spaceToDash')}`);
   };
 

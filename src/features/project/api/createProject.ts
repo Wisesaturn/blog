@@ -3,6 +3,7 @@ import replaceBodyImages from '$features/post/api/firebase/replaceBodyImages';
 import uploadImage from '$features/post/api/firebase/uploadImage';
 import deleteStore from '$features/post/api/deleteStore';
 import getHtml from '$features/post/lib/getHtml';
+import { DEFAULT_THUMBNAIL } from '$features/post/constant';
 
 import convertString from '$shared/lib/convertString';
 import notion from '$shared/middleware/notion';
@@ -18,7 +19,7 @@ import { IProject } from '../types/project';
  */
 export default async function createProject(title: string) {
   try {
-    const post: IProject = await notion.databases
+    const project: IProject = await notion.databases
       .query({
         database_id: process.env.NOTION_DATABASE_PROJECTS_KEY,
       })
@@ -39,16 +40,42 @@ export default async function createProject(title: string) {
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
         // ////////////////// data /////////////////// //
-        const postData: IProject = {
-          plainTitle: '',
+        const projectData: IProject = {
+          index: selectedPost[0].id,
+          title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
+            selectedPost[0].properties.이름.title[0].plain_text
+          }`,
+          plainTitle: selectedPost[0].properties.이름.title[0].plain_text,
+          theme: selectedPost[0].properties.theme.rich_text[0].plain_text,
+          thumbnail: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url || '',
+          category: selectedPost[0].properties.category.select.name,
+          createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
+          lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
+            lastEditedTime,
+          ),
+          description: selectedPost[0].properties.description.rich_text[0].plain_text,
+          skills: selectedPost[0].properties.skills.multi_select.map((skill) => skill.name),
+          role: selectedPost[0].properties.role.multi_select.map((role) => role.name),
+          github: selectedPost[0].properties.github.url,
+          lastmod: new Intl.DateTimeFormat('fr-CA', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+          }).format(lastEditedTime),
+          date: {
+            start: selectedPost[0].properties.date.date.start,
+            end: selectedPost[0].properties.date.date.end,
+          },
+          views: 0,
+          body: '',
         };
         // ////////////////// data /////////////////// //
 
         // 1. delete previous storage
         await deleteStore({
           collection: 'project',
-          category: postData.category,
-          title: convertString(postData.plainTitle, 'spaceToDash'),
+          category: `${projectData.category}-projects`,
+          title: convertString(projectData.plainTitle, 'spaceToDash'),
         });
 
         // 2. get markdown
@@ -56,42 +83,43 @@ export default async function createProject(title: string) {
 
         // 3. get html tag
         const htmlBody = await getHtml(mdString);
-        postData.body = htmlBody;
+        projectData.body = htmlBody;
 
         // 3. upload thumbnail on firsbase
-        if (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) {
+        if (projectData.thumbnail) {
           const customThumbnail = await uploadImage({
             collection: 'project',
-            src: selectedPost[0].cover.external?.url || selectedPost[0].cover.file?.url || '',
-            category: postData.category,
-            title: convertString(postData.plainTitle, 'spaceToDash'),
+            src: projectData.thumbnail,
+            category: `${projectData.category}-projects`,
+            title: convertString(projectData.plainTitle, 'spaceToDash'),
           });
 
-          postData.thumbnail = customThumbnail;
+          projectData.thumbnail = customThumbnail;
         } else {
+          projectData.thumbnail = DEFAULT_THUMBNAIL;
           Logger.log('기본 썸네일 설정');
         }
 
         // 4. upload image on firebase
-        if (postData.body) {
+        if (projectData.body) {
           const replaceBody = await replaceBodyImages({
             collection: 'project',
-            body: postData.body,
-            category: postData.category,
-            title: convertString(postData.plainTitle, 'spaceToDash'),
+            body: projectData.body,
+            category: `${projectData.category}-projects`,
+            title: convertString(projectData.plainTitle, 'spaceToDash'),
           });
-          postData.body = replaceBody;
+          projectData.body = replaceBody;
         }
 
-        Logger.success(`${title} 게시물을 생성하였습니다.`);
+        Logger.success(`${title} 프로젝트를 생성하였습니다.`);
 
-        return postData;
+        return projectData;
       });
 
-    return post;
+    return project;
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title} 게시물 생성에 실패하였습니다.`));
+      Logger.error(new Error(`${title} 프로젝트 생성에 실패하였습니다.`));
       Logger.error(err);
     }
     throw err;

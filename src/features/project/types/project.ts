@@ -1,20 +1,21 @@
-type ProjectCategory = 'team' | 'personal';
-
 export interface IProject {
   index: string;
   title: string;
-  theme: string;
   plainTitle: string;
+  theme: string;
   description: string;
   body: string;
-  category: ProjectCategory;
+  category: string;
   createdAt: string;
   lastEditedAt: Date | string;
   lastmod: string;
   skills: string[];
   role: string[];
   thumbnail: string;
-  date: string;
+  date: {
+    start: string;
+    end: string;
+  };
   github: string;
   views: number;
 }

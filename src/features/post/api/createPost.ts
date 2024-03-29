@@ -35,22 +35,21 @@ export default async function createPost(title: string) {
           Logger.log(`${selectedPost[0].id}/${title}를 찾았습니다`);
         }
 
-        console.log(selectedPost[0]);
-
         // post date format
         const createdTime = new Date(selectedPost[0].created_time);
         const lastEditedTime = new Date(selectedPost[0].last_edited_time);
 
         // ////////////////// data /////////////////// //
         const postData: IPost = {
-          plain_title: selectedPost[0].properties.이름.title[0].plain_text,
+          index: selectedPost[0].id,
           title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
             selectedPost[0].properties.이름.title[0].plain_text
           }`,
+          thumbnail: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url || '',
+          plain_title: selectedPost[0].properties.이름.title[0].plain_text,
           category: selectedPost[0].properties.category.select.name,
-          body: '',
           description: selectedPost[0].properties.description.rich_text[0]?.plain_text || '',
-          index: selectedPost[0].id,
+          tags: selectedPost[0].properties.tags.multi_select.map((keyword) => keyword.name),
           createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
           last_editedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
             lastEditedTime,
@@ -60,9 +59,8 @@ export default async function createPost(title: string) {
             day: '2-digit',
             year: 'numeric',
           }).format(lastEditedTime),
-          thumbnail: DEFAULT_THUMBNAIL,
+          body: '',
           views: 0,
-          tags: selectedPost[0].properties.tags.multi_select.map((keyword) => keyword.name),
         };
         // ////////////////// data /////////////////// //
 
@@ -81,16 +79,17 @@ export default async function createPost(title: string) {
         postData.body = htmlBody;
 
         // 3. upload thumbnail on firsbase
-        if (selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url) {
+        if (postData.thumbnail) {
           const customThumbnail = await uploadImage({
             collection: 'post',
-            src: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url || '',
+            src: postData.thumbnail,
             category: postData.category,
             title: convertString(postData.plain_title, 'spaceToDash'),
           });
 
           postData.thumbnail = customThumbnail;
         } else {
+          postData.thumbnail = DEFAULT_THUMBNAIL;
           Logger.log('기본 썸네일 설정');
         }
 

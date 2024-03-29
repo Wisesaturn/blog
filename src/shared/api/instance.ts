@@ -1,5 +1,5 @@
 import { ILayout } from '$shared/middleware/layout';
-import { PostBody, PostEndPoint } from '$shared/types/api';
+import { PostBody, PostEndPoint, PostResponse } from '$shared/types/api';
 
 class Api {
   private baseUrl;
@@ -28,10 +28,9 @@ class Api {
     const response = await fetch(newEndPoint, config);
     const result = await response.json();
     this.updateLayout({ loading: false });
-    return result;
+    return result as PostResponse<T>;
   }
 }
-
 const instance = new Api();
 
 export default instance;

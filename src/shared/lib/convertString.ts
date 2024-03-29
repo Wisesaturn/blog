@@ -1,3 +1,5 @@
+import Logger from '$shared/helper/logger';
+
 type ConvertType = 'spaceToDash' | 'dashToSpace';
 
 /**
@@ -5,6 +7,12 @@ type ConvertType = 'spaceToDash' | 'dashToSpace';
  * @returns
  */
 export default function convertString(str: string, type: ConvertType) {
+  if (typeof str !== 'string') {
+    const NotStringError = new Error('입력받은 문자열이 올바르지 않습니다.');
+    Logger.error(NotStringError);
+    throw NotStringError;
+  }
+
   if (type === 'spaceToDash') {
     return str.replace(/\s+/g, '-');
   }
