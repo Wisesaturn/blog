@@ -4,6 +4,7 @@ import { useLoaderData } from '@remix-run/react';
 
 import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
 import getProjects from '$features/project/api/getProjects';
+import ProjectList from '$features/project/ui/organisms/ProjectList';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import Title from '$shared/ui/atoms/Title';
@@ -40,6 +41,7 @@ export default function ProjectsPage() {
         subtitle="개발자로 성장해가며 만들었던 작품들입니다"
       />
       <ProjectCreater animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ProjectList projects={projects} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }

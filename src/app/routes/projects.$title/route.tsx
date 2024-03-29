@@ -15,5 +15,5 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function ProjectPage() {
   const { project } = useLoaderData<typeof loader>();
 
-  return <div>ProjectPage</div>;
+  return <div>{JSON.stringify(project)}</div>;
 }

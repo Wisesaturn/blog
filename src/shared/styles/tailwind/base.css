@@ -246,7 +246,7 @@
 
     a {
       text-decoration-line: underline;
-      position: relative;
+      display: inline-block;
 
       @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700 break-keep;
     }
@@ -254,10 +254,9 @@
     a:after {
       --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5'/%3E%3C/svg%3E");
       content: '';
-      position: absolute;
+      display: inline-block;
       width: 1.2rem;
       height: 1.2rem;
-      display: inline-block;
       background-color: currentColor;
       -webkit-mask-image: var(--svg);
       mask-image: var(--svg);
@@ -265,9 +264,7 @@
       mask-repeat: no-repeat;
       -webkit-mask-size: 100% 100%;
       mask-size: 100% 100%;
-      right: -1.5rem;
-      top: 50%;
-      transform: translateY(-50%);
+      transform: translate(0.125rem, 25%);
     }
 
     p {

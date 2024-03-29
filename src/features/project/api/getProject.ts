@@ -21,7 +21,9 @@ export default async function getProject(props: Props) {
   const body = queryBodySnapshot.docs.map((doc) => doc.data() as Pick<IProject, 'body'>);
 
   if (queryMetaSnapshot.empty || queryBodySnapshot.empty) {
-    Logger.error(new Error(`${title}에 해당하는 프로젝트가 없습니다`));
+    const NotFoundError = new Error(`${title}에 해당하는 프로젝트가 없습니다`);
+    Logger.error(NotFoundError);
+    throw NotFoundError;
   }
 
   return { ...meta[0], ...body[0] };
