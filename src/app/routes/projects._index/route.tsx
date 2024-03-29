@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { MetaFunction } from '@remix-run/node';
 
+import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
+
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import Title from '$shared/ui/atoms/Title';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -26,6 +28,7 @@ export default function ProjectsPage() {
         title="Projects"
         subtitle="개발자로 성장해가며 만들었던 작품들입니다"
       />
+      <ProjectCreater animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }

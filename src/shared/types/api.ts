@@ -1,10 +1,15 @@
-interface ApiPostCreate {
+interface ApiPostArticle {
+  title: string;
+}
+
+interface ApiPostProject {
   title: string;
 }
 
 interface IPostBody {
-  create: ApiPostCreate;
+  article: ApiPostArticle;
+  project: ApiPostProject;
 }
 
-export type PostEndPoint = 'create';
-export type PostBody<T> = T extends 'create' ? IPostBody['create'] : unknown;
+export type PostEndPoint = keyof IPostBody;
+export type PostBody<T> = T extends keyof IPostBody ? IPostBody[T] : unknown;
