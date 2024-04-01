@@ -94,7 +94,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           )}
         </div>
         {inputType === 'search' && (
-          <button tabIndex={0} type="button" onClick={handleSearchClick}>
+          <button
+            aria-label="input-search-button"
+            tabIndex={0}
+            type="button"
+            onClick={handleSearchClick}
+          >
             <Icons.Search type="border" size="large" />
           </button>
         )}

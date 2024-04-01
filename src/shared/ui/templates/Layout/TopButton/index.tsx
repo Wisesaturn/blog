@@ -25,6 +25,7 @@ export default function TopButton() {
   return (
     <button
       type="button"
+      aria-label="go-to-top-button"
       onClick={handleScrollTop}
       className={`max-md:p-2.5 fixed z-10 dark:bg-[#222] border-2 bg-white dark:border-gray-600 max-md:bottom-16 bottom-8 max-md:right-4 right-8 p-3 rounded-full border-gray-400 shadow-lg hover:-translate-y-1.5 ${showButton ? 'hover:cursor-pointer' : 'hover:cursor-default'}`}
       style={{
