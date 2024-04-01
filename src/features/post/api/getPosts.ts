@@ -35,8 +35,10 @@ export default async function getPosts(props: Props) {
 
       const querySnapshot = await getDocs(q);
       const post = querySnapshot.docs.map((doc) => doc.data());
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const excludedBodyPost = post.map(({ body, ...doc }) => doc);
 
-      return { data: post };
+      return { data: excludedBodyPost };
     }),
   );
 
