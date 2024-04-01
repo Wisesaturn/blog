@@ -26,7 +26,7 @@ export const meta: MetaFunction = (args) => formatHeadTags(args);
 
 export const links: LinksFunction = () => [
   formatStyleSheet(
-    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.7/dist/web/variable/pretendardvariable-dynamic-subset.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable-dynamic-subset.min.css',
   ),
   formatStyleSheet(tossface),
   formatStyleSheet(globalStyles),
@@ -35,7 +35,7 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = ({ request }) => {
   const cookieHeader = request.headers.get('cookie');
-  const darkmode = getCookie(cookieHeader, 'color-theme');
+  const darkmode = getCookie(cookieHeader, 'color-theme') || 'light';
 
   return json({
     layout: {
