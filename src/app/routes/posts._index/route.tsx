@@ -34,7 +34,14 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const posts = await getPosts(searchParams);
   const sortedPosts = sortPosts(posts, params.orderby as PostsOrderBy);
 
-  return json({ posts: sortedPosts });
+  return json(
+    { posts: sortedPosts },
+    {
+      headers: {
+        'Cache-Control': 'public, stale-while-revalidate=31556952',
+      },
+    },
+  );
 }
 
 // page
