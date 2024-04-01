@@ -4,11 +4,12 @@ import ButtonIcon from '$shared/ui/atoms/button/_Icon';
 import ButtonText from '$shared/ui/atoms/button/_Text';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  hierarchy?: Hierarchy;
   children: React.ReactNode;
 }
 
 function Button(props: ButtonProps) {
-  const { children, type = 'button', ...rest } = props;
+  const { hierarchy = 'primary', children, type = 'button', ...rest } = props;
 
   if (React.Children.count(children) === 0) {
     throw new Error('하나의 자식 컴포넌트가 필요합니다');
@@ -23,12 +24,15 @@ function Button(props: ButtonProps) {
       throw new Error('Button에 속한 컴포넌트를 렌더링해야 합니다');
   }
 
+  const hierarchyClass = {
+    primary: `dark:bg-green-dark bg-black text-white`,
+    secondary: `layout-bg`,
+  };
+
+  const buttonClass = `flex gap-4 px-8 py-2.5 layout-rounded items-center layout-border ${hierarchyClass[hierarchy]}`;
+
   return (
-    <button
-      className="flex gap-4 items-center layout-text-color layout-rounded layout-bg layout-text layout-border px-8 py-2.5"
-      type={type}
-      {...rest}
-    >
+    <button className={buttonClass} type={type} {...rest}>
       {children}
     </button>
   );

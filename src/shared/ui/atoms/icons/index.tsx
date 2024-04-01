@@ -17,6 +17,7 @@ import CopyIcon from './copy';
 import DateIcon from './date';
 import ArrowUpIcon from './arrowUp';
 import RefreshIcon from './refresh';
+import ListIcon from './list';
 
 // global type
 declare global {
@@ -92,6 +93,8 @@ class Icons {
   static Date = Icons.createIcon(DateIcon);
 
   static Refresh = Icons.createIcon(RefreshIcon);
+
+  static List = Icons.createIcon(ListIcon);
 }
 declare global {
   type IconElement = keyof typeof Icons;

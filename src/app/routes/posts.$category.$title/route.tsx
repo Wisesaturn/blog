@@ -11,6 +11,7 @@ import TOC from '$features/post/ui/molecules/TOC';
 import useCodePen from '$features/post/hooks/useCodePen';
 import ArticleTags from '$features/post/ui/atoms/ArticleTags';
 import ArticleShareButton from '$features/post/ui/atoms/ArticleShareButton';
+import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -95,7 +96,7 @@ export default function ArticlePage() {
         <TOC {...TOCElement} />
       </motion.div>
       <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ArticleShareButton animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ArticleButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );

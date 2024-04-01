@@ -9,8 +9,8 @@ export default function ArticleShareButton(props: GlobalAnimation) {
   const { animation } = props;
 
   return (
-    <motion.div className="mx-auto w-fit py-10" variants={animation?.variants}>
-      <Button onClick={sharePage}>
+    <motion.div className="w-fit" variants={animation?.variants}>
+      <Button hierarchy="secondary" onClick={sharePage}>
         <Button.Icon>
           <Icons.Share />
         </Button.Icon>
