@@ -50,7 +50,7 @@ export default function App() {
   useInitialScript();
 
   return (
-    <html lang="ko">
+    <html lang="ko" color-theme={data.layout.darkmode}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />

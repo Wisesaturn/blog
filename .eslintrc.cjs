@@ -62,11 +62,11 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
       ],
       rules: {
+        'react/no-unknown-property': ['error', { ignore: ['color-theme', 'css'] }],
         'react/display-name': 'off',
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': ['off'],
         'react/jsx-no-target-blank': 'error',
-        'react/no-unknown-property': ['error', { ignore: ['css'] }],
         'import/order': [
           'error',
           {
