@@ -8,7 +8,7 @@ export default function Menus(props: MenusProps) {
   const { data } = props;
   const { pathname } = useLocation();
 
-  const SELECTED_CLASS = `text-green-main border-b-2 border-green-main`;
+  const SELECTED_CLASS = `text-green-main dark:text-green-brighter border-b-2 border-green-main dark:broder-green-brighter`;
   const MENU_CLASS = `icon-hover md:px-3 md:py-1.5 px-2 py-1 rounded-b-none layout-text`;
 
   return (

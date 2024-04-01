@@ -241,14 +241,14 @@
 
     /* code */
     :not(pre[class*='language-'], blockquote p) > code {
-      @apply bg-gray-200 dark:bg-[#111] font-bold layout-text-color tracking-tight;
+      @apply bg-gray-200 dark:bg-[#191919] font-bold layout-text-color tracking-tight;
     }
 
     a {
       text-decoration-line: underline;
       display: inline-block;
 
-      @apply text-blue-500 dark:text-blue-300 dark:hover:text-blue-400 transition-colors duration-200 hover:text-blue-700 break-keep;
+      @apply text-blue-500 dark:text-blue-400 dark:hover:text-blue-500 transition-colors duration-200 hover:text-blue-700 break-keep;
     }
 
     a:after {
@@ -336,7 +336,7 @@
       @apply pt-8 layout-text;
 
       thead {
-        @apply bg-gray-200 dark:bg-[#111] font-bold;
+        @apply bg-gray-200 dark:bg-[#191919] font-bold;
       }
 
       tbody {
@@ -399,7 +399,7 @@
 
     /* code block title */
     h5[class='code-title'] {
-      @apply text-sm max-md:text-xs no-underline bg-gray-300 dark:bg-[#111] w-full py-2 px-4 translate-y-8 rounded-t-md;
+      @apply text-sm max-md:text-xs no-underline bg-gray-300 dark:bg-[#191919] w-full py-2 px-4 translate-y-8 rounded-t-md;
       + pre {
         @apply rounded-t-none;
       }

@@ -54,7 +54,7 @@ n2m.setCustomTransformer('image', async (block: any) => {
     const { url } = image.external;
     const alt = plainCaption || 'image';
     const plainAlt = alt.replace(/&nbsp;/g, ' ');
-    return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
+    return `<img width="500" height="500" src="${url}" alt="${plainAlt}" />
   <div class="image-caption">${caption}</div>`;
   }
 
@@ -62,7 +62,7 @@ n2m.setCustomTransformer('image', async (block: any) => {
   const alt = plainCaption || decodeURIComponent(path.basename(url)).split('?').shift();
   const plainAlt = alt.replace(/&nbsp;/g, ' ');
 
-  return `<img loading="lazy" width="500" height="500" src="${url}" alt="${plainAlt}" />
+  return `<img width="500" height="500" src="${url}" alt="${plainAlt}" />
   <div class="image-caption">${caption}</div>`;
 });
 

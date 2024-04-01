@@ -3,7 +3,7 @@ export default {
   ignoredRouteFiles: ['**/*.css', '**/*.ts', '**/*.stories.ts', '**/*.stories.tsx', '**/*.js'],
   cacheDirectory: '.cache',
   appDirectory: 'src/app',
-  watchPaths: 'src',
+  watchPaths: ['src', 'tailwind.config.js'],
   tailwind: true,
   postcss: false,
   assetsBuildDirectory: 'public/build',
