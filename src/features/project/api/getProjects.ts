@@ -8,7 +8,7 @@ import { IProject } from '../types/project';
 export default async function getProjects() {
   const originProjects = await Promise.all(
     PROJECTS_DATA.map(async (project) => {
-      const q = query(collection(db, 'projects',project.name , 'meta'));
+      const q = query(collection(db, 'projects', project.name, 'meta'));
       const querySnapshot = await getDocs(q);
       const projects = querySnapshot.docs.map((doc) => doc.data());
       return { data: projects };
