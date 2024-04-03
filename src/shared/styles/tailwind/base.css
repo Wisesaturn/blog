@@ -221,7 +221,6 @@
 
     h4 {
       position: relative;
-      width: max-content;
       z-index: 2;
 
       @apply pt-8;

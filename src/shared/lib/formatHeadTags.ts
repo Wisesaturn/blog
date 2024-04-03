@@ -1,8 +1,8 @@
 import { ServerRuntimeMetaArgs, ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime';
 
 import { IPost } from '$features/post/types/post';
-
-import { CATEGORY_DATA } from '$shared/constant/category';
+import { IProject } from '$features/project/types/project';
+import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '$features/post/constant';
 
 interface HeadTagFormat extends ServerRuntimeMetaArgs {
   title?: string;
@@ -16,6 +16,9 @@ function isPost(obj: unknown): obj is { post: IPost } {
   return typeof obj === 'object' && obj !== null && 'post' in obj;
 }
 
+function isProject(obj: unknown): obj is { project: IProject } {
+  return typeof obj === 'object' && obj !== null && 'project' in obj;
+}
 /**
  * @summary meta tag 및 link tag 포맷을 추출하는 함수
  * @returns
@@ -27,33 +30,39 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   // calculate data
   const HOST_URL = `https://jaehan.blog/${urlPrefix || ''}`;
   const convertTitle = params.title ? params.title : title;
-  const convertDescription =
-    isPost(data) && data.post.description && data.post.tags
-      ? `${data.post.description} | ${data.post.tags.map((tag) => tag).join(' ')}`
-      : description;
-  const convertThumbnail = isPost(data) && data.post.thumbnail ? data.post.thumbnail : thumbnail;
+  let convertThumbnail = thumbnail || DEFAULT_THUMBNAIL;
+  let convertDescription = description || DEFAULT_DESCRIPTION;
   let convertUrl = HOST_URL;
 
-  if (params.category) {
-    if (params.title) {
-      convertUrl = `${HOST_URL}/${params.category}/${convertTitle}`;
-    } else {
-      convertUrl = `${HOST_URL}/${params.category}`;
-    }
+  // thumbnail
+  if (isPost(data) && data.post.thumbnail) {
+    convertThumbnail = data.post.thumbnail;
+  } else if (isProject(data) && data.project.thumbnail) {
+    convertThumbnail = data.project.thumbnail;
+  }
+
+  // description
+  if (isPost(data) && data.post.description && data.post.tags) {
+    convertDescription = `${data.post.description} | ${data.post.tags.map((tag) => tag).join(' ')}`;
+  } else if (isProject(data) && data.project.description) {
+    convertDescription = `${data.project.description}`;
+  }
+
+  // url
+  if (params.category && params.title) {
+    convertUrl = `${HOST_URL}/${params.category}/${convertTitle}`;
+  } else if (params.category) {
+    convertUrl = `${HOST_URL}/${params.category}`;
+  } else if (params.title) {
+    convertUrl = `${HOST_URL}/${convertTitle}`;
   }
 
   // metadata object
   const metadata = {
     title: convertTitle || '사툰사툰',
-    description:
-      convertDescription ||
-      `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | Error ${CATEGORY_DATA.map(
-        (category) => category.name,
-      ).join(' ')}`,
+    description: convertDescription,
     url: convertUrl,
-    thumbnail:
-      convertThumbnail ||
-      'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png',
+    thumbnail: convertThumbnail,
   };
 
   return [

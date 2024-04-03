@@ -10,7 +10,6 @@ import useTOC from '$features/post/hooks/useTOC';
 import TOC from '$features/post/ui/molecules/TOC';
 import useCodePen from '$features/post/hooks/useCodePen';
 import ArticleTags from '$features/post/ui/atoms/ArticleTags';
-import ArticleShareButton from '$features/post/ui/atoms/ArticleShareButton';
 import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
