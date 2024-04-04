@@ -89,12 +89,16 @@ n2m.setCustomTransformer('heading_3', async (block: any) => {
  */
 n2m.setCustomTransformer('code', async (block: any) => {
   const { language } = block.code;
-  const title = block.code.caption ? block.code.caption[0]?.plain_text : '';
+  const caption = block.code.caption ? block.code.caption[0]?.plain_text : '';
   const content = block.code.rich_text[0]?.plain_text.trim();
-  if (title) {
-    return `<h5 class="code-title">${title}</h5>
 
-\`\`\`${language}
+  if (caption) {
+    const title = caption.split(';')[0];
+    const highlight = caption.split(';')[1];
+
+    return `${title ? `<h5 class="code-title">${title}</h5>` : ''}
+
+\`\`\`diff-${language} ${highlight || ''}
 ${content}
 \`\`\`
   `;
