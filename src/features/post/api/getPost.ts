@@ -1,7 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
-import convertString from '$shared/lib/convertString';
 import Logger from '$shared/helper/logger';
 
 import { IPost } from '../types/post';
@@ -13,8 +12,7 @@ interface Props {
 
 export default async function getPost(props: Props) {
   const { category, title } = props;
-  const convertTitle = convertString(title, 'spaceToDash');
-  const docRef = doc(db, category, convertTitle);
+  const docRef = doc(db, category, title);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {

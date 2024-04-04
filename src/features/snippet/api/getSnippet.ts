@@ -1,7 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
-import convertString from '$shared/lib/convertString';
 import Logger from '$shared/helper/logger';
 
 import { ISnippet } from '../types/snippet';
@@ -12,8 +11,7 @@ interface Props {
 
 export default async function getSnippet(props: Props) {
   const { title } = props;
-  const convertTitle = convertString(title, 'spaceToDash');
-  const docRef = doc(db, 'snippets', convertTitle);
+  const docRef = doc(db, 'snippets', title);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
