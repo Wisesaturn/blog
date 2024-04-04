@@ -140,9 +140,17 @@ interface ProjectProperties {
   theme: Text;
 }
 
+interface SnippetProperties {
+  skills: MultiSelect;
+  description: Text;
+  createdAt: CreatedTime;
+  lastEditedAt: LastEditedTime;
+}
+
 interface INotion {
   post: PostProperties;
   project: ProjectProperties;
+  snippet: SnippetProperties;
 }
 
 /**

@@ -8,16 +8,16 @@ import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';
 import convertString from '$shared/lib/convertString';
 
-export default function ProjectCreater(props: GlobalAnimation) {
+export default function SnippetCreater(props: GlobalAnimation) {
   const { animation } = props;
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleCreateProject = async () => {
+  const handleCreateSnippet = async () => {
     const inputValue = inputRef.current?.value;
     if (!inputValue) return;
-    const project = await instance.post('project', { title: inputValue });
-    navigate(`/projects/${convertString(project.plainTitle, 'spaceToDash')}`);
+    const snippet = await instance.post('snippet', { title: inputValue });
+    navigate(`/snippets/${convertString(snippet.plainTitle, 'spaceToDash')}`);
   };
 
   return (
@@ -25,10 +25,10 @@ export default function ProjectCreater(props: GlobalAnimation) {
       {process.env.NODE_ENV === 'development' && (
         <motion.div variants={animation?.variants} className="py-4">
           <Input
-            handleSearch={handleCreateProject}
+            handleSearch={handleCreateSnippet}
             inputType="search"
             ref={inputRef}
-            placeholder="프로젝트 제목을 입력하세요"
+            placeholder="스니펫 제목을 입력하세요"
           />
         </motion.div>
       )}

@@ -1,22 +1,27 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getProject from '$features/project/api/getProject';
 import TOC from '$features/post/ui/molecules/TOC';
 import useTOC from '$features/post/hooks/useTOC';
-import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
 import ProjectComments from '$features/project/ui/atoms/ProjectComments';
 import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
+import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
+import formatStyleSheet from '$shared/lib/formatStyleSheet';
+import codeStyles from '$shared/styles/etc/vscode-prism.css';
 
 // meta
 export const meta: MetaFunction = (args) => {
   const urlPrefix = 'projects';
   return formatHeadTags({ urlPrefix, ...args });
 };
+
+// link
+export const links: LinksFunction = () => [formatStyleSheet(codeStyles)];
 
 // loader
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -51,7 +56,7 @@ export default function ProjectPage() {
         />
         <TOC {...TOCElement} />
       </motion.div>
-      <ArticleButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ProjectButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ProjectComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
