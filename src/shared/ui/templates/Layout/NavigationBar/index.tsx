@@ -7,6 +7,7 @@ import HomeIcon from '$shared/ui/atoms/icons/navigation-bar/home';
 import PostIcon from '$shared/ui/atoms/icons/navigation-bar/post';
 import ProfileIcon from '$shared/ui/atoms/icons/navigation-bar/profile';
 import PortfolioIcon from '$shared/ui/atoms/icons/navigation-bar/portfolio';
+import SnippetIcon from '$shared/ui/atoms/icons/navigation-bar/snippet';
 
 /**
  * Only Use Navigation Bar
@@ -16,6 +17,7 @@ const Icons = {
   Post: PostIcon,
   Profile: ProfileIcon,
   Portfolio: PortfolioIcon,
+  Snippet: SnippetIcon,
 };
 
 function Nav({ children }: { children: React.ReactNode }) {
@@ -51,6 +53,9 @@ export default function NavigationBar() {
       </Nav.Button>
       <Nav.Button to="projects" isSelected={checkSelected('projects')}>
         <Icons.Portfolio />
+      </Nav.Button>
+      <Nav.Button to="snippets" isSelected={checkSelected('snippets')}>
+        <Icons.Snippet />
       </Nav.Button>
       <Nav.Button to="about" isSelected={checkSelected('about')}>
         <Icons.Profile />

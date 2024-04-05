@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Link } from '@remix-run/react';
 
 import { ISnippet } from '$features/snippet/types/snippet';
-import CategoryChip from '$features/post/ui/atoms/CategoryChip';
 
 import Badge from '$shared/ui/atoms/Badge';
 import Icons from '$shared/ui/atoms/icons';
@@ -19,7 +18,7 @@ export default function SnippetCard(props: Props) {
       >
         <div className="p-4 flex gap-1 flex-col">
           <h3>{title}</h3>
-          <p>{description}</p>
+          <p className="text-gray-600 dark:text-gray-300">{description}</p>
           <div className="flex justify-between pt-1 w-full">
             <div className="flex gap-1 flex-wrap">
               {skills.map((skill, idx) => (

@@ -26,7 +26,7 @@ export default function ProjectCard(props: Props) {
         <div className="p-4">
           <div className="flex flex-col gap-1">
             <h3>{title}</h3>
-            <h4 className="font-normal text-base">{theme}</h4>
+            <h4 className="font-normal text-base text-gray-600 dark:text-gray-300">{theme}</h4>
             <div className="flex gap-1 flex-wrap pt-1">
               {skills.map((skill, idx) => (
                 <Badge key={`${skill}-${idx}`}>{skill}</Badge>
@@ -34,11 +34,11 @@ export default function ProjectCard(props: Props) {
             </div>
           </div>
           <div className="flex w-full justify-between pt-6">
-            <div className="text-gray-600 dark:text-gray-300 space-x-1 flex">
+            <div className="text-gray-600 dark:text-gray-300 space-x-1 flex items-center">
               <Icons.Date className="icons-size-small pr-1" />
-              <span>{date.start}</span>
-              <span>~</span>
-              <span>{date.end}</span>
+              <p>{date.start}</p>
+              <p>~</p>
+              <p>{date.end}</p>
             </div>
             <div className="flex ml-auto items-center gap-1 text-gray-600 dark:text-gray-300">
               <Icons.View className="icons-size-small pr-1" />

@@ -23,10 +23,10 @@ export default function PostRow(props: Omit<IPost, 'body'>) {
         </span>
         <span className="whitespace-nowrap">{createdAt}</span>
       </div>
-      <div className="pt-4 gap-4 flex justify-between items-end">
-        <h3 className="layout-text text-gray-500 dark:text-gray-300">{description}</h3>
-        <div className="flex items-center gap-2 dark:text-gray-300">
-          <Icons.View size="small" className="fill-gray-500 icons-size-small" />
+      <div className="pt-4 gap-4 flex justify-between items-end text-gray-600 dark:text-gray-300">
+        <h3 className="layout-text">{description}</h3>
+        <div className="flex items-center gap-1">
+          <Icons.View size="small" className="icons-size-small pr-1" />
           {views || 0}
         </div>
       </div>

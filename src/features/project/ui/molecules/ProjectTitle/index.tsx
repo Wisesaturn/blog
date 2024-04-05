@@ -14,7 +14,7 @@ export default function ProjectTitle(props: ProjectTitleProps) {
   return (
     <>
       <motion.div
-        className="pb-8 max-md:pb-5 w-full h-[500px] rounded-3xl max-md:rounded-xl"
+        className="pb-4 max-md:pb-0 w-full h-[500px] max-md:h-[250px] rounded-3xl max-md:rounded-xl"
         variants={animation?.variants}
       >
         <img
@@ -26,15 +26,17 @@ export default function ProjectTitle(props: ProjectTitleProps) {
       </motion.div>
       <motion.section
         id="article-title"
-        className="pt-4 pb-2 flex flex-col gap-4 max-md:gap-2 border-b-[1px]"
+        className="pt-4 pb-2 flex flex-col gap-2 max-md:gap-1 border-b-[1px]"
         variants={animation?.variants}
       >
         <span className="font-bold text-base max-md:text-sm text-green-darker dark:text-green-brighter">
           {category.toLocaleUpperCase()}
         </span>
-        <h1 className="text-4xl max-md:text-3xl">{title}</h1>
-        <h2 className="text-2xl max-md:text-xl">{theme}</h2>
-        <h3 className="text-xl max-md:text-base font-light">{description}</h3>
+        <div>
+          <h1 className="text-4xl max-md:text-2xl">{title}</h1>
+          <h2 className="text-2xl max-md:text-lg">{theme}</h2>
+        </div>
+        <h3 className="text-xl max-md:text-base font-light py-2">{description}</h3>
         <div className="flex justify-between items-end">
           <ProjectTitleInfo date={date} views={views} />
         </div>
