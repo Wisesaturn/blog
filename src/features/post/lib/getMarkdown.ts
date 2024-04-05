@@ -104,7 +104,11 @@ ${content}
   `;
   }
 
-  return block;
+  return `
+\`\`\`diff-${language}
+${content}
+\`\`\`
+  `;
 });
 
 /**

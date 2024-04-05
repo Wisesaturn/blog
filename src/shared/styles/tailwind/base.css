@@ -360,7 +360,7 @@
         }
 
         code {
-          @apply bg-green-brighter dark:bg-green-darker;
+          @apply bg-green-brighter dark:bg-emerald-950;
         }
       }
 
