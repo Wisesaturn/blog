@@ -33,18 +33,6 @@ export default function ProjectCard(props: Props) {
               ))}
             </div>
           </div>
-          <div className="flex w-full justify-between pt-6">
-            <div className="text-gray-600 dark:text-gray-300 space-x-1 flex items-center">
-              <Icons.Date className="icons-size-small pr-1" />
-              <p>{date.start}</p>
-              <p>~</p>
-              <p>{date.end}</p>
-            </div>
-            <div className="flex ml-auto items-center gap-1 text-gray-600 dark:text-gray-300">
-              <Icons.View className="icons-size-small pr-1" />
-              {views || 0}
-            </div>
-          </div>
         </div>
       </motion.div>
     </Link>
