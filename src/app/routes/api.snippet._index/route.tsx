@@ -12,7 +12,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const body: PostBody<'snippet'> = await request.json();
     const project = await createSnippet(body.title);
     await updateSnippet({
-      category: `snippets`,
       title: convertString(project.plainTitle, 'spaceToDash'),
       data: project,
     });

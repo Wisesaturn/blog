@@ -112,8 +112,7 @@ export default async function createPost(title: string) {
     return post;
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title} 게시물 생성에 실패하였습니다.`));
-      Logger.error(err);
+      Logger.error(new Error(`${title} 게시물 생성에 실패하였습니다.`, { cause: err }));
     }
     throw err;
   }

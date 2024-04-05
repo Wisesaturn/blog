@@ -14,7 +14,10 @@ class LoggerModule {
 
   error(err: Error) {
     const newMessage = this.baseMessage + err.message;
-    console.log(chalk.red(`[ERROR] ${newMessage}`, err));
+    console.log(chalk.red(`[ERROR] ${newMessage}`));
+    if (err.cause) {
+      console.log(chalk.bgRed(`[CAUSE] ${err.cause}`));
+    }
   }
 
   warn(message: string, err?: Error) {

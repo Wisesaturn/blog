@@ -32,7 +32,7 @@ export default function ProjectTitle(props: ProjectTitleProps) {
         <span className="font-bold text-base max-md:text-sm text-green-darker dark:text-green-brighter">
           {category.toLocaleUpperCase()}
         </span>
-        <div>
+        <div className="md:space-y-1">
           <h1 className="text-4xl max-md:text-2xl">{title}</h1>
           <h2 className="text-2xl max-md:text-lg">{theme}</h2>
         </div>

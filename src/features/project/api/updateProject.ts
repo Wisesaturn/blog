@@ -7,17 +7,15 @@ import { IProject } from '../types/project';
 
 interface Props {
   title: string;
-  data: Partial<IProject>;
+  meta: Partial<Omit<IProject, 'body'>>;
+  body?: string;
 }
 
 export default async function updateProject(props: Props) {
-  const { title, data } = props;
+  const { title, meta, body } = props;
   try {
-    const { body, ...meta } = data;
-    const docMetaRef = doc(collection(db, 'projects', title, 'meta'), data.index);
-    const docBodyRef = doc(collection(db, 'projects', title, 'body'), data.index);
+    const docMetaRef = doc(collection(db, 'projects', title, 'meta'), meta.index);
     const docMetaSnap = await getDoc(docMetaRef);
-    const docBodySnap = await getDoc(docBodyRef);
 
     if (docMetaSnap.exists()) {
       await updateDoc(docMetaRef, meta);
@@ -25,17 +23,21 @@ export default async function updateProject(props: Props) {
       await setDoc(docMetaRef, meta);
     }
 
-    if (docBodySnap.exists()) {
-      await updateDoc(docBodyRef, { body });
-    } else {
-      await setDoc(docBodyRef, { body });
+    if (body) {
+      const docBodyRef = doc(collection(db, 'projects', title, 'body'), meta.index);
+      const docBodySnap = await getDoc(docBodyRef);
+
+      if (docBodySnap.exists()) {
+        await updateDoc(docBodyRef, { body });
+      } else {
+        await setDoc(docBodyRef, { body });
+      }
     }
 
     Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title}에 해당하는 프로젝트가 없습니다`));
-      Logger.error(err);
+      Logger.error(new Error(`${title}에 해당하는 프로젝트가 없습니다`, { cause: err }));
     }
     throw err;
   }

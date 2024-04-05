@@ -21,8 +21,7 @@ export default async function deleteStore(props: IFireStore) {
           Logger.delete(`${collection}/${category}/${title}/${item.name}`);
         } catch (error) {
           if (error instanceof Error) {
-            Logger.error(new Error(`${item.name}을 삭제할 수 없습니다.`));
-            Logger.error(error);
+            Logger.error(new Error(`${item.name}을 삭제할 수 없습니다.`, { cause: error }));
           }
           throw error;
         }
@@ -36,8 +35,7 @@ export default async function deleteStore(props: IFireStore) {
     }
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error('알 수 없는 이유로 파일 삭제에 실패했습니다'));
-      Logger.error(err);
+      Logger.error(new Error('알 수 없는 이유로 파일 삭제에 실패했습니다', { cause: err }));
     }
   }
 }

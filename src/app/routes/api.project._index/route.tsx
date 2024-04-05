@@ -10,11 +10,11 @@ import convertString from '$shared/lib/convertString';
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const body: PostBody<'project'> = await request.json();
-    const project = await createProject(body.title);
+    const { body: projectBody, ...project } = await createProject(body.title);
     await updateProject({
-      category: `projects`,
       title: convertString(project.plainTitle, 'spaceToDash'),
-      data: project,
+      meta: project,
+      body: projectBody,
     });
     return json(project);
   } catch (err) {

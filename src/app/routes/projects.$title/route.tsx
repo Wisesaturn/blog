@@ -52,7 +52,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   // update view
   await updateProject({
     title,
-    data: { views },
+    meta: { views, index: project.index },
   });
 
   return json(

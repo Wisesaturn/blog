@@ -93,8 +93,7 @@ export default async function createSnippet(title: string) {
     return snippet;
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title} 스니펫 생성에 실패하였습니다.`));
-      Logger.error(err);
+      Logger.error(new Error(`${title} 스니펫 생성에 실패하였습니다.`, { cause: err }));
     }
     throw err;
   }

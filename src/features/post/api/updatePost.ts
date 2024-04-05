@@ -25,8 +25,7 @@ export default async function updatePost(props: Props) {
     Logger.success(`${category}/${title}에 게시물을 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${category}/${title}에 해당하는 게시물이 없습니다`));
-      Logger.error(err);
+      Logger.error(new Error(`${category}/${title}에 해당하는 게시물이 없습니다`, { cause: err }));
     }
     throw err;
   }
