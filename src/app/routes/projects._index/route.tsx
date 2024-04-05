@@ -5,6 +5,7 @@ import { useLoaderData } from '@remix-run/react';
 import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
 import getProjects from '$features/project/api/getProjects';
 import ProjectList from '$features/project/ui/organisms/ProjectList';
+import sortProjects from '$features/project/lib/sortProjects';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import Title from '$shared/ui/atoms/Title';
@@ -19,8 +20,9 @@ export const meta: MetaFunction = (args) => {
 // loader
 export async function loader() {
   const projects = await getProjects();
+  const sortedProjects = sortProjects(projects);
 
-  return json({ projects });
+  return json({ projects: sortedProjects });
 }
 
 export default function ProjectsPage() {

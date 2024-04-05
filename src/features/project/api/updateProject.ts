@@ -6,17 +6,16 @@ import Logger from '$shared/helper/logger';
 import { IProject } from '../types/project';
 
 interface Props {
-  category: string;
   title: string;
   data: Partial<IProject>;
 }
 
 export default async function updateProject(props: Props) {
-  const { category, title, data } = props;
+  const { title, data } = props;
   try {
     const { body, ...meta } = data;
-    const docMetaRef = doc(collection(db, category, title, 'meta'), data.index);
-    const docBodyRef = doc(collection(db, category, title, 'body'), data.index);
+    const docMetaRef = doc(collection(db, 'projects', title, 'meta'), data.index);
+    const docBodyRef = doc(collection(db, 'projects', title, 'body'), data.index);
     const docMetaSnap = await getDoc(docMetaRef);
     const docBodySnap = await getDoc(docBodyRef);
 
@@ -32,10 +31,10 @@ export default async function updateProject(props: Props) {
       await setDoc(docBodyRef, { body });
     }
 
-    Logger.success(`${category}/${title}에 프로젝트를 업데이트하였습니다.`);
+    Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${category}/${title}에 해당하는 프로젝트가 없습니다`));
+      Logger.error(new Error(`${title}에 해당하는 프로젝트가 없습니다`));
       Logger.error(err);
     }
     throw err;

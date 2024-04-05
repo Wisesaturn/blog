@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
@@ -6,6 +6,7 @@ import getSnippet from '$features/snippet/api/getSnippet';
 import SnippetComments from '$features/snippet/ui/atoms/SnippetComments';
 import SnippetTitle from '$features/snippet/ui/molecules/SnippetTitle';
 import SnippetButtons from '$features/snippet/ui/molecules/SnippetButtons';
+import updateSnippet from '$features/snippet/api/updateSnippet';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -22,12 +23,43 @@ export const meta: MetaFunction = (args) => {
 export const links: LinksFunction = () => [formatStyleSheet(codeStyles)];
 
 // loader
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const { title } = params;
   if (!title) throw new Error();
 
   const snippet = await getSnippet({ title });
-  return json({ snippet });
+  // cookie settings
+  const hasUserVisited = createCookie(`${snippet.index}`, {
+    path: '/',
+    secure: true,
+    httpOnly: true,
+    maxAge: 60 * 60 * 0.5,
+  });
+  const cookieHeader = request.headers.get('Cookie');
+  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
+
+  // ignore create cookie if it's development or alreeady has cookie
+  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+    return json({ snippet });
+  }
+
+  const views = snippet.views ? snippet.views + 1 : 1;
+  snippet.views = views;
+
+  // update view
+  await updateSnippet({
+    title,
+    data: { views },
+  });
+
+  return json(
+    { snippet },
+    {
+      headers: {
+        'Set-Cookie': await hasUserVisited.serialize({}),
+      },
+    },
+  );
 }
 
 export default function SnippetPage() {

@@ -8,14 +8,14 @@ interface ArticleTitleInfo {
 export default function ArticleTitleInfo(props: ArticleTitleInfo) {
   const { views, createdAt } = props;
   return (
-    <div className="flex gap-3 items-center align-middle text-gray-500 dark:text-gray-400">
+    <div className="flex gap-4 items-center align-middle text-gray-600 dark:text-gray-300">
       <div className="flex gap-1 items-center align-middle">
-        <Icons.Date size="small" />
-        <p className="layout-text dark:text-white">{createdAt}</p>
+        <Icons.Date className="icons-size-small pr-1" />
+        <p className="layout-text">{createdAt}</p>
       </div>
       <div className="flex gap-1 items-center align-middle">
-        <Icons.View size="small" />
-        <p className="layout-text dark:text-white">{views}</p>
+        <Icons.View className="icons-size-small pr-1" />
+        <p className="layout-text">{views}</p>
       </div>
     </div>
   );

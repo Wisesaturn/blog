@@ -3,6 +3,9 @@ import { Link } from '@remix-run/react';
 
 import { IProject } from '$features/project/types/project';
 
+import Badge from '$shared/ui/atoms/Badge';
+import Icons from '$shared/ui/atoms/icons';
+
 interface Props extends Omit<IProject, 'body'>, GlobalAnimation {}
 
 export default function ProjectCard(props: Props) {
@@ -11,7 +14,7 @@ export default function ProjectCard(props: Props) {
     <Link to={title}>
       <motion.div
         variants={animation?.variants}
-        className="layout-hover layout-border layout-bg layout-text layout-rounded"
+        className="layout-hover h-full layout-border layout-bg layout-text layout-rounded"
       >
         <div className="w-full h-[200px] layout-rounded">
           <img
@@ -21,23 +24,27 @@ export default function ProjectCard(props: Props) {
           />
         </div>
         <div className="p-4">
-          <h3>{title}</h3>
-          <h4 className="font-normal text-base">{theme}</h4>
-          <div>
-            <div>
+          <div className="flex flex-col gap-1">
+            <h3>{title}</h3>
+            <h4 className="font-normal text-base">{theme}</h4>
+            <div className="flex gap-1 flex-wrap pt-1">
+              {skills.map((skill, idx) => (
+                <Badge key={`${skill}-${idx}`}>{skill}</Badge>
+              ))}
+            </div>
+          </div>
+          <div className="flex w-full justify-between pt-6">
+            <div className="text-gray-600 dark:text-gray-300 space-x-1 flex">
+              <Icons.Date className="icons-size-small pr-1" />
               <span>{date.start}</span>
               <span>~</span>
               <span>{date.end}</span>
             </div>
+            <div className="flex ml-auto items-center gap-1 text-gray-600 dark:text-gray-300">
+              <Icons.View className="icons-size-small pr-1" />
+              {views || 0}
+            </div>
           </div>
-          <div className="flex gap-1 flex-wrap">
-            {skills.map((skill, idx) => (
-              <div className="text-base" key={`${title}-${idx}`}>
-                {skill}
-              </div>
-            ))}
-          </div>
-          <span>{views}</span>
         </div>
       </motion.div>
     </Link>

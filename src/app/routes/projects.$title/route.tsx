@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
@@ -8,6 +8,7 @@ import useTOC from '$features/post/hooks/useTOC';
 import ProjectComments from '$features/project/ui/atoms/ProjectComments';
 import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
 import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
+import updateProject from '$features/project/api/updateProject';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -24,12 +25,44 @@ export const meta: MetaFunction = (args) => {
 export const links: LinksFunction = () => [formatStyleSheet(codeStyles)];
 
 // loader
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const { title } = params;
   if (!title) throw new Error();
 
   const project = await getProject({ title });
-  return json({ project });
+
+  // cookie settings
+  const hasUserVisited = createCookie(`${project.index}`, {
+    path: '/',
+    secure: true,
+    httpOnly: true,
+    maxAge: 60 * 60 * 0.5,
+  });
+  const cookieHeader = request.headers.get('Cookie');
+  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
+
+  // ignore create cookie if it's development or alreeady has cookie
+  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+    return json({ project });
+  }
+
+  const views = project.views ? project.views + 1 : 1;
+  project.views = views;
+
+  // update view
+  await updateProject({
+    title,
+    data: { views },
+  });
+
+  return json(
+    { project },
+    {
+      headers: {
+        'Set-Cookie': await hasUserVisited.serialize({}),
+      },
+    },
+  );
 }
 
 export default function ProjectPage() {
