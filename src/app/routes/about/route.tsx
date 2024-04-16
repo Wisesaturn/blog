@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { MetaFunction } from '@remix-run/node';
 
+import ProfileTitle from '$features/profile/ui/molecules/ProfileTitle';
+
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import Title from '$shared/ui/atoms/Title';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 
 // meta
@@ -19,12 +20,7 @@ export default function AboutPage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <Title
-        animation={{
-          variants: ANIMATE_FADE_UP_ITEM,
-        }}
-        title="About 송재한"
-      />
+      <ProfileTitle animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }

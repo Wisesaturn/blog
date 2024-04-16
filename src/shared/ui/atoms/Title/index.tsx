@@ -17,9 +17,11 @@ export default function Title(props: TitleProps) {
       <motion.h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl">
         {title}
       </motion.h1>
-      <motion.h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight max-md:pt-1">
-        {subtitle}
-      </motion.h2>
+      {subtitle && (
+        <motion.h2 className="text-2xl text-gray-400 font-light max-md:text-base max-md:leading-tight max-md:pt-1">
+          {subtitle}
+        </motion.h2>
+      )}
     </motion.div>
   );
 }

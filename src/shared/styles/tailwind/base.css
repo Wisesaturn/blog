@@ -342,6 +342,14 @@
       @apply pt-4;
     }
 
+    li {
+      strong {
+        background-color: var(--green-bright);
+        color: var(--black);
+        font-weight: bold;
+      }
+    }
+
     table {
       @apply pt-8 layout-text;
 
@@ -390,7 +398,7 @@
     }
 
     /* no margin image instantly after heading */
-    :is(h4, h3, h2) + img {
+    :is(h4, h3, h2, img, div[class='image-caption']) + img {
       @apply mt-4;
     }
 
