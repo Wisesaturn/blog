@@ -1,5 +1,3 @@
-import { DocumentData } from 'firebase/firestore';
-
 import { IProject } from '../types/project';
 
 /**
@@ -8,10 +6,15 @@ import { IProject } from '../types/project';
  * @returns
  */
 export default function sortProjects(projects: Omit<IProject, 'body'>[]) {
-  projects.sort((a: DocumentData, b: DocumentData) => {
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return dateA < dateB ? 1 : -1;
+  projects.sort((a, b) => {
+    const dateAStart = new Date(a.date.start);
+    const dateBStart = new Date(b.date.start);
+    if (dateAStart.getTime() === dateBStart.getTime()) {
+      const dateAEnd = new Date(a.date.end);
+      const dateBEnd = new Date(b.date.end);
+      return dateAEnd < dateBEnd ? -1 : 1;
+    }
+    return dateAStart < dateBStart ? 1 : -1;
   });
 
   return projects;

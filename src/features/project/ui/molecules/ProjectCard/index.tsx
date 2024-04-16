@@ -4,12 +4,11 @@ import { Link } from '@remix-run/react';
 import { IProject } from '$features/project/types/project';
 
 import Badge from '$shared/ui/atoms/Badge';
-import Icons from '$shared/ui/atoms/icons';
 
 interface Props extends Omit<IProject, 'body'>, GlobalAnimation {}
 
 export default function ProjectCard(props: Props) {
-  const { skills, theme, views, date, title, thumbnail, animation } = props;
+  const { skills, theme, title, thumbnail, animation } = props;
   return (
     <Link to={title}>
       <motion.div

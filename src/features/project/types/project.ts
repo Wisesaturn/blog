@@ -16,6 +16,7 @@ export interface IProject {
     start: string;
     end: string;
   };
-  github: string;
+  website?: string;
+  github?: string;
   views: number;
 }

@@ -57,6 +57,7 @@ export default async function createProject(title: string) {
           skills: selectedPost[0].properties.skills.multi_select.map((skill) => skill.name),
           role: selectedPost[0].properties.role.multi_select.map((role) => role.name),
           github: selectedPost[0].properties.github.url,
+          website: selectedPost[0].properties.website.url,
           lastmod: new Intl.DateTimeFormat('fr-CA', {
             month: '2-digit',
             day: '2-digit',

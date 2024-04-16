@@ -133,6 +133,7 @@ interface ProjectProperties {
   skills: MultiSelect;
   lastEditedAt: LastEditedTime;
   github: Link;
+  website: Link;
   description: Text;
   date: Date;
   role: MultiSelect;
