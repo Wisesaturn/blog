@@ -316,6 +316,11 @@
       }
     }
 
+    /* no padding ul instantly after heading */
+    :is(h2, h3, h4) + ul {
+      @apply pt-4;
+    }
+
     ol {
       @apply pt-8 layout-text;
 
@@ -330,6 +335,11 @@
           color: var(--gray-darker);
         }
       }
+    }
+
+    /* no padding ol instantly after heading */
+    :is(h2, h3, h4) + ol {
+      @apply pt-4;
     }
 
     table {
@@ -377,6 +387,11 @@
 
     img {
       @apply mt-16 mx-auto w-full rounded-3xl max-md:rounded-xl;
+    }
+
+    /* no margin image instantly after heading */
+    :is(h4, h3, h2) + img {
+      @apply mt-4;
     }
 
     /* code snippets */
