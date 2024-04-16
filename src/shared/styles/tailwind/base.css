@@ -343,10 +343,18 @@
     }
 
     li {
+      img {
+        @apply mt-2;
+      }
+
       strong {
         background-color: var(--green-bright);
         color: var(--black);
         font-weight: bold;
+      }
+
+      p {
+        @apply pt-0;
       }
     }
 

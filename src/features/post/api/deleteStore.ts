@@ -8,6 +8,7 @@ import { IFireStore } from '$shared/types/global';
 export default async function deleteStore(props: IFireStore) {
   const { category, title, collection } = props;
   try {
+    Logger.log(`${collection}/${category}/${title} 기존 파일 삭제`);
     const listRef = ref(storage, `${collection}/${category}/${title}`);
     const res = await listAll(listRef);
 
