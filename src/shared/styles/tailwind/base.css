@@ -208,7 +208,9 @@
   }
 }
 
-/** markdown-body */
+/** 
+* markdown-body 
+*/
 @layer base {
   .markdown-body {
     h2 {
@@ -273,6 +275,10 @@
       strong {
         background-color: var(--green-bright);
         color: var(--black);
+      }
+
+      + p:has(a) {
+        @apply pt-0;
       }
     }
 
