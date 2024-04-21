@@ -9,11 +9,26 @@ interface Props extends GlobalAnimation {
 }
 
 export default function ProfileInfo({ animation, item }: Props) {
+  const { subTitle, link, date, title, list } = item;
+
   return (
     <motion.div variants={animation?.variants} className="space-y-1">
-      <h4 className="text-2xl max-md:text-xl">{item.title}</h4>
-      {item.subTitle && <Badge>{item.subTitle}</Badge>}
-      <div className="text-sm max-md:text-xs">{item.date}</div>
+      <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
+      {subTitle && <Badge>{subTitle}</Badge>}
+      {date && <div className="text-sm max-md:text-xs">{date}</div>}
+      {link && <div className="text-sm max-md:text-xs">{link}</div>}
+      {list && (
+        <div>
+          <hr className="mt-2 mb-4 max-md:mb-2" />
+          <ul className="list-disc pl-6 max-md:pl-4 space-y-2 max-md:pt-2 pt-1">
+            {list.map((l, idx) => (
+              <li className="text-sm" key={l + idx}>
+                {l}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </motion.div>
   );
 }
