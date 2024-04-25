@@ -1,15 +1,15 @@
 export type ProfileItemTypes = 'default' | 'accordion';
 
 interface DefaultItems {
-  subTitle?: string;
+  badge?: string;
   date?: string;
   link?: string;
-  list?: string[];
+  list?: React.ReactNode[];
 }
 
 interface AccordionItems {
   subTitle: string;
-  list: string[];
+  list: React.ReactNode[];
 }
 
 interface ProfileItems {

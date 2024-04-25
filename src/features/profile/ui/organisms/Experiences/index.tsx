@@ -10,7 +10,7 @@ export default function Experiences({ animation }: GlobalAnimation) {
     <>
       <ProfileCategory animation={animation}>Experiences</ProfileCategory>
       <motion.section
-        className="pt-8 pb-4 max-md:pt-4 max-md:pb-2 flex flex-col gap-8 max-md:gap-6"
+        className="pt-8 pb-4 max-md:pt-4 max-md:pb-2 flex flex-col gap-10"
         variants={animation?.variants}
       >
         {PROFILE.experiences.map((info, idx) => (

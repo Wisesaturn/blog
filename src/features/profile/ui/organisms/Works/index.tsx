@@ -8,9 +8,9 @@ import ProfileBox from '../ProfileBox';
 export default function Works({ animation }: GlobalAnimation) {
   return (
     <>
-      <ProfileCategory animation={animation}>Works (Accordian)</ProfileCategory>
+      <ProfileCategory animation={animation}>Works</ProfileCategory>
       <motion.section
-        className="pt-8 pb-4 max-md:pt-4 max-md:pb-2 flex flex-col gap-8 max-md:gap-6"
+        className="pt-8 pb-4 max-md:pt-4 max-md:pb-2 flex flex-col gap-10"
         variants={animation?.variants}
       >
         {PROFILE.works.map((info, idx) => (
