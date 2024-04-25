@@ -16,9 +16,16 @@ const PROFILE: {
     {
       type: 'accordion',
       title: 'Language',
-      items: {
-        list: ['뭘 봐', '네네'],
-      },
+      items: [
+        {
+          subTitle: 'Javascript',
+          list: ['뭘 봐', '네네'],
+        },
+        {
+          subTitle: 'Javascript',
+          list: ['뭘 봐', '네네'],
+        },
+      ],
     },
   ],
   certificates: [

@@ -8,12 +8,13 @@ interface DefaultItems {
 }
 
 interface AccordionItems {
+  subTitle: string;
   list: string[];
 }
 
 interface ProfileItems {
   default: DefaultItems;
-  accordion: AccordionItems;
+  accordion: AccordionItems[];
 }
 
 export interface IProfile<T extends ProfileItemTypes> {
