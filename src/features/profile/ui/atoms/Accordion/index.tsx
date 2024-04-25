@@ -25,7 +25,7 @@ export default function Accordion({ item }: Props) {
       >
         {subTitle}
       </h5>
-      <motion.ul
+      <motion.div
         initial={{ opacity: 0, height: 0 }}
         animate={{
           opacity: isOpen ? 1 : 0,
@@ -33,16 +33,18 @@ export default function Accordion({ item }: Props) {
         }}
         transition={{ duration: 0.3 }}
         style={{ overflow: 'hidden' }}
-        className="list-disc"
       >
-        <div className="p-2 space-y-1">
+        <ul className="list-disc p-2 pl-6 space-y-1">
           {list.map((content, idx) => (
-            <li key={idx} className="break-keep markdown-body text-sm">
+            <li
+              key={idx}
+              className="list-disc marker:text-green-main break-keep markdown-body text-sm"
+            >
               {content}
             </li>
           ))}
-        </div>
-      </motion.ul>
+        </ul>
+      </motion.div>
     </div>
   );
 }

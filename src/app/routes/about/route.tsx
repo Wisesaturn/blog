@@ -29,11 +29,11 @@ export default function AboutPage() {
     >
       <ProfileTitle animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <Works animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <Experiences animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <Activities animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <Certificates animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <Awards animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <TechStacks animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <Experiences animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <Education animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );

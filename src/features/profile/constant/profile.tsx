@@ -1,7 +1,7 @@
 import { IProfile } from '../types/profile';
 
 const PROFILE: {
-  works: IProfile<'default'>[];
+  works: IProfile<'separate'>[];
   experiences: IProfile<'default'>[];
   activities: IProfile<'default'>[];
   techStacks: IProfile<'accordion'>[];
@@ -9,7 +9,51 @@ const PROFILE: {
   awards: IProfile<'default'>[];
   education: IProfile<'default'>[];
 } = {
-  works: [],
+  works: [
+    {
+      type: 'separate',
+      title: '무하유',
+      items: {
+        summary: {
+          role: 'Frontend Developer',
+          date: '2024.04 ~ ing',
+          department: '개발 10 유닛',
+          introduction: '',
+          link: 'https://www.muhayu.com/',
+        },
+        projects: [
+          {
+            title: '',
+            list: [],
+          },
+        ],
+      },
+    },
+    {
+      type: 'separate',
+      title: '이지일렉트릭',
+      items: {
+        summary: {
+          role: 'Frontend Developer',
+          date: '2023.06 ~ 2023.12',
+          department: '개발부',
+          introduction: '엔지니오 웹 프론트엔드 서비스 개발, Next.js 마이그레이션 담당',
+          link: 'https://engineeo.kr/',
+        },
+        projects: [
+          {
+            title: '서비스 개발',
+            list: [
+              'Next.js 기반 복원 플랫폼 서비스 개발',
+              '게시판 에디터 내 AWS S3 이미지 업로드 연동 개발',
+              '포인트 충전 기능 구현',
+              '어드민 페이지 내 KPI 지표 구현',
+            ],
+          },
+        ],
+      },
+    },
+  ],
   experiences: [
     {
       type: 'default',
@@ -88,6 +132,132 @@ const PROFILE: {
   techStacks: [
     {
       type: 'accordion',
+      title: 'Web Development',
+      items: [
+        {
+          subTitle: 'React',
+          list: [
+            'React와 함께 SPA를 개발할 수 있으며, DOM 조작 및 이벤트 처리에 대한 이해가 있습니다',
+            '훅을 활용하여 비즈니스와 UI를 분리하며 개발할 수 있습니다',
+            '코드 스플리팅과 메모이제이션을 통해 성능 개선한 경험이 있습니다',
+          ],
+        },
+        {
+          subTitle: 'Next.js',
+          list: [
+            'Page Routing과 App Routing의 장단점을 파악하고 있습니다',
+            'SSR과 SSG 환경에 대한 이해가 있습니다',
+            'Middleware와 fetch API를 결합하여 사용자 인가 및 인증을 구현한 경험이 있습니다',
+          ],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Test',
+      items: [
+        {
+          subTitle: 'Jest',
+          list: [
+            'DCI 패턴 기반으로 유닛 테스트를 한 경험이 있습니다',
+            'Mocking을 통해 비동기 로직을 테스트 할 수 있습니다',
+          ],
+        },
+        {
+          subTitle: 'Playwright',
+          list: [
+            '사파리와 크로미움 기반 브라우저 간의 차이를 최소화하기 위해 E2E 테스트를 자동화한 경험이 있습니다',
+          ],
+        },
+        {
+          subTitle: 'Storybook',
+          list: ['CDD 방법론에 익숙합니다', '디자인 시스템을 구축할 때 주로 사용하였습니다'],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Markup',
+      items: [
+        {
+          subTitle: 'HTML',
+          list: [
+            '웹 접근성과 SEO를 고려하며 코드를 작성할 수 있습니다',
+            '레이아웃 시안을 보고 반응형을 고려하며 빠르게 구현해 낼 수 있습니다',
+          ],
+        },
+        {
+          subTitle: 'Markdown',
+          list: [
+            'README 파일, 블로그 게시물 작성에 익숙합니다',
+            'rehype와 remark를 사용하여 mdast를 html로 변환하는 데 능숙합니다',
+          ],
+        },
+        {
+          subTitle: 'Katex',
+          list: ['간단한 수학 기호와 방정식을 작성할 수 있습니다'],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'DevOps',
+      items: [
+        {
+          subTitle: 'Linux / Ubuntu',
+          list: [
+            'AWS를 통해 웹 애플리케이션과 서버를 배포한 경험이 있습니다',
+            '리눅스 명령어를 사용하여 시스템 관리와 간단한 스크립트 작성을 할 수 있습니다',
+          ],
+        },
+        {
+          subTitle: 'Github Actions',
+          list: [''],
+        },
+        {
+          subTitle: 'AWS',
+          list: [''],
+        },
+        {
+          subTitle: 'Nginx',
+          list: [''],
+        },
+        {
+          subTitle: 'Docker',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Server',
+      items: [
+        {
+          subTitle: 'Nest.js',
+          list: [''],
+        },
+        {
+          subTitle: 'Node.js',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Database',
+      items: [
+        {
+          subTitle: 'MySQL',
+          list: [''],
+        },
+        {
+          subTitle: 'Firestore',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
       title: 'Language',
       items: [
         {
@@ -131,206 +301,18 @@ const PROFILE: {
     },
     {
       type: 'accordion',
-      title: 'Markup',
-      items: [
-        {
-          subTitle: 'HTML',
-          list: [''],
-        },
-        {
-          subTitle: 'Markup',
-          list: [''],
-        },
-        {
-          subTitle: 'Katex',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Styling',
-      items: [
-        {
-          subTitle: 'CSS/SCSS/CSS Module',
-          list: [''],
-        },
-        {
-          subTitle: 'TailwindCSS',
-          list: [''],
-        },
-        {
-          subTitle: 'Styled-Components',
-          list: [''],
-        },
-        {
-          subTitle: 'Emotion',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Web Development',
-      items: [
-        {
-          subTitle: 'React',
-          list: [''],
-        },
-        {
-          subTitle: 'Next.js',
-          list: [''],
-        },
-        {
-          subTitle: 'Remix',
-          list: [''],
-        },
-        {
-          subTitle: 'Svelte',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'State Management',
-      items: [
-        {
-          subTitle: 'Recoil',
-          list: [''],
-        },
-        {
-          subTitle: 'Context API',
-          list: [''],
-        },
-        {
-          subTitle: 'Redux',
-          list: [''],
-        },
-        {
-          subTitle: 'React-Query',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'DevOps',
-      items: [
-        {
-          subTitle: 'Github Actions',
-          list: [''],
-        },
-        {
-          subTitle: 'AWS',
-          list: [''],
-        },
-        {
-          subTitle: 'Nginx',
-          list: [''],
-        },
-        {
-          subTitle: 'Docker',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Test',
-      items: [
-        {
-          subTitle: 'Jest',
-          list: [''],
-        },
-        {
-          subTitle: 'Playwright',
-          list: [''],
-        },
-        {
-          subTitle: 'Storybook',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Server',
-      items: [
-        {
-          subTitle: 'Nest.js',
-          list: [''],
-        },
-        {
-          subTitle: 'Node.js',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Database',
-      items: [
-        {
-          subTitle: 'MySQL',
-          list: [''],
-        },
-        {
-          subTitle: 'Firestore',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Graphic',
-      items: [
-        {
-          subTitle: 'openCV',
-          list: [''],
-        },
-        {
-          subTitle: 'openGL',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Game',
+      title: 'Etc',
       items: [
         {
           subTitle: 'Unity',
           list: [''],
         },
         {
-          subTitle: 'Unreal Game',
-          list: [''],
-        },
-      ],
-    },
-    {
-      type: 'accordion',
-      title: 'Collaboration',
-      items: [
-        {
-          subTitle: 'Git & Github',
+          subTitle: 'openCV',
           list: [''],
         },
         {
-          subTitle: 'Notion',
-          list: [''],
-        },
-        {
-          subTitle: 'Figma',
-          list: [''],
-        },
-        {
-          subTitle: 'Slack',
-          list: [''],
-        },
-        {
-          subTitle: 'Jira & Wiki Confluuence',
+          subTitle: 'openGL',
           list: [''],
         },
       ],
