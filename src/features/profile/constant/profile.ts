@@ -1,31 +1,60 @@
 import { IProfile } from '../types/profile';
 
-const PROFILE: { [key in string]: IProfile[] } = {
+const PROFILE: {
+  works: IProfile<'default'>[];
+  experiences: IProfile<'default'>[];
+  activities: IProfile<'default'>[];
+  techStacks: IProfile<'accordion'>[];
+  certificates: IProfile<'default'>[];
+  awards: IProfile<'default'>[];
+  education: IProfile<'default'>[];
+} = {
   works: [],
   experiences: [],
   activities: [],
   techStacks: [
     {
+      type: 'accordion',
       title: 'Language',
-      list: ['뭘 봐', '네네'],
+      items: {
+        list: ['뭘 봐', '네네'],
+      },
     },
   ],
   certificates: [
     {
+      type: 'default',
       title: 'SQLD',
-      date: '2024.04.05',
+      items: {
+        date: '2024.04.05',
+      },
     },
   ],
-  awards: [{ title: '제 1회 아주톤 우수상', subTitle: '해커톤', date: '2023.03.19' }],
+  awards: [
+    {
+      type: 'default',
+      title: '제 1회 아주톤 우수상',
+      items: {
+        subTitle: '해커톤',
+        date: '2023.03.19',
+      },
+    },
+  ],
   education: [
     {
+      type: 'default',
       title: '아주대학교',
-      date: '2017.03 ~ 2024.02',
-      subTitle: '디지털미디어학과',
+      items: {
+        date: '2017.03 ~ 2024.02',
+        subTitle: '디지털미디어학과',
+      },
     },
     {
+      type: 'default',
       title: '수원고등학교',
-      date: '2013.03 ~ 2016.02',
+      items: {
+        date: '2013.03 ~ 2016.02',
+      },
     },
   ],
 };

@@ -5,11 +5,12 @@ import { IProfile } from '$features/profile/types/profile';
 import Badge from '$shared/ui/atoms/Badge';
 
 interface Props extends GlobalAnimation {
-  item: IProfile;
+  info: IProfile<'default'>;
 }
 
-export default function ProfileInfo({ animation, item }: Props) {
-  const { subTitle, link, date, title, list } = item;
+export default function ProfileDefaultInfo({ animation, info }: Props) {
+  const { title, items } = info;
+  const { subTitle, link, date, list } = items;
 
   return (
     <motion.div variants={animation?.variants} className="space-y-1">
