@@ -147,6 +147,194 @@ const PROFILE: {
         },
       ],
     },
+    {
+      type: 'accordion',
+      title: 'Styling',
+      items: [
+        {
+          subTitle: 'CSS/SCSS/CSS Module',
+          list: [''],
+        },
+        {
+          subTitle: 'TailwindCSS',
+          list: [''],
+        },
+        {
+          subTitle: 'Styled-Components',
+          list: [''],
+        },
+        {
+          subTitle: 'Emotion',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Web Development',
+      items: [
+        {
+          subTitle: 'React',
+          list: [''],
+        },
+        {
+          subTitle: 'Next.js',
+          list: [''],
+        },
+        {
+          subTitle: 'Remix',
+          list: [''],
+        },
+        {
+          subTitle: 'Svelte',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'State Management',
+      items: [
+        {
+          subTitle: 'Recoil',
+          list: [''],
+        },
+        {
+          subTitle: 'Context API',
+          list: [''],
+        },
+        {
+          subTitle: 'Redux',
+          list: [''],
+        },
+        {
+          subTitle: 'React-Query',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'DevOps',
+      items: [
+        {
+          subTitle: 'Github Actions',
+          list: [''],
+        },
+        {
+          subTitle: 'AWS',
+          list: [''],
+        },
+        {
+          subTitle: 'Nginx',
+          list: [''],
+        },
+        {
+          subTitle: 'Docker',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Test',
+      items: [
+        {
+          subTitle: 'Jest',
+          list: [''],
+        },
+        {
+          subTitle: 'Playwright',
+          list: [''],
+        },
+        {
+          subTitle: 'Storybook',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Server',
+      items: [
+        {
+          subTitle: 'Nest.js',
+          list: [''],
+        },
+        {
+          subTitle: 'Node.js',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Database',
+      items: [
+        {
+          subTitle: 'MySQL',
+          list: [''],
+        },
+        {
+          subTitle: 'Firestore',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Graphic',
+      items: [
+        {
+          subTitle: 'openCV',
+          list: [''],
+        },
+        {
+          subTitle: 'openGL',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Game',
+      items: [
+        {
+          subTitle: 'Unity',
+          list: [''],
+        },
+        {
+          subTitle: 'Unreal Game',
+          list: [''],
+        },
+      ],
+    },
+    {
+      type: 'accordion',
+      title: 'Collaboration',
+      items: [
+        {
+          subTitle: 'Git & Github',
+          list: [''],
+        },
+        {
+          subTitle: 'Notion',
+          list: [''],
+        },
+        {
+          subTitle: 'Figma',
+          list: [''],
+        },
+        {
+          subTitle: 'Slack',
+          list: [''],
+        },
+        {
+          subTitle: 'Jira & Wiki Confluuence',
+          list: [''],
+        },
+      ],
+    },
   ],
   certificates: [
     {
