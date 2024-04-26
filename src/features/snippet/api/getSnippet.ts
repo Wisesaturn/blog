@@ -15,7 +15,9 @@ export default async function getSnippet(props: Props) {
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
-    Logger.error(new Error(`${title}에 해당하는 스니펫이 없습니다`));
+    const NotFoundError = new Error(`${title}에 해당하는 스니펫이 없습니다`);
+    Logger.error(NotFoundError);
+    throw NotFoundError;
   }
 
   return docSnap.data() as ISnippet;

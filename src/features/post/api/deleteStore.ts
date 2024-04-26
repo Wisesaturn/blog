@@ -36,7 +36,9 @@ export default async function deleteStore(props: IFireStore) {
     }
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error('알 수 없는 이유로 파일 삭제에 실패했습니다', { cause: err }));
+      const UnknownError = new Error('알 수 없는 이유로 파일 삭제에 실패했습니다', { cause: err });
+      Logger.error(UnknownError);
+      throw UnknownError;
     }
   }
 }

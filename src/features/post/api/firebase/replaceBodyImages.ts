@@ -46,8 +46,9 @@ export default async function replaceBodyImages(props: Props): Promise<string> {
     return modifiedBody;
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error('이미지 업로드에 실패하였습니다.'));
-      Logger.error(err);
+      const ApplicationError = new Error('이미지 업로드에 실패하였습니다', { cause: err });
+      Logger.error(ApplicationError);
+      throw ApplicationError;
     }
     throw err;
   }

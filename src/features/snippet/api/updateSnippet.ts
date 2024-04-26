@@ -24,8 +24,11 @@ export default async function updateSnippet(props: Props) {
     Logger.success(`${title}에 스니펫을 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title}에 해당하는 스니펫이 없습니다`, { cause: err }));
+      const NotFoundError = new Error(`${title}에 해당하는 스니펫이 없습니다`, {
+        cause: err,
+      });
+      Logger.error(NotFoundError);
+      throw NotFoundError;
     }
-    throw err;
   }
 }

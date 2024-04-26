@@ -88,12 +88,12 @@ export function ErrorBoundary() {
   if (error instanceof Error) {
     return (
       <Layout data={data}>
-        <h1 className="w-full text-center pt-16 pb-8">Error</h1>
-        <p className="w-full max-w-layout break-keep py-8">{error.message}</p>
+        <h1 className="w-full text-center pt-16 pb-2">{error.name}</h1>
+        <p className="w-full text-center max-w-layout break-keep pt-4 pb-8">{error.message}</p>
         {process.env.NODE_ENV === 'development' && (
           <>
             <p>The stack trace is:</p>
-            <pre className="w-full max-w-layout break-keep py-8">{error.stack}</pre>
+            <pre className="w-full text-sm max-w-layout break-keep pt-2 pb-8">{error.stack}</pre>
           </>
         )}
         <div className="w-fit mx-auto h-screen">

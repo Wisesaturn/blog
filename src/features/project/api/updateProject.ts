@@ -37,7 +37,9 @@ export default async function updateProject(props: Props) {
     Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
-      Logger.error(new Error(`${title}에 해당하는 프로젝트가 없습니다`, { cause: err }));
+      const NotFoundError = new Error(`${title}에 해당하는 프로젝트가 없습니다`, { cause: err });
+      Logger.error(NotFoundError);
+      throw NotFoundError;
     }
     throw err;
   }
