@@ -182,6 +182,7 @@ const PROFILE: {
             'Page Routing과 App Routing의 장단점을 파악하고 있습니다',
             'SSR과 SSG 환경에 대한 이해가 있습니다',
             'Middleware와 fetch API를 결합하여 사용자 인가 및 인증을 구현한 경험이 있습니다',
+            'standalone 기반으로 EC2 내에 호스팅한 경험이 있습니다',
           ],
         },
       ],
@@ -246,19 +247,35 @@ const PROFILE: {
         },
         {
           subTitle: 'Github Actions',
-          list: [''],
+          list: [
+            'Pull Request 이벤트 감지를 통해 다양한 테스트 작업을 자동화할 수 있습니다',
+            'Docker 기반과 AWS CodeDeploy 기반의 CI/CD 파이프라인을 구현한 경험이 있습니다',
+          ],
         },
         {
           subTitle: 'AWS',
-          list: [''],
+          list: [
+            'S3와 CloudFront를 사용하여 정적 파일 캐싱을 통해 로드 속도를 개선한 경험이 있습니다',
+            'EC2 인스턴스에서 Docker 기반으로 애플리케이션을 호스팅하고, RDS를 통해 관계형 데이터베이스를 관리할 수 있습니다',
+            'CloudWatch를 활용하여 시스템 모니터링 및 로그 수집을 진행하고, SNS 알림을 통해 Slack 자동 메세지 알림 발송을 구현한 경험이 있습니다',
+          ],
         },
         {
           subTitle: 'Nginx',
-          list: [''],
+          list: [
+            '리버스 프록시를 사용하여 클라이언트 요청을 서버로 라우팅할 수 있습니다',
+            'HTTP 444 상태 코드를 활용해 특정 IP 주소나 범위를 차단하여 보안 수준을 높일 수 있습니다',
+            '블루-그린 방식의 배포 아키텍쳐를 구현한 경험이 있습니다',
+            '라운드-로빈 방식의 로드 밸런싱을 구현할 수 있습니다',
+          ],
         },
         {
           subTitle: 'Docker',
-          list: [''],
+          list: [
+            'Dockerfile을 작성하는 간단한 문법을 이해하고 있습니다',
+            '멀티 스테이지 빌드를 사용하여 단계별로 이미지를 분리하고 빌드 과정을 최적화할 수 있습니다',
+            '볼륨 마운트를 통해 호스트와 컨테이너 간에 로그 데이터를 공유한 경험이 있습니다',
+          ],
         },
       ],
     },
@@ -268,11 +285,19 @@ const PROFILE: {
       items: [
         {
           subTitle: 'Nest.js',
-          list: [''],
+          list: [
+            '간단한 소셜 로그인 및 RESTFul API를 구현한 경험이 있습니다',
+            'Repository 패턴 도입 등 관심사를 분리하며 개발합니다',
+            '데코레이터를 활용하여 코드의 가독성을 높이고 의존성을 효과적으로 관리합니다',
+            '파이프를 통해 커스텀 예외 처리 및 로깅 모듈을 개발한 경험이 있습니다',
+          ],
         },
         {
           subTitle: 'Node.js',
-          list: [''],
+          list: [
+            'Express를 사용하여 RESTful API를 구현하고, 라우팅 및 미들웨어를 사용한 경험이 있습니다.',
+            'Stream을 활용하여 대량의 데이터를 효율적으로 처리할 수 있습니다.',
+          ],
         },
       ],
     },
@@ -282,11 +307,25 @@ const PROFILE: {
       items: [
         {
           subTitle: 'MySQL',
-          list: [''],
+          list: [
+            'SQL 쿼리문을 작성하는 데 능숙합니다',
+            'Nest.js와 MySQL를 연동하여 데이터베이스 작업을 처리한 경험이 있습니다',
+            '정규화를 통해 중복 데이터를 최소화하며 데이터 무결성을 보장할 수 있습니다',
+          ],
+        },
+        {
+          subTitle: 'prisma',
+          list: [
+            'Prisma Schema를 활용하여 간단한 데이터베이스 작업을 수행한 경험이 있습니다',
+            '외래 키에 대한 유연한 관리와 엔터티 간의 관계 매핑을 쉽게 할 수 있습니다',
+          ],
         },
         {
           subTitle: 'Firestore',
-          list: [''],
+          list: [
+            'NoSQL 방식의 컬렉션 및 문서 구조를 설계에 능숙합니다',
+            'Firebase SDK를 통해 CRUD 기능을 구현한 경험이 있습니다',
+          ],
         },
       ],
     },
@@ -339,15 +378,27 @@ const PROFILE: {
       items: [
         {
           subTitle: 'Unity',
-          list: [''],
+          list: [
+            'Kinamatic과 Rigidbody를 활용하여 충돌 이벤트를 구현한 경험이 있습니다',
+            'Raycast를 활용하여 사용자 상호작용을 구현할 수 있습니다',
+            'VR/AR 게임을 제작한 경험이 있습니다',
+          ],
         },
         {
           subTitle: 'openCV',
-          list: [''],
+          list: [
+            'SURF 알고리즘을 활용하여 특징점을 찾고, Homography 좌표를 통해 이미지 스티칭을 구현할 수 있습니다',
+            'Hough Transform을 사용하여 동전 식별 알고리즘을 구현한 경험이 있습니다',
+            'Sobel, Canny 등의 알고리즘을 통해 Edge를 추출할 수 있습니다',
+          ],
         },
         {
           subTitle: 'openGL',
-          list: [''],
+          list: [
+            'Phong Shading을 사용하여 표면의 부드러운 조명 효과를 구현한 경험이 있습니다',
+            'Vertex와 Buffer를 활용해 3D 오브젝트의 위치와 형태를 정의할 수 있습니다',
+            'Shader를 활용하여 다양한 조명과 색상을 표현할 수 있습니다',
+          ],
         },
       ],
     },
