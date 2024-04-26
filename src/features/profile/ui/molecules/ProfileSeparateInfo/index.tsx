@@ -38,18 +38,18 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
           </span>
         )}
       </aside>
-      <section className="block max-md:pt-4 col-span-3">
+      <section className="block max-md:pt-4 col-span-3 space-y-4">
         {projects.map((project, idx) => (
-          <React.Fragment key={project.title + idx}>
+          <div key={project.title + idx}>
             <h5 className="font-semibold text-lg max-md:text-base">{project.title}</h5>
             <ul className="p-2 pl-4 space-y-2">
               {project.list.map((content, i) => (
-                <li key={i} className="list-disc text-sm">
+                <li key={i} className="list-disc text-sm markdown-body">
                   {content}
                 </li>
               ))}
             </ul>
-          </React.Fragment>
+          </div>
         ))}
         {projects.length === 0 && (
           <h5 className="text-sm text-gray-400">열심히 성과 쌓는 중입니다 😊</h5>

@@ -29,19 +29,19 @@ export default function ProfileTitle({ animation }: GlobalAnimation) {
         variants={animation?.variants}
       >
         <div className="space-y-4">
-          <p className="text-lg break-keep max-md:text-sm">
+          <p className="text-base break-keep max-md:text-sm">
             안녕하세요! <b>모두가 편할 수 있도록 개선하는</b> 프론트엔드 개발자 송재한입니다. 저는
             레이아웃 시안을 보고 반응형을 고려하며 빠르게 구현하는데 능숙합니다. 복잡한 기능도
             사용자에게 직관적으로 전달되도록 사용자 경험을 중시하며, CSS 애니메이션과 SVG 그래픽을
             활용해 사용자 상호작용을 향상시키는 데 탁월합니다.
           </p>
-          <p className="text-lg break-keep max-md:text-sm">
+          <p className="text-base break-keep max-md:text-sm">
             <b>제한된 자원과 환경을 효율적으로 극복한 경험</b>이 있습니다. 군 복무 때 부대 행정
             처리가 수동적이어서 반나절이 걸리던 인사 행정 업무를 프로그램을 개발하여 1시간 이내로
             단축한 경험이 있습니다. 엑셀 VBA와 Javascript를 이용하여 근무표 및 문서 작성을
             자동화하여 부대 자체에 편의성을 제공하였습니다.
           </p>
-          <p className="text-lg break-keep max-md:text-sm">
+          <p className="text-base break-keep max-md:text-sm">
             <b>업무 프로세스를 생산적으로 개선한 경험</b>이 있습니다. 프론트엔드 인턴 업무 중
             리팩토링 및 유지 보수 업무에 참여하여 팀 전체의 아키텍처 및 컴포넌트 설계를
             최적화하였습니다. Compound 패턴 및 Atomic Design 패턴을 도입하여 기존 레거시 코드 대비
