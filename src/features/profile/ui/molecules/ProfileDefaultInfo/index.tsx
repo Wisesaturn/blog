@@ -16,7 +16,7 @@ export default function ProfileDefaultInfo({ animation, info }: Props) {
     <motion.div variants={animation?.variants} className="space-y-1">
       <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
       {badge && <Badge>{badge}</Badge>}
-      {date && <span className="block text-sm max-md:text-xs">{date}</span>}
+      {date && <span className="block text-sm max-md:text-xs font-light">{date}</span>}
       {link && (
         <span className="markdown-body">
           <a target="_blank" href={link} className="text-sm max-md:text-xs" rel="noreferrer">

@@ -10,16 +10,21 @@ interface Props extends GlobalAnimation {
 export default function ProfileSeparateInfo({ animation, info }: Props) {
   const { title, items } = info;
   const { projects, summary } = items;
-  const { role, date, department, introduction, link, linkTitle = '홈페이지' } = summary;
+  const { role, isWorking, date, department, introduction, link, linkTitle = '홈페이지' } = summary;
 
   return (
     <motion.div
       variants={animation?.variants}
-      className="grid grid-cols-4 max-md:grid-cols-1 gap-4"
+      className="grid grid-cols-4 max-md:grid-cols-1 gap-4 max-md:gap-0"
     >
       <aside className="h-full col-span-1 max-md:pb-4 max-md:border-b-[1px]">
         <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
-        <p className="layout-text">{date}</p>
+        <p className="layout-text inline-block">
+          {date}
+          {isWorking && (
+            <p className="text-green-main dark:text-green-brighter inline-block">재직 중</p>
+          )}
+        </p>
         <p className="layout-text">{role}</p>
         <p className="layout-text">{department}</p>
         <p className="break-keep layout-text pt-10 text-gray-500 dark:text-gray-400">
@@ -27,7 +32,7 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
         </p>
         {link && (
           <span className="markdown-body">
-            <a target="_blank" href={link} className="text-sm max-md:text-xs" rel="noreferrer">
+            <a target="_blank" href={link} className="text-sm" rel="noreferrer">
               {linkTitle}
             </a>
           </span>
@@ -46,6 +51,9 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
             </ul>
           </React.Fragment>
         ))}
+        {projects.length === 0 && (
+          <h5 className="text-sm text-gray-400">열심히 성과 쌓는 중입니다 😊</h5>
+        )}
       </section>
     </motion.div>
   );

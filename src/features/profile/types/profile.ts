@@ -14,6 +14,7 @@ interface AccordionItems {
 
 interface SeparateItems {
   summary: {
+    isWorking: boolean;
     date: string;
     role: string;
     department: string;

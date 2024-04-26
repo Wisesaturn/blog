@@ -9,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button(props: ButtonProps) {
-  const { hierarchy = 'primary', children, type = 'button', ...rest } = props;
+  const { hierarchy = 'primary', children, type = 'button', className, ...rest } = props;
 
   // validation
   if (React.Children.count(children) === 0) {
@@ -34,10 +34,10 @@ function Button(props: ButtonProps) {
   });
 
   const hierarchyClass = {
-    primary: `dark:bg-green-dark bg-black text-white`,
+    primary: `dark:bg-green-main bg-black text-white`,
     secondary: `layout-bg`,
   };
-  const buttonClass = `flex gap-4 px-8 py-2.5 layout-rounded items-center layout-border ${hierarchyClass[hierarchy]}`;
+  const buttonClass = `flex gap-4 px-8 py-2.5 w-full layout-rounded justify-around items-center layout-border ${className || hierarchyClass[hierarchy]}`;
 
   return (
     <button aria-label={ariaLabel} className={buttonClass} type={type} {...rest}>

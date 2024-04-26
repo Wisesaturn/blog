@@ -21,7 +21,7 @@ export default function Accordion({ item }: Props) {
       <h5
         role="presentation"
         onClick={toggleAccordion}
-        className="p-4 bg-white dark:bg-black font-light max-md:text-sm border-2 rounded-lg cursor-pointer"
+        className="p-4 bg-white dark:bg-black layout-border font-light max-md:text-sm border-2 rounded-lg cursor-pointer"
       >
         {subTitle}
       </h5>
@@ -38,7 +38,7 @@ export default function Accordion({ item }: Props) {
           {list.map((content, idx) => (
             <li
               key={idx}
-              className="list-disc marker:text-green-main break-keep markdown-body text-sm"
+              className="list-disc marker:text-green-main dark:marker:text-green-brighter break-keep markdown-body text-sm"
             >
               {content}
             </li>

@@ -15,18 +15,14 @@ const PROFILE: {
       title: '무하유',
       items: {
         summary: {
+          isWorking: true,
           role: 'Frontend Developer',
-          date: '2024.04 ~ ing',
+          date: '2024.04 ~ ',
           department: '개발 10 유닛',
           introduction: '',
           link: 'https://www.muhayu.com/',
         },
-        projects: [
-          {
-            title: '',
-            list: [],
-          },
-        ],
+        projects: [],
       },
     },
     {
@@ -34,8 +30,9 @@ const PROFILE: {
       title: '이지일렉트릭',
       items: {
         summary: {
+          isWorking: false,
           role: 'Frontend Developer',
-          date: '2023.06 ~ 2023.12',
+          date: '2023.06 ~ 2023.12 (6개월)',
           department: '개발부',
           introduction: '엔지니오 웹 프론트엔드 서비스 개발, Next.js 마이그레이션 담당',
           link: 'https://engineeo.kr/',
