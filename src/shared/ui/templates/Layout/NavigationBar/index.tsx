@@ -29,7 +29,7 @@ function Nav({ children }: { children: React.ReactNode }) {
     <div className="fixed bottom-0 border-t-[1px] dark:border-none -shadow-t-2xl w-full bg-white dark:bg-black">
       <Responsive>
         <Responsive.Mobile>
-          <div className="py-1.5 w-full flex items-center justify-around">{children}</div>
+          <div className="py-1.5 pb-6 w-full flex items-center justify-around">{children}</div>
         </Responsive.Mobile>
       </Responsive>
     </div>
