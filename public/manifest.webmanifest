@@ -1,17 +1,84 @@
 {
-  "short_name": "📚 사툰사툰",
-  "name": "📚 사툰사툰 - Jaehan.blog",
+  "name": "📚 사툰사툰 - 송재한 개발 일지",
+  "short_name": "사툰사툰",
   "description": "안녕하세요 꾸준히 성장하고 싶은 프론트엔드 개발자 송재한입니다. 기록하고 싶은 것들을 모아두었습니다",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/ico"
+      "sizes": "64x64 48x48 24x24",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32",
+      "purpose": "any"
     }
   ],
-  "start_url": "index.html",
+  "shoutcuts": [
+    {
+      "name": "Posts",
+      "icons": [
+        {
+          "src": "android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "url": "/posts"
+    },
+    {
+      "name": "Projects",
+      "icons": [
+        {
+          "src": "android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "url": "/projects"
+    },
+    {
+      "name": "Snippets",
+      "icons": [
+        {
+          "src": "android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "url": "/snippets"
+    },
+    {
+      "name": "About",
+      "icons": [
+        {
+          "src": "android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "url": "/about"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#50ad63",
+  "theme_color": "#059669",
   "background_color": "#ffffff"
 }

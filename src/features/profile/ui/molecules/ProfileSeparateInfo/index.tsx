@@ -17,7 +17,7 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
       variants={animation?.variants}
       className="grid grid-cols-4 max-md:grid-cols-1 gap-4 max-md:gap-0"
     >
-      <aside className="h-full col-span-1 max-md:pb-4 max-md:border-b-[1px]">
+      <aside className="col-span-1 max-md:pb-4 max-md:border-b-[1px]">
         <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
         <p className="layout-text inline-block">
           {date}
