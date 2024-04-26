@@ -1,6 +1,6 @@
 {
   "name": "jaehan-blog",
-  "description": "Jae han's dev blog by Remix",
+  "description": "Jae han's dev blog by Remix v2",
   "private": true,
   "sideEffects": true,
   "type": "module",
