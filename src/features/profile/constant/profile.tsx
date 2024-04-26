@@ -314,7 +314,7 @@ const PROFILE: {
           ],
         },
         {
-          subTitle: 'prisma',
+          subTitle: 'Prisma',
           list: [
             'Prisma Schema를 활용하여 간단한 데이터베이스 작업을 수행한 경험이 있습니다',
             '외래 키에 대한 유연한 관리와 엔터티 간의 관계 매핑을 쉽게 할 수 있습니다',
