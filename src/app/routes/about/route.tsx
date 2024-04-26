@@ -16,7 +16,8 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 // meta
 export const meta: MetaFunction = (args) => {
   const urlPrefix = 'about';
-  return formatHeadTags({ urlPrefix, ...args });
+  const title = '프론트엔드 개발자 송재한입니다';
+  return formatHeadTags({ urlPrefix, title, ...args });
 };
 
 export default function AboutPage() {
