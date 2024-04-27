@@ -91,10 +91,10 @@ export function ErrorBoundary() {
         <h1 className="w-full text-center pt-16 pb-2">{error.name}</h1>
         <p className="w-full text-center max-w-layout break-keep pt-4 pb-8">{error.message}</p>
         {process.env.NODE_ENV === 'development' && (
-          <>
+          <div className="w-full text-center">
             <p>The stack trace is:</p>
             <pre className="w-full text-sm max-w-layout break-keep pt-2 pb-8">{error.stack}</pre>
-          </>
+          </div>
         )}
         <div className="w-fit mx-auto h-screen">
           <Button onClick={goToBack}>

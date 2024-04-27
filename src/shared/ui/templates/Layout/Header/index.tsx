@@ -12,12 +12,12 @@ const Header = () => {
   const { header } = layout;
 
   // style
-  const HEADER_CLASS = `max-md:pt-6 flex h-12 md:h-16 items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
+  const HEADER_CLASS = `flex min-h-12 md:min-h-16 ios-notch-top items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
   const HEADER_CONTAINER_CLASS = `fixed top-0 w-full z-[9998]`;
 
   return (
     <>
-      <div className="md:h-16 h-12" />
+      <div className="md:min-h-16 min-h-12 ios-notch-margin-top" />
       <div className={HEADER_CONTAINER_CLASS}>
         <ProgressBar />
         <header className={HEADER_CLASS}>

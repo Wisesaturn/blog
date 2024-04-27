@@ -11,7 +11,7 @@ export default function IntroduceSection() {
         variants={ANIMATE_FADE_UP_CONTAINER}
         className="md:my-60 my-40 break-keep"
       >
-        <motion.h1 variants={ANIMATE_FADE_UP_ITEM} className="text-gray-300">
+        <motion.h1 variants={ANIMATE_FADE_UP_ITEM} className="text-gray-300 max-md:text-sm">
           사툰사툰
         </motion.h1>
         <motion.h2
