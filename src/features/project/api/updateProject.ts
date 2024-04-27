@@ -18,7 +18,8 @@ export default async function updateProject(props: Props) {
     const docMetaSnap = await getDoc(docMetaRef);
 
     if (docMetaSnap.exists()) {
-      await updateDoc(docMetaRef, meta);
+      const updatedMeta = { ...meta, views: docMetaSnap.data().views || meta.views };
+      await updateDoc(docMetaRef, updatedMeta);
     } else {
       await setDoc(docMetaRef, meta);
     }
