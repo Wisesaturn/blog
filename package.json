@@ -40,7 +40,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.23.3",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-react": "^7.24.1",
     "@chromatic-com/storybook": "^1.2.18",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",

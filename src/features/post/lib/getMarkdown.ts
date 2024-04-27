@@ -4,6 +4,8 @@ import { createRequire } from 'module';
 
 import notion from '$shared/middleware/notion';
 
+import checkJSX from './checkJSX';
+
 const { NotionToMarkdown } = createRequire(import.meta.url)(
   path.join(process.cwd(), 'node_modules/notion-to-md'),
 );
@@ -91,6 +93,7 @@ n2m.setCustomTransformer('code', async (block: any) => {
   const { language } = block.code;
   const caption = block.code.caption ? block.code.caption[0]?.plain_text : '';
   const content = block.code.rich_text[0]?.plain_text.trim();
+  const langType = checkJSX(content) ? 'jsx' : language;
 
   if (caption) {
     const title = caption.split(';')[0];
@@ -98,30 +101,17 @@ n2m.setCustomTransformer('code', async (block: any) => {
 
     return `${title ? `<h5 class="code-title">${title}</h5>` : ''}
 
-\`\`\`diff-${language} ${highlight || ''}
+\`\`\`diff-${langType} ${highlight || ''}
 ${content}
 \`\`\`
   `;
   }
 
   return `
-\`\`\`diff-${language}
+\`\`\`diff-${langType}
 ${content}
 \`\`\`
   `;
-});
-
-/**
- * video settings
- */
-n2m.setCustomTransformer('video', async (block: any) => {
-  // external link
-  const { external } = block.video;
-
-  return `
-  <div class="my-4 w-full aspect-video">
-    <iframe width="100%" height="100%" src="${external.url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>`;
 });
 
 /**

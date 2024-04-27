@@ -18,7 +18,8 @@ export default async function updatePost(props: Props) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      await updateDoc(docRef, data);
+      const updatedData = { ...data, views: docSnap.data().views || data.views };
+      await updateDoc(docRef, updatedData);
     } else {
       await setDoc(docRef, data);
     }

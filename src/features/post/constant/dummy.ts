@@ -1,5 +1,4 @@
 import { IPost } from '../types/post';
-import { Tag } from '../types/article';
 
 const DUMMY_POSTS: IPost[] = [
   {
@@ -11,18 +10,7 @@ const DUMMY_POSTS: IPost[] = [
     lastmod: '2022-01-01T12:00:00Z',
     last_editedAt: new Date(),
     plain_title: 'dummy-post-1',
-    tags: [
-      {
-        color: '#ff0000',
-        id: '1',
-        name: 'Tag 1',
-      },
-      {
-        color: '#00ff00',
-        id: '2',
-        name: 'Tag 2',
-      },
-    ] as Tag[],
+    tags: ['Tag 1', 'Tag 2'],
     thumbnail: 'https://example.com/thumbnail1.jpg',
     title: 'Dummy Post 1',
     views: 100,
@@ -36,13 +24,7 @@ const DUMMY_POSTS: IPost[] = [
     lastmod: '2022-01-02T12:00:00Z',
     last_editedAt: new Date(),
     plain_title: 'dummy-post-2',
-    tags: [
-      {
-        color: '#0000ff',
-        id: '3',
-        name: 'Tag 3',
-      },
-    ] as Tag[],
+    tags: ['Tag 3', 'Tag 4', 'Tag 5'],
     thumbnail: 'https://example.com/thumbnail2.jpg',
     title: 'Dummy Post 2',
     views: 150,
