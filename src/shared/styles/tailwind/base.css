@@ -278,7 +278,7 @@
       }
 
       + p:has(a) {
-        @apply pt-0;
+        @apply pt-1;
       }
     }
 
@@ -296,10 +296,6 @@
       ~ * {
         @apply pt-0 pl-4;
       }
-    }
-
-    table {
-      @apply mt-8;
     }
 
     ul {
@@ -411,7 +407,7 @@
       @apply mt-16 mx-auto w-full rounded-3xl max-md:rounded-xl;
     }
 
-    /* no margin image instantly after heading */
+    /* no margin image instantly after heading or image */
     :is(h4, h3, h2, img, div[class='image-caption']) + img {
       @apply mt-4;
     }
