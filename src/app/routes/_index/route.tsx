@@ -1,21 +1,18 @@
-// export async function loader() {
-//   const searchAllData = await searchAllDB(5);
+import { motion } from 'framer-motion';
 
 import IntroduceSection from '$features/home/ui/organisms/introduce-section';
 
-//   return searchAllData;
-// }
+import { ANIMATE_FADE_UP_CONTAINER } from '$shared/constant/animation';
 
-export const MainPage = () => {
-  // const recentDB = useLoaderData();
-
-  const categoryClass = `flex gap-1 items-center justify-center py-1 px-4 max-md:text-sm max-md:px-2 max-md:py-1 rounded-lg border-2 text-white border-white dark:border-[#222] before:hidden font-light duration-200`;
-
-  return (
-    <>
-      <IntroduceSection />
-    </>
-  );
-};
+export const MainPage = () => (
+  <motion.main
+    initial="hidden"
+    animate="show"
+    variants={ANIMATE_FADE_UP_CONTAINER}
+    className="layout min-h-screen"
+  >
+    <IntroduceSection />
+  </motion.main>
+);
 
 export default MainPage;

@@ -49,8 +49,8 @@
     }
 
     .ios-notch-margin-bottom {
-      margin-bottom: calc(constant(safe-area-inset-bottom) + 10px);
-      margin-bottom: calc(env(safe-area-inset-bottom) + 10px);
+      margin-bottom: 4px;
+      margin-bottom: 4px;
     }
   }
 }
