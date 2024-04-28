@@ -15,6 +15,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       title: convertString(project.plainTitle, 'spaceToDash'),
       meta: project,
       body: projectBody,
+      isUpdateProject: true,
     });
     return json(project);
   } catch (err) {

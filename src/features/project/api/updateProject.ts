@@ -9,16 +9,19 @@ interface Props {
   title: string;
   meta: Partial<Omit<IProject, 'body'>>;
   body?: string;
+  isUpdateProject?: boolean;
 }
 
 export default async function updateProject(props: Props) {
-  const { title, meta, body } = props;
+  const { title, meta, body, isUpdateProject = false } = props;
   try {
     const docMetaRef = doc(collection(db, 'projects', title, 'meta'), meta.index);
     const docMetaSnap = await getDoc(docMetaRef);
 
     if (docMetaSnap.exists()) {
-      const updatedMeta = { ...meta, views: docMetaSnap.data().views || meta.views };
+      const updatedMeta = isUpdateProject
+        ? { ...meta, views: docMetaSnap.data().views || meta.views }
+        : meta;
       await updateDoc(docMetaRef, updatedMeta);
     } else {
       await setDoc(docMetaRef, meta);

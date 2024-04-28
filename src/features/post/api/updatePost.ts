@@ -9,16 +9,19 @@ interface Props {
   category: string;
   title: string;
   data: Partial<IPost>;
+  isUpdatePost?: boolean;
 }
 
 export default async function updatePost(props: Props) {
-  const { category, title, data } = props;
+  const { category, title, data, isUpdatePost = false } = props;
   try {
     const docRef = doc(db, category, title);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const updatedData = { ...data, views: docSnap.data().views || data.views };
+      const updatedData = isUpdatePost
+        ? { ...data, views: docSnap.data().views || data.views }
+        : data;
       await updateDoc(docRef, updatedData);
     } else {
       await setDoc(docRef, data);

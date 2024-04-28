@@ -8,16 +8,19 @@ import { ISnippet } from '../types/snippet';
 interface Props {
   title: string;
   data: Partial<ISnippet>;
+  isUpdateSnippet?: boolean;
 }
 
 export default async function updateSnippet(props: Props) {
-  const { title, data } = props;
+  const { title, data, isUpdateSnippet = false } = props;
   try {
     const docRef = doc(db, 'snippets', title);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const updatedData = { ...data, views: docSnap.data().views || data.views };
+      const updatedData = isUpdateSnippet
+        ? { ...data, views: docSnap.data().views || data.views }
+        : data;
       await updateDoc(docRef, updatedData);
     } else {
       await setDoc(docRef, data);

@@ -14,6 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     await updateSnippet({
       title: convertString(project.plainTitle, 'spaceToDash'),
       data: project,
+      isUpdateSnippet: true,
     });
     return json(project);
   } catch (err) {
