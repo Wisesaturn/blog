@@ -115,6 +115,19 @@ ${content}
 });
 
 /**
+ * video settings
+ */
+n2m.setCustomTransformer('video', async (block: any) => {
+  // external link
+  const { external } = block.video;
+
+  return `
+  <div class="my-4 w-full aspect-video">
+    <iframe width="100%" height="100%" src="${external.url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>`;
+});
+
+/**
  * @summary 노션 페이지를 마크다운으로 변환하는 함수입니다.
  * @environment server
  * @param notionPageId
