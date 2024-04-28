@@ -15,6 +15,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       category: post.category,
       title: convertString(post.plain_title, 'spaceToDash'),
       data: post,
+      isUpdatePost: true,
     });
     return json(post);
   } catch (err) {
