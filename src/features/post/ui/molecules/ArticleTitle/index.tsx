@@ -17,7 +17,8 @@ export default function ArticleTitle(props: ArticleTitleProps) {
         variants={animation?.variants}
       >
         <img
-          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="rounded-3xl object-cover h-full w-full max-md:rounded-xl"
           src={thumbnail}
           alt={title}
