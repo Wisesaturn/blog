@@ -33,7 +33,7 @@ export default function ProfileTitle({ animation }: GlobalAnimation) {
             안녕하세요! <b>모두가 편할 수 있도록 개선하는</b> 프론트엔드 개발자 송재한입니다. 저는
             레이아웃 시안을 보고 반응형을 고려하며 빠르게 구현하는데 능숙합니다. 복잡한 기능도
             사용자에게 직관적으로 전달되도록 사용자 경험을 중시하며, CSS 애니메이션과 SVG 그래픽을
-            활용해 사용자 상호작용을 향상시키는 데 탁월합니다.
+            활용해 인터렉션 디자인을 구현하는 걸 좋아합니다.
           </p>
           <p className="text-base break-keep max-md:text-sm">
             <b>제한된 자원과 환경을 효율적으로 극복한 경험</b>이 있습니다. 군 복무 때 부대 행정
