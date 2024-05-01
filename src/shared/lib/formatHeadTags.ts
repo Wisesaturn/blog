@@ -4,6 +4,8 @@ import { IPost } from '$features/post/types/post';
 import { IProject } from '$features/project/types/project';
 import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '$features/post/constant';
 
+import convertString from './convertString';
+
 interface HeadTagFormat extends ServerRuntimeMetaArgs {
   title?: string;
   description?: string;
@@ -28,11 +30,13 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   const { data, params } = args;
 
   // calculate data
-  const HOST_URL = `https://jaehan.blog/${urlPrefix || ''}`;
-  const convertTitle = params.title ? params.title : title;
+  const prefix = urlPrefix || '';
+  const HOST_URL = `https://jaehan.blog/${prefix}`;
+  const convertTitle = `${params.title ? `${convertString(params.title, 'dashToSpace')}` : title || '사툰사툰'}`;
   let convertThumbnail = thumbnail || DEFAULT_THUMBNAIL;
   let convertDescription = description || DEFAULT_DESCRIPTION;
   let convertUrl = HOST_URL;
+  let convertSuffix = '';
 
   // thumbnail
   if (isPost(data) && data.post.thumbnail) {
@@ -57,9 +61,18 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
     convertUrl = `${HOST_URL}/${convertTitle}`;
   }
 
+  // Title Suffix
+  if (params.category && params.title) {
+    convertSuffix = ` - 사툰사툰 ${params.category.toUpperCase()}`;
+  } else if (params.title && prefix) {
+    convertSuffix = ` - 사툰사툰 ${prefix.toUpperCase()}`;
+  } else if (prefix) {
+    convertSuffix = ` - 사툰사툰`;
+  }
+
   // metadata object
   const metadata = {
-    title: convertTitle || '사툰사툰',
+    title: convertTitle + convertSuffix || '사툰사툰',
     description: convertDescription,
     url: convertUrl,
     thumbnail: convertThumbnail,

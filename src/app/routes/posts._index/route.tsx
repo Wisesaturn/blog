@@ -18,7 +18,7 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 // meta
 export const meta: MetaFunction = (args) => {
   const urlPrefix = 'posts';
-  const title = '사툰사툰 :: Posts';
+  const title = 'Posts';
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
