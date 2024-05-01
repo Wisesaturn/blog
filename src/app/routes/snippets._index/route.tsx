@@ -14,7 +14,7 @@ import formatHeadTags from '$shared/lib/formatHeadTags';
 // meta
 export const meta: MetaFunction = (args) => {
   const urlPrefix = 'snippets';
-  const title = '사툰사툰 :: Snippets';
+  const title = 'Snippets';
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
