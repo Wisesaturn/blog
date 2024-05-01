@@ -19,12 +19,12 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
     >
       <aside className="col-span-1 max-md:pb-4 max-md:border-b-[1px]">
         <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
-        <p className="layout-text inline-block">
-          {date}
+        <div className="layout-text space-x-1.5 max-md:space-x-1">
+          <p className="inline-block">{date}</p>
           {isWorking && (
             <p className="text-green-main dark:text-green-brighter inline-block">재직 중</p>
           )}
-        </p>
+        </div>
         <p className="layout-text">{role}</p>
         <p className="layout-text">{department}</p>
         <p className="break-keep layout-text pt-10 text-gray-500 dark:text-gray-400">

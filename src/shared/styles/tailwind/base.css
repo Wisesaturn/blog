@@ -361,7 +361,7 @@
     }
 
     table {
-      @apply pt-8 layout-text mx-auto;
+      @apply mt-8 layout-text mx-auto;
 
       thead {
         @apply bg-gray-200 dark:bg-[#191919] font-bold;

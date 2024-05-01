@@ -32,7 +32,7 @@ export default function ProfileTitle({ animation }: GlobalAnimation) {
           <p className="text-base break-keep max-md:text-sm">
             안녕하세요! <b>모두가 편할 수 있도록 개선하는</b> 프론트엔드 개발자 송재한입니다. 저는
             레이아웃 시안을 보고 반응형을 고려하며 빠르게 구현하는데 능숙합니다. 복잡한 기능도
-            사용자에게 직관적으로 전달되도록 사용자 경험을 중시하며, CSS 애니메이션과 SVG 그래픽을
+            사용자에게 직관적으로 전달되도록 사용자 경험을 중시하며, CSS, Framer-motion, Canvas 등을
             활용해 인터렉션 디자인을 구현하는 걸 좋아합니다.
           </p>
           <p className="text-base break-keep max-md:text-sm">

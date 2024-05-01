@@ -22,7 +22,7 @@ export default function Accordion({ item }: Props) {
         role="presentation"
         onClick={toggleAccordion}
         className="p-4 bg-white dark:bg-black layout-border font-light max-md:text-sm border-2 rounded-lg cursor-pointer"
-        style={{ borderColor: isOpen ? '#059669' : '' }}
+        style={{ borderColor: isOpen ? '#059669' : 'inherit' }}
       >
         {subTitle}
       </h5>
