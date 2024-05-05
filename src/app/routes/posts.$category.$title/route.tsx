@@ -63,6 +63,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     {
       headers: {
         'Set-Cookie': await hasUserVisited.serialize({}),
+        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=31556952',
       },
     },
   );

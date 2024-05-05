@@ -14,7 +14,7 @@ export default function ProjectComments(props: GlobalAnimation) {
         category="Projects Comments"
         categoryId="DIC_kwDOHa92pM4CeIrA"
         mapping="title"
-        term={`${layout.header.title || 'jaehan.blog'} comments`}
+        term={`Projects comments`}
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
