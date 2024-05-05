@@ -14,7 +14,7 @@ export default function SnippetComments(props: GlobalAnimation) {
         category="Snippets Comments"
         categoryId="DIC_kwDOHa92pM4CeIrA"
         mapping="title"
-        term={`${layout.header.title || 'jaehan.blog'} comments`}
+        term={`Snippets comments`}
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
