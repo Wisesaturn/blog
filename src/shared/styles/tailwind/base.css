@@ -404,7 +404,7 @@
     }
 
     img {
-      @apply mt-16 mx-auto w-fit h-fit rounded-3xl max-md:mt-8 max-md:rounded-xl object-contain object-top max-h-[350px];
+      @apply mt-16 mx-auto w-fit rounded-3xl max-md:mt-8 max-md:rounded-xl object-contain object-top;
     }
 
     /* no margin image instantly after heading or image */
