@@ -91,7 +91,7 @@ export default async function createProject(title: string) {
         if (projectData.thumbnail) {
           const filePath = await createImageOnUrl({
             savePath: `thumbnail`,
-            title: `${projectData.plainTitle.replaceAll(':', '-')}`,
+            title: projectData.index,
             url: projectData.thumbnail,
           });
           projectData.thumbnail = filePath;

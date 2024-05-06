@@ -82,7 +82,7 @@ export default async function createPost(title: string) {
         if (postData.thumbnail) {
           const filePath = await createImageOnUrl({
             savePath: `thumbnail`,
-            title: `${postData.plain_title.replaceAll(':', '-')}`,
+            title: postData.index,
             url: postData.thumbnail,
           });
           postData.thumbnail = filePath;
