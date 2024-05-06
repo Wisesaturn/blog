@@ -4,32 +4,44 @@
   "description": "안녕하세요 꾸준히 성장하고 싶은 프론트엔드 개발자 송재한입니다. 기록하고 싶은 것들을 모아두었습니다",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 48x48 24x24",
+      "src": "assets/favicon.ico",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
-      "src": "android-chrome-192x192.png",
+      "src": "assets/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "android-chrome-512x512.png",
+      "src": "assets/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
     },
     {
-      "src": "favicon-16x16.png",
+      "src": "assets/favicon-16x16.png",
       "type": "image/png",
       "sizes": "16x16",
       "purpose": "any"
     },
     {
-      "src": "favicon-32x32.png",
+      "src": "assets/favicon-48x48.png",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon-32x32.png",
       "type": "image/png",
       "sizes": "32x32",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon-24x24.png",
+      "type": "image/png",
+      "sizes": "24x24",
       "purpose": "any"
     }
   ],
@@ -38,7 +50,7 @@
       "name": "Posts",
       "icons": [
         {
-          "src": "android-chrome-192x192.png",
+          "src": "assets/android-chrome-192x192.png",
           "sizes": "192x192"
         }
       ],
@@ -48,14 +60,14 @@
       "name": "Projects",
       "icons": [
         {
-          "src": "android-chrome-192x192.png",
+          "src": "assets/android-chrome-192x192.png",
           "sizes": "192x192"
         }
       ],
       "url": "/projects"
     },
     {
-      "name": "Snippets",
+      "name": "assets/Snippets",
       "icons": [
         {
           "src": "android-chrome-192x192.png",
@@ -68,7 +80,7 @@
       "name": "About",
       "icons": [
         {
-          "src": "android-chrome-192x192.png",
+          "src": "assets/android-chrome-192x192.png",
           "sizes": "192x192"
         }
       ],

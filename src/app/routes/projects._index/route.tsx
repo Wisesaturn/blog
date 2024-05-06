@@ -41,7 +41,7 @@ export default function ProjectsPage() {
           variants: ANIMATE_FADE_UP_ITEM,
         }}
         title="Projects"
-        subtitle="개발자로 성장해가며 만들었던 작품들입니다"
+        subtitle="개발자로 성장해가며 만들었던 작품들입니다 (천천히 작성 중...)"
       />
       <ProjectCreater animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ProjectList projects={projects} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />

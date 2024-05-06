@@ -9,7 +9,8 @@ self.addEventListener('fetch', (event) => {
   if (
     url.pathname.startsWith('/tossface/') ||
     url.pathname.startsWith('/build/') ||
-    url.pathname.startsWith('/thumbnail/')
+    url.pathname.startsWith('/thumbnail/') ||
+    url.pathname.startsWith('/assets/')
   ) {
     event.respondWith(
       // we will open the cache
