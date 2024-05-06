@@ -18,6 +18,8 @@ export const ORDER_BY_TO_POST_FILTER: Record<PostsOrderBy, PostsFilter> = {
   mostView: '조회수',
 };
 
+export const URL_PREFIX =
+  process.env.NODE_ENV !== 'development' ? 'https://jaehan.blog' : 'http://localhost:3000';
 export const DEFAULT_THUMBNAIL =
   'https://user-images.githubusercontent.com/79848632/220535309-f7a02b94-5eab-46bf-867c-8c9c82475620.png';
 export const DEFAULT_DESCRIPTION = `꾸준히 성장하고 싶은 프론트엔드 엔지니어입니다. 저만의 경험과 기록을 담아두었습니다 | Error ${CATEGORY_DATA.map(
