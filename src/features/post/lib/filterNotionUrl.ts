@@ -10,7 +10,11 @@ export default function filterNotionUrl(body: string): string[] {
 
   // notion url에서 img src 추출
   while (match !== null) {
-    if (!match[1].includes('firebasestorage') && !match[1].includes('giphy.com')) {
+    if (
+      !match[1].includes('firebasestorage') &&
+      !match[1].includes('storage.googleapis.com/jaehan-flow.appspot.com') &&
+      !match[1].includes('giphy.com')
+    ) {
       imgSrcArray.push(match[1]);
     }
     match = imgSrcRegex.exec(body);

@@ -4,12 +4,12 @@ import Logger from '$shared/helper/logger';
 import { INotionList, NotionPage } from '$shared/types/notion';
 
 import { IPost } from '../types/post';
-import { DEFAULT_THUMBNAIL } from '../constant';
+import { DEFAULT_THUMBNAIL, URL_PREFIX } from '../constant';
 import deleteStore from './deleteStore';
-import uploadImage from './firebase/uploadImage';
 import replaceBodyImages from './firebase/replaceBodyImages';
 import getMarkdown from '../lib/getMarkdown';
 import getHtml from '../lib/getHtml';
+import createImageOnUrl from '../lib/createImageOnUrl';
 
 /**
  * @summary Notion에서 작성한 포스트를 마크다운으로 변환하여 게시물을 생성하는 함수
@@ -78,16 +78,15 @@ export default async function createPost(title: string) {
         const htmlBody = await getHtml(mdString);
         postData.body = htmlBody;
 
-        // 3. upload thumbnail on firsbase
+        // 3. upload thumbnail on Public Folder (use Vercel CDN)
         if (postData.thumbnail) {
-          const customThumbnail = await uploadImage({
-            collection: 'post',
-            src: postData.thumbnail,
-            category: postData.category,
-            title: convertString(postData.plain_title, 'spaceToDash'),
+          const filePath = await createImageOnUrl({
+            savePath: `thumbnail`,
+            title: `${postData.plain_title.replaceAll(':', '-')}`,
+            url: postData.thumbnail,
           });
-
-          postData.thumbnail = customThumbnail;
+          postData.thumbnail = filePath;
+          Logger.log(`썸네일 : ${filePath}`);
         } else {
           postData.thumbnail = DEFAULT_THUMBNAIL;
           Logger.log('기본 썸네일 설정');

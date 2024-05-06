@@ -4,6 +4,7 @@ import uploadImage from '$features/post/api/firebase/uploadImage';
 import deleteStore from '$features/post/api/deleteStore';
 import getHtml from '$features/post/lib/getHtml';
 import { DEFAULT_THUMBNAIL } from '$features/post/constant';
+import createImageOnUrl from '$features/post/lib/createImageOnUrl';
 
 import convertString from '$shared/lib/convertString';
 import notion from '$shared/middleware/notion';
@@ -86,22 +87,21 @@ export default async function createProject(title: string) {
         const htmlBody = await getHtml(mdString);
         projectData.body = htmlBody;
 
-        // 3. upload thumbnail on firsbase
+        // 4. upload thumbnail on Public Folder (use Vercel CDN)
         if (projectData.thumbnail) {
-          const customThumbnail = await uploadImage({
-            collection: 'project',
-            src: projectData.thumbnail,
-            category: `${projectData.category}-projects`,
-            title: convertString(projectData.plainTitle, 'spaceToDash'),
+          const filePath = await createImageOnUrl({
+            savePath: `thumbnail`,
+            title: `${projectData.plainTitle.replaceAll(':', '-')}`,
+            url: projectData.thumbnail,
           });
-
-          projectData.thumbnail = customThumbnail;
+          projectData.thumbnail = filePath;
+          Logger.log(`썸네일 : ${filePath}`);
         } else {
           projectData.thumbnail = DEFAULT_THUMBNAIL;
           Logger.log('기본 썸네일 설정');
         }
 
-        // 4. upload image on firebase
+        // 5. upload image on firebase
         if (projectData.body) {
           const replaceBody = await replaceBodyImages({
             collection: 'project',

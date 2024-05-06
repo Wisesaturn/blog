@@ -6,7 +6,11 @@ self.addEventListener('fetch', (event) => {
   if (method.toLowerCase() !== 'get') return;
 
   // If the request is for the built files (which are hashed in the name)
-  if (url.pathname.startsWith('/tossface/') || url.pathname.startsWith('/build/')) {
+  if (
+    url.pathname.startsWith('/tossface/') ||
+    url.pathname.startsWith('/build/') ||
+    url.pathname.startsWith('/thumbnail/')
+  ) {
     event.respondWith(
       // we will open the cache
       caches.open('build-cache').then(async (cache) => {
