@@ -16,11 +16,11 @@ export const loader = async () => {
   // handle "GET" request
   // separating xml content from Response to keep clean code.
   const sitePost: ISitemap[] = [
-    { loc: HOST_URL, priority: '1.0' },
-    { loc: `${HOST_URL}/about`, priority: '0.8', changeFreq: 'daily' },
-    { loc: `${HOST_URL}/posts`, priority: '0.7', changeFreq: 'daily' },
-    { loc: `${HOST_URL}/snippets`, priority: '0.7', changeFreq: 'daily' },
-    { loc: `${HOST_URL}/projects`, priority: '0.7', changeFreq: 'daily' },
+    { loc: HOST_URL, priority: '1.00' },
+    { loc: `${HOST_URL}/about`, priority: '0.80', changeFreq: 'weekly' },
+    { loc: `${HOST_URL}/posts`, priority: '0.80', changeFreq: 'weekly' },
+    { loc: `${HOST_URL}/snippets`, priority: '0.80', changeFreq: 'weekly' },
+    { loc: `${HOST_URL}/projects`, priority: '0.80', changeFreq: 'weekly' },
   ];
 
   // Post Sitemap
@@ -32,8 +32,8 @@ export const loader = async () => {
     sitePost.push({
       loc,
       lastmod,
-      priority: '0.7',
-      changeFreq: 'daily',
+      priority: '0.64',
+      changeFreq: 'weekly',
     });
   });
 
@@ -46,7 +46,7 @@ export const loader = async () => {
     sitePost.push({
       loc,
       lastmod,
-      priority: '0.5',
+      priority: '0.50',
       changeFreq: 'weekly',
     });
   });
@@ -60,7 +60,7 @@ export const loader = async () => {
     sitePost.push({
       loc,
       lastmod,
-      priority: '0.5',
+      priority: '0.50',
       changeFreq: 'weekly',
     });
   });
@@ -73,8 +73,8 @@ export const loader = async () => {
           `<url>
         <loc>${encodeURI(item.loc)}</loc>
         ${item.lastmod ? `<lastmod>${item.lastmod}</lastmod>` : ''}
+        ${item.changeFreq ? `<changefreq>${item.changeFreq}</changefreq>` : ''}
         ${item.priority ? `<priority>${item.priority}</priority>` : ''}
-        ${item.changeFreq ? `<changeFreq>${item.changeFreq}</changeFreq>` : ''}
       </url>`,
       )
       .join('')}
