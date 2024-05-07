@@ -30,15 +30,38 @@ export default function Layout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <Meta />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
+        {/* --------IOS Set-------- */}
+        {/* <!-- iPhone ICON --> */}
+        <link href="assets/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon" />
+        {/* <!-- iPad ICON--> */}
+        <link href="assets/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon" />
+        {/* <!-- iPhone (Retina) ICON--> */}
+        <link href="assets/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon" />
+        {/* <!-- iPad (Retina) ICON--> */}
+        <link href="assets/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon" />
+        {/* iPhone default ICON */}
+        <link href="assets/apple-touch-icon-180x180.png" sizes="180x180" rel="apple-touch-icon" />
+        {/* <!-- iPhone SPLASHSCREEN--> */}
         <link
+          href="assets/apple-touch-startup-image-320x460.png"
+          media="(device-width: 320px)"
           rel="apple-touch-startup-image"
-          media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-          href="/android-chrome-512x512.png"
         />
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="manifest" href="/manifest.webmanifest" />
+        {/* <!-- iPhone (Retina) SPLASHSCREEN--> */}
+        <link
+          href="assets/apple-touch-startup-image-640x920.png"
+          media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image"
+        />
+        {/* iPhone default Splash */}
+        <link
+          href="assets/apple-touch-startup-image-512x512.png"
+          media="screen and (device-width: 375px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+          rel="apple-touch-startup-image"
+        />
+        <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="manifest" href="assets/manifest.webmanifest" />
         <Links />
         {process.env.NODE_ENV === 'production' && (
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-3F4JB1BK0P" />
