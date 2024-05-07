@@ -40,7 +40,7 @@ export default async function createImageOnUrl({ savePath, title, url }: Props) 
     const buffer = Buffer.from(arrayBuffer); // ArrayBuffer를 Node.js의 Buffer로 변환
 
     // `sharp`로 바로 변환하고 로컬에 `webp` 파일만 저장
-    await sharp(buffer).withMetadata().toFormat('webp', { quality: 80 }).toFile(fullPath);
+    await sharp(buffer).withMetadata().toFormat('webp', { quality: 90 }).toFile(fullPath);
 
     Logger.success(`파일 변환 및 저장 완료: ${fullPath}`);
   } catch (error) {

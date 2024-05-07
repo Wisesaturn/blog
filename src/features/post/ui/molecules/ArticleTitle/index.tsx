@@ -13,13 +13,13 @@ export default function ArticleTitle(props: ArticleTitleProps) {
   return (
     <>
       <motion.div
-        className="pb-4 max-md:pb-0 w-full h-[500px] max-md:h-[250px] rounded-3xl max-md:rounded-xl"
+        className="pb-4 max-md:pb-0 w-full h-[500px] max-md:h-[250px] rounded-3xl max-md:rounded-xl skeleton"
         variants={animation?.variants}
       >
         <img
           fetchPriority="high"
           decoding="async"
-          className="rounded-3xl object-cover h-full w-full max-md:rounded-xl"
+          className="rounded-3xl object-cover h-[500px] max-md:h-[250px] w-full max-md:rounded-xl"
           src={thumbnail}
           alt={title}
         />
