@@ -74,7 +74,7 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   const metadata = {
     title: convertTitle + convertSuffix || '사툰사툰',
     description: convertDescription,
-    url: convertUrl,
+    url: convertString(convertUrl, 'spaceToDash'),
     thumbnail: convertThumbnail,
   };
 
