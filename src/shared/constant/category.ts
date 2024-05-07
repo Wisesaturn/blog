@@ -8,6 +8,7 @@ export const PRODUCTION_CATEGORY_DATA: ICategory[] = [
   { name: 'Frontend', link: 'frontend' },
   { name: 'React', link: 'react' },
   { name: 'Next.js', link: 'nextjs' },
+  { name: 'Nginx', link: 'nginx' },
 ];
 
 export const CATEGORY_DATA: ICategory[] = PRODUCTION_CATEGORY_DATA.concat(
