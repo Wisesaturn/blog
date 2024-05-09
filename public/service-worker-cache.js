@@ -1,5 +1,6 @@
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
+  const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
   const { method } = event.request;
 
   // any non GET request is ignored
@@ -17,7 +18,18 @@ self.addEventListener('fetch', (event) => {
       caches.open('build-cache').then(async (cache) => {
         // if the request is cached we will use the cache
         const cacheResponse = await cache.match(event.request);
-        if (cacheResponse) return cacheResponse;
+        if (cacheResponse) {
+          const cachedTime = new Date(cacheResponse.headers.get('date')).getTime();
+          const currentTime = new Date().getTime();
+
+          // Check if the cache has expired
+          if (currentTime - cachedTime < CACHE_EXPIRATION) {
+            return cacheResponse; // If cache is valid, return it
+          } else {
+            // If cache has expired, delete it
+            await cache.delete(event.request);
+          }
+        }
 
         // if it's not cached we will run the fetch, cache it and return it
         // this way the next time this asset it's needed it will load from the cache

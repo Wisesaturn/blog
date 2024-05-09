@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     // we will register it after the page complete the load
     navigator.serviceWorker
-      .register('/sw.js')
+      .register('/service-worker-cache.js')
       .then((registration) => {
         console.log('Service Worker registered:', registration.scope);
       })
