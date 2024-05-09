@@ -1,4 +1,5 @@
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import sharp from 'sharp';
 
 import { storage } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
@@ -24,12 +25,10 @@ export default async function uploadImage(props: Props): Promise<string> {
   const isSrc = src.replace(/#x26;/g, '&');
 
   const response = await fetch(isSrc);
-  const data = await response.arrayBuffer();
+  const buffer = await response.arrayBuffer();
 
-  // 확장자
-  const ext = isSrc.includes('unsplash')
-    ? String(isSrc.split('fm=').pop()).split('&').shift()
-    : String(isSrc.split('.').pop()).split('?').shift();
+  // `sharp`로 이미지 파일을 webp buffer로 변환
+  const data = await sharp(buffer).withMetadata().toFormat('webp', { quality: 100 }).toBuffer();
 
   // 파일 이름
   const filename = decodeURIComponent(
@@ -41,7 +40,7 @@ export default async function uploadImage(props: Props): Promise<string> {
   // 메타데이터
   const metadata = {
     cacheControl: 'public, max-age=31556952, s-maxage=31556952, immutable',
-    contentType: `image/${ext}`,
+    contentType: `image/webp`,
   };
 
   // 유닉스 타임
@@ -49,12 +48,12 @@ export default async function uploadImage(props: Props): Promise<string> {
 
   const collectionRef = ref(
     storage,
-    `${collection}/${category}/${title}/${filename}-${hashTime}.${ext}`,
+    `${collection}/${category}/${title}/${filename}-${hashTime}.webp`,
   );
 
   // firebase에 올린 파일 주소 얻기
   const imgFirebaseUrl = await uploadBytes(collectionRef, data, metadata).then(async () => {
-    Logger.update(`${filename}-${hashTime}.${ext}`);
+    Logger.update(`${filename}-${hashTime}.webp`);
     const url = await getDownloadURL(collectionRef);
     return url;
   });

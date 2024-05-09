@@ -4,7 +4,7 @@ import Logger from '$shared/helper/logger';
 import { INotionList, NotionPage } from '$shared/types/notion';
 
 import { IPost } from '../types/post';
-import { DEFAULT_THUMBNAIL, URL_PREFIX } from '../constant';
+import { DEFAULT_THUMBNAIL } from '../constant';
 import deleteStore from './deleteStore';
 import replaceBodyImages from './firebase/replaceBodyImages';
 import getMarkdown from '../lib/getMarkdown';
