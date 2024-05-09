@@ -8,7 +8,6 @@ import {
   useRouteError,
 } from '@remix-run/react';
 
-import tossface from '$shared/styles/etc/tossface.css';
 import globalStyles from '$shared/styles/global.css';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import useInitialScript from '$shared/hooks/useInitialScript';
@@ -27,7 +26,6 @@ export const links: LinksFunction = () => [
   formatStyleSheet(
     'https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable-dynamic-subset.min.css',
   ),
-  formatStyleSheet(tossface),
   formatStyleSheet(globalStyles),
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
