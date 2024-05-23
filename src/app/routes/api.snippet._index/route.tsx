@@ -6,9 +6,15 @@ import createSnippet from '$features/snippet/api/createSnippet';
 
 import { PostBody } from '$shared/types/api';
 import convertString from '$shared/lib/convertString';
+import Logger from '$shared/helper/logger';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
+    if (process.env.NODE_ENV === 'production') {
+      const CannotAccessProductionEnvError = new Error('Cannot access production environment');
+      Logger.error(CannotAccessProductionEnvError);
+      throw CannotAccessProductionEnvError;
+    }
     const body: PostBody<'snippet'> = await request.json();
     const project = await createSnippet(body.title);
     await updateSnippet({
@@ -18,12 +24,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     });
     return json(project);
   } catch (err) {
-    return new Response(JSON.stringify(err), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-        encoding: 'UTF-8',
-      },
-    });
+    if (err instanceof Error) {
+      return new Response(err.message, {
+        status: 400,
+        headers: {
+          'Content-Type': 'text/plain',
+          encoding: 'UTF-8',
+        },
+      });
+    }
+    return null;
   }
 };
