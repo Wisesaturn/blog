@@ -59,8 +59,8 @@ export default function Layout({
           media="screen and (device-width: 375px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
           rel="apple-touch-startup-image"
         />
-        <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="manifest" href="/assets/manifest.webmanifest" />
         <Links />
         {process.env.NODE_ENV === 'production' && (

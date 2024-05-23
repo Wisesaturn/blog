@@ -38,7 +38,11 @@ export default async function updateProject(props: Props) {
       }
     }
 
-    Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
+    if (isUpdateProject) {
+      Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
+    } else {
+      Logger.log(`${title} views update : ${meta.views}`);
+    }
   } catch (err) {
     if (err instanceof Error) {
       const NotFoundError = new Error(`${title}에 해당하는 프로젝트가 없습니다`, { cause: err });

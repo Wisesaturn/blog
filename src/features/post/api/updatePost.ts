@@ -26,7 +26,12 @@ export default async function updatePost(props: Props) {
     } else {
       await setDoc(docRef, data);
     }
-    Logger.success(`${category}/${title}에 게시물을 업데이트하였습니다.`);
+
+    if (isUpdatePost) {
+      Logger.success(`${category}/${title}에 게시물을 업데이트하였습니다.`);
+    } else {
+      Logger.log(`${title} views update : ${data.views}`);
+    }
   } catch (err) {
     if (err instanceof Error) {
       const NotFoundError = new Error(`${category}/${title}에 해당하는 게시물이 없습니다`, {

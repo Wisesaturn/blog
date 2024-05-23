@@ -25,7 +25,12 @@ export default async function updateSnippet(props: Props) {
     } else {
       await setDoc(docRef, data);
     }
-    Logger.success(`${title}에 스니펫을 업데이트하였습니다.`);
+
+    if (isUpdateSnippet) {
+      Logger.success(`${title}에 스니펫을 업데이트하였습니다.`);
+    } else {
+      Logger.log(`${title} views update : ${data.views}`);
+    }
   } catch (err) {
     if (err instanceof Error) {
       const NotFoundError = new Error(`${title}에 해당하는 스니펫이 없습니다`, {
