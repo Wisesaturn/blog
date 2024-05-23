@@ -6,6 +6,9 @@ export const loader = () => {
     User-agent: *
     Allow: /
 
+    Disallow: /thumbnail/
+    Disallow: /assets/
+
     Sitemap: https://jaehan.blog/sitemap.xml
     `;
   // return the text content, a status 200 success response, and set the content type to text/plain
