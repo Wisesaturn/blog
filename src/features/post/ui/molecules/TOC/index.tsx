@@ -1,12 +1,16 @@
 import { motion } from 'framer-motion';
 
-import useTOC from '$features/post/hooks/useTOC';
 import TOCRow from '$features/post/ui/atoms/TOCRow';
+import useTOC from '$features/post/hooks/useTOC';
+import getHeading from '$features/post/lib/getHeading';
 
-interface TOCProps extends ReturnType<typeof useTOC> {}
+interface TOCProps {
+  body: string;
+}
 
 export default function TOC(props: TOCProps) {
-  const { Heading, selectId } = props;
+  const { selectId } = useTOC();
+  const Heading = getHeading(props.body);
 
   const SELECTED_STYLE_CLASS = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
   const NON_SELECTED_STYLE_CLASS = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;

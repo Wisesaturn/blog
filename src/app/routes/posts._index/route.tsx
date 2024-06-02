@@ -1,15 +1,13 @@
 import { motion } from 'framer-motion';
 import { ActionFunction, LoaderFunctionArgs, MetaFunction, defer } from '@remix-run/node';
-import { Await, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import qs from 'qs';
-import { Suspense } from 'react';
 
 import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import getPosts from '$features/post/api/getPosts';
 import { PostsOrderBy } from '$features/post/types/post';
-import sortPosts from '$features/post/lib/sortPosts';
 
 import Input from '$shared/ui/molecules/Input';
 import Title from '$shared/ui/atoms/Title';
