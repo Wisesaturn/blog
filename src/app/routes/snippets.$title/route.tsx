@@ -1,12 +1,12 @@
 import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
-import { json, useLoaderData } from '@remix-run/react';
+import { defer, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getSnippet from '$features/snippet/api/getSnippet';
 import SnippetComments from '$features/snippet/ui/atoms/SnippetComments';
-import SnippetTitle from '$features/snippet/ui/molecules/SnippetTitle';
 import SnippetButtons from '$features/snippet/ui/molecules/SnippetButtons';
 import updateSnippet from '$features/snippet/api/updateSnippet';
+import SnippetBox from '$features/snippet/ui/organisms/SnippetBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -27,9 +27,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const { title } = params;
   if (!title) throw new Error();
 
-  const snippet = await getSnippet({ title });
   // cookie settings
-  const hasUserVisited = createCookie(`${snippet.index}`, {
+  const hasUserVisited = createCookie(request.url, {
     path: '/',
     secure: true,
     httpOnly: true,
@@ -38,21 +37,24 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  // ignore create cookie if it's development or alreeady has cookie
-  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-    return json({ snippet });
-  }
+  const snippet = getSnippet({ title }).then(async (resolvedSnippet) => {
+    // ignore create cookie if it's development or alreeady has cookie
+    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+      return resolvedSnippet;
+    }
 
-  const views = snippet.views ? snippet.views + 1 : 1;
-  snippet.views = views;
+    const updatedSnippet = { ...resolvedSnippet, views: (resolvedSnippet.views || 0) + 1 };
 
-  // update view
-  await updateSnippet({
-    title,
-    data: { views },
+    // update snippet (view only)
+    await updateSnippet({
+      title,
+      data: { views: updatedSnippet.views },
+    });
+
+    return updatedSnippet;
   });
 
-  return json(
+  return defer(
     { snippet },
     {
       headers: {
@@ -65,7 +67,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
-  const { body, ...rest } = snippet;
 
   return (
     <motion.main
@@ -74,17 +75,7 @@ export default function SnippetPage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <SnippetTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <motion.div
-        variants={ANIMATE_FADE_UP_ITEM}
-        className="flex w-full max-w-layout max-md:flex-col-reverse"
-      >
-        <motion.article
-          variants={ANIMATE_FADE_UP_ITEM}
-          className="markdown-body w-full"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
-      </motion.div>
+      <SnippetBox snippet={snippet} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <SnippetButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <SnippetComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>

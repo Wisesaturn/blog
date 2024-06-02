@@ -2,7 +2,6 @@ import { Await } from '@remix-run/react';
 import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 
-import useCodePen from '$features/post/hooks/useCodePen';
 import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
 import { IProject } from '$features/project/types/project';
 import TOC from '$features/post/ui/molecules/TOC';
@@ -14,8 +13,6 @@ interface ProjectBoxProps extends GlobalAnimation {
 }
 
 export default function ProjectBox({ project, animation }: ProjectBoxProps) {
-  useCodePen();
-
   return (
     <Suspense fallback={<PostSkeleton />}>
       <Await resolve={project}>
