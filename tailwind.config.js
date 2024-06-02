@@ -66,7 +66,6 @@ module.exports = {
       },
       animation: {
         slideRight: 'slideRight .55s ease-in-out forwards',
-        skeletonUI: 'skeleton 1.25s infinite ease-in-out',
         bounceCenterAndFadeOut: 'bounceCenterAndFadeOut 2s forwards ease-in-out',
       },
     },

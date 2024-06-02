@@ -1,14 +1,12 @@
 import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
-import { json, useLoaderData } from '@remix-run/react';
+import { defer, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getProject from '$features/project/api/getProject';
-import TOC from '$features/post/ui/molecules/TOC';
-import useTOC from '$features/post/hooks/useTOC';
 import ProjectComments from '$features/project/ui/atoms/ProjectComments';
-import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
 import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
 import updateProject from '$features/project/api/updateProject';
+import ProjectBox from '$features/project/ui/organisms/ProjectBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -29,10 +27,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const { title } = params;
   if (!title) throw new Error();
 
-  const project = await getProject({ title });
-
   // cookie settings
-  const hasUserVisited = createCookie(`${project.index}`, {
+  const hasUserVisited = createCookie(request.url, {
     path: '/',
     secure: true,
     httpOnly: true,
@@ -41,21 +37,24 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  // ignore create cookie if it's development or alreeady has cookie
-  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-    return json({ project });
-  }
+  const project = getProject({ title }).then(async (resolvedProject) => {
+    // ignore create cookie if it's development or alreeady has cookie
+    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+      return resolvedProject;
+    }
 
-  const views = project.views ? project.views + 1 : 1;
-  project.views = views;
+    const updatedProject = { ...resolvedProject, views: (resolvedProject.views || 0) + 1 };
 
-  // update view
-  await updateProject({
-    title,
-    meta: { views, index: project.index },
+    // update project (view only)
+    await updateProject({
+      title,
+      meta: { views: updatedProject.views, index: resolvedProject.index },
+    });
+
+    return updatedProject;
   });
 
-  return json(
+  return defer(
     { project },
     {
       headers: {
@@ -68,8 +67,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
 export default function ProjectPage() {
   const { project } = useLoaderData<typeof loader>();
-  const { body, ...rest } = project;
-  const TOCElement = useTOC(body);
 
   return (
     <motion.main
@@ -78,18 +75,7 @@ export default function ProjectPage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <ProjectTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <motion.div
-        variants={ANIMATE_FADE_UP_ITEM}
-        className="flex w-full max-w-layout max-md:flex-col-reverse"
-      >
-        <motion.article
-          variants={ANIMATE_FADE_UP_ITEM}
-          className="markdown-body md:w-3/4 w-full"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
-        <TOC {...TOCElement} />
-      </motion.div>
+      <ProjectBox project={project} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ProjectButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ProjectComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>

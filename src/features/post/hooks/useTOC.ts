@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import getHeading from '$features/post/lib/getHeading';
 import getIntersectionObserver from '$features/post/lib/getIntersectionObserver';
 
 /**
  * @summary TOC 컴포넌트에서 사용하는 훅
  * @description 전체 Heading 태그와 뷰포트 내 제목 id를 구합니다
  */
-export default function useTOC(body: string) {
+export default function useTOC() {
   const [selectId, setSelectId] = useState('');
-  const Heading = getHeading(body);
 
   const handleSelectId = useCallback((id: string) => {
     setSelectId(id);
@@ -30,5 +28,5 @@ export default function useTOC(body: string) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { Heading, selectId };
+  return { selectId };
 }

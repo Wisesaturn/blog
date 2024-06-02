@@ -1,17 +1,20 @@
 import { collection, query, getDocs, where } from 'firebase/firestore';
 
-import { IPost } from '$features/post/types/post';
+import { IPost, PostsOrderBy } from '$features/post/types/post';
 
 import { db } from '$shared/middleware/firebase';
 import { CATEGORY_DATA } from '$shared/constant/category';
 
+import sortPosts from '../lib/sortPosts';
+
 interface Props {
   keyword: string;
   categories: string[];
+  orderBy?: PostsOrderBy;
 }
 
 export default async function getPosts(props: Props) {
-  const { keyword, categories } = props;
+  const { keyword, categories, orderBy } = props;
 
   let SEARCH_CATEGORY = CATEGORY_DATA;
 
@@ -47,6 +50,12 @@ export default async function getPosts(props: Props) {
 
     return acc;
   });
+
+  // sorting
+  if (orderBy) {
+    const sortedPosts = sortPosts(posts.data as IPost[], orderBy);
+    return sortedPosts;
+  }
 
   return posts.data as IPost[];
 }

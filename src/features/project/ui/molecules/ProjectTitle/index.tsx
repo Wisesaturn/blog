@@ -26,7 +26,7 @@ export default function ProjectTitle(props: ProjectTitleProps) {
   return (
     <>
       <motion.div
-        className="pb-4 max-md:pb-0 w-full h-[500px] max-md:h-[250px] rounded-3xl max-md:rounded-xl skeleton"
+        className="pb-4 max-md:pb-0 w-full h-[500px] max-md:h-[250px] rounded-3xl max-md:rounded-xl"
         variants={animation?.variants}
       >
         <img

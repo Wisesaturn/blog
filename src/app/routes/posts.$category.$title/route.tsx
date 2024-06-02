@@ -1,16 +1,12 @@
 import { motion } from 'framer-motion';
-import { LinksFunction, LoaderFunctionArgs, createCookie, json } from '@remix-run/node';
-import { MetaFunction, useLoaderData } from '@remix-run/react';
+import { LinksFunction, LoaderFunctionArgs, createCookie } from '@remix-run/node';
+import { MetaFunction, defer, useLoaderData } from '@remix-run/react';
 
 import getPost from '$features/post/api/getPost';
 import updatePost from '$features/post/api/updatePost';
-import ArticleTitle from '$features/post/ui/molecules/ArticleTitle';
 import ArticleComments from '$features/post/ui/atoms/ArticleComments';
-import useTOC from '$features/post/hooks/useTOC';
-import TOC from '$features/post/ui/molecules/TOC';
-import useCodePen from '$features/post/hooks/useCodePen';
-import ArticleTags from '$features/post/ui/atoms/ArticleTags';
 import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
+import ArticleBox from '$features/post/ui/organsims/ArticleBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -31,10 +27,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const { category, title } = params;
   if (!category || !title) throw new Error();
 
-  const post = await getPost({ category, title });
-
   // cookie settings
-  const hasUserVisited = createCookie(`${post.index}`, {
+  const hasUserVisited = createCookie(request.url, {
     path: '/',
     secure: true,
     httpOnly: true,
@@ -43,22 +37,25 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  // ignore create cookie if it's development or alreeady has cookie
-  if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-    return json({ post });
-  }
+  const post = getPost({ category, title }).then(async (resolvedPost) => {
+    // ignore create cookie if it's development or alreeady has cookie
+    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
+      return resolvedPost;
+    }
 
-  const views = post.views ? post.views + 1 : 1;
-  post.views = views;
+    const updatedPost = { ...resolvedPost, views: (resolvedPost.views || 0) + 1 };
 
-  // update view
-  await updatePost({
-    category,
-    title,
-    data: { views },
+    // update post (view only)
+    await updatePost({
+      category,
+      title,
+      data: { views: updatedPost.views },
+    });
+
+    return updatedPost;
   });
 
-  return json(
+  return defer(
     { post },
     {
       headers: {
@@ -72,9 +69,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 // page
 export default function ArticlePage() {
   const { post } = useLoaderData<typeof loader>();
-  const { body, tags, ...rest } = post;
-  const TOCElement = useTOC(body);
-  useCodePen();
 
   return (
     <motion.main
@@ -83,19 +77,7 @@ export default function ArticlePage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <ArticleTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <motion.div
-        variants={ANIMATE_FADE_UP_ITEM}
-        className="flex w-full max-w-layout max-md:flex-col-reverse"
-      >
-        <motion.article
-          variants={ANIMATE_FADE_UP_ITEM}
-          className="markdown-body md:w-3/4 w-full"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
-        <TOC {...TOCElement} />
-      </motion.div>
-      <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ArticleBox post={post} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ArticleButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
