@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { ActionFunction, LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { ActionFunction, LoaderFunctionArgs, MetaFunction, defer } from '@remix-run/node';
+import { Await, useLoaderData } from '@remix-run/react';
 import qs from 'qs';
+import { Suspense } from 'react';
 
 import PostList from '$features/post/ui/organsims/PostList';
 import Categories from '$features/post/ui/molecules/Categories';
@@ -23,7 +24,7 @@ export const meta: MetaFunction = (args) => {
 };
 
 // action (refresh post callback)
-export const action: ActionFunction = async () => json({ refetch: true });
+export const action: ActionFunction = async () => defer({ refetch: true });
 
 // loader
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -31,12 +32,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const searchParams = {
     keyword: String(params.keyword || ''),
     categories: params.category ? String(params.category).split(',') : [],
+    orderBy: params.orderby as PostsOrderBy,
   };
-  const posts = await getPosts(searchParams);
-  const sortedPosts = sortPosts(posts, params.orderby as PostsOrderBy);
+  const posts = getPosts(searchParams);
 
-  return json(
-    { posts: sortedPosts },
+  return defer(
+    { posts },
     {
       headers: {
         'Cache-Control': 'public, stale-while-revalidate=31556952',

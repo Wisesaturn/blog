@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { LinksFunction, LoaderFunctionArgs, createCookie, json } from '@remix-run/node';
-import { MetaFunction, useLoaderData } from '@remix-run/react';
+import { LinksFunction, LoaderFunctionArgs, createCookie } from '@remix-run/node';
+import { Await, MetaFunction, defer, useLoaderData } from '@remix-run/react';
+import { Suspense } from 'react';
 
 import getPost from '$features/post/api/getPost';
 import updatePost from '$features/post/api/updatePost';
@@ -45,7 +46,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
   // ignore create cookie if it's development or alreeady has cookie
   if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-    return json({ post });
+    return defer({ post });
   }
 
   const views = post.views ? post.views + 1 : 1;
@@ -58,7 +59,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     data: { views },
   });
 
-  return json(
+  return defer(
     { post },
     {
       headers: {
@@ -83,19 +84,23 @@ export default function ArticlePage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <ArticleTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <motion.div
-        variants={ANIMATE_FADE_UP_ITEM}
-        className="flex w-full max-w-layout max-md:flex-col-reverse"
-      >
-        <motion.article
-          variants={ANIMATE_FADE_UP_ITEM}
-          className="markdown-body md:w-3/4 w-full"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
-        <TOC {...TOCElement} />
-      </motion.div>
-      <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <Suspense fallback={<div className="skeleton-item">포스트 로딩 중...</div>}>
+        <Await resolve={post}>
+          <ArticleTitle {...rest} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+          <motion.div
+            variants={ANIMATE_FADE_UP_ITEM}
+            className="flex w-full max-w-layout max-md:flex-col-reverse"
+          >
+            <motion.article
+              variants={ANIMATE_FADE_UP_ITEM}
+              className="markdown-body md:w-3/4 w-full"
+              dangerouslySetInnerHTML={{ __html: body }}
+            />
+            <TOC {...TOCElement} />
+          </motion.div>
+          <ArticleTags tags={tags} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+        </Await>
+      </Suspense>
       <ArticleButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
