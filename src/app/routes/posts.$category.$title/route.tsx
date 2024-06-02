@@ -7,7 +7,6 @@ import updatePost from '$features/post/api/updatePost';
 import ArticleComments from '$features/post/ui/atoms/ArticleComments';
 import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
 import ArticleBox from '$features/post/ui/organsims/ArticleBox';
-import { IPost } from '$features/post/types/post';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -28,17 +27,17 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const { category, title } = params;
   if (!category || !title) throw new Error();
 
-  const post = getPost({ category, title }).then(async (resolvedPost) => {
-    // cookie settings
-    const hasUserVisited = createCookie(`${resolvedPost.index}`, {
-      path: '/',
-      secure: true,
-      httpOnly: true,
-      maxAge: 60 * 60 * 0.5,
-    });
-    const cookieHeader = request.headers.get('Cookie');
-    const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
+  // cookie settings
+  const hasUserVisited = createCookie(request.url, {
+    path: '/',
+    secure: true,
+    httpOnly: true,
+    maxAge: 60 * 60 * 0.5,
+  });
+  const cookieHeader = request.headers.get('Cookie');
+  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
+  const post = getPost({ category, title }).then(async (resolvedPost) => {
     // ignore create cookie if it's development or alreeady has cookie
     if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
       return resolvedPost;
@@ -60,6 +59,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     { post },
     {
       headers: {
+        'Set-Cookie': await hasUserVisited.serialize({}),
         'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=31556952',
       },
     },
