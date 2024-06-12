@@ -8,15 +8,15 @@ import {
   useRouteError,
 } from '@remix-run/react';
 
-import globalStyles from '$shared/styles/global.css';
-import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import useInitialScript from '$shared/hooks/useInitialScript';
-import Layout from '$shared/ui/templates/Layout';
-import getCookie from '$shared/lib/getCookieOnHeader';
 import formatHeadTags from '$shared/lib/formatHeadTags';
-import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
+import formatStyleSheet from '$shared/lib/formatStyleSheet';
+import getCookie from '$shared/lib/getCookieOnHeader';
 import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
+import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
+import globalStyles from '$shared/styles/global.css';
 import Button from '$shared/ui/molecules/Button';
+import Layout from '$shared/ui/templates/Layout';
 
 import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 

@@ -1,18 +1,18 @@
-import { motion } from 'framer-motion';
 import { ActionFunction, LoaderFunctionArgs, MetaFunction, defer } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { motion } from 'framer-motion';
 import qs from 'qs';
 
-import PostList from '$features/post/ui/organsims/PostList';
-import Categories from '$features/post/ui/molecules/Categories';
-import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import getPosts from '$features/post/api/getPosts';
+import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import { PostsOrderBy } from '$features/post/types/post';
+import Categories from '$features/post/ui/molecules/Categories';
+import PostList from '$features/post/ui/organsims/PostList';
 
-import Input from '$shared/ui/molecules/Input';
-import Title from '$shared/ui/atoms/Title';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
 import formatHeadTags from '$shared/lib/formatHeadTags';
+import Title from '$shared/ui/atoms/Title';
+import Input from '$shared/ui/molecules/Input';
 
 // meta
 export const meta: MetaFunction = (args) => {

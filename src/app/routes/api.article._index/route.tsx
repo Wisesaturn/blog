@@ -4,9 +4,9 @@ import { ActionFunctionArgs, json } from '@remix-run/node';
 import createPost from '$features/post/api/createPost';
 import updatePost from '$features/post/api/updatePost';
 
-import { PostBody } from '$shared/types/api';
-import convertString from '$shared/lib/convertString';
 import Logger from '$shared/helper/logger';
+import convertString from '$shared/lib/convertString';
+import { PostBody } from '$shared/types/api';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {

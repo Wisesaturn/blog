@@ -1,15 +1,15 @@
-import { motion } from 'framer-motion';
 import { MetaFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { motion } from 'framer-motion';
 
-import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
 import getProjects from '$features/project/api/getProjects';
-import ProjectList from '$features/project/ui/organisms/ProjectList';
 import sortProjects from '$features/project/lib/sortProjects';
+import ProjectCreater from '$features/project/ui/molecules/ProjectCreater';
+import ProjectList from '$features/project/ui/organisms/ProjectList';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import Title from '$shared/ui/atoms/Title';
 import formatHeadTags from '$shared/lib/formatHeadTags';
+import Title from '$shared/ui/atoms/Title';
 
 // meta
 export const meta: MetaFunction = (args) => {

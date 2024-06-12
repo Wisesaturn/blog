@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
 import { LinksFunction, LoaderFunctionArgs, createCookie } from '@remix-run/node';
 import { MetaFunction, defer, useLoaderData } from '@remix-run/react';
+import { motion } from 'framer-motion';
 
 import getPost from '$features/post/api/getPost';
 import updatePost from '$features/post/api/updatePost';

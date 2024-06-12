@@ -1,9 +1,9 @@
-import { collection, query, getDocs, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import { IPost, PostsOrderBy } from '$features/post/types/post';
 
-import { db } from '$shared/middleware/firebase';
 import { CATEGORY_DATA } from '$shared/constant/category';
+import { db } from '$shared/middleware/firebase';
 
 import sortPosts from '../lib/sortPosts';
 

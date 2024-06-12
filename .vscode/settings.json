@@ -16,6 +16,8 @@
   },
   "tailwindCSS.validate": true,
   "css.validate": false,
+  "javascript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",

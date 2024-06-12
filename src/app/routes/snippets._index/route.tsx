@@ -1,15 +1,15 @@
-import { motion } from 'framer-motion';
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
+import { motion } from 'framer-motion';
 import qs from 'qs';
 
+import getSnippets from '$features/snippet/api/getSnippets';
 import SnippetCreater from '$features/snippet/ui/molecules/SnippetCreater';
 import SnippetList from '$features/snippet/ui/organisms/SnippetList';
-import getSnippets from '$features/snippet/api/getSnippets';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import Title from '$shared/ui/atoms/Title';
 import formatHeadTags from '$shared/lib/formatHeadTags';
+import Title from '$shared/ui/atoms/Title';
 
 // meta
 export const meta: MetaFunction = (args) => {

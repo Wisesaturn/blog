@@ -1,7 +1,7 @@
-import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
-import { db } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
+import { db } from '$shared/middleware/firebase';
 
 import { IPost } from '../types/post';
 

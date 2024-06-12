@@ -1,13 +1,13 @@
-import { unified } from 'unified';
-import remarkGfm from 'remark-gfm';
+import rehypeMathjax from 'rehype-mathjax';
+import rehypePrismPlus from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
+import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
-import remarkMath from 'remark-math';
-import rehypePrismPlus from 'rehype-prism-plus';
-import rehypeMathjax from 'rehype-mathjax';
-import rehypeSlug from 'rehype-slug';
+import { unified } from 'unified';
 
 import HtmlConverter from '../helper/HtmlConverter';
 

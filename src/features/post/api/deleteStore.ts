@@ -1,8 +1,8 @@
 /* eslint-disable array-callback-return */
-import { deleteObject, ref, listAll } from 'firebase/storage';
+import { deleteObject, listAll, ref } from 'firebase/storage';
 
-import { storage } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
+import { storage } from '$shared/middleware/firebase';
 import { IFireStore } from '$shared/types/global';
 
 export default async function deleteStore(props: IFireStore) {
