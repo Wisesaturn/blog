@@ -15,7 +15,7 @@
     *
     */
   .skeleton {
-    background: #eaeaea;
+    background: var(--skeleton);
     position: relative;
     overflow: hidden;
     border-radius: 0.5rem;
@@ -31,7 +31,7 @@
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 50%,
+        var(--skeleton-line) 50%,
         rgba(255, 255, 255, 0) 100%
       );
       animation: loading 1.35s infinite;

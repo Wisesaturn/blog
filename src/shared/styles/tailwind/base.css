@@ -19,6 +19,8 @@
     --blue-darker: #033d8b;
     --strong: var(--black);
     --strong-callout: var(--black);
+    --skeleton: #eaeaea;
+    --skeleton-line: rgba(255, 255, 255, 0.3);
     --bg-thead: #f2f2f2;
     --bg-callout: rgb(187, 250, 203, 0.5);
     --border-table: #ddd;
@@ -43,6 +45,8 @@
     --blue-bright: #94ccfd;
     --strong: var(--green-bright);
     --strong-callout: var(--black);
+    --skeleton: #494949;
+    --skeleton-line: rgba(21, 21, 21, 0.3);
     --bg-thead: #393939;
     --bg-callout: rgba(16, 77, 31, 0.5);
     --border-table: #191919;

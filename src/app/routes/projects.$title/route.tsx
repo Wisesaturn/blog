@@ -3,9 +3,9 @@ import { defer, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getProject from '$features/project/api/getProject';
+import updateProject from '$features/project/api/updateProject';
 import ProjectComments from '$features/project/ui/atoms/ProjectComments';
 import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
-import updateProject from '$features/project/api/updateProject';
 import ProjectBox from '$features/project/ui/organisms/ProjectBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
