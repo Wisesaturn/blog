@@ -30,7 +30,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const searchParams = {
     keyword: String(params.keyword || ''),
     categories: params.category ? String(params.category).split(',') : [],
-    orderBy: params.orderby as PostsOrderBy,
+    orderBy: (params.orderby as PostsOrderBy) || 'desc',
   };
   const posts = getPosts(searchParams);
 
