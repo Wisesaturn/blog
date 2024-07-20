@@ -18,7 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { posts: DUMMY_POSTS },
+  args: { posts: Promise.resolve(DUMMY_POSTS) },
   decorators: [
     (StoryChlidren) => (
       <MemoryRouter initialEntries={['/']}>

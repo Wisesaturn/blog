@@ -1,6 +1,6 @@
-import { Heading } from '$features/post/types/article';
+import { IHeading } from '$features/post/types/article';
 
-interface TOCRowProps extends Heading {
+interface TOCRowProps extends IHeading {
   className: string;
   handleClick: (_i: string) => void;
 }
