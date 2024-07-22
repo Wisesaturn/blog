@@ -18,7 +18,7 @@ const PROFILE: {
           isWorking: true,
           role: 'Frontend Developer',
           date: '2024.04 ~ ',
-          department: '개발 10 유닛',
+          department: '개발 13 유닛',
           introduction: '',
           link: 'https://www.muhayu.com/',
         },
