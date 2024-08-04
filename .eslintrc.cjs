@@ -67,6 +67,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': ['off'],
         'react/jsx-no-target-blank': 'error',
+        'prefer-arrow-callback': 'off',
         'import/order': [
           'error',
           {

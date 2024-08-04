@@ -8,16 +8,14 @@ import createDarkmodeCookie from '$shared/lib/createDarkmodeCookie';
 export default function DarkmodeButton() {
   const { layout, updateLayout } = useLayout();
 
-  /* [Action] click button */
-  const handleDarkmode = () => {
+  const handleSwitchDarkmodeClick = () => {
     const nextDarkmode: Darkmode = layout.darkmode === 'light' ? 'dark' : 'light';
     updateLayout({ darkmode: nextDarkmode });
     createDarkmodeCookie(nextDarkmode);
     document.documentElement.setAttribute('color-theme', nextDarkmode);
   };
 
-  /* [Business] initial darkmode by System */
-  useEffect(() => {
+  useEffect(function initialDarkmode() {
     const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light';
@@ -33,7 +31,7 @@ export default function DarkmodeButton() {
   }, []);
 
   return (
-    <button aria-label="darkmode-button" type="button" onClick={handleDarkmode}>
+    <button aria-label="darkmode-button" type="button" onClick={handleSwitchDarkmodeClick}>
       {layout.darkmode === 'dark' ? <Icons.Dark type="border" /> : <Icons.Light type="border" />}
     </button>
   );

@@ -12,7 +12,7 @@ export default function TOC(props: TOCProps) {
   const { selectId } = useTOC();
   const Heading = getHeading(props.body);
 
-  const SELECTED_STYLE_CLASS = `text-black dark:text-white border-l-slate-500 dark:border-l-slate-200`;
+  const SELECTED_STYLE_CLASS = `text-black font-semibold dark:text-white border-l-slate-500 dark:border-l-slate-200`;
   const NON_SELECTED_STYLE_CLASS = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;
 
   const handleRowClick = (targetId: string) => {
@@ -35,8 +35,8 @@ export default function TOC(props: TOCProps) {
         <div className="overflow-y-auto max-h-96">
           {Heading.map((head, idx) => {
             const SELECTED_CLASS = `${selectId === head.id ? SELECTED_STYLE_CLASS : NON_SELECTED_STYLE_CLASS}`;
-            let hierarchyClass = `pl-3`;
 
+            let hierarchyClass = `pl-3`;
             if (head.level === 3) hierarchyClass = 'pl-6';
             else if (head.level === 4) hierarchyClass = 'pl-9';
 

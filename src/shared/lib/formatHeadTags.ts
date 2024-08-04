@@ -21,6 +21,7 @@ function isPost(obj: unknown): obj is { post: IPost } {
 function isProject(obj: unknown): obj is { project: IProject } {
   return typeof obj === 'object' && obj !== null && 'project' in obj;
 }
+
 /**
  * @summary meta tag 및 link tag 포맷을 추출하는 함수
  * @returns
@@ -33,6 +34,7 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
   const prefix = urlPrefix || '';
   const HOST_URL = `https://jaehan.blog/${prefix}`;
   const convertTitle = `${params.title ? `${convertString(params.title, 'dashToSpace')}` : title || '사툰사툰'}`;
+
   let convertThumbnail = thumbnail || DEFAULT_THUMBNAIL;
   let convertDescription = description || DEFAULT_DESCRIPTION;
   let convertUrl = HOST_URL;
