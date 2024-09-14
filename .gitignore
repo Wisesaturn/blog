@@ -4,6 +4,7 @@ node_modules
 /build
 /public/build
 .env
+.idea
 
 # misc
 .DS_Store
