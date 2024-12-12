@@ -298,7 +298,11 @@
       @apply hover:cursor-pointer layout-text;
 
       ~ * {
-        @apply pt-0 pl-4;
+        @apply pt-0 ml-4;
+      }
+      
+      + img {
+        @apply mt-2;
       }
     }
 
