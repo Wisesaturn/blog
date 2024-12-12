@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 /**
  * @summary Codepen 3rd party load hook
  */
 export default function useCodePen() {
   // codepen load
-  useEffect(() => {
+  useLayoutEffect(() => {
     const codepenScript = `https://cpwebassets.codepen.io/assets/embed/ei.js`;
     const script = document.createElement('script');
     script.async = true;

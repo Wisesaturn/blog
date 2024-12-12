@@ -1,8 +1,8 @@
 import { cssBundleHref } from '@remix-run/css-bundle';
 import {
-  Outlet,
   isRouteErrorResponse,
   json,
+  Outlet,
   useLoaderData,
   useNavigate,
   useRouteError,
@@ -59,6 +59,7 @@ export default function App() {
  */
 export function ErrorBoundary() {
   const error = useRouteError();
+  console.log(error);
   const navigate = useNavigate();
   const data = {
     layout: DEFAULT_LAYOUT_VALUE,
@@ -87,11 +88,15 @@ export function ErrorBoundary() {
     return (
       <Layout data={data}>
         <h1 className="w-full text-center pt-16 pb-2">{error.name}</h1>
-        <p className="w-full text-center max-w-layout break-keep pt-4 pb-8">{error.message}</p>
+        <p className="w-full text-center max-w-layout mx-auto break-keep pt-4 pb-8">
+          {error.message}
+        </p>
         {process.env.NODE_ENV === 'development' && (
           <div className="w-full text-center">
             <p>The stack trace is:</p>
-            <pre className="w-full text-sm max-w-layout break-keep pt-2 pb-8">{error.stack}</pre>
+            <pre className="w-full text-sm max-w-layout mx-auto break-keep dark:bg-black bg-gray-200 rounded-md mt-2 mb-8 pt-2 pb-8">
+              {error.stack}
+            </pre>
           </div>
         )}
         <div className="w-fit mx-auto h-screen">

@@ -1,5 +1,5 @@
-import { LinksFunction, LoaderFunctionArgs, createCookie } from '@remix-run/node';
-import { MetaFunction, defer, useLoaderData } from '@remix-run/react';
+import { createCookie, LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
+import { defer, MetaFunction, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getPost from '$features/post/api/getPost';
@@ -25,6 +25,10 @@ export const links: LinksFunction = () => [formatStyleSheet(codeStyles)];
 // loader
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const { category, title } = params;
+  if (process.env.NODE_ENV !== 'development') {
+    if (category === 'LOCAL_TEST' || category === 'LOCAL_WRITING')
+      throw new Error('접속할 수 없는 페이지입니다');
+  }
   if (!category || !title) throw new Error();
 
   // cookie settings
