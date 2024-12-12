@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}', './.storybook/preview.tsx'],
   darkMode: ['class', '[color-theme="dark"]'],
   theme: {
