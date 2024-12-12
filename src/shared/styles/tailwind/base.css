@@ -66,23 +66,22 @@
     background-color: var(--white);
     line-height: 180%;
 
-    font-family:
-      'Pretendard Variable',
-      Pretendard,
-      -apple-system,
-      BlinkMacSystemFont,
-      Tossface,
-      system-ui,
-      Roboto,
-      'Helvetica Neue',
-      'Segoe UI',
-      'Apple SD Gothic Neo',
-      'Noto Sans KR',
-      'Malgun Gothic',
-      'Apple Color Emoji',
-      'Segoe UI Emoji',
-      'Segoe UI Symbol',
-      sans-serif;
+    font-family: 'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    Tossface,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    sans-serif;
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
@@ -246,6 +245,7 @@
     }
 
     /* code */
+
     :not(pre[class*='language-'], blockquote p) > code {
       @apply bg-gray-200 dark:bg-[#191919] font-bold layout-text-color tracking-tight;
     }
@@ -323,6 +323,7 @@
     }
 
     /* no padding ul instantly after heading */
+
     :is(h2, h3, h4) + ul {
       @apply pt-4;
     }
@@ -344,6 +345,7 @@
     }
 
     /* no padding ol instantly after heading */
+
     :is(h2, h3, h4) + ol {
       @apply pt-4;
     }
@@ -377,7 +379,7 @@
 
       th,
       td {
-        @apply px-6 py-2.5 border-[1px];
+        @apply px-6 py-2.5 border-[1px] text-center;
       }
     }
 
@@ -412,11 +414,13 @@
     }
 
     /* no margin image instantly after heading or image */
+
     :is(h4, h3, h2, img, div[class='image-caption']) + img {
       @apply mt-4;
     }
 
     /* code snippets */
+
     pre[class*='language-'] {
       overflow-x: auto;
       overflow-y: hidden;
@@ -430,13 +434,16 @@
     }
 
     /* image caption */
+
     div[class='image-caption'] {
       @apply text-sm max-md:text-xs py-1 text-gray-500 dark:text-gray-300 font-light mx-auto w-full text-center;
     }
 
     /* code block title */
+
     h5[class='code-title'] {
       @apply text-sm max-md:text-xs no-underline bg-gray-300 dark:bg-[#191919] w-full py-2 px-4 translate-y-8 rounded-t-md;
+
       + pre {
         @apply rounded-t-none;
       }
