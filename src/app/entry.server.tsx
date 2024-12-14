@@ -114,7 +114,7 @@ function handleBrowserRequest(
           // set cache control for browser cache
           responseHeaders.set(
             'Cache-Control',
-            'public, max-age=0, s-maxage=86400, must-revalidate',
+            'public, max-age=3600, s-maxage=86400, must-revalidate',
           );
           responseHeaders.set('CDN-Cache-Control', 'public, max-age=86400');
           responseHeaders.set('Vercel-CDN-Cache-Control', 'public, max-age=86400');
