@@ -116,6 +116,14 @@ function handleBrowserRequest(
             'Cache-Control',
             'public, max-age=0, s-maxage=86400, must-revalidate',
           );
+          responseHeaders.set(
+            'CDN-Cache-Control',
+            'public, max-age=0, s-maxage=86400, must-revalidate',
+          );
+          responseHeaders.set(
+            'Vercel-CDN-Cache-Control',
+            'public, max-age=0, s-maxage=86400, must-revalidate',
+          );
 
           resolve(
             new Response(modifiedStream, {
