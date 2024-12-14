@@ -53,15 +53,6 @@
   ],
   "headers": [
     {
-      "source": "/(.*).html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=86400, must-revalidate"
-        }
-      ]
-    },
-    {
       "source": "/:path*\\.(css|js|svg|jpg|png|gif|webp|ico|woff2|woff|ttf|eot|webmanifest)",
       "headers": [
         {
@@ -76,6 +67,10 @@
         {
           "key": "x-content-type-options",
           "value": "nosniff"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, must-revalidate"
         },
         {
           "key": "X-Frame-Options",
