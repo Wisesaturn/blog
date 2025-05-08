@@ -112,11 +112,7 @@ const PROFILE: {
         list: [
           '주도적인 개발 학습에 목표를 두고 참여하였습니다',
           <>
-            <a
-              target="_blank"
-              href="https://gdsc.community.dev/events/details/developer-student-clubs-ajou-university-presents-ajouthon/#0"
-              rel="noreferrer"
-            >
+            <a target="_blank" href="https://gdsc-ajou.tistory.com/45" rel="noreferrer">
               해커톤
             </a>{' '}
             참여, UX Flow 및 성능 개선 스터디 진행
@@ -172,9 +168,10 @@ const PROFILE: {
         {
           subTitle: 'React',
           list: [
-            'React와 함께 SPA를 개발할 수 있으며, DOM 조작 및 이벤트 처리에 대한 이해가 있습니다',
-            '훅을 활용하여 비즈니스와 UI를 분리하며 개발할 수 있습니다',
-            '코드 스플리팅과 메모이제이션을 통해 성능 개선한 경험이 있습니다',
+            'React를 활용한 SPA 개발 경험이 있으며, 가상 DOM 및 이벤트 처리 메커니즘에 대한 이해도가 높습니다',
+            '커스텀 훅 HOC를 활용하여 상태 관리 로직과 렌더링 계층을 명확히 분리하는 컴포넌트 설계에 능숙합니다',
+            'React.lazy와 React.memo, useMemo 최적화 기법을 적용하여 번들 사이즈 감소 및 불필요한 리렌더링을 방지하는 성능 최적화를 구현한 경험이 있습니다',
+            'React Fiber의 렌더링 파이프라인의 높은 이해도가 있으며, Lane 모델 지식을 활용해 렌더링 이슈에 대한 효과적인 트러블슈팅이 가능합니다',
           ],
         },
         {
