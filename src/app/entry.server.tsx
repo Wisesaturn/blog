@@ -111,6 +111,20 @@ function handleBrowserRequest(
           responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
           responseHeaders.set('Content-Type', 'text/html');
 
+          // set cache control for browser cache
+          responseHeaders.set(
+            'Cache-Control',
+            'public, max-age=0, stale-while-revalidate=31556952, must-revalidate',
+          );
+          responseHeaders.set(
+            'CDN-Cache-Control',
+            'public, max-age=0, stale-while-revalidate=31556952',
+          );
+          responseHeaders.set(
+            'Vercel-CDN-Cache-Control',
+            'public, max-age=0, stale-while-revalidate=31556952',
+          );
+
           resolve(
             new Response(modifiedStream, {
               headers: responseHeaders,
