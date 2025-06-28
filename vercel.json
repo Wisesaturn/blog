@@ -64,15 +64,15 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=86400, must-revalidate"
+          "value": "public, stale-while-revalidate=31556952"
         },
         {
           "key": "CDN-Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, stale-while-revalidate=31556952"
         },
         {
           "key": "Vercel-CDN-Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, stale-while-revalidate=31556952"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "headers": [
         {
           "key": "cache-control",
-          "value": "public, max-age=86400, s-maxage=31556952, stale-while-revalidate=31556952, immutable"
+          "value": "public, max-age=31556952, s-maxage=31556952, immutable"
         }
       ]
     },
