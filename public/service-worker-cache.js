@@ -9,7 +9,7 @@ self.addEventListener('fetch', (event) => {
   // If the request is for the built files (which are hashed in the name)
   if (
     url.pathname.startsWith('/tossface/') ||
-    url.pathname.startsWith('/build/') ||
+    (url.pathname.startsWith('/build/') && !url.pathname.startsWith('/build/routes/')) ||
     url.pathname.startsWith('/thumbnail/') ||
     url.pathname.startsWith('/assets/')
   ) {
