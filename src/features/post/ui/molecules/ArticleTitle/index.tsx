@@ -10,6 +10,11 @@ interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags'
 export default function ArticleTitle(props: ArticleTitleProps) {
   const { animation, description, createdAt, thumbnail, views, category, title } = props;
 
+  const thumbnailUrl =
+    process.env.NODE_ENV === 'development'
+      ? thumbnail.replace('https://jaehan.blog/', 'http://localhost:3000/')
+      : thumbnail;
+
   return (
     <>
       <motion.div
@@ -20,7 +25,7 @@ export default function ArticleTitle(props: ArticleTitleProps) {
           fetchPriority="high"
           decoding="async"
           className="rounded-3xl object-cover h-[500px] max-md:h-[250px] w-full max-md:rounded-xl"
-          src={thumbnail}
+          src={thumbnailUrl}
           alt={title}
         />
       </motion.div>
