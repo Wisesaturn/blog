@@ -17,18 +17,3 @@ startTransition(() => {
     </StrictMode>,
   );
 });
-
-// if the browser supports Service Worker (all modern browsers do it)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    // we will register it after the page complete the load
-    navigator.serviceWorker
-      .register('/service-worker-cache.js')
-      .then((registration) => {
-        console.log('Service Worker registered:', registration.scope);
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
-  });
-}
