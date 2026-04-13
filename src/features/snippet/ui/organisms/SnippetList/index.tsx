@@ -11,9 +11,11 @@ interface Props extends GlobalAnimation {
 export default function SnippetList(props: Props) {
   const { animation, snippets } = props;
   return (
-    <motion.div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4 mt-6">
+    <motion.div className="columns-3 max-lg:columns-2 max-sm:columns-1 gap-4 mt-6">
       {snippets.map((snippet) => (
-        <SnippetCard animation={animation} key={snippet.index} {...snippet} />
+        <div key={snippet.index} className="break-inside-avoid mb-4">
+          <SnippetCard animation={animation} {...snippet} />
+        </div>
       ))}
     </motion.div>
   );
