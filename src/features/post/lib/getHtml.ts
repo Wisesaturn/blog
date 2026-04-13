@@ -28,6 +28,6 @@ export default async function getHtml(mdString: string): Promise<string> {
     .use(rehypeMathjax) // math 구문 강조용
     .use(rehypePrismPlus, { showLineNumbers: true }) // code 강조용 (Highlight에서 Prism으로 교체)
     .process(mdString);
-  const html = new HtmlConverter(result.value as string).link().process();
+  const html = new HtmlConverter(result.value as string).link().codeBlock().process();
   return html;
 }

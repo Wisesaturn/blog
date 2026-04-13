@@ -426,6 +426,7 @@
     /* code snippets */
 
     pre[class*='language-'] {
+      position: relative;
       overflow-x: auto;
       overflow-y: hidden;
       white-space: nowrap;
@@ -434,6 +435,45 @@
 
       span {
         @apply text-base max-md:text-sm;
+      }
+
+      .copy-code-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.375rem;
+        border-radius: 0.375rem;
+        opacity: 0;
+        transition: opacity 0.2s, background-color 0.2s;
+        background: rgba(255, 255, 255, 0.1);
+        color: #aaa;
+        cursor: pointer;
+        z-index: 10;
+        line-height: 0;
+
+        .check-icon {
+          display: none;
+        }
+
+        &[data-copied='true'] {
+          .copy-icon {
+            display: none;
+          }
+
+          .check-icon {
+            display: block;
+            color: #4ade80;
+          }
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+        }
+      }
+
+      &:hover .copy-code-btn {
+        opacity: 1;
       }
     }
 
