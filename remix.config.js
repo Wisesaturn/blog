@@ -43,6 +43,7 @@ export default {
     /^hast*/,
     /^rehype*/,
     /^remark*/,
+    /^markdown*/,
     'remark-gfm',
     'remark-rehype',
     'remark-stringify',
