@@ -9,6 +9,7 @@ import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
 import ProjectBox from '$features/project/ui/organisms/ProjectBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
+import convertString from '$shared/lib/convertString';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import codeStyles from '$shared/styles/etc/vscode-prism.css';
@@ -28,7 +29,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (!title) throw new Error();
 
   // cookie settings
-  const hasUserVisited = createCookie(request.url, {
+  const cookieName = convertString(new URL(request.url).pathname, 'urlPathToCookieName');
+  const hasUserVisited = createCookie(cookieName, {
     path: '/',
     secure: true,
     httpOnly: true,
