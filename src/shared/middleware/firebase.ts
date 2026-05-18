@@ -28,4 +28,4 @@ export function getEnv() {
 
 // Subsequent queries will use persistence, if it was enabled successfully
 
-export { storage, db, functions };
+export { app, storage, db, functions };

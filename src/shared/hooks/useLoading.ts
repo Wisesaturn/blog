@@ -8,5 +8,5 @@ import useDebounce from './useDebounce';
 export default function useLoading(): boolean {
   const { state } = useNavigation();
   const debouncedState = useDebounce(state, 500);
-  return debouncedState === ('loading' || 'submitting');
+  return debouncedState === 'loading' || debouncedState === 'submitting';
 }
