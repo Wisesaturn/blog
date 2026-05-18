@@ -1,4 +1,3 @@
-
 import Title from '.';
 
 import type { Meta, StoryObj } from '@storybook/react';

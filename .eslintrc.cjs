@@ -5,6 +5,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/no-cycle': 'off',
     'import/no-named-as-default': 'off',
+    'import/prefer-default-export': 'off',
     'import/no-duplicates': 'error',
     'import/extensions': [
       'error',
@@ -17,6 +18,7 @@ module.exports = {
     ],
     'no-unused-vars': 'off',
     'no-console': 'off',
+    'consistent-return': 'off',
     'no-warning-comments': [
       'warn',
       {
@@ -86,6 +88,37 @@ module.exports = {
                 position: 'before',
               },
               {
+                pattern: '@/app/**',
+                group: 'internal',
+                position: 'after',
+              },
+              {
+                pattern: '@/pages/**',
+                group: 'internal',
+                position: 'after',
+              },
+              {
+                pattern: '@/modules/**',
+                group: 'internal',
+                position: 'after',
+              },
+              {
+                pattern: '@/features/**',
+                group: 'internal',
+                position: 'after',
+              },
+              {
+                pattern: '@/entities/**',
+                group: 'internal',
+                position: 'after',
+              },
+              {
+                pattern: '@/commons/**',
+                group: 'internal',
+                position: 'after',
+              },
+              // legacy aliases — 신규 코드에서는 @/* 사용
+              {
                 pattern: '$app/**',
                 group: 'internal',
                 position: 'after',
@@ -104,25 +137,6 @@ module.exports = {
                 pattern: '$shared/**',
                 group: 'internal',
                 position: 'after',
-              },
-              {
-                pattern: '**/atoms/**',
-                group: 'internal',
-                position: 'after',
-              },
-              {
-                pattern: '**/molecules/**',
-                group: 'internal',
-                position: 'after',
-              },
-              {
-                pattern: '**/organisms/**',
-                group: 'internal',
-                position: 'after',
-              },
-              {
-                pattern: '$styles/**',
-                group: 'unknown',
               },
             ],
             'newlines-between': 'always',
@@ -183,7 +197,7 @@ module.exports = {
         ],
       },
       settings: {
-        'import/internal-regex': '^$/',
+        'import/internal-regex': '^(@/|\\$)',
         'import/resolver': {
           node: {
             extensions: ['.ts', '.tsx'],

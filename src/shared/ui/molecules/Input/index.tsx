@@ -5,8 +5,7 @@ import Icons from '$shared/ui/atoms/icons';
 
 type InputType = 'normal' | 'search';
 interface InputProps
-  extends GlobalAnimation,
-    Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+  extends GlobalAnimation, Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
   label?: string;
   placeholder: string;
   description?: string;
