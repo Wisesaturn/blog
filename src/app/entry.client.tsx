@@ -4,7 +4,6 @@
  * For more information, see https://remix.run/file-conventions/entry.client
  */
 import { RemixBrowser } from '@remix-run/react';
-import { Analytics } from '@vercel/analytics/react';
 import { startTransition, StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
@@ -13,7 +12,6 @@ startTransition(() => {
     document,
     <StrictMode>
       <RemixBrowser />
-      <Analytics />
     </StrictMode>,
   );
 });

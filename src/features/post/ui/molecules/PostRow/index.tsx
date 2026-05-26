@@ -9,6 +9,7 @@ export default function PostRow(props: Omit<IPost, 'body'>) {
   // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
   const { createdAt, title, description, category, views, plain_title } = props;
 
+  if (typeof plain_title !== 'string') return null;
   const convertTitle = convertString(plain_title, 'spaceToDash');
 
   return (
