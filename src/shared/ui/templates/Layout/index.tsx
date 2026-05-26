@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Links, LiveReload, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/remix';
 
 import MiddlewareContext from '$shared/middleware/_index';
@@ -80,6 +81,7 @@ export default function Layout({
           </MiddlewareContext.Provider>
         </Suspense>
         <ScrollRestoration />
+        <Analytics />
         <SpeedInsights />
         <Scripts />
         <LiveReload />

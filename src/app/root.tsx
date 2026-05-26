@@ -59,7 +59,7 @@ export default function App() {
  */
 export function ErrorBoundary() {
   const error = useRouteError();
-  console.log(error);
+  console.error(error);
   const navigate = useNavigate();
   const data = {
     layout: DEFAULT_LAYOUT_VALUE,
