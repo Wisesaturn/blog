@@ -25,8 +25,7 @@ export default async function createPost(title: string) {
       .then(async (data: INotionList<'post'>) => {
         const selectedPost = data.results.filter(
           (page: NotionPage<'post'>) =>
-            page.object === 'page' &&
-            page.properties.이름.title[0].plain_text === convertString(title, 'dashToSpace'),
+            page.object === 'page' && page.properties.이름.title[0].plain_text === title,
         );
 
         if (selectedPost.length === 0) {

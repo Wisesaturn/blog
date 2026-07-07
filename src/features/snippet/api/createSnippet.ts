@@ -25,7 +25,7 @@ export default async function createSnippet(title: string) {
         const selectedPost = data.results.filter(
           (result: NotionPage<'snippet'>) =>
             result.object === 'page' &&
-            result.properties.이름.title[0].plain_text === convertString(title, 'dashToSpace'),
+            result.properties.이름.title[0].plain_text === title,
         );
 
         if (selectedPost.length === 0) {
