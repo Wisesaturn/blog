@@ -1,5 +1,11 @@
-import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
-import { defer, useLoaderData } from '@remix-run/react';
+import {
+  createCookie,
+  json,
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getProject from '$features/project/api/getProject';
@@ -39,25 +45,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  const project = getProject({ title }).then(async (resolvedProject) => {
-    // ignore create cookie if it's development or alreeady has cookie
-    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-      return resolvedProject;
-    }
+  const resolvedProject = await getProject({ title });
 
-    const updatedProject = { ...resolvedProject, views: (resolvedProject.views || 0) + 1 };
-
-    // update project (view only)
-    await updateProject({
+  // ignore view count update if it's development or already has cookie
+  if (!hasUserVisitedPage && process.env.NODE_ENV !== 'development') {
+    // fire-and-forget: 응답을 블로킹하지 않고 조회수만 비동기로 갱신
+    updateProject({
       title,
-      meta: { views: updatedProject.views, index: resolvedProject.index },
-    });
+      meta: { views: (resolvedProject.views || 0) + 1, index: resolvedProject.index },
+    }).catch((err) => console.error(err));
+  }
 
-    return updatedProject;
-  });
-
-  return defer(
-    { project },
+  return json(
+    { project: resolvedProject },
     {
       headers: {
         'Set-Cookie': await hasUserVisited.serialize({}),

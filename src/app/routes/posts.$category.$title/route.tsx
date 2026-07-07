@@ -1,5 +1,5 @@
-import { createCookie, LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
-import { defer, MetaFunction, useLoaderData } from '@remix-run/react';
+import { createCookie, json, LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
+import { MetaFunction, useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getPost from '$features/post/api/getPost';
@@ -43,26 +43,20 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  const post = getPost({ category, title }).then(async (resolvedPost) => {
-    // ignore create cookie if it's development or alreeady has cookie
-    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-      return resolvedPost;
-    }
+  const resolvedPost = await getPost({ category, title });
 
-    const updatedPost = { ...resolvedPost, views: (resolvedPost.views || 0) + 1 };
-
-    // update post (view only)
-    await updatePost({
+  // ignore view count update if it's development or already has cookie
+  if (!hasUserVisitedPage && process.env.NODE_ENV !== 'development') {
+    // fire-and-forget: 응답을 블로킹하지 않고 조회수만 비동기로 갱신
+    updatePost({
       category,
       title,
-      data: { views: updatedPost.views },
-    });
+      data: { views: (resolvedPost.views || 0) + 1 },
+    }).catch((err) => console.error(err));
+  }
 
-    return updatedPost;
-  });
-
-  return defer(
-    { post },
+  return json(
+    { post: resolvedPost },
     {
       headers: {
         'Set-Cookie': await hasUserVisited.serialize({}),

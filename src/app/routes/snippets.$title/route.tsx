@@ -1,5 +1,11 @@
-import { LinksFunction, LoaderFunctionArgs, MetaFunction, createCookie } from '@remix-run/node';
-import { defer, useLoaderData } from '@remix-run/react';
+import {
+  createCookie,
+  json,
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
 import getSnippet from '$features/snippet/api/getSnippet';
@@ -39,25 +45,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
 
-  const snippet = getSnippet({ title }).then(async (resolvedSnippet) => {
-    // ignore create cookie if it's development or alreeady has cookie
-    if (hasUserVisitedPage || process.env.NODE_ENV === 'development') {
-      return resolvedSnippet;
-    }
+  const resolvedSnippet = await getSnippet({ title });
 
-    const updatedSnippet = { ...resolvedSnippet, views: (resolvedSnippet.views || 0) + 1 };
-
-    // update snippet (view only)
-    await updateSnippet({
+  // ignore view count update if it's development or already has cookie
+  if (!hasUserVisitedPage && process.env.NODE_ENV !== 'development') {
+    // fire-and-forget: 응답을 블로킹하지 않고 조회수만 비동기로 갱신
+    updateSnippet({
       title,
-      data: { views: updatedSnippet.views },
-    });
+      data: { views: (resolvedSnippet.views || 0) + 1 },
+    }).catch((err) => console.error(err));
+  }
 
-    return updatedSnippet;
-  });
-
-  return defer(
-    { snippet },
+  return json(
+    { snippet: resolvedSnippet },
     {
       headers: {
         'Set-Cookie': await hasUserVisited.serialize({}),

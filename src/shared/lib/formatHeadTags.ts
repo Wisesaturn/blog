@@ -2,6 +2,7 @@ import { ServerRuntimeMetaArgs, ServerRuntimeMetaDescriptor } from '@remix-run/s
 
 import { IPost } from '$features/post/types/post';
 import { IProject } from '$features/project/types/project';
+import { ISnippet } from '$features/snippet/types/snippet';
 import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '$features/post/constant';
 
 import convertString from './convertString';
@@ -20,6 +21,10 @@ function isPost(obj: unknown): obj is { post: IPost } {
 
 function isProject(obj: unknown): obj is { project: IProject } {
   return typeof obj === 'object' && obj !== null && 'project' in obj;
+}
+
+function isSnippet(obj: unknown): obj is { snippet: ISnippet } {
+  return typeof obj === 'object' && obj !== null && 'snippet' in obj;
 }
 
 /**
@@ -52,6 +57,10 @@ export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaD
     convertDescription = `${data.post.description} | ${data.post.tags.map((tag) => tag).join(' ')}`;
   } else if (isProject(data) && data.project.description) {
     convertDescription = `${data.project.description}`;
+  } else if (isSnippet(data) && data.snippet.description) {
+    convertDescription = data.snippet.skills?.length
+      ? `${data.snippet.description} | ${data.snippet.skills.map((skill) => skill).join(' ')}`
+      : data.snippet.description;
   }
 
   // url
