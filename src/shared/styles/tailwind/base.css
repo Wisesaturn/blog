@@ -425,16 +425,21 @@
 
     /* code snippets */
 
-    pre[class*='language-'] {
+    .code-block-wrapper {
       position: relative;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
 
-      @apply mt-8 rounded-lg max-md:rounded-md max-w-layout;
+      @apply mt-8 max-w-layout;
 
-      span {
-        @apply text-base max-md:text-sm;
+      pre[class*='language-'] {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+
+        @apply rounded-lg max-md:rounded-md;
+
+        span {
+          @apply text-base max-md:text-sm;
+        }
       }
 
       .copy-code-btn {
