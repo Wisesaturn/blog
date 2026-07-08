@@ -26,6 +26,8 @@ export const loader = async () => {
   // Post Sitemap
   posts.forEach((post) => {
     const { title, category, lastmod } = post;
+    // 컬렉션에 title 없이 reactions 필드만 있는 유령 문서가 존재함 — 건너뛰지 않으면 convertString이 throw되어 500 발생
+    if (typeof title !== 'string' || typeof category !== 'string') return;
     const convertTitle = convertString(title, 'spaceToDash');
     const loc = `${HOST_URL}/posts/${category}/${convertTitle}`;
 
@@ -40,6 +42,7 @@ export const loader = async () => {
   // Project Sitemap
   projects.forEach((project) => {
     const { title, lastmod } = project;
+    if (typeof title !== 'string') return;
     const convertTitle = convertString(title, 'spaceToDash');
     const loc = `${HOST_URL}/projects/${convertTitle}`;
 
@@ -54,6 +57,7 @@ export const loader = async () => {
   // Snippet Sitemap
   snippets.forEach((snippet) => {
     const { title, lastmod } = snippet;
+    if (typeof title !== 'string') return;
     const convertTitle = convertString(title, 'spaceToDash');
     const loc = `${HOST_URL}/snippets/${convertTitle}`;
 
