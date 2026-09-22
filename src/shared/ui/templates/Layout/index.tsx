@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Links, LiveReload, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/remix';
 
@@ -84,7 +84,6 @@ export default function Layout({
         <Analytics />
         <SpeedInsights />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );

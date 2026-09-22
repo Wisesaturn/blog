@@ -1,4 +1,3 @@
-import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   isRouteErrorResponse,
   json,
@@ -14,7 +13,7 @@ import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import getCookie from '$shared/lib/getCookieOnHeader';
 import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
 import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
-import globalStyles from '$shared/styles/global.css';
+import globalStyles from '$shared/styles/global.css?url';
 import Button from '$shared/ui/molecules/Button';
 import Layout from '$shared/ui/templates/Layout';
 
@@ -27,7 +26,6 @@ export const links: LinksFunction = () => [
     'https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable-dynamic-subset.min.css',
   ),
   formatStyleSheet(globalStyles),
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
 export const loader: LoaderFunction = ({ request }) => {

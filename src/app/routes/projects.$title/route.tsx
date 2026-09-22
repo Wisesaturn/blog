@@ -18,7 +18,7 @@ import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constan
 import convertString from '$shared/lib/convertString';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
-import codeStyles from '$shared/styles/etc/vscode-prism.css';
+import codeStyles from '$shared/styles/etc/vscode-prism.css?url';
 
 // meta
 export const meta: MetaFunction = (args) => {
