@@ -47,6 +47,9 @@ importers:
       notion-to-md:
         specifier: ^3.1.1
         version: 3.1.9
+      qs:
+        specifier: ^6.14.2
+        version: 6.14.2
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -93,6 +96,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.6.7
         version: 14.6.7(@testing-library/dom@10.4.2)
+      '@types/qs':
+        specifier: ^6.15.1
+        version: 6.15.1
       '@types/react':
         specifier: ^18.2.20
         version: 18.3.28
@@ -2305,6 +2311,9 @@ packages:
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+
+  '@types/qs@6.15.1':
+    resolution: {integrity: sha512-GZHUBZR9hckSUhrxmp1nG6NwdpM9fCunJwyThLW1X3AyHgd9IlHb6VANpQQqDr2o/qQp6McZ3y/IA2rVzKzSbw==}
 
   '@types/react-dom@18.3.7':
     resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
@@ -8455,6 +8464,8 @@ snapshots:
   '@types/prismjs@1.26.6': {}
 
   '@types/prop-types@15.7.15': {}
+
+  '@types/qs@6.15.1': {}
 
   '@types/react-dom@18.3.7(@types/react@18.3.28)':
     dependencies:
