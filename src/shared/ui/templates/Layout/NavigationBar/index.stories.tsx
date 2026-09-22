@@ -4,7 +4,7 @@ import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
 
 import NavigationBar from './index';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'shared/layout/NavigationBar',

@@ -2,7 +2,7 @@ import { MemoryRouter } from 'react-router';
 
 import TopButton from './index';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'shared/Layout/TopButton',

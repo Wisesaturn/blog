@@ -2,7 +2,7 @@ import Icons from '$shared/ui/atoms/icons';
 
 import Button from '.';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'shared/Button',

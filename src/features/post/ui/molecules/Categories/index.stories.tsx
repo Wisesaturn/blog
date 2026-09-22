@@ -2,7 +2,7 @@ import { MemoryRouter } from 'react-router';
 
 import Categories from '.';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'features/post/Categories',

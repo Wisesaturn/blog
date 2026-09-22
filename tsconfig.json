@@ -1,11 +1,9 @@
 {
   "include": ["remix.env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"],
-   "files": [
-    "src/shared/types/global.d.ts"
-  ],
+  "files": ["src/shared/types/global.d.ts"],
   "parserOptions": {
-    "project" : "./tsconfig.json"
+    "project": "./tsconfig.json"
   },
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -13,7 +11,7 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "module": "ES2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "target": "ES2022",
     "strict": true,
@@ -22,7 +20,7 @@
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "types": ["node"],
+    "types": ["node"]
   },
-  "extends": "./tsconfig.paths.json",
+  "extends": "./tsconfig.paths.json"
 }
