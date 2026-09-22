@@ -29,6 +29,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.29.7",
     "@giscus/react": "^3.0.0",
     "@notionhq/client": "^2.2.10",
     "@remix-run/node": "^2.9.1",
@@ -45,8 +47,6 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/preset-react": "^7.24.1",
     "@chromatic-com/storybook": "^1.2.18",
     "@remix-run/dev": "^2.9.1",
     "@storybook/addon-essentials": "^8.0.0",

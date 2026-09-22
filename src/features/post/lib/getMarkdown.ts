@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
-import { createRequire } from 'module';
+
+import { NotionToMarkdown } from 'notion-to-md';
 
 import notion from '$shared/middleware/notion';
 
 import checkJSX from './checkJSX';
-
-const { NotionToMarkdown } = createRequire(import.meta.url)(
-  path.join(process.cwd(), 'node_modules/notion-to-md'),
-);
 
 const n2m = new NotionToMarkdown({
   notionClient: notion,

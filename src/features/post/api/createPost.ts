@@ -20,9 +20,14 @@ export default async function createPost(title: string) {
   try {
     const post: IPost = await notion.databases
       .query({
-        database_id: process.env.NOTION_DATABASE_POSTS_KEY,
+        database_id: process.env.NOTION_DATABASE_POSTS_KEY as string,
       })
-      .then(async (data: INotionList<'post'>) => {
+      // Notion SDK 의 QueryDatabaseResponse 는 properties 가 Record<string, 유니온> 이라
+      // 프로젝트 자체 타입인 INotionList<'post'> 와 구조가 맞지 않는다. 이전에는 notion 클라이언트를
+      // createRequire 로 가져와 any 였기 때문에 이 불일치가 드러나지 않았다.
+      .then(async (raw) => {
+        const data = raw as unknown as INotionList<'post'>;
+
         const selectedPost = data.results.filter(
           (page: NotionPage<'post'>) =>
             page.object === 'page' && page.properties.이름.title[0].plain_text === title,

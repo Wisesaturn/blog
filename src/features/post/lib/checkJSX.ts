@@ -1,7 +1,4 @@
-import { createRequire } from 'module';
-import path from 'path';
-
-const babel = createRequire(import.meta.url)(path.join(process.cwd(), 'node_modules/@babel/core'));
+import { transform } from '@babel/core';
 
 /**
  * 해당 string이 JSX 문법인지 체크합니다
@@ -10,7 +7,7 @@ const babel = createRequire(import.meta.url)(path.join(process.cwd(), 'node_modu
  */
 export default function checkJSX(jsxString: string): boolean {
   try {
-    babel.transform(jsxString, {
+    transform(jsxString, {
       presets: ['@babel/preset-react'],
     });
     return true;
