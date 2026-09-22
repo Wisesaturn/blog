@@ -24,3 +24,6 @@ firebaseAdminKey.json
 
 docs
 .playwright-mcp
+
+# storybook
+storybook-static
