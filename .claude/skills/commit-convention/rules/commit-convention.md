@@ -17,7 +17,7 @@
 
 ## 이슈 번호
 
-브랜치명에서 추출 — `git branch --show-current`
+브랜치명에서 추출한다. `git branch --show-current`
 
 ```
 fix/#2  → fix/#2:
@@ -48,9 +48,10 @@ chore: 한 줄 요약
 
 ## 작성 규칙
 
-- 제목은 마침표 없이 간결하게. 핵심 결과를 `—` 뒤에 붙여도 좋음
+- 제목은 마침표 없이 간결하게. em dash(`—`)를 쓰지 않는다. 덧붙일 내용이 있으면 한 문장으로 합치거나 본문으로 내린다
+- 커밋 메시지와 PR 제목에도 `doc-writing.md` 와 `word-choice.md` 를 적용한다. 중간점(`·`)은 짝을 이루는 고유명사에만 쓰고, 나열은 쉼표로 한다
 - `📋 작업 내역`: 파일/함수 단위로 구체적으로, 중요한 건 자세히
-- `💡 설계 이유`: 대안과 선택 근거 — "왜 이걸 골랐는지" 위주
+- `💡 설계 이유`: 대안과 선택 근거. "왜 이걸 골랐는지" 위주
 - **Co-Authored-By 추가하지 않음**
 
 ## 예시
@@ -60,13 +61,13 @@ feat/#1: 포스트 좋아요 기능 구현
 
 - 📋 작업 내역
 
-  - `LikeButton` 컴포넌트 생성 — 좋아요 토글 UI
+  - 좋아요 토글 UI 를 담은 `LikeButton` 컴포넌트 생성
   - `entities/post/api/apis.ts`에 `toggleLike` 함수 추가
   - `useToggleLikeMutation` 훅 추가
 
 - 💡 설계 이유
 
-  - Remix loader 대신 TQ mutation 사용 — 낙관적 업데이트로 UX 개선
+  - Remix loader 대신 TQ mutation 을 썼다. 낙관적 업데이트로 반응이 즉시 보인다
   - 클라이언트 상태라 loader 캐시 무효화 없이 처리 가능
 ```
 
