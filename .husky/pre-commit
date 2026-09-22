@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+#
+# 1) lint-staged 로 포맷과 오토픽스를 적용한다.
+# 2) TypeScript 가 바뀐 커밋에만 typecheck 와 관련 테스트를 돌린다.
+#
+# 순서를 바꾸지 말 것. lint-staged 가 파일을 고쳐 다시 스테이징하므로,
+# 테스트를 먼저 돌리면 커밋되는 내용과 다른 버전을 검사하게 된다.
+
+# 파이프나 CI 로 넘어갈 때는 ANSI 코드가 잡음이 된다.
+if [ -t 1 ]; then
+  GREEN='\033[0;32m'
+  YELLOW='\033[1;33m'
+  RED='\033[0;31m'
+  DIM='\033[2m'
+  NC='\033[0m'
+else
+  GREEN='' YELLOW='' RED='' DIM='' NC=''
+fi
+
+printf "${GREEN}[LINT]${NC} lint-staged 실행\n"
+if ! pnpm lint-staged; then
+  printf "${RED}[FAIL]${NC} lint-staged 실패. 커밋을 중단합니다\n"
+  exit 1
+fi
+
+# lint-staged 가 고쳐 다시 스테이징한 결과를 봐야 하므로 여기서 읽는다.
+changed=$(git diff --staged --name-only --diff-filter=ACMR -- '*.ts' '*.tsx')
+
+if [ -z "$changed" ]; then
+  printf "${YELLOW}[SKIP]${NC} TypeScript 변경이 없어 typecheck 와 테스트를 건너뜁니다\n"
+  exit 0
+fi
+
+# tsc 는 프로젝트 전체를 본다. 스테이징된 파일만 검사할 수 없어 통째로 돌린다.
+printf "${GREEN}[TYPE]${NC} typecheck\n"
+if ! pnpm typecheck; then
+  printf "${RED}[FAIL]${NC} 타입 검사 실패. 커밋을 중단합니다\n"
+  exit 1
+fi
+
+# `related` 는 모듈 그래프를 보고 바뀐 파일을 import 하는 테스트까지 고른다.
+# 파일 이름으로 짝을 맞추면 간접 의존을 놓친다.
+printf "${GREEN}[TEST]${NC} 변경 파일과 관련된 테스트\n"
+printf "${DIM}%s${NC}\n" "$changed"
+# shellcheck disable=SC2086
+if ! pnpm vitest related --run --passWithNoTests $changed; then
+  printf "${RED}[FAIL]${NC} 테스트 실패. 커밋을 중단합니다\n"
+  exit 1
+fi
+
+printf "${GREEN}[PASS]${NC} 모든 검사를 통과했습니다\n"
