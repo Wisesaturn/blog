@@ -8,6 +8,8 @@ pnpm build        # 프로덕션 빌드
 pnpm start        # 프로덕션 서버
 pnpm lint         # ESLint 검사
 pnpm typecheck    # TypeScript 타입 검사
+pnpm test         # Vitest 실행
+pnpm test:watch   # Vitest watch 모드
 pnpm storybook    # Storybook 개발 서버
 ```
 
@@ -22,6 +24,7 @@ pnpm storybook    # Storybook 개발 서버
 - **Database**: Firebase (Firestore + Storage)
 - **State**: Remix loader 가 처리한다. 별도 상태 라이브러리는 설치되어 있지 않다
 - **Lint/Format**: ESLint 8 + Prettier
+- **Test**: Vitest + Testing Library (jsdom)
 - **Component Dev**: Storybook
 
 ## Architecture — FSD (Feature-Sliced Design)
@@ -139,6 +142,7 @@ ESLint 8 이고 `.eslintrc.cjs` 를 쓴다. flat config 전환과 아래 「목�
 @.claude/rules/jsdoc.md
 @.claude/rules/overlay.md
 @.claude/rules/database.md
+@.claude/rules/testing.md
 
 ## 세션 실수 기록
 
