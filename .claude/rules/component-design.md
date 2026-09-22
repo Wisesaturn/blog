@@ -1,5 +1,9 @@
 # 공통 UI 컴포넌트 설계 가이드
 
+> **상태: 목표 규칙.** `src/commons/ui/` 와 `createSafeContext` 가 아직 없다.
+> 현재 공용 컴포넌트 위치는 `CLAUDE.md` 의 「Architecture > 현재」를 본다.
+> 이 문서대로 옮기는 작업이 [#89](https://github.com/Wisesaturn/blog/issues/89) 다.
+
 blog 프로젝트의 `src/commons/ui/` 컴포넌트 작성 규칙을 정의한다.
 
 ---

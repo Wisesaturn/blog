@@ -1,5 +1,8 @@
 # FSD 구조 규칙 (Feature-Sliced Design)
 
+> **상태: 목표 구조.** 현재 구조는 `CLAUDE.md` 의 「Architecture > 현재」를 본다.
+> 이 문서대로 옮기는 작업이 [#89](https://github.com/Wisesaturn/blog/issues/89) 다.
+
 blog 프로젝트의 FSD 아키텍처 규칙을 정의한다.
 공식 FSD 문서(https://feature-sliced.design)를 기반으로 Remix 환경에 맞게 조정했다.
 

@@ -24,8 +24,7 @@ export default async function createSnippet(title: string) {
       .then(async (data: INotionList<'snippet'>) => {
         const selectedPost = data.results.filter(
           (result: NotionPage<'snippet'>) =>
-            result.object === 'page' &&
-            result.properties.이름.title[0].plain_text === title,
+            result.object === 'page' && result.properties.이름.title[0].plain_text === title,
         );
 
         if (selectedPost.length === 0) {

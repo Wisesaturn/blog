@@ -6,11 +6,11 @@ import Icons from '$shared/ui/atoms/icons';
 import convertString from '$shared/lib/convertString';
 
 export default function PostRow(props: Omit<IPost, 'body'>) {
-  // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
-  const { createdAt, title, description, category, views, plain_title } = props;
+  // Firestore 문서의 필드명이 plain_title 이라 구조분해에서 이름을 바꿔 받는다
+  const { createdAt, title, description, category, views, plain_title: plainTitle } = props;
 
-  if (typeof plain_title !== 'string') return null;
-  const convertTitle = convertString(plain_title, 'spaceToDash');
+  if (typeof plainTitle !== 'string') return null;
+  const convertTitle = convertString(plainTitle, 'spaceToDash');
 
   return (
     <Link

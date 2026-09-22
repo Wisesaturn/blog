@@ -27,8 +27,7 @@ export default async function createProject(title: string) {
       .then(async (data: INotionList<'project'>) => {
         const selectedPost = data.results.filter(
           (result: NotionPage<'project'>) =>
-            result.object === 'page' &&
-            result.properties.이름.title[0].plain_text === title,
+            result.object === 'page' && result.properties.이름.title[0].plain_text === title,
         );
 
         if (selectedPost.length === 0) {

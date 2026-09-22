@@ -1,5 +1,8 @@
 # overlay-kit 사용 규칙
 
+> **상태: 목표 규칙.** `overlay-kit` 이 설치되어 있지 않고 Dialog 와 Drawer 컴포넌트도 없다.
+> 오버레이를 처음 만들 때 이 문서를 따른다.
+
 Dialog, Drawer 등 오버레이 UI가 필요할 때는 **overlay-kit** 기반으로 열어야 한다.
 
 ## 원칙
