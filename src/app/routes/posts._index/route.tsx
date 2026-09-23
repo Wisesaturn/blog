@@ -1,5 +1,10 @@
-import { ActionFunction, LoaderFunctionArgs, MetaFunction, defer } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import {
+  ActionFunction,
+  data,
+  LoaderFunctionArgs,
+  MetaFunction,
+  useLoaderData,
+} from 'react-router';
 import { motion } from 'framer-motion';
 import qs from 'qs';
 
@@ -21,8 +26,8 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
-// action (refresh post callback)
-export const action: ActionFunction = async () => defer({ refetch: true });
+// action (dev 전용 목록 새로고침 버튼이 호출한다)
+export const action: ActionFunction = async () => ({ refetch: true });
 
 // loader
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -32,9 +37,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
     categories: params.category ? String(params.category).split(',') : [],
     orderBy: (params.orderby as PostsOrderBy) || 'desc',
   };
-  const posts = getPosts(searchParams);
+  const posts = await getPosts(searchParams);
 
-  return defer(
+  return data(
     { posts },
     {
       headers: {

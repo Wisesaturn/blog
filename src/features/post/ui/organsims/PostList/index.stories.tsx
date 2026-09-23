@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createRemixStub } from '@remix-run/testing';
+import { createRoutesStub } from 'react-router';
 
 import DUMMY_POSTS from '$features/post/constant/dummy';
 
@@ -19,20 +19,20 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * `PostList` 는 Remix 의 `Await` 로 posts 프로미스를 푼다. `Await` 는 데이터 라우터 안에서만
- * 동작하므로 `MemoryRouter` 로는 부족하고, `createRemixStub` 이 만드는 라우터가 필요하다.
+ * `PostList` 안의 `PostRow` 가 `Link` 를, `PostFilter` 가 `useSearchParams` 를 쓴다.
+ * 둘 다 라우터 컨텍스트를 요구하므로 스텁 라우터로 감싼다.
  *
  * 스토리가 바뀔 때만 스텁을 다시 만든다. 매 렌더마다 만들면 라우터 상태가 초기화된다.
  */
-function WithRemixStub({ storyComponent }: { storyComponent: React.ComponentType }) {
+function WithRouterStub({ storyComponent }: { storyComponent: React.ComponentType }) {
   const Stub = useMemo(
-    () => createRemixStub([{ path: '/', Component: storyComponent }]),
+    () => createRoutesStub([{ path: '/', Component: storyComponent }]),
     [storyComponent],
   );
   return <Stub initialEntries={['/']} />;
 }
 
 export const Default: Story = {
-  args: { posts: Promise.resolve(DUMMY_POSTS) },
-  decorators: [(StoryChildren) => <WithRemixStub storyComponent={StoryChildren} />],
+  args: { posts: DUMMY_POSTS },
+  decorators: [(StoryChildren) => <WithRouterStub storyComponent={StoryChildren} />],
 };

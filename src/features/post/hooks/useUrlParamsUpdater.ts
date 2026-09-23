@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { useSearchParams } from '@remix-run/react';
+import { useSearchParams } from 'react-router';
 import { useCallback } from 'react';
 
 /**

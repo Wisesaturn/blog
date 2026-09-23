@@ -1,5 +1,11 @@
-import { createCookie, json, LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
-import { MetaFunction, useLoaderData } from '@remix-run/react';
+import {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+  createCookie,
+  data,
+  useLoaderData,
+} from 'react-router';
 import { motion } from 'framer-motion';
 
 import getPost from '$features/post/api/getPost';
@@ -55,7 +61,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     }).catch((err) => console.error(err));
   }
 
-  return json(
+  return data(
     { post: resolvedPost },
     {
       headers: {

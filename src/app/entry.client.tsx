@@ -1,9 +1,8 @@
 /**
- * By default, Remix will handle hydrating your app on the client for you.
- * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
- * For more information, see https://remix.run/file-conventions/entry.client
+ * 클라이언트 하이드레이션 진입점.
+ * https://reactrouter.com/api/framework-conventions/entry.client.tsx
  */
-import { RemixBrowser } from '@remix-run/react';
+import { HydratedRouter } from 'react-router/dom';
 import { startTransition, StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
@@ -11,7 +10,7 @@ startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
-      <RemixBrowser />
+      <HydratedRouter />
     </StrictMode>,
   );
 });

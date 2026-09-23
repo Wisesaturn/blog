@@ -1,5 +1,4 @@
-import { MetaFunction, json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { MetaFunction, useLoaderData } from 'react-router';
 import { motion } from 'framer-motion';
 
 import getProjects from '$features/project/api/getProjects';
@@ -23,7 +22,7 @@ export async function loader() {
   const projects = await getProjects();
   const sortedProjects = sortProjects(projects);
 
-  return json({ projects: sortedProjects });
+  return { projects: sortedProjects };
 }
 
 export default function ProjectsPage() {

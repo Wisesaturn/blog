@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { ActionFunctionArgs, json } from '@remix-run/node';
+import { ActionFunctionArgs } from 'react-router';
 
 import createSnippet from '$features/snippet/api/createSnippet';
 import updateSnippet from '$features/snippet/api/updateSnippet';
@@ -22,7 +22,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       data: project,
       isUpdateSnippet: true,
     });
-    return json(project);
+    return Response.json(project);
   } catch (err) {
     if (err instanceof Error) {
       return new Response(err.message, {

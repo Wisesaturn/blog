@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MetaFunction } from '@remix-run/node';
+import { MetaFunction } from 'react-router';
 
 import ProfileTitle from '$features/profile/ui/molecules/ProfileTitle';
 import Education from '$features/profile/ui/organisms/Education';

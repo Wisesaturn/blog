@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from '@remix-run/react';
+import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
 
 import Icons from '$shared/ui/atoms/icons';

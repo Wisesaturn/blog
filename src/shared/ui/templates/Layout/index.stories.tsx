@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createRemixStub } from '@remix-run/testing';
+import { createRoutesStub } from 'react-router';
 
 import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
 import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 /**
  * `Layout` 은 `<html>` 부터 통째로 그리는 문서 루트라 Remix 의 `Meta`, `Links`, `Scripts`,
  * `ScrollRestoration` 을 쓰고, 내부 `LayoutProvider` 가 `useNavigation` 까지 부른다.
- * `MemoryRouter` 로는 어느 것도 채울 수 없어서 `createRemixStub` 으로 라우터와 Remix 컨텍스트를
+ * `MemoryRouter` 로는 어느 것도 채울 수 없어서 `createRoutesStub` 으로 라우터와 Remix 컨텍스트를
  * 함께 세운다.
  *
  * `MiddlewareContext` 와 `LayoutProvider` 는 `Layout` 이 안에서 직접 감싸므로 여기서 또 씌우지 않는다.
@@ -32,7 +32,7 @@ type Story = StoryObj<typeof meta>;
  */
 function WithRemixStub({ storyComponent }: { storyComponent: React.ComponentType }) {
   const Stub = useMemo(
-    () => createRemixStub([{ path: '/', Component: storyComponent }]),
+    () => createRoutesStub([{ path: '/', Component: storyComponent }]),
     [storyComponent],
   );
   return <Stub initialEntries={['/']} />;

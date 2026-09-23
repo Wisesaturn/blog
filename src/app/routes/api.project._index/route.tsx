@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { ActionFunctionArgs, json } from '@remix-run/node';
+import { ActionFunctionArgs } from 'react-router';
 
 import createProject from '$features/project/api/createProject';
 import updateProject from '$features/project/api/updateProject';
@@ -23,7 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       body: projectBody,
       isUpdateProject: true,
     });
-    return json(project);
+    return Response.json(project);
   } catch (err) {
     if (err instanceof Error) {
       return new Response(err.message, {

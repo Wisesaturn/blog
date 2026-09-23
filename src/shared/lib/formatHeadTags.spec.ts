@@ -16,7 +16,7 @@ import formatHeadTags from './formatHeadTags';
 type Args = Parameters<typeof formatHeadTags>[0];
 
 /**
- * `ServerRuntimeMetaArgs` 는 라우트 매칭 정보까지 요구한다. 이 함수가 실제로 읽는 것은
+ * `MetaArgs` 는 라우트 매칭 정보까지 요구한다. 이 함수가 실제로 읽는 것은
  * `data` 와 `params` 뿐이라 그 둘만 넘기고 나머지는 생략한다.
  */
 function run(overrides: Record<string, unknown> = {}) {

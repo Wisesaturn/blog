@@ -1,5 +1,4 @@
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { json, useLoaderData } from '@remix-run/react';
+import { LoaderFunctionArgs, MetaFunction, useLoaderData } from 'react-router';
 import { motion } from 'framer-motion';
 import qs from 'qs';
 
@@ -26,7 +25,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   };
   const snippets = await getSnippets(searchParams);
 
-  return json({ snippets });
+  return { snippets };
 }
 
 export default function SnippetsPage() {

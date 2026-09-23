@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 import { useRef } from 'react';
-import { Form, useNavigate } from '@remix-run/react';
+import { Form, useNavigate } from 'react-router';
 
 import { IPost } from '$features/post/types/post';
 

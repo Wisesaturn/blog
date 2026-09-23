@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/remix';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import MiddlewareContext from '$shared/middleware/_index';
 import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '$shared/middleware/layout';

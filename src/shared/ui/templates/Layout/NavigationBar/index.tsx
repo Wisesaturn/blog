@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from '@remix-run/react';
+import { useLocation } from 'react-router';
 
 import NavButton from '$shared/ui/atoms/navigation-bar/_Button';
 import Responsive from '$shared/ui/templates/Responsive';

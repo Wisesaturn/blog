@@ -1,4 +1,4 @@
-import { ServerRuntimeMetaArgs, ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime';
+import { MetaArgs, MetaDescriptor } from 'react-router';
 
 import { IPost } from '$features/post/types/post';
 import { IProject } from '$features/project/types/project';
@@ -7,7 +7,7 @@ import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '$features/post/constant'
 
 import convertString from './convertString';
 
-interface HeadTagFormat extends ServerRuntimeMetaArgs {
+interface HeadTagFormat extends MetaArgs {
   title?: string;
   description?: string;
   thumbnail?: string;
@@ -31,7 +31,7 @@ function isSnippet(obj: unknown): obj is { snippet: ISnippet } {
  * @summary meta tag 및 link tag 포맷을 추출하는 함수
  * @returns
  */
-export default function formatHeadTags(props: HeadTagFormat): ServerRuntimeMetaDescriptor[] {
+export default function formatHeadTags(props: HeadTagFormat): MetaDescriptor[] {
   const { title, description, urlPrefix, thumbnail, ...args } = props;
   const { data, params } = args;
 

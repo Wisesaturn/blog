@@ -1,11 +1,13 @@
 import {
-  isRouteErrorResponse,
-  json,
   Outlet,
+  isRouteErrorResponse,
   useLoaderData,
   useNavigate,
   useRouteError,
-} from '@remix-run/react';
+  type LinksFunction,
+  type LoaderFunction,
+  type MetaFunction,
+} from 'react-router';
 
 import useInitialScript from '$shared/hooks/useInitialScript';
 import formatHeadTags from '$shared/lib/formatHeadTags';
@@ -16,8 +18,6 @@ import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
 import globalStyles from '$shared/styles/global.css?url';
 import Button from '$shared/ui/molecules/Button';
 import Layout from '$shared/ui/templates/Layout';
-
-import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 
 export const meta: MetaFunction = (args) => formatHeadTags(args);
 
@@ -32,12 +32,12 @@ export const loader: LoaderFunction = ({ request }) => {
   const cookieHeader = request.headers.get('cookie');
   const darkmode = getCookie(cookieHeader, 'color-theme') || 'light';
 
-  return json({
+  return {
     layout: {
       darkmode,
     },
     middleware: {},
-  });
+  };
 };
 
 export default function App() {

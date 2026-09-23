@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 import { useRef } from 'react';
-import { useNavigate } from '@remix-run/react';
+import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
 import Input from '$shared/ui/molecules/Input';

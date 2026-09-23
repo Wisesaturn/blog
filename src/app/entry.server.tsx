@@ -1,21 +1,22 @@
 /* eslint-disable no-param-reassign */
 /**
- * By default, Remix will handle generating the HTTP Response for you.
- * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
- * For more information, see https://remix.run/file-conventions/entry.server
+ * 서버 렌더링 진입점.
+ * https://reactrouter.com/api/framework-conventions/entry.server.tsx
  */
 
 import { PassThrough } from 'node:stream';
 
-import { createCookie, createReadableStreamFromReadable } from '@remix-run/node';
-import { RemixServer } from '@remix-run/react';
+import { createReadableStreamFromReadable } from '@react-router/node';
+import { ServerRouter, createCookie, type AppLoadContext, type EntryContext } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
 
 import getCookie from '$shared/lib/getCookieOnHeader';
 
-import type { AppLoadContext, EntryContext } from '@remix-run/node';
-
+/**
+ * 스트리밍이 이 시간을 넘기면 렌더를 끊는다.
+ * React Router v7 에서 `ServerRouter` 의 `abortDelay` prop 이 없어져, 타이머로만 남는다.
+ */
 const ABORT_DELAY = 5_000;
 
 const versionCookie = createCookie('version', {
@@ -29,12 +30,12 @@ function handleBotRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  routerContext: EntryContext,
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />,
+      <ServerRouter context={routerContext} url={request.url} />,
       {
         onAllReady() {
           shellRendered = true;
@@ -75,13 +76,13 @@ function handleBrowserRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  routerContext: EntryContext,
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
-    const { version } = remixContext.manifest; // get the build version
+    const { version } = routerContext.manifest; // get the build version
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />,
+      <ServerRouter context={routerContext} url={request.url} />,
       {
         async onShellReady() {
           shellRendered = true;
@@ -157,13 +158,13 @@ export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  routerContext: EntryContext,
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext,
 ) {
   return isbot(request.headers.get('user-agent') || '')
-    ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext)
-    : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext);
+    ? handleBotRequest(request, responseStatusCode, responseHeaders, routerContext)
+    : handleBrowserRequest(request, responseStatusCode, responseHeaders, routerContext);
 }

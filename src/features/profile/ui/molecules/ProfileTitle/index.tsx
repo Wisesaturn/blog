@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from '@remix-run/react';
+import { useNavigate } from 'react-router';
 
 import Title from '$shared/ui/atoms/Title';
 import profile from '$shared/assets/profile.jpg';
