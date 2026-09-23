@@ -3,7 +3,7 @@ import { createContext, useState, startTransition } from 'react';
 import { Darkmode } from '$shared/types/layout';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import useLoading from '$shared/hooks/useLoading';
-import useDebounce from '$shared/hooks/useDebounce';
+import useDelayedTrue from '$shared/hooks/useDelayedTrue';
 import instance from '$shared/api/instance';
 
 export interface ILayout {
@@ -33,7 +33,7 @@ const LayoutContext = createContext<ILayoutContext>({
 
 export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, children }) => {
   const [layout, setLayout] = useState(initialLayout);
-  const debouncedLayoutLoading = useDebounce(layout.loading, 1000);
+  const isApiLoading = useDelayedTrue(layout.loading, 1000);
   const isLoading = useLoading();
 
   const updateLayout = (newLayout: Partial<ILayout>) => {
@@ -46,7 +46,7 @@ export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, c
 
   return (
     <>
-      {(debouncedLayoutLoading || isLoading) && <Spinner layout="full" />}
+      {(isApiLoading || isLoading) && <Spinner layout="full" />}
       <LayoutContext.Provider value={{ layout, updateLayout }}>{children}</LayoutContext.Provider>
     </>
   );
