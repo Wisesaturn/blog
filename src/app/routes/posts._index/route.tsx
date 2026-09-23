@@ -16,6 +16,7 @@ import Categories from '$features/post/ui/molecules/Categories';
 import PostList from '$features/post/ui/organsims/PostList';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
+import { LIST_CACHE_CONTROL } from '$shared/constant/cache';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import Title from '$shared/ui/atoms/Title';
 import Input from '$shared/ui/molecules/Input';
@@ -60,10 +61,7 @@ export async function loader() {
   return data(
     { posts },
     {
-      headers: {
-        // 목록에서 발행 뒤에 바뀌는 값은 조회수뿐이라 10분 늦어도 된다. s-maxage 가 없으면 CDN 이 캐시하지 않는다
-        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=31556952',
-      },
+      headers: { 'Cache-Control': LIST_CACHE_CONTROL },
     },
   );
 }

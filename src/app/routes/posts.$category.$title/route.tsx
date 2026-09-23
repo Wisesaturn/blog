@@ -15,6 +15,7 @@ import ArticleButtons from '$features/post/ui/molecules/ArticleButtons';
 import ArticleBox from '$features/post/ui/organsims/ArticleBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
+import { DETAIL_CACHE_CONTROL } from '$shared/constant/cache';
 import useViewCount from '$shared/hooks/useViewCount';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
@@ -50,7 +51,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     { post: resolvedPost },
     {
       headers: {
-        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=31556952',
+        'Cache-Control': DETAIL_CACHE_CONTROL,
       },
     },
   );

@@ -1,4 +1,4 @@
-import { MetaFunction, useLoaderData } from 'react-router';
+import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
 
 import getSnippets from '$features/snippet/api/getSnippets';
@@ -6,6 +6,7 @@ import SnippetCreater from '$features/snippet/ui/molecules/SnippetCreater';
 import SnippetList from '$features/snippet/ui/organisms/SnippetList';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
+import { LIST_CACHE_CONTROL } from '$shared/constant/cache';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import Title from '$shared/ui/atoms/Title';
 
@@ -16,11 +17,17 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
+/**
+ * loader 가 `data()` 에 넣은 헤더는 이 export 가 있어야 문서 응답과 `.data` 응답에 실린다.
+ * 없으면 `Cache-Control` 이 빠져 CDN 이 캐시하지 않는다.
+ */
+export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
+
 // loader
 export async function loader() {
   const snippets = await getSnippets();
 
-  return { snippets };
+  return data({ snippets }, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
 }
 
 export default function SnippetsPage() {
