@@ -11,7 +11,9 @@ export default function ButtonIcon({
   children,
   className,
 }: {
-  children: React.ReactElement;
+  /** `cloneElement` 로 `size` 를 주입하므로 그 prop 을 타입에 적는다. React 19 에서
+   *  `ReactElement` 의 기본 props 가 `any` 에서 `unknown` 으로 바뀌어 명시가 필요하다. */
+  children: React.ReactElement<IconProps>;
   className?: string;
 }) {
   // error message

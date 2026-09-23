@@ -28,8 +28,11 @@ function Button(props: ButtonProps) {
   // aria-label
   let ariaLabel = 'shared-button';
   React.Children.forEach(children, (child) => {
-    if (React.isValidElement(child) && typeof child.props.children === 'string') {
-      ariaLabel = child.props.children;
+    // React 19 에서 `isValidElement` 의 기본 props 가 `unknown` 이라 읽을 prop 을 적어 준다
+    if (React.isValidElement<{ children?: React.ReactNode }>(child)) {
+      if (typeof child.props.children === 'string') {
+        ariaLabel = child.props.children;
+      }
     }
   });
 

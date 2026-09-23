@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 
 interface NavButtonProps {
-  children: React.ReactElement;
+  /** `cloneElement` 로 `className` 을 주입하므로 그 prop 을 타입에 적는다. */
+  children: React.ReactElement<{ className?: string }>;
   isSelected: boolean;
   to: string;
 }
