@@ -27,11 +27,7 @@ export interface ContentPaths {
  * @returns 종류별 경로 목록
  */
 export default async function getContentPaths(): Promise<ContentPaths> {
-  const [posts, projects, snippets] = await Promise.all([
-    getPosts({ keyword: '', categories: [] }),
-    getProjects(),
-    getSnippets({ keyword: '' }),
-  ]);
+  const [posts, projects, snippets] = await Promise.all([getPosts(), getProjects(), getSnippets()]);
 
   const toPath = (prefix: string, plainTitle: unknown, lastmod?: string) =>
     typeof plainTitle === 'string'

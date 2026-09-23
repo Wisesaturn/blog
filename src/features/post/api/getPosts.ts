@@ -1,61 +1,30 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
-import { IPost, PostsOrderBy } from '$features/post/types/post';
+import { IPost } from '$features/post/types/post';
 
 import { CATEGORY_DATA } from '$shared/constant/category';
 import { db } from '$shared/middleware/firebase';
 
-import sortPosts from '../lib/sortPosts';
-
-interface Props {
-  keyword: string;
-  categories: string[];
-  orderBy?: PostsOrderBy;
-}
-
-export default async function getPosts(props: Props) {
-  const { keyword, categories, orderBy } = props;
-
-  let SEARCH_CATEGORY = CATEGORY_DATA;
-
-  if (categories.length > 0) {
-    SEARCH_CATEGORY = CATEGORY_DATA.filter((c) => categories.includes(c.link));
-  }
-
-  const originPosts = await Promise.all(
-    SEARCH_CATEGORY.map(async (category) => {
-      // search가 문자열 앞부터 가능함 (Like 구문 없음)
-      // TODO : 추후에 LIKE처럼 Search 되도록 수정해야 함
-      const q = keyword
-        ? query(
-            collection(db, category.link),
-            where('plain_title', '>=', keyword),
-            where('plain_title', '<=', `${keyword}\uf8ff`),
-            // TODO : 추후에 모든 게시물 tag가 바뀌면 추가
-            // where('tags', 'array-contains', keyword),
-          )
-        : query(collection(db, category.link));
-
-      const querySnapshot = await getDocs(q);
-      const post = querySnapshot.docs.map((doc) => doc.data());
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const excludedBodyPost = post.map(({ body, ...doc }) => doc);
-
-      return { data: excludedBodyPost };
+/**
+ * @description 모든 카테고리의 글 목록을 본문 없이 조회한다
+ * @returns 본문을 뺀 글 목록. 순서는 정하지 않는다
+ *
+ * 검색과 카테고리 필터, 정렬은 여기서 하지 않고 목록 페이지가 `filterPosts` 로 한다.
+ * loader 가 쿼리스트링을 읽지 않아야 목록 응답이 한 벌로 캐시되기 때문이다.
+ *
+ * 컬렉션에 `plain_title` 없이 `reactions` 만 있는 유령 문서가 있어 건너뛴다.
+ * 목록에 제목 없는 행으로 나오고, 검색에서 `plain_title` 을 읽다가 멈춘다.
+ */
+export default async function getPosts(): Promise<Omit<IPost, 'body'>[]> {
+  const perCategory = await Promise.all(
+    CATEGORY_DATA.map(async (category) => {
+      const snapshot = await getDocs(collection(db, category.link));
+      return snapshot.docs.map((doc) => doc.data());
     }),
   );
 
-  const posts = originPosts.reduce((acc, cur) => {
-    acc.data.push(...cur.data);
-
-    return acc;
-  });
-
-  // sorting
-  if (orderBy) {
-    const sortedPosts = sortPosts(posts.data as IPost[], orderBy);
-    return sortedPosts;
-  }
-
-  return posts.data as IPost[];
+  return perCategory
+    .flat()
+    .filter((doc) => typeof doc.plain_title === 'string')
+    .map(({ body: _body, ...rest }) => rest as Omit<IPost, 'body'>);
 }

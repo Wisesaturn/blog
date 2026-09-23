@@ -1,6 +1,5 @@
-import { LoaderFunctionArgs, MetaFunction, useLoaderData } from 'react-router';
+import { MetaFunction, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
-import qs from 'qs';
 
 import getSnippets from '$features/snippet/api/getSnippets';
 import SnippetCreater from '$features/snippet/ui/molecules/SnippetCreater';
@@ -18,12 +17,8 @@ export const meta: MetaFunction = (args) => {
 };
 
 // loader
-export async function loader({ request }: LoaderFunctionArgs) {
-  const params = qs.parse(request.url.split('?')[1]);
-  const searchParams = {
-    keyword: String(params.keyword || ''),
-  };
-  const snippets = await getSnippets(searchParams);
+export async function loader() {
+  const snippets = await getSnippets();
 
   return { snippets };
 }

@@ -35,7 +35,6 @@ export default defineConfig({
       'firebase/functions',
       'firebase/storage',
       'motion/react',
-      'qs',
     ],
   },
 });

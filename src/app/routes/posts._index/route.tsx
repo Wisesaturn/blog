@@ -1,17 +1,17 @@
+import { useMemo } from 'react';
 import {
   ActionFunction,
   HeadersFunction,
   data,
-  LoaderFunctionArgs,
   MetaFunction,
+  ShouldRevalidateFunction,
   useLoaderData,
 } from 'react-router';
 import { motion } from 'motion/react';
-import qs from 'qs';
 
 import getPosts from '$features/post/api/getPosts';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import { PostsOrderBy } from '$features/post/types/post';
+import filterPosts, { parsePostsQuery } from '$features/post/lib/filterPosts';
 import Categories from '$features/post/ui/molecules/Categories';
 import PostList from '$features/post/ui/organsims/PostList';
 
@@ -36,15 +36,26 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
 // action (dev 전용 목록 새로고침 버튼이 호출한다)
 export const action: ActionFunction = async () => ({ refetch: true });
 
+/**
+ * 검색과 카테고리, 정렬은 쿼리스트링만 바꾸므로 loader 를 다시 부르지 않는다.
+ * 다시 부르면 조건마다 다른 `.data` URL 로 요청이 나가 CDN 캐시가 갈라진다.
+ * dev 전용 새로고침 버튼은 action 을 거치므로 그때는 기본 동작대로 다시 읽는다.
+ */
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentUrl,
+  nextUrl,
+  formMethod,
+  defaultShouldRevalidate,
+}) => {
+  if (formMethod) return defaultShouldRevalidate;
+  if (currentUrl.pathname === nextUrl.pathname) return false;
+  return defaultShouldRevalidate;
+};
+
 // loader
-export async function loader({ request }: LoaderFunctionArgs) {
-  const params = qs.parse(request.url.split('?')[1]);
-  const searchParams = {
-    keyword: String(params.keyword || ''),
-    categories: params.category ? String(params.category).split(',') : [],
-    orderBy: (params.orderby as PostsOrderBy) || 'desc',
-  };
-  const posts = await getPosts(searchParams);
+// 쿼리스트링을 읽지 않는다. 응답이 URL 과 무관하게 한 벌이어야 CDN 이 하나로 캐시한다
+export async function loader() {
+  const posts = await getPosts();
 
   return data(
     { posts },
@@ -61,6 +72,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function PostsPage() {
   const { posts } = useLoaderData<typeof loader>();
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
+  const visiblePosts = useMemo(
+    () => filterPosts(posts, parsePostsQuery(searchParams)),
+    [posts, searchParams],
+  );
 
   return (
     <motion.main
@@ -86,7 +101,7 @@ export default function PostsPage() {
         handleSearch={(_v) => setSelectedParams('keyword', _v, false)}
       />
       <Categories animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <PostList posts={posts} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <PostList posts={visiblePosts} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );
 }

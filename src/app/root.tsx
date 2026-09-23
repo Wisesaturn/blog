@@ -7,6 +7,7 @@ import {
   type LinksFunction,
   type LoaderFunction,
   type MetaFunction,
+  type ShouldRevalidateFunction,
 } from 'react-router';
 
 import useInitialScript from '$shared/hooks/useInitialScript';
@@ -27,6 +28,22 @@ export const links: LinksFunction = () => [
   ),
   formatStyleSheet(globalStyles),
 ];
+
+/**
+ * root loader 는 테마 쿠키만 읽으므로 쿼리스트링이 바뀌어도 결과가 같다.
+ * 목록의 검색과 필터는 쿼리스트링만 바꾸는데, 이걸 막지 않으면 조작할 때마다 root 의 `.data` 요청이
+ * 서버 함수까지 간다. 경로가 바뀌거나 action 을 거칠 때는 기본 동작대로 다시 읽는다.
+ */
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentUrl,
+  nextUrl,
+  formMethod,
+  defaultShouldRevalidate,
+}) => {
+  if (formMethod) return defaultShouldRevalidate;
+  if (currentUrl.pathname === nextUrl.pathname) return false;
+  return defaultShouldRevalidate;
+};
 
 export const loader: LoaderFunction = ({ request }) => {
   const cookieHeader = request.headers.get('cookie');
