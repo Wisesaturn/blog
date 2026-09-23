@@ -1,17 +1,19 @@
-/* eslint-disable no-param-reassign */
 /**
  * 서버 렌더링 진입점.
  * https://reactrouter.com/api/framework-conventions/entry.server.tsx
+ *
+ * 응답 헤더는 여기서 건드리지 않는다. `Cache-Control` 은 라우트의 `headers` export 가 정한다.
+ * 예전에는 여기서 모든 HTML 응답의 `Cache-Control` 을 `max-age=0, must-revalidate` 로 덮어쓰고
+ * 읽는 곳 없는 `version` 쿠키를 심어서, Vercel CDN 이 브라우저 요청을 한 번도 캐시하지 않았다.
+ * 봇 요청은 이 경로를 지나지 않아 curl 로 확인하면 캐시되는 것처럼 보였다.
  */
 
 import { PassThrough } from 'node:stream';
 
 import { createReadableStreamFromReadable } from '@react-router/node';
-import { ServerRouter, createCookie, type AppLoadContext, type EntryContext } from 'react-router';
+import { ServerRouter, type AppLoadContext, type EntryContext } from 'react-router';
 import { isbot } from 'isbot';
-import { renderToPipeableStream } from 'react-dom/server';
-
-import getCookie from '$shared/lib/getCookieOnHeader';
+import { renderToPipeableStream, type RenderToPipeableStreamOptions } from 'react-dom/server';
 
 /**
  * 스트리밍이 이 시간을 넘기면 렌더를 끊는다.
@@ -19,152 +21,48 @@ import getCookie from '$shared/lib/getCookieOnHeader';
  */
 const ABORT_DELAY = 5_000;
 
-const versionCookie = createCookie('version', {
-  path: '/', // make sure the cookie we receive the request on every path
-  secure: true, // enable this in prod
-  httpOnly: true, // only for server-side usage
-  maxAge: 60 * 60 * 24 * 365, // keep the cookie for a year
-});
-
-function handleBotRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  routerContext: EntryContext,
-) {
-  return new Promise((resolve, reject) => {
-    let shellRendered = false;
-    const { pipe, abort } = renderToPipeableStream(
-      <ServerRouter context={routerContext} url={request.url} />,
-      {
-        onAllReady() {
-          shellRendered = true;
-          const body = new PassThrough();
-          const stream = createReadableStreamFromReadable(body);
-
-          responseHeaders.set('Content-Type', 'text/html');
-
-          resolve(
-            new Response(stream, {
-              headers: responseHeaders,
-              status: responseStatusCode,
-            }),
-          );
-
-          pipe(body);
-        },
-        onShellError(error: unknown) {
-          reject(error);
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500;
-          // Log streaming rendering errors from inside the shell.  Don't log
-          // errors encountered during initial shell rendering since they'll
-          // reject and get logged in handleDocumentRequest.
-          if (shellRendered) {
-            console.error(error);
-          }
-        },
-      },
-    );
-
-    setTimeout(abort, ABORT_DELAY);
-  });
-}
-
-function handleBrowserRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  routerContext: EntryContext,
-) {
-  return new Promise((resolve, reject) => {
-    let shellRendered = false;
-    const { version } = routerContext.manifest; // get the build version
-    const { pipe, abort } = renderToPipeableStream(
-      <ServerRouter context={routerContext} url={request.url} />,
-      {
-        async onShellReady() {
-          shellRendered = true;
-          const body = new PassThrough();
-          const stream = createReadableStreamFromReadable(body);
-
-          /* darkmode set */
-          const cookieHeader = request.headers.get('cookie');
-          const darkmode = getCookie(cookieHeader, 'color-theme') || 'light';
-
-          // Create a pipe line for stream transformation
-          const transformStream = new TransformStream({
-            transform(chunk, controller) {
-              // Manipulate and modify the data
-              const modifiedChunk = chunk
-                .toString()
-                .replace('<html>', `<html lang="ko" color-theme="${darkmode}>"`);
-              controller.enqueue(modifiedChunk);
-            },
-          });
-
-          // Transform the stream and create a new stream
-          const modifiedStream = stream.pipeThrough(transformStream);
-          /* darkmode set */
-
-          // set version on cookie
-          responseHeaders.append('Set-Cookie', await versionCookie.serialize(version));
-          responseHeaders.set('Content-Type', 'text/html');
-
-          // set cache control for browser cache
-          responseHeaders.set(
-            'Cache-Control',
-            'public, max-age=0, stale-while-revalidate=31556952, must-revalidate',
-          );
-          responseHeaders.set(
-            'CDN-Cache-Control',
-            'public, max-age=0, stale-while-revalidate=31556952',
-          );
-          responseHeaders.set(
-            'Vercel-CDN-Cache-Control',
-            'public, max-age=0, stale-while-revalidate=31556952',
-          );
-
-          resolve(
-            new Response(modifiedStream, {
-              headers: responseHeaders,
-              status: responseStatusCode,
-            }),
-          );
-
-          pipe(body);
-        },
-        onShellError(error: unknown) {
-          reject(error);
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500;
-          // Log streaming rendering errors from inside the shell.  Don't log
-          // errors encountered during initial shell rendering since they'll
-          // reject and get logged in handleDocumentRequest.
-          if (shellRendered) {
-            console.error(error);
-          }
-        },
-      },
-    );
-
-    setTimeout(abort, ABORT_DELAY);
-  });
-}
-
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   routerContext: EntryContext,
-  // This is ignored so we can keep it in the template for visibility.  Feel
-  // free to delete this parameter in your app if you're not using it!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext,
+  _loadContext: AppLoadContext,
 ) {
-  return isbot(request.headers.get('user-agent') || '')
-    ? handleBotRequest(request, responseStatusCode, responseHeaders, routerContext)
-    : handleBrowserRequest(request, responseStatusCode, responseHeaders, routerContext);
+  // 봇과 prerender 는 스트리밍 없이 다 그린 HTML 을 받아야 한다
+  const userAgent = request.headers.get('user-agent');
+  const readyOption: keyof RenderToPipeableStreamOptions =
+    (userAgent && isbot(userAgent)) || routerContext.isSpaMode ? 'onAllReady' : 'onShellReady';
+
+  return new Promise((resolve, reject) => {
+    let shellRendered = false;
+    let statusCode = responseStatusCode;
+    const { pipe, abort } = renderToPipeableStream(
+      <ServerRouter context={routerContext} url={request.url} />,
+      {
+        [readyOption]() {
+          shellRendered = true;
+          const body = new PassThrough();
+          const stream = createReadableStreamFromReadable(body);
+
+          responseHeaders.set('Content-Type', 'text/html');
+
+          resolve(new Response(stream, { headers: responseHeaders, status: statusCode }));
+
+          pipe(body);
+        },
+        onShellError(error: unknown) {
+          reject(error);
+        },
+        onError(error: unknown) {
+          statusCode = 500;
+          // 셸을 그리는 도중의 에러는 reject 되어 따로 기록되므로, 셸 이후의 에러만 남긴다
+          if (shellRendered) {
+            console.error(error);
+          }
+        },
+      },
+    );
+
+    setTimeout(abort, ABORT_DELAY);
+  });
 }

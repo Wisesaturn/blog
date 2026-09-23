@@ -4,6 +4,7 @@ import { ActionFunctionArgs } from 'react-router';
 import createProject from '$features/project/api/createProject';
 import updateProject from '$features/project/api/updateProject';
 
+import requestRedeploy from '$shared/api/requestRedeploy';
 import Logger from '$shared/helper/logger';
 import convertString from '$shared/lib/convertString';
 import { PostBody } from '$shared/types/api';
@@ -23,6 +24,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       body: projectBody,
       isUpdateProject: true,
     });
+    await requestRedeploy();
     return Response.json(project);
   } catch (err) {
     if (err instanceof Error) {

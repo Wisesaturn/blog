@@ -12,6 +12,15 @@ import Header from './Header';
 import NavigationBar from './NavigationBar';
 import TopButton from './TopButton';
 
+/**
+ * 페인트 전에 `<html color-theme>` 를 정한다. 사용자가 고른 테마(쿠키)가 먼저고, 없으면 시스템 설정을 따른다.
+ *
+ * 상세 페이지는 빌드 때 구운 HTML 이나 CDN 에 캐시된 HTML 로 나가서, 서버가 쿠키를 읽어 넣은 테마가
+ * 지금 보는 사람의 것이 아닐 수 있다. 하이드레이션을 기다리면 다크 모드 사용자에게 밝은 화면이 먼저
+ * 보이므로 `<head>` 안에서 동기로 실행한다.
+ */
+const THEME_SCRIPT = `(function(){try{var m=document.cookie.match(/(?:^|; )color-theme=(dark|light)/);var t=m?m[1]:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('color-theme',t);}catch(e){}})();`;
+
 export default function Layout({
   children,
   data,
@@ -20,8 +29,11 @@ export default function Layout({
   data: GlobalLoaderData;
 }) {
   return (
-    <html lang="ko" color-theme={data.layout.darkmode}>
+    // 인라인 스크립트가 color-theme 을 바꾸므로 서버 HTML 과 다를 수 있다
+    <html lang="ko" color-theme={data.layout.darkmode} suppressHydrationWarning>
       <head>
+        {/* eslint-disable-next-line react/no-danger */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <meta charSet="utf-8" />
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

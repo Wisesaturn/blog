@@ -15,18 +15,16 @@ export default function DarkmodeButton() {
     document.documentElement.setAttribute('color-theme', nextDarkmode);
   };
 
-  useEffect(function initialDarkmode() {
-    const isBrowserDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-    if (isBrowserDarkTheme === 'dark') {
-      updateLayout({ darkmode: isBrowserDarkTheme });
-      createDarkmodeCookie(isBrowserDarkTheme);
-      document.documentElement.setAttribute('color-theme', isBrowserDarkTheme);
-    } else {
-      createDarkmodeCookie(layout.darkmode);
-      document.documentElement.setAttribute('color-theme', layout.darkmode);
-    }
+  /**
+   * `Layout` 의 인라인 스크립트가 페인트 전에 테마를 정해 둔다. 여기서는 그 값에 상태만 맞춘다.
+   *
+   * 예전에는 시스템 설정이 다크면 쿠키보다 앞세워 덮어썼다. 사용자가 밝은 테마를 골라도 다음 방문에
+   * 다시 다크가 됐다. 쿠키도 여기서 심지 않는다. 심으면 그 뒤로 시스템 설정이 바뀌어도 따라가지 않는다.
+   */
+  useEffect(function syncDarkmodeWithDocument() {
+    const current: Darkmode =
+      document.documentElement.getAttribute('color-theme') === 'dark' ? 'dark' : 'light';
+    if (current !== layout.darkmode) updateLayout({ darkmode: current });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

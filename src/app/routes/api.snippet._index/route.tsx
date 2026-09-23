@@ -4,6 +4,7 @@ import { ActionFunctionArgs } from 'react-router';
 import createSnippet from '$features/snippet/api/createSnippet';
 import updateSnippet from '$features/snippet/api/updateSnippet';
 
+import requestRedeploy from '$shared/api/requestRedeploy';
 import Logger from '$shared/helper/logger';
 import convertString from '$shared/lib/convertString';
 import { PostBody } from '$shared/types/api';
@@ -22,6 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       data: project,
       isUpdateSnippet: true,
     });
+    await requestRedeploy();
     return Response.json(project);
   } catch (err) {
     if (err instanceof Error) {

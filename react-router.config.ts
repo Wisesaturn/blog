@@ -1,4 +1,31 @@
+import { createServer } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
 import type { Config } from '@react-router/dev/config';
+import type getContentPathsFn from './src/shared/api/getContentPaths';
+
+/**
+ * 경로 목록을 앱 코드의 `getContentPaths` 로 만든다.
+ *
+ * 이 설정 파일은 앱과 다른 로더로 읽혀서 `$features` 같은 alias 가 풀리지 않는다. 그래서 여기서만
+ * Vite 를 잠깐 띄워 `vite-tsconfig-paths` 로 alias 를 풀고 모듈을 불러온 뒤 바로 닫는다.
+ * 앱 코드를 상대경로 import 로 바꾸지 않으려고 이렇게 했다.
+ */
+async function loadContentPaths(): ReturnType<typeof getContentPathsFn> {
+  const server = await createServer({
+    configFile: false,
+    plugins: [tsconfigPaths()],
+    server: { middlewareMode: true, hmr: false, watch: null },
+    appType: 'custom',
+    logLevel: 'error',
+  });
+  try {
+    const mod = await server.ssrLoadModule('/src/shared/api/getContentPaths.ts');
+    return await (mod.default as typeof getContentPathsFn)();
+  } finally {
+    await server.close();
+  }
+}
 
 /**
  * 라우트 규약과 빌드 동작을 정한다. Vite 쪽 설정은 `vite.config.ts` 에 있다.
@@ -7,9 +34,20 @@ import type { Config } from '@react-router/dev/config';
  * `routes.ts` 로 라우트를 명시하거나 `@react-router/fs-routes` 로 파일 규약을 쓰는데,
  * 이 레포는 `app/routes/` 의 Remix v2 파일 규약을 그대로 쓰므로 `fs-routes` 를 붙였다.
  *
- * `ssr` 은 기본값 `true` 다. 정적 생성(#80)에서 `prerender` 를 더할 때도 이 값을 유지한다.
- * 조회수 갱신과 발행 엔드포인트가 `action` 을 쓰는데, `ssr: false` 면 `action` 을 둘 수 없다.
+ * `ssr` 은 기본값 `true` 다. 조회수 API 와 발행 엔드포인트가 `action` 을 쓰는데, `ssr: false` 면
+ * `action` 을 둘 수 없다. `prerender` 목록에 없는 경로(빌드 뒤에 발행한 글 등)도 SSR 로 열린다.
  */
 export default {
   appDirectory: 'src/app',
+
+  /**
+   * 글과 프로젝트, 스니펫의 상세 페이지만 빌드 때 HTML 로 굽는다. 경로는 sitemap 과 같은 함수로 만든다.
+   *
+   * 목록 페이지는 굽지 않는다. 목록은 쿼리스트링(`?category=react`)으로 필터링하는데, 정적 파일은
+   * 쿼리를 무시하고 같은 HTML 을 돌려주므로 필터가 적용되지 않은 목록이 나간다.
+   */
+  async prerender() {
+    const { posts, projects, snippets } = await loadContentPaths();
+    return [...posts, ...projects, ...snippets].map(({ path }) => path);
+  },
 } satisfies Config;

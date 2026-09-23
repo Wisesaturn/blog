@@ -1,73 +1,31 @@
 /* eslint-disable import/prefer-default-export */
 
-import getPosts from '$features/post/api/getPosts';
-import getProjects from '$features/project/api/getProjects';
-import getSnippets from '$features/snippet/api/getSnippets';
-
-import convertString from '$shared/lib/convertString';
+import getContentPaths from '$shared/api/getContentPaths';
 import { ISitemap } from '$shared/types/global';
 
 export const HOST_URL = `https://jaehan.blog`;
 
 export const loader = async () => {
-  const posts = await getPosts({ keyword: '', categories: [] });
-  const projects = await getProjects();
-  const snippets = await getSnippets({ keyword: '' });
-  // handle "GET" request
-  // separating xml content from Response to keep clean code.
+  const { posts, projects, snippets } = await getContentPaths();
   const sitePost: ISitemap[] = [
     { loc: HOST_URL, priority: '1.00' },
     { loc: `${HOST_URL}/about`, priority: '0.80', changeFreq: 'weekly' },
     { loc: `${HOST_URL}/posts`, priority: '0.80', changeFreq: 'weekly' },
     { loc: `${HOST_URL}/snippets`, priority: '0.80', changeFreq: 'weekly' },
     { loc: `${HOST_URL}/projects`, priority: '0.80', changeFreq: 'weekly' },
-  ];
-
-  // Post Sitemap
-  posts.forEach((post) => {
-    const { title, category, lastmod } = post;
-    // 컬렉션에 title 없이 reactions 필드만 있는 유령 문서가 존재함 — 건너뛰지 않으면 convertString이 throw되어 500 발생
-    if (typeof title !== 'string' || typeof category !== 'string') return;
-    const convertTitle = convertString(title, 'spaceToDash');
-    const loc = `${HOST_URL}/posts/${category}/${convertTitle}`;
-
-    sitePost.push({
-      loc,
+    ...posts.map(({ path, lastmod }) => ({
+      loc: `${HOST_URL}${path}`,
       lastmod,
       priority: '0.64',
-      changeFreq: 'weekly',
-    });
-  });
-
-  // Project Sitemap
-  projects.forEach((project) => {
-    const { title, lastmod } = project;
-    if (typeof title !== 'string') return;
-    const convertTitle = convertString(title, 'spaceToDash');
-    const loc = `${HOST_URL}/projects/${convertTitle}`;
-
-    sitePost.push({
-      loc,
+      changeFreq: 'weekly' as const,
+    })),
+    ...[...projects, ...snippets].map(({ path, lastmod }) => ({
+      loc: `${HOST_URL}${path}`,
       lastmod,
       priority: '0.50',
-      changeFreq: 'weekly',
-    });
-  });
-
-  // Snippet Sitemap
-  snippets.forEach((snippet) => {
-    const { title, lastmod } = snippet;
-    if (typeof title !== 'string') return;
-    const convertTitle = convertString(title, 'spaceToDash');
-    const loc = `${HOST_URL}/snippets/${convertTitle}`;
-
-    sitePost.push({
-      loc,
-      lastmod,
-      priority: '0.50',
-      changeFreq: 'weekly',
-    });
-  });
+      changeFreq: 'weekly' as const,
+    })),
+  ];
 
   const content = `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
