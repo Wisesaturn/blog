@@ -10,9 +10,14 @@ class HtmlConverter {
 
   /**
    * link tag for target="_blank"
+   *
+   * `<a` 뒤에 공백이나 `>` 가 오는 경우만 바꾼다. 문자열로 `<a` 를 찾으면 `<aside` 와 `<abbr`,
+   * `<address` 처럼 a 로 시작하는 다른 태그의 앞부분까지 걸려 태그 이름이 부서진다.
+   * `remarkRehype` 와 `rehypeStringify` 가 둘 다 `allowDangerousHtml` 이라 본문의 raw HTML 이
+   * 그대로 통과하므로 실제로 걸릴 수 있다.
    */
   link(): this {
-    this.result = this.result.replaceAll('<a', '<a target="_blank"');
+    this.result = this.result.replace(/<a(?=[\s>])/g, '<a target="_blank"');
     return this;
   }
 
