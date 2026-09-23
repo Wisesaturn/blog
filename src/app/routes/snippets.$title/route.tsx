@@ -6,7 +6,7 @@ import {
   data,
   useLoaderData,
 } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import getSnippet from '$features/snippet/api/getSnippet';
 import updateSnippet from '$features/snippet/api/updateSnippet';

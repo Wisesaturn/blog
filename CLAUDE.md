@@ -20,7 +20,7 @@ pnpm storybook    # Storybook 개발 서버
 - **Package Manager**: pnpm
 - **CMS**: Notion (`@notionhq/client`, `notion-to-md`)
 - **Styling**: Tailwind CSS + clsx + tailwind-merge → `cn()` 유틸, cva (class-variance-authority)
-- **Animation**: framer-motion
+- **Animation**: motion (`motion/react` 에서 import 한다. `framer-motion` 은 쓰지 않는다)
 - **Database**: Firebase (Firestore + Storage)
 - **State**: Remix loader 가 처리한다. 별도 상태 라이브러리는 설치되어 있지 않다
 - **Lint/Format**: ESLint 8 + Prettier

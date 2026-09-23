@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, MetaFunction, useLoaderData } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import qs from 'qs';
 
 import getSnippets from '$features/snippet/api/getSnippets';

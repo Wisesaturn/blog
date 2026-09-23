@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
 
 import Title from '$shared/ui/atoms/Title';

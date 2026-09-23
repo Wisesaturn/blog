@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import ArticleTitle from '$features/post/ui/molecules/ArticleTitle';
 import ArticleTags from '$features/post/ui/atoms/ArticleTags';

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import IntroduceSection from '$features/home/ui/organisms/introduce-section';
 

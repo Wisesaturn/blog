@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import { IPost } from '$features/post/types/post';
 import PostFilter from '$features/post/ui/molecules/PostFilter';

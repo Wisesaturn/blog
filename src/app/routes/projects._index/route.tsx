@@ -1,5 +1,5 @@
 import { MetaFunction, useLoaderData } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import getProjects from '$features/project/api/getProjects';
 import sortProjects from '$features/project/lib/sortProjects';

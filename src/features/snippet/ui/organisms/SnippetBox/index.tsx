@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import SnippetTitle from '$features/snippet/ui/molecules/SnippetTitle';
 import { ISnippet } from '$features/snippet/types/snippet';

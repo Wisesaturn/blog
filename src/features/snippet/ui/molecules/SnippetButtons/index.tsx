@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import SnippetShareButton from '../../atoms/SnippetShareButton';
 import SnippetListButton from '../../atoms/SnippetListButton';

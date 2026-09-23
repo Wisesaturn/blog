@@ -6,7 +6,7 @@ import {
   data,
   useLoaderData,
 } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import getProject from '$features/project/api/getProject';
 import updateProject from '$features/project/api/updateProject';

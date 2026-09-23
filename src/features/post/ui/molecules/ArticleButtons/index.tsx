@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import ArticleShareButton from '../../atoms/ArticleShareButton';
 import ArticleListButton from '../../atoms/ArticleListButton';

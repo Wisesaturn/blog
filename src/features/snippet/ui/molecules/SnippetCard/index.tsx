@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Link } from 'react-router';
 
 import { ISnippet } from '$features/snippet/types/snippet';

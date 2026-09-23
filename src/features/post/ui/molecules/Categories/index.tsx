@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
 import CategoryChip from '$features/post/ui/atoms/CategoryChip';

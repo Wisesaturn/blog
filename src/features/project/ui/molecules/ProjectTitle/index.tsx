@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import { IProject } from '$features/project/types/project';
 

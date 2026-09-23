@@ -34,7 +34,7 @@ export default defineConfig({
       'firebase/firestore',
       'firebase/functions',
       'firebase/storage',
-      'framer-motion',
+      'motion/react',
       'qs',
     ],
   },

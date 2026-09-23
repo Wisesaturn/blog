@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import TOCRow from '$features/post/ui/atoms/TOCRow';
 import useTOC from '$features/post/hooks/useTOC';

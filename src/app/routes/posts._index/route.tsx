@@ -5,7 +5,7 @@ import {
   MetaFunction,
   useLoaderData,
 } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import qs from 'qs';
 
 import getPosts from '$features/post/api/getPosts';

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import ProfileCategory from '$features/profile/ui/atoms/ProfileCategory';
 import PROFILE from '$features/profile/constant/profile';

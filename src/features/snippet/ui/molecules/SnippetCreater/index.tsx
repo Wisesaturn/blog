@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import Input from '$shared/ui/molecules/Input';
 import instance from '$shared/api/instance';

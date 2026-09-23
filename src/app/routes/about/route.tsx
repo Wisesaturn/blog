@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MetaFunction } from 'react-router';
 
 import ProfileTitle from '$features/profile/ui/molecules/ProfileTitle';

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
 import { IProject } from '$features/project/types/project';

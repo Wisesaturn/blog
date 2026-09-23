@@ -6,7 +6,7 @@ import {
   data,
   useLoaderData,
 } from 'react-router';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import getPost from '$features/post/api/getPost';
 import updatePost from '$features/post/api/updatePost';

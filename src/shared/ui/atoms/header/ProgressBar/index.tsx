@@ -1,4 +1,4 @@
-import { useSpring, motion, useScroll } from 'framer-motion';
+import { useSpring, motion, useScroll } from 'motion/react';
 
 export default function ProgressBar() {
   const { scrollYProgress } = useScroll();
