@@ -1,5 +1,6 @@
 import {
   ActionFunction,
+  HeadersFunction,
   data,
   LoaderFunctionArgs,
   MetaFunction,
@@ -26,6 +27,12 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
+/**
+ * loader 가 `data()` 에 넣은 헤더는 이 export 가 있어야 문서 응답과 `.data` 응답에 실린다.
+ * 없으면 `Cache-Control` 이 빠져 CDN 이 캐시하지 않는다.
+ */
+export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
+
 // action (dev 전용 목록 새로고침 버튼이 호출한다)
 export const action: ActionFunction = async () => ({ refetch: true });
 
@@ -43,7 +50,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     { posts },
     {
       headers: {
-        'Cache-Control': 'public, stale-while-revalidate=31556952',
+        // 목록에서 발행 뒤에 바뀌는 값은 조회수뿐이라 10분 늦어도 된다. s-maxage 가 없으면 CDN 이 캐시하지 않는다
+        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=31556952',
       },
     },
   );

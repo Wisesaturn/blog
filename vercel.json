@@ -54,30 +54,6 @@
   ],
   "headers": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "header",
-          "key": "Content-Type",
-          "value": "text/html"
-        }
-      ],
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, stale-while-revalidate=31556952"
-        },
-        {
-          "key": "CDN-Cache-Control",
-          "value": "public, stale-while-revalidate=31556952"
-        },
-        {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "public, stale-while-revalidate=31556952"
-        }
-      ]
-    },
-    {
       "source": "/:path*\\.(css|js|svg|jpg|png|gif|webp|ico|woff2|woff|ttf|eot|webmanifest)",
       "headers": [
         {

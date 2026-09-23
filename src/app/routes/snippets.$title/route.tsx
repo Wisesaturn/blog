@@ -1,21 +1,21 @@
 import {
+  HeadersFunction,
   LinksFunction,
   LoaderFunctionArgs,
   MetaFunction,
-  createCookie,
   data,
   useLoaderData,
+  useParams,
 } from 'react-router';
 import { motion } from 'motion/react';
 
 import getSnippet from '$features/snippet/api/getSnippet';
-import updateSnippet from '$features/snippet/api/updateSnippet';
 import SnippetComments from '$features/snippet/ui/atoms/SnippetComments';
 import SnippetButtons from '$features/snippet/ui/molecules/SnippetButtons';
 import SnippetBox from '$features/snippet/ui/organisms/SnippetBox';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import convertString from '$shared/lib/convertString';
+import useViewCount from '$shared/hooks/useViewCount';
 import formatHeadTags from '$shared/lib/formatHeadTags';
 import formatStyleSheet from '$shared/lib/formatStyleSheet';
 import codeStyles from '$shared/styles/etc/vscode-prism.css?url';
@@ -29,38 +29,23 @@ export const meta: MetaFunction = (args) => {
 // link
 export const links: LinksFunction = () => [formatStyleSheet(codeStyles)];
 
+/**
+ * loader 가 `data()` 에 넣은 헤더는 이 export 가 있어야 문서 응답과 `.data` 응답에 실린다.
+ * 없으면 `Cache-Control` 이 빠져 CDN 이 캐시하지 않는다.
+ */
+export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
+
 // loader
-export async function loader({ params, request }: LoaderFunctionArgs) {
+export async function loader({ params }: LoaderFunctionArgs) {
   const { title } = params;
   if (!title) throw new Error();
 
-  // cookie settings
-  const cookieName = convertString(new URL(request.url).pathname, 'urlPathToCookieName');
-  const hasUserVisited = createCookie(cookieName, {
-    path: '/',
-    secure: true,
-    httpOnly: true,
-    maxAge: 60 * 60 * 0.5,
-  });
-  const cookieHeader = request.headers.get('Cookie');
-  const hasUserVisitedPage = await hasUserVisited.parse(cookieHeader);
-
   const resolvedSnippet = await getSnippet({ title });
-
-  // ignore view count update if it's development or already has cookie
-  if (!hasUserVisitedPage && process.env.NODE_ENV !== 'development') {
-    // fire-and-forget: 응답을 블로킹하지 않고 조회수만 비동기로 갱신
-    updateSnippet({
-      title,
-      data: { views: (resolvedSnippet.views || 0) + 1 },
-    }).catch((err) => console.error(err));
-  }
 
   return data(
     { snippet: resolvedSnippet },
     {
       headers: {
-        'Set-Cookie': await hasUserVisited.serialize({}),
         'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=31556952',
       },
     },
@@ -69,6 +54,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
+  const { title = '' } = useParams();
+  const views = useViewCount(`/api/snippet-view/${encodeURIComponent(title)}`, snippet.views || 0);
 
   return (
     <motion.main
@@ -77,7 +64,7 @@ export default function SnippetPage() {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <SnippetBox snippet={snippet} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <SnippetBox snippet={{ ...snippet, views }} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <SnippetButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <SnippetComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
