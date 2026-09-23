@@ -19,6 +19,7 @@ yarn-error.log*
 #firebase
 firebaseAdminKey.json
 .vercel
+.vercel-cli
 
 docs
 .playwright-mcp
