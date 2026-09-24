@@ -18,6 +18,11 @@ async function loadContentPaths(): ReturnType<typeof getContentPathsFn> {
     server: { middlewareMode: true, hmr: false, watch: null },
     appType: 'custom',
     logLevel: 'error',
+    // 이 서버는 `ssrLoadModule` 만 쓰므로 브라우저용 의존성 최적화가 필요 없다. 끄지 않으면 개발 서버와
+    // 같은 `node_modules/.vite` 를 쓰면서 첫 요청 때 최적화 결과를 빈 것으로 덮어쓴다. 그러면 개발 서버가
+    // 이미 참조한 `react.js` 등이 사라져 504 (Outdated Optimize Dep) 가 나고 하이드레이션이 되지 않는다.
+    cacheDir: 'node_modules/.vite-prerender',
+    optimizeDeps: { noDiscovery: true, include: [] },
   });
   try {
     const mod = await server.ssrLoadModule('/src/shared/api/getContentPaths.ts');
