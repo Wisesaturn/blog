@@ -4,7 +4,6 @@ import { Darkmode } from '$shared/types/layout';
 import Spinner from '$shared/ui/atoms/indicator/Spinner';
 import useLoading from '$shared/hooks/useLoading';
 import useDelayedTrue from '$shared/hooks/useDelayedTrue';
-import instance from '$shared/api/instance';
 
 export interface ILayout {
   loading: boolean;
@@ -41,8 +40,6 @@ export const LayoutProvider: React.FC<LayoutProviderProps> = ({ initialLayout, c
       setLayout((prev) => ({ ...prev, ...newLayout }));
     });
   };
-
-  instance.setUpdateLayout(updateLayout);
 
   return (
     <>

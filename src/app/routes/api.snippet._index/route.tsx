@@ -7,7 +7,7 @@ import updateSnippet from '$features/snippet/api/updateSnippet';
 import requestRedeploy from '$shared/api/requestRedeploy';
 import verifyWebhookSecret from '$shared/api/verifyWebhookSecret';
 import convertString from '$shared/lib/convertString';
-import { PostBody } from '$shared/types/api';
+import getWebhookPageId from '$shared/lib/getWebhookPageId';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   // 시크릿이 없거나 다르면 Notion 을 읽기 전에 돌려보낸다
@@ -16,11 +16,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    // 임시: Notion 웹훅이 실제로 보내는 본문을 확인하려고 남긴다 (#87). 형식에 맞춰 읽게 바꾼 뒤 지운다
-    const raw = await request.text();
-    console.warn(`[publish:snippet] body ${raw}`);
-    const body: PostBody<'snippet'> = JSON.parse(raw);
-    const project = await createSnippet(body.title);
+    const pageId = getWebhookPageId(await request.json());
+    const project = await createSnippet(pageId);
     await updateSnippet({
       title: convertString(project.plainTitle, 'spaceToDash'),
       data: project,

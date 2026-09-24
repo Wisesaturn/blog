@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import {
-  ActionFunction,
   HeadersFunction,
   data,
   MetaFunction,
@@ -34,21 +33,15 @@ export const meta: MetaFunction = (args) => {
  */
 export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
 
-// action (dev 전용 목록 새로고침 버튼이 호출한다)
-export const action: ActionFunction = async () => ({ refetch: true });
-
 /**
  * 검색과 카테고리, 정렬은 쿼리스트링만 바꾸므로 loader 를 다시 부르지 않는다.
  * 다시 부르면 조건마다 다른 `.data` URL 로 요청이 나가 CDN 캐시가 갈라진다.
- * dev 전용 새로고침 버튼은 action 을 거치므로 그때는 기본 동작대로 다시 읽는다.
  */
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
-  formMethod,
   defaultShouldRevalidate,
 }) => {
-  if (formMethod) return defaultShouldRevalidate;
   if (currentUrl.pathname === nextUrl.pathname) return false;
   return defaultShouldRevalidate;
 };

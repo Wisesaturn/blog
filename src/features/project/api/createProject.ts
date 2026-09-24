@@ -7,124 +7,109 @@ import { DEFAULT_THUMBNAIL } from '$features/post/constant';
 import createImageOnUrl from '$features/post/lib/createImageOnUrl';
 
 import convertString from '$shared/lib/convertString';
-import notion from '$shared/middleware/notion';
+import getNotionPage from '$shared/api/getNotionPage';
 import Logger from '$shared/helper/logger';
-import { INotionList, NotionPage } from '$shared/types/notion';
 
 import { IProject } from '../types/project';
 
 /**
  * @summary Notion에서 작성한 프로젝트를 마크다운으로 변환하여 게시물을 생성하는 함수
- * @param title
+ * @param pageId 발행할 Notion 페이지 ID. 웹훅 본문의 `data.id`
  * @returns
  */
-export default async function createProject(title: string) {
+export default async function createProject(pageId: string) {
   try {
-    const project: IProject = await notion.databases
-      .query({
-        database_id: process.env.NOTION_DATABASE_PROJECTS_KEY as string,
-      })
-      // Notion SDK 의 QueryDatabaseResponse 는 properties 가 Record<string, 유니온> 이라
-      // 프로젝트 자체 타입인 INotionList<'project'> 와 구조가 맞지 않는다. 이전에는 notion 클라이언트를
-      // createRequire 로 가져와 any 였기 때문에 이 불일치가 드러나지 않았다.
-      .then(async (raw) => {
-        const data = raw as unknown as INotionList<'project'>;
+    const project: IProject = await getNotionPage<'project'>(
+      pageId,
+      process.env.NOTION_DATABASE_PROJECTS_KEY,
+    ).then(async (page) => {
+      const title = page.properties.이름.title[0]?.plain_text ?? '';
+      Logger.log(`${page.id}/${title}를 찾았습니다`);
 
-        const selectedPost = data.results.filter(
-          (result: NotionPage<'project'>) =>
-            result.object === 'page' && result.properties.이름.title[0]?.plain_text === title,
-        );
+      // post date format
+      const createdTime = new Date(page.created_time);
+      const lastEditedTime = new Date(page.last_edited_time);
+      // ////////////////// data /////////////////// //
+      const projectData: IProject = {
+        index: page.id,
+        title: `${page.icon?.emoji ? `${page.icon.emoji} ` : ''}${
+          page.properties.이름.title[0].plain_text
+        }`,
+        plainTitle: page.properties.이름.title[0].plain_text,
+        theme: page.properties.theme.rich_text[0].plain_text,
+        thumbnail: page.cover?.external?.url || page.cover?.file?.url || '',
+        category: page.properties.category.select.name,
+        createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
+        lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
+          lastEditedTime,
+        ),
+        description: page.properties.description.rich_text[0].plain_text,
+        skills: page.properties.skills.multi_select.map((skill) => skill.name),
+        role: page.properties.role.multi_select.map((role) => role.name),
+        github: page.properties.github.url,
+        website: page.properties.website.url,
+        lastmod: new Intl.DateTimeFormat('fr-CA', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        }).format(lastEditedTime),
+        date: {
+          start: page.properties.date.date.start,
+          end: page.properties.date.date.end,
+        },
+        views: 0,
+        body: '',
+      };
+      // ////////////////// data /////////////////// //
 
-        if (selectedPost.length === 0) {
-          throw new Error(`${title}를 찾을 수 없습니다`);
-        } else {
-          Logger.log(`${selectedPost[0].id}/${title}를 찾았습니다`);
-        }
+      // 1. delete previous storage
+      await deleteStore({
+        collection: 'project',
+        category: `${projectData.category}-projects`,
+        title: convertString(projectData.plainTitle, 'spaceToDash'),
+      });
 
-        // post date format
-        const createdTime = new Date(selectedPost[0].created_time);
-        const lastEditedTime = new Date(selectedPost[0].last_edited_time);
-        // ////////////////// data /////////////////// //
-        const projectData: IProject = {
-          index: selectedPost[0].id,
-          title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
-            selectedPost[0].properties.이름.title[0].plain_text
-          }`,
-          plainTitle: selectedPost[0].properties.이름.title[0].plain_text,
-          theme: selectedPost[0].properties.theme.rich_text[0].plain_text,
-          thumbnail: selectedPost[0].cover?.external?.url || selectedPost[0].cover?.file?.url || '',
-          category: selectedPost[0].properties.category.select.name,
-          createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
-          lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
-            lastEditedTime,
-          ),
-          description: selectedPost[0].properties.description.rich_text[0].plain_text,
-          skills: selectedPost[0].properties.skills.multi_select.map((skill) => skill.name),
-          role: selectedPost[0].properties.role.multi_select.map((role) => role.name),
-          github: selectedPost[0].properties.github.url,
-          website: selectedPost[0].properties.website.url,
-          lastmod: new Intl.DateTimeFormat('fr-CA', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric',
-          }).format(lastEditedTime),
-          date: {
-            start: selectedPost[0].properties.date.date.start,
-            end: selectedPost[0].properties.date.date.end,
-          },
-          views: 0,
-          body: '',
-        };
-        // ////////////////// data /////////////////// //
+      // 2. get markdown
+      const mdString = await getMarkdown(page.id);
 
-        // 1. delete previous storage
-        await deleteStore({
+      // 3. get html tag
+      const htmlBody = await getHtml(mdString);
+      projectData.body = htmlBody;
+
+      // 4. upload thumbnail on Public Folder (use Vercel CDN)
+      if (projectData.thumbnail) {
+        const filePath = await createImageOnUrl({
+          savePath: `thumbnail`,
+          title: projectData.index,
+          url: projectData.thumbnail,
+        });
+        projectData.thumbnail = filePath;
+        Logger.log(`썸네일 : ${filePath}`);
+      } else {
+        projectData.thumbnail = DEFAULT_THUMBNAIL;
+        Logger.log('기본 썸네일 설정');
+      }
+
+      // 5. upload image on firebase
+      if (projectData.body) {
+        const replaceBody = await replaceBodyImages({
           collection: 'project',
+          body: projectData.body,
           category: `${projectData.category}-projects`,
           title: convertString(projectData.plainTitle, 'spaceToDash'),
         });
+        projectData.body = replaceBody;
+      }
 
-        // 2. get markdown
-        const mdString = await getMarkdown(selectedPost[0].id);
+      Logger.success(`${title} 프로젝트를 생성하였습니다.`);
 
-        // 3. get html tag
-        const htmlBody = await getHtml(mdString);
-        projectData.body = htmlBody;
-
-        // 4. upload thumbnail on Public Folder (use Vercel CDN)
-        if (projectData.thumbnail) {
-          const filePath = await createImageOnUrl({
-            savePath: `thumbnail`,
-            title: projectData.index,
-            url: projectData.thumbnail,
-          });
-          projectData.thumbnail = filePath;
-          Logger.log(`썸네일 : ${filePath}`);
-        } else {
-          projectData.thumbnail = DEFAULT_THUMBNAIL;
-          Logger.log('기본 썸네일 설정');
-        }
-
-        // 5. upload image on firebase
-        if (projectData.body) {
-          const replaceBody = await replaceBodyImages({
-            collection: 'project',
-            body: projectData.body,
-            category: `${projectData.category}-projects`,
-            title: convertString(projectData.plainTitle, 'spaceToDash'),
-          });
-          projectData.body = replaceBody;
-        }
-
-        Logger.success(`${title} 프로젝트를 생성하였습니다.`);
-
-        return projectData;
-      });
+      return projectData;
+    });
 
     return project;
   } catch (err) {
     if (err instanceof Error) {
-      const ApplicationError = new Error(`${title} 프로젝트 생성에 실패하였습니다.`, {
+      const ApplicationError = new Error(`${pageId} 프로젝트 생성에 실패하였습니다.`, {
         cause: err,
       });
       Logger.error(ApplicationError);

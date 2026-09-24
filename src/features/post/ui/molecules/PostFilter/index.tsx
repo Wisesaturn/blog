@@ -11,8 +11,6 @@ import { PostsFilter, PostsOrderBy } from '$features/post/types/post';
 
 import Dropdown from '$shared/ui/molecules/Dropdown';
 
-import PostCreater from '../PostCreater';
-
 interface PostFilterProps extends GlobalAnimation {}
 
 export default function PostFilter(props: PostFilterProps) {
@@ -39,7 +37,6 @@ export default function PostFilter(props: PostFilterProps) {
         items={POST_SORT_FILTER}
         handleSelect={handleFilterRowClick}
       />
-      <PostCreater />
     </motion.div>
   );
 }

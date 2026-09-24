@@ -2,7 +2,6 @@ import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router
 import { motion } from 'motion/react';
 
 import getSnippets from '$features/snippet/api/getSnippets';
-import SnippetCreater from '$features/snippet/ui/molecules/SnippetCreater';
 import SnippetList from '$features/snippet/ui/organisms/SnippetList';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
@@ -47,7 +46,6 @@ export default function SnippetsPage() {
         title="Code Snippets"
         subtitle="실제로 유용했던 코드 조각들을 모아두었습니다"
       />
-      <SnippetCreater animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <SnippetList snippets={snippets} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>
   );

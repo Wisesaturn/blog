@@ -4,100 +4,85 @@ import deleteStore from '$features/post/api/deleteStore';
 import getHtml from '$features/post/lib/getHtml';
 
 import convertString from '$shared/lib/convertString';
-import notion from '$shared/middleware/notion';
+import getNotionPage from '$shared/api/getNotionPage';
 import Logger from '$shared/helper/logger';
-import { INotionList, NotionPage } from '$shared/types/notion';
 
 import { ISnippet } from '../types/snippet';
 
 /**
  * @summary Notion에서 작성한 스니펫을 마크다운으로 변환하여 게시물을 생성하는 함수
- * @param title
+ * @param pageId 발행할 Notion 페이지 ID. 웹훅 본문의 `data.id`
  * @returns
  */
-export default async function createSnippet(title: string) {
+export default async function createSnippet(pageId: string) {
   try {
-    const snippet: ISnippet = await notion.databases
-      .query({
-        database_id: process.env.NOTION_DATABASE_SNIPPETS_KEY as string,
-      })
-      // Notion SDK 의 QueryDatabaseResponse 는 properties 가 Record<string, 유니온> 이라
-      // 프로젝트 자체 타입인 INotionList<'snippet'> 와 구조가 맞지 않는다. 이전에는 notion 클라이언트를
-      // createRequire 로 가져와 any 였기 때문에 이 불일치가 드러나지 않았다.
-      .then(async (raw) => {
-        const data = raw as unknown as INotionList<'snippet'>;
+    const snippet: ISnippet = await getNotionPage<'snippet'>(
+      pageId,
+      process.env.NOTION_DATABASE_SNIPPETS_KEY,
+    ).then(async (page) => {
+      const title = page.properties.이름.title[0]?.plain_text ?? '';
+      Logger.log(`${page.id}/${title}를 찾았습니다`);
 
-        const selectedPost = data.results.filter(
-          (result: NotionPage<'snippet'>) =>
-            result.object === 'page' && result.properties.이름.title[0]?.plain_text === title,
-        );
+      // post date format
+      const createdTime = new Date(page.created_time);
+      const lastEditedTime = new Date(page.last_edited_time);
+      // ////////////////// data /////////////////// //
+      const snippetData: ISnippet = {
+        index: page.id,
+        title: `${page.icon?.emoji ? `${page.icon.emoji} ` : ''}${
+          page.properties.이름.title[0].plain_text
+        }`,
+        plainTitle: page.properties.이름.title[0].plain_text,
+        createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
+        lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
+          lastEditedTime,
+        ),
+        description: page.properties.description.rich_text[0].plain_text,
+        skills: page.properties.skills.multi_select.map((skill) => skill.name),
+        lastmod: new Intl.DateTimeFormat('fr-CA', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        }).format(lastEditedTime),
+        views: 0,
+        body: '',
+      };
+      // ////////////////// data /////////////////// //
 
-        if (selectedPost.length === 0) {
-          throw new Error(`${title}를 찾을 수 없습니다`);
-        } else {
-          Logger.log(`${selectedPost[0].id}/${title}를 찾았습니다`);
-        }
+      // 1. delete previous storage
+      await deleteStore({
+        collection: 'snippet',
+        category: `snippets`,
+        title: convertString(snippetData.plainTitle, 'spaceToDash'),
+      });
 
-        // post date format
-        const createdTime = new Date(selectedPost[0].created_time);
-        const lastEditedTime = new Date(selectedPost[0].last_edited_time);
-        // ////////////////// data /////////////////// //
-        const snippetData: ISnippet = {
-          index: selectedPost[0].id,
-          title: `${selectedPost[0].icon?.emoji ? `${selectedPost[0].icon.emoji} ` : ''}${
-            selectedPost[0].properties.이름.title[0].plain_text
-          }`,
-          plainTitle: selectedPost[0].properties.이름.title[0].plain_text,
-          createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
-          lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
-            lastEditedTime,
-          ),
-          description: selectedPost[0].properties.description.rich_text[0].plain_text,
-          skills: selectedPost[0].properties.skills.multi_select.map((skill) => skill.name),
-          lastmod: new Intl.DateTimeFormat('fr-CA', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric',
-          }).format(lastEditedTime),
-          views: 0,
-          body: '',
-        };
-        // ////////////////// data /////////////////// //
+      // 2. get markdown
+      const mdString = await getMarkdown(page.id);
 
-        // 1. delete previous storage
-        await deleteStore({
+      // 3. get html tag
+      const htmlBody = await getHtml(mdString);
+      snippetData.body = htmlBody;
+
+      // 4. upload image on firebase
+      if (snippetData.body) {
+        const replaceBody = await replaceBodyImages({
           collection: 'snippet',
+          body: snippetData.body,
           category: `snippets`,
           title: convertString(snippetData.plainTitle, 'spaceToDash'),
         });
+        snippetData.body = replaceBody;
+      }
 
-        // 2. get markdown
-        const mdString = await getMarkdown(selectedPost[0].id);
+      Logger.success(`${title} 스니펫을 생성하였습니다.`);
 
-        // 3. get html tag
-        const htmlBody = await getHtml(mdString);
-        snippetData.body = htmlBody;
-
-        // 4. upload image on firebase
-        if (snippetData.body) {
-          const replaceBody = await replaceBodyImages({
-            collection: 'snippet',
-            body: snippetData.body,
-            category: `snippets`,
-            title: convertString(snippetData.plainTitle, 'spaceToDash'),
-          });
-          snippetData.body = replaceBody;
-        }
-
-        Logger.success(`${title} 스니펫을 생성하였습니다.`);
-
-        return snippetData;
-      });
+      return snippetData;
+    });
 
     return snippet;
   } catch (err) {
     if (err instanceof Error) {
-      const ApplicationError = new Error(`${title} 스니펫 생성에 실패하였습니다.`, { cause: err });
+      const ApplicationError = new Error(`${pageId} 스니펫 생성에 실패하였습니다.`, { cause: err });
       Logger.error(ApplicationError);
       throw ApplicationError;
     }
