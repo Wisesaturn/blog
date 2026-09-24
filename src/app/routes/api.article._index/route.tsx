@@ -5,19 +5,22 @@ import createPost from '$features/post/api/createPost';
 import updatePost from '$features/post/api/updatePost';
 
 import requestRedeploy from '$shared/api/requestRedeploy';
-import Logger from '$shared/helper/logger';
+import verifyWebhookSecret from '$shared/api/verifyWebhookSecret';
 import { PRODUCTION_CATEGORY_DATA } from '$shared/constant/category';
 import convertString from '$shared/lib/convertString';
 import { PostBody } from '$shared/types/api';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  // 시크릿이 없거나 다르면 Notion 을 읽기 전에 돌려보낸다
+  if (!verifyWebhookSecret(request)) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
   try {
-    if (process.env.NODE_ENV === 'production') {
-      const CannotAccessProductionEnvError = new Error('Cannot access production environment');
-      Logger.error(CannotAccessProductionEnvError);
-      throw CannotAccessProductionEnvError;
-    }
-    const body: PostBody<'article'> = await request.json();
+    // 임시: Notion 웹훅이 실제로 보내는 본문을 확인하려고 남긴다 (#87). 형식에 맞춰 읽게 바꾼 뒤 지운다
+    const raw = await request.text();
+    console.warn(`[publish:article] body ${raw}`);
+    const body: PostBody<'article'> = JSON.parse(raw);
     const post = await createPost(body.title);
     await updatePost({
       category: post.category,

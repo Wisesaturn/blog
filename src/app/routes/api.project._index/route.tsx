@@ -5,18 +5,21 @@ import createProject from '$features/project/api/createProject';
 import updateProject from '$features/project/api/updateProject';
 
 import requestRedeploy from '$shared/api/requestRedeploy';
-import Logger from '$shared/helper/logger';
+import verifyWebhookSecret from '$shared/api/verifyWebhookSecret';
 import convertString from '$shared/lib/convertString';
 import { PostBody } from '$shared/types/api';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  // 시크릿이 없거나 다르면 Notion 을 읽기 전에 돌려보낸다
+  if (!verifyWebhookSecret(request)) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
   try {
-    if (process.env.NODE_ENV === 'production') {
-      const CannotAccessProductionEnvError = new Error('Cannot access production environment');
-      Logger.error(CannotAccessProductionEnvError);
-      throw CannotAccessProductionEnvError;
-    }
-    const body: PostBody<'project'> = await request.json();
+    // 임시: Notion 웹훅이 실제로 보내는 본문을 확인하려고 남긴다 (#87). 형식에 맞춰 읽게 바꾼 뒤 지운다
+    const raw = await request.text();
+    console.warn(`[publish:project] body ${raw}`);
+    const body: PostBody<'project'> = JSON.parse(raw);
     const { body: projectBody, ...project } = await createProject(body.title);
     await updateProject({
       title: convertString(project.plainTitle, 'spaceToDash'),
