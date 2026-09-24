@@ -1,4 +1,24 @@
-@tailwind base;
+@import 'tailwindcss/theme' layer(theme);
+
+@import 'tailwindcss/preflight' layer(base);
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 /** color */
 @layer base {
@@ -6,11 +26,11 @@
   :root[color-theme*='light'] {
     --black: #222;
     --white: #fff;
-    --green-dark: theme(colors.green.dark);
-    --green-darker: theme(colors.green.darker);
-    --green-main: theme(colors.green.main);
-    --green-brighter: theme(colors.green.brighter);
-    --green-bright: theme(colors.green.bright);
+    --green-dark: var(--color-green-dark);
+    --green-darker: var(--color-green-darker);
+    --green-main: var(--color-green-main);
+    --green-brighter: var(--color-green-brighter);
+    --green-bright: var(--color-green-bright);
     --yellow: #fffa82;
     --gray-main: #b7b7b7;
     --gray-darker: #777;
@@ -32,11 +52,11 @@
   :root[color-theme*='dark'] {
     --black: #efefef;
     --white: #222;
-    --green-dark: theme(colors.green.bright);
-    --green-darker: theme(colors.green.brighter);
-    --green-main: theme(colors.green.main);
-    --green-brighter: theme(colors.green.darker);
-    --green-bright: theme(colors.green.dark);
+    --green-dark: var(--color-green-bright);
+    --green-darker: var(--color-green-brighter);
+    --green-main: var(--color-green-main);
+    --green-brighter: var(--color-green-darker);
+    --green-bright: var(--color-green-dark);
     --yellow: #fffa82;
     --gray-main: #777;
     --gray-darker: #b7b7b7;
@@ -66,22 +86,23 @@
     background-color: var(--white);
     line-height: 180%;
 
-    font-family: 'Pretendard Variable',
-    Pretendard,
-    -apple-system,
-    BlinkMacSystemFont,
-    Tossface,
-    system-ui,
-    Roboto,
-    'Helvetica Neue',
-    'Segoe UI',
-    'Apple SD Gothic Neo',
-    'Noto Sans KR',
-    'Malgun Gothic',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    sans-serif;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      Tossface,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
     /* Blocked IOS touch interactions */
     -webkit-tap-highlight-color: transparent;
 
@@ -173,43 +194,6 @@
 }
 
 /** layout */
-@layer base {
-  .layout-all {
-    @apply layout-border layout-hover-pure layout-rounded layout-bg layout-text layout-text-color;
-  }
-
-  .layout-hover {
-    @apply hover:border-green-darker dark:hover:border-green-bright layout-hover-pure;
-  }
-
-  .layout-hover-pure {
-    @apply hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors duration-200;
-  }
-
-  .layout-rounded {
-    @apply rounded-md max-md:rounded-sm;
-  }
-
-  .layout-bg {
-    @apply bg-white dark:bg-black;
-  }
-
-  .layout-text {
-    @apply text-base max-md:text-sm font-light;
-  }
-
-  .layout-text-color {
-    @apply text-black dark:text-white;
-  }
-
-  .layout-border {
-    @apply border-[1px] layout-border-color;
-  }
-
-  .layout-border-color {
-    @apply border-gray-200 duration-200 transition-colors hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-400;
-  }
-}
 
 /** 
 * markdown-body 
@@ -300,7 +284,7 @@
       ~ * {
         @apply pt-0 ml-4;
       }
-      
+
       + img {
         @apply mt-2;
       }
@@ -383,7 +367,7 @@
 
       th,
       td {
-        @apply px-6 py-2.5 border-[1px] text-center;
+        @apply px-6 py-2.5 border text-center;
       }
     }
 
@@ -449,7 +433,9 @@
         padding: 0.375rem;
         border-radius: 0.375rem;
         opacity: 0;
-        transition: opacity 0.2s, background-color 0.2s;
+        transition:
+          opacity 0.2s,
+          background-color 0.2s;
         background: rgba(255, 255, 255, 0.1);
         color: #aaa;
         cursor: pointer;

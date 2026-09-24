@@ -17,9 +17,9 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
       variants={animation?.variants}
       className="grid grid-cols-4 max-md:grid-cols-1 gap-4 max-md:gap-0"
     >
-      <aside className="col-span-1 max-md:pb-4 max-md:border-b-[1px]">
+      <aside className="col-span-1 max-md:pb-4 max-md:border-b">
         <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
-        <div className="layout-text space-x-1.5 max-md:space-x-1">
+        <div className="layout-text [&>:not(:first-child)]:ml-1.5 max-md:[&>:not(:first-child)]:ml-1">
           <p className="inline-block">{date}</p>
           {isWorking && (
             <p className="text-green-main dark:text-green-brighter inline-block">재직 중</p>
@@ -38,11 +38,11 @@ export default function ProfileSeparateInfo({ animation, info }: Props) {
           </span>
         )}
       </aside>
-      <section className="block max-md:pt-4 col-span-3 space-y-4">
+      <section className="block max-md:pt-4 col-span-3 [&>:not(:first-child)]:mt-4">
         {projects.map((project, idx) => (
           <div key={project.title + idx}>
             <h5 className="font-semibold text-lg max-md:text-base">{project.title}</h5>
-            <ul className="p-2 pl-4 space-y-2">
+            <ul className="p-2 pl-4 [&>:not(:first-child)]:mt-2">
               {project.list.map((content, i) => (
                 <li key={i} className="list-disc text-sm markdown-body">
                   {content}

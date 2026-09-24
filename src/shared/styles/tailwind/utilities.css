@@ -1,93 +1,101 @@
-@tailwind utilities;
-@layer utilities {
-  .glassmorphism {
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    @apply bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(32,32,32,0.4)];
-  }
+@import 'tailwindcss/utilities' layer(utilities);
 
-  .layout {
-    @apply max-w-layout mx-auto w-full ios-notch-wrap;
-  }
+@utility glassmorphism {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  @apply bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(32,32,32,0.4)];
+}
 
+@utility layout {
+  @apply max-w-layout mx-auto w-full ios-notch-wrap;
+}
+
+@utility skeleton {
   /**
     * Skeleton UI
     *
     */
-  .skeleton {
-    background: var(--skeleton);
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.5rem;
+  background: var(--skeleton);
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
 
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: -100%;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        var(--skeleton-line) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      animation: loading 1.35s infinite;
-    }
-  }
-
-  @keyframes loading {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      var(--skeleton-line) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: loading 1.35s infinite;
   }
 
   /** 
     * IOS Notch CSS
     *
     */
+}
+
+@utility ios-notch-top {
   @media only screen and (orientation: portrait) and (max-width: 768px) {
-    .ios-notch-top {
-      padding-top: calc(constant(safe-area-inset-top) + 10px);
-      padding-top: calc(env(safe-area-inset-top) + 10px);
-    }
+    padding-top: calc(constant(safe-area-inset-top) + 10px);
+    padding-top: calc(env(safe-area-inset-top) + 10px);
+  }
+}
 
-    .ios-notch-bottom {
-      padding-bottom: calc(constant(safe-area-inset-bottom) + 10px);
-      padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
-    }
+@utility ios-notch-bottom {
+  @media only screen and (orientation: portrait) and (max-width: 768px) {
+    padding-bottom: calc(constant(safe-area-inset-bottom) + 10px);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+  }
+}
 
-    .ios-notch-margin-top {
-      margin-top: calc(constant(safe-area-inset-top) + 10px);
-      margin-top: calc(env(safe-area-inset-top) + 10px);
-    }
+@utility ios-notch-margin-top {
+  @media only screen and (orientation: portrait) and (max-width: 768px) {
+    margin-top: calc(constant(safe-area-inset-top) + 10px);
+    margin-top: calc(env(safe-area-inset-top) + 10px);
+  }
+}
 
-    .ios-notch-margin-bottom {
-      margin-bottom: calc(constant(safe-area-inset-bottom) + 10px);
-      margin-bottom: calc(env(safe-area-inset-bottom) + 10px);
-    }
-
-    .ios-notch-wrap {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
+@utility ios-notch-margin-bottom {
+  @media only screen and (orientation: portrait) and (max-width: 768px) {
+    margin-bottom: calc(constant(safe-area-inset-bottom) + 10px);
+    margin-bottom: calc(env(safe-area-inset-bottom) + 10px);
   }
 
   @media only screen and (orientation: landscape) {
-    .ios-notch-wrap {
-      padding-left: calc(12px + constant(safe-area-inset-left));
-      padding-right: calc(12px + constant(safe-area-inset-right));
-      padding-left: calc(12px + env(safe-area-inset-left));
-      padding-right: calc(12px + env(safe-area-inset-right));
-    }
+    margin-bottom: 4px;
+  }
+}
 
-    .ios-notch-margin-bottom {
-      margin-bottom: 4px;
+@utility ios-notch-wrap {
+  @media only screen and (orientation: portrait) and (max-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media only screen and (orientation: landscape) {
+    padding-left: calc(12px + constant(safe-area-inset-left));
+    padding-right: calc(12px + constant(safe-area-inset-right));
+    padding-left: calc(12px + env(safe-area-inset-left));
+    padding-right: calc(12px + env(safe-area-inset-right));
+  }
+}
+
+@layer utilities {
+  @keyframes loading {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
     }
   }
 }

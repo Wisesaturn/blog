@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -9,9 +10,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
  * `viteFinal` 에서 걷어내는 방법은 빌드에서만 통한다. 개발 서버는 `getOptimizeDeps` 가
  * `viteFinal` 을 거치지 않고 설정을 따로 resolve 해서 같은 자리에서 다시 멈춘다.
  *
- * alias 는 루트와 마찬가지로 `tsconfig.paths.json` 하나를 읽어 해결하고, Tailwind 와 PostCSS 는
- * Vite 가 `postcss.config.js` 를 찾아 처리한다.
+ * alias 는 루트와 마찬가지로 `tsconfig.paths.json` 하나를 읽어 해결한다. Tailwind 는 루트와 같은
+ * `@tailwindcss/vite` 플러그인을 여기에도 넣는다. 루트 설정을 읽지 않으므로 빠뜨리면 스토리에 스타일이 없다.
  */
 export default defineConfig({
-  plugins: [tsconfigPaths()],
+  plugins: [tailwindcss(), tsconfigPaths()],
 });

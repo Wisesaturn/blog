@@ -39,13 +39,13 @@ export default function ProjectTitle(props: ProjectTitleProps) {
       </motion.div>
       <motion.section
         id="article-title"
-        className="pt-4 pb-2 flex flex-col gap-2 max-md:gap-1 border-b-[1px]"
+        className="pt-4 pb-2 flex flex-col gap-2 max-md:gap-1 border-b"
         variants={animation?.variants}
       >
         <span className="font-bold text-base max-md:text-sm text-green-darker dark:text-green-brighter">
           {category.toLocaleUpperCase()}
         </span>
-        <div className="md:space-y-1">
+        <div className="md:[&>:not(:first-child)]:mt-1">
           <h1 className="text-4xl max-md:text-2xl">{title}</h1>
           <h2 className="font-semibold text-2xl max-md:text-lg">{theme}</h2>
         </div>

@@ -13,7 +13,7 @@ export default function TOC(props: TOCProps) {
   const Heading = getHeading(props.body);
 
   const SELECTED_STYLE_CLASS = `text-black font-semibold dark:text-white border-l-slate-500 dark:border-l-slate-200`;
-  const NON_SELECTED_STYLE_CLASS = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 hover:dark:bg-[#111] hover:dark:text-white hover:border-l-slate-500 hover:text-black`;
+  const NON_SELECTED_STYLE_CLASS = `text-gray-500 border-l-slate-200 dark:border-l-[#454545] hover:bg-slate-100 dark:hover:bg-[#111] dark:hover:text-white hover:border-l-slate-500 hover:text-black`;
 
   const handleRowClick = (targetId: string) => {
     const targetElement = document.getElementById(targetId);

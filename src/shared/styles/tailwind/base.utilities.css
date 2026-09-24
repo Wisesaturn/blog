@@ -1,0 +1,35 @@
+@utility layout-all {
+  @apply layout-border layout-hover-pure layout-rounded layout-bg layout-text layout-text-color;
+}
+
+@utility layout-hover {
+  @apply hover:border-green-darker dark:hover:border-green-bright layout-hover-pure;
+}
+
+@utility layout-hover-pure {
+  @apply hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors duration-200;
+}
+
+@utility layout-rounded {
+  @apply rounded-md max-md:rounded-xs;
+}
+
+@utility layout-bg {
+  @apply bg-white dark:bg-black;
+}
+
+@utility layout-text {
+  @apply text-base max-md:text-sm font-light;
+}
+
+@utility layout-text-color {
+  @apply text-black dark:text-white;
+}
+
+@utility layout-border {
+  @apply border layout-border-color;
+}
+
+@utility layout-border-color {
+  @apply border-gray-200 duration-200 transition-colors hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-400;
+}

@@ -14,7 +14,7 @@ export default function Title(props: TitleProps) {
 
   return (
     <motion.div variants={animation?.variants} className="mt-8">
-      <motion.h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl">
+      <motion.h1 className="text-[3.5rem] leading-tight tracking-tight max-md:text-4xl max-md:leading-10">
         {title}
       </motion.h1>
       {subtitle && (

@@ -1,40 +1,35 @@
-@tailwind components;
-@layer components {
-  .absolute-center {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+@utility absolute-center {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-@layer components {
-  .icons {
-    @apply border-[1px] icons-size-medium icons-pure;
-  }
+@utility icons {
+  @apply border icons-size-medium icons-pure;
+}
 
-  .icons-pure {
-    @apply flex items-center p-1 icons-color icons-border;
-  }
+@utility icons-pure {
+  @apply flex items-center p-1 icons-color icons-border;
+}
 
-  .icons-color {
-    @apply fill-gray-300 hover:cursor-pointer hover:border-gray-400 hover:bg-gray-100 hover:fill-gray-600 dark:fill-white hover:dark:border-green-brighter hover:dark:fill-green-brighter active:dark:border-green-main active:dark:fill-green-main hover:dark:bg-transparent rounded duration-200;
-  }
+@utility icons-color {
+  @apply fill-gray-300 hover:cursor-pointer hover:border-gray-400 hover:bg-gray-100 hover:fill-gray-600 dark:fill-white dark:hover:border-green-brighter dark:hover:fill-green-brighter dark:active:border-green-main dark:active:fill-green-main dark:hover:bg-transparent rounded-sm duration-200;
+}
 
-  .icons-border {
-    @apply dark:border-gray-600 active:bg-gray-200;
-  }
+@utility icons-border {
+  @apply dark:border-gray-600 active:bg-gray-200;
+}
 
-  .icons-size-large {
-    @apply md:p-1.5 p-2 md:w-[42px] md:h-[42px] w-[38px] h-[38px];
-  }
+@utility icons-size-large {
+  @apply md:p-1.5 p-2 md:w-[42px] md:h-[42px] w-[38px] h-[38px];
+}
 
-  .icons-size-medium {
-    @apply md:w-[32px] md:h-[32px] w-[28px] h-[28px];
-  }
+@utility icons-size-medium {
+  @apply md:w-[32px] md:h-[32px] w-[28px] h-[28px];
+}
 
-  .icons-size-small {
-    @apply md:w-[20px] md:h-[20px] w-[16px] h-[16px];
-  }
+@utility icons-size-small {
+  @apply md:w-[20px] md:h-[20px] w-[16px] h-[16px];
 }

@@ -35,7 +35,7 @@ export default function Accordion({ item }: Props) {
         transition={{ duration: 0.3 }}
         style={{ overflow: 'hidden' }}
       >
-        <ul className="list-disc p-2 pl-6 space-y-1">
+        <ul className="list-disc p-2 pl-6 [&>:not(:first-child)]:mt-1">
           {list.map((content, idx) => (
             <li
               key={idx}

@@ -1,4 +1,5 @@
 import { reactRouter } from '@react-router/dev/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -13,7 +14,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
  * 는 여전히 같은 값을 손으로 들고 있으므로, alias 를 추가할 때 두 파일을 함께 고친다.
  */
 export default defineConfig({
-  plugins: [reactRouter(), tsconfigPaths()],
+  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 
   /**
    * Vite 의 기동 시 의존성 스캔은 `index.html` 진입점을 따라가는데, React Router 는 라우트 단위라

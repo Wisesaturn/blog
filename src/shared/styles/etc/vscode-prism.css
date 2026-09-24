@@ -1,10 +1,10 @@
 :root[color-theme*='light'] {
-  --bg-selection: theme(colors.green.bright);
+  --bg-selection: var(--color-green-bright);
   --bg-code: #1e1e1e;
 }
 
 :root[color-theme*='dark'] {
-  --bg-selection: theme(colors.green.dark);
+  --bg-selection: var(--color-green-dark);
   --bg-code: #343434;
 }
 

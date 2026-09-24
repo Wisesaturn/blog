@@ -7,10 +7,10 @@ export default function ProgressBar() {
   return (
     <>
       <motion.div
-        className={`z-[10000] w-full fixed h-0.5 bg-green-dark left-0`}
+        className={`z-10000 w-full fixed h-0.5 bg-green-dark left-0`}
         style={{ transformOrigin: 'left', scaleX }}
       />
-      <div className="w-full z-[9999] fixed h-0.5 left-0" />
+      <div className="w-full z-9999 fixed h-0.5 left-0" />
     </>
   );
 }

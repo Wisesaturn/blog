@@ -13,7 +13,7 @@ export default function ProfileDefaultInfo({ animation, info }: Props) {
   const { badge, link, date, list } = items;
 
   return (
-    <motion.div variants={animation?.variants} className="space-y-1">
+    <motion.div variants={animation?.variants} className="[&>:not(:first-child)]:mt-1">
       <h4 className="text-2xl max-md:text-xl font-medium">{title}</h4>
       {badge && <Badge>{badge}</Badge>}
       {date && <span className="block text-sm max-md:text-xs font-light">{date}</span>}
@@ -27,7 +27,7 @@ export default function ProfileDefaultInfo({ animation, info }: Props) {
       {list && (
         <div>
           <hr className="mt-2 mb-4 max-md:mb-2" />
-          <ul className="list-disc pl-6 max-md:pl-4 space-y-2 max-md:pt-2 pt-1">
+          <ul className="list-disc pl-6 max-md:pl-4 [&>:not(:first-child)]:mt-2 max-md:pt-2 pt-1">
             {list.map((l, idx) => (
               <li className="text-sm break-keep markdown-body" key={title + idx}>
                 {l}

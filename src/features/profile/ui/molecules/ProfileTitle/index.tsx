@@ -28,7 +28,7 @@ export default function ProfileTitle({ animation }: GlobalAnimation) {
         className="my-4 flex gap-8 justify-between max-md:flex-col-reverse max-md:items-center"
         variants={animation?.variants}
       >
-        <div className="space-y-4">
+        <div className="[&>:not(:first-child)]:mt-4">
           <p className="text-base break-keep max-md:text-sm">
             안녕하세요! <b>모두가 편할 수 있도록 개선하는</b> 프론트엔드 개발자 송재한입니다. 저는
             레이아웃 시안을 보고 반응형을 고려하며 빠르게 구현하는데 능숙합니다. 복잡한 기능도

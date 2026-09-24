@@ -17,7 +17,7 @@ export default function NavButton(props: NavButtonProps) {
   const { children, isSelected, to } = props;
 
   const SELECTED_CLASS = `fill-green-main dark:fill-green-brighter`;
-  const NON_SELECTED_CLASS = `hover:dark:fill-green-main hover:bg-white`;
+  const NON_SELECTED_CLASS = `dark:hover:fill-green-main hover:bg-white`;
 
   const modifiedChildren = React.cloneElement(children, {
     className: `icons-pure ${isSelected ? SELECTED_CLASS : NON_SELECTED_CLASS}`,

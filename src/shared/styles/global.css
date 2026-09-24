@@ -1,3 +1,65 @@
 @import './tailwind/components.css';
 @import './tailwind/base.css';
+@import './tailwind/base.utilities.css';
 @import './tailwind/utilities.css';
+
+@custom-variant dark (&:is([color-theme="dark"] *));
+
+@theme {
+  --container-layout: 65.5rem;
+
+  --min-height-screen: calc(100vh - 64px);
+
+  --shadow-invert: 0 -1px 6px 3.5px rgb(0 0 0 / 0.15);
+
+  --color-black: #333333;
+
+  --color-green-dark: #064e3b;
+  --color-green-darker: #047857;
+  --color-green-main: #059669;
+  --color-green-brighter: #6ee7b7;
+  --color-green-bright: #d1fae5;
+
+  --color-yellow: #fffa82;
+
+  --font-pretandard: Pretandard, sans-serif;
+
+  --animate-slideRight: slideRight 0.55s ease-in-out forwards;
+  --animate-bounceCenterAndFadeOut: bounceCenterAndFadeOut 2s forwards ease-in-out;
+
+  @keyframes slideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-15%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes bounceCenterAndFadeOut {
+    0% {
+      transform: scale(0%);
+      left: 0;
+      top: 0;
+      margin-top: -2.5rem;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: scale(102.75%);
+    }
+    20% {
+      transform: scale(100%);
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      left: 0;
+      top: 0;
+      margin-top: -2.5rem;
+    }
+  }
+}

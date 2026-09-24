@@ -4,8 +4,8 @@
   position: relative;
   width: 9.6px;
   height: 9.6px;
-  background: theme(colors.green.main);
-  color: theme(colors.green.main);
+  background: var(--color-green-main);
+  color: var(--color-green-main);
   border-radius: 50%;
   box-shadow:
     16px 0,

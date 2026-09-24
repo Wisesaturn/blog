@@ -8,8 +8,8 @@ import { HeaderMenu } from './constant';
 
 const Header = () => {
   // style
-  const HEADER_CLASS = `flex min-h-12 md:min-h-16 ios-notch-top items-center z-[9998] align-middle glassmorphism justify-between layout py-2 relative`;
-  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full z-[9998]`;
+  const HEADER_CLASS = `flex min-h-12 md:min-h-16 ios-notch-top items-center z-9998 align-middle glassmorphism justify-between layout py-2 relative`;
+  const HEADER_CONTAINER_CLASS = `fixed top-0 w-full z-9998`;
 
   return (
     <>

@@ -22,7 +22,7 @@ export default function SnippetCard(props: Props) {
           <div className="flex justify-between pt-1 w-full">
             <div className="flex gap-1 flex-wrap">
               {skills.map((skill, idx) => (
-                <div className="text-base space-x-1" key={`${title}-${idx}`}>
+                <div className="text-base [&>:not(:first-child)]:ml-1" key={`${title}-${idx}`}>
                   <Badge>{skill}</Badge>
                 </div>
               ))}

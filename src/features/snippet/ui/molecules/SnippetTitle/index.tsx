@@ -16,7 +16,7 @@ export default function SnippetTitle(props: SnippetTitleProps) {
     <>
       <motion.section
         id="article-title"
-        className="pt-4 pb-2 flex flex-col gap-2 max-md:gap-1 border-b-[1px]"
+        className="pt-4 pb-2 flex flex-col gap-2 max-md:gap-1 border-b"
         variants={animation?.variants}
       >
         <h1 className="text-4xl max-md:text-2xl">{title}</h1>

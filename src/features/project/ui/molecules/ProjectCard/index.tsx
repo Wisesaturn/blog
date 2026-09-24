@@ -17,7 +17,7 @@ export default function ProjectCard(props: Props) {
       >
         <div className="w-full h-[200px] layout-rounded">
           <img
-            className="rounded-t-md max-md:rounded-t-sm w-full h-full object-cover"
+            className="rounded-t-md max-md:rounded-t-xs w-full h-full object-cover"
             src={thumbnail}
             alt={`${title} thumbnail`}
           />

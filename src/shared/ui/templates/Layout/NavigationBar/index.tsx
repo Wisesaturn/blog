@@ -26,7 +26,7 @@ function Nav({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="fixed bottom-0 border-t-[1px] dark:border-none -shadow-t-2xl w-full bg-white dark:bg-black">
+    <div className="fixed bottom-0 border-t dark:border-none -shadow-t-2xl w-full bg-white dark:bg-black">
       <Responsive>
         <Responsive.Mobile>
           <div className="py-1.5 ios-notch-bottom w-full flex items-center justify-around">
