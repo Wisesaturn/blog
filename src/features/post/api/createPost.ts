@@ -30,7 +30,7 @@ export default async function createPost(title: string) {
 
         const selectedPost = data.results.filter(
           (page: NotionPage<'post'>) =>
-            page.object === 'page' && page.properties.이름.title[0].plain_text === title,
+            page.object === 'page' && page.properties.이름.title[0]?.plain_text === title,
         );
 
         if (selectedPost.length === 0) {
