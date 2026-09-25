@@ -1,3 +1,10 @@
+import { z } from 'zod';
+
+/** 본문에서 쓰는 부분만 검사한다. `source` 와 페이지 속성은 보지 않는다 */
+const notionPageWebhookBody = z.object({
+  data: z.object({ object: z.literal('page'), id: z.string().min(1) }),
+});
+
 /**
  * @description Notion "웹훅 보내기" 본문에서 버튼을 누른 페이지의 ID 를 꺼낸다
  * @param body 발행 API 로 들어온 JSON 본문
@@ -11,15 +18,9 @@
  * // 'a31f4f15-...'
  */
 export default function getWebhookPageId(body: unknown): string {
-  const data =
-    typeof body === 'object' && body !== null ? (body as { data?: unknown }).data : undefined;
-  const page =
-    typeof data === 'object' && data !== null
-      ? (data as { object?: unknown; id?: unknown })
-      : undefined;
-
-  if (page?.object !== 'page' || typeof page.id !== 'string' || page.id === '') {
-    throw new Error('Notion 페이지 웹훅 본문이 아닙니다');
+  const result = notionPageWebhookBody.safeParse(body);
+  if (!result.success) {
+    throw new Error('Notion 페이지 웹훅 본문이 아닙니다', { cause: result.error });
   }
-  return page.id;
+  return result.data.data.id;
 }

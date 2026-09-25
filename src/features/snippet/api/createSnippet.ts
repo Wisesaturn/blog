@@ -5,9 +5,10 @@ import getHtml from '$features/post/lib/getHtml';
 
 import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
-import { getFirstPlainText, getIconEmoji, requireNotionValue } from '$shared/lib/notionValue';
+import { getIconEmoji } from '$shared/lib/notionValue';
 import Logger from '$shared/helper/logger';
 
+import { snippetNotionProperties } from '../model/notionProperties';
 import { ISnippet } from '../types/snippet';
 
 /**
@@ -20,10 +21,9 @@ export default async function createSnippet(pageId: string) {
     const snippet: ISnippet = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_SNIPPETS_KEY,
-      'snippet',
+      snippetNotionProperties,
     ).then(async (page) => {
-      const { properties } = page;
-      const title = requireNotionValue(getFirstPlainText(properties.이름.title), '이름');
+      const { 이름: title, skills, description } = page.properties;
       Logger.log(`${page.id}/${title}를 찾았습니다`);
       const emoji = getIconEmoji(page.icon);
 
@@ -39,8 +39,8 @@ export default async function createSnippet(pageId: string) {
         lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
           lastEditedTime,
         ),
-        description: getFirstPlainText(properties.description.rich_text) ?? '',
-        skills: properties.skills.multi_select.map((skill) => skill.name),
+        description,
+        skills,
         lastmod: new Intl.DateTimeFormat('fr-CA', {
           month: '2-digit',
           day: '2-digit',

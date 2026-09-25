@@ -1,44 +1,13 @@
 /**
- * `notionValue` 는 Notion 속성에서 발행에 쓸 값을 꺼낸다.
+ * `notionValue` 는 Notion 페이지의 아이콘과 커버에서 발행에 쓸 값을 꺼낸다.
  *
- * SDK 타입에서는 select, date, url 이 null 일 수 있다. 예전 코드는 항상 값이 있다고 보고 읽어서
- * 값이 빈 페이지를 발행하면 도중에 터지거나, 빈 제목이 Firestore 문서 ID 가 될 수 있었다.
- * 꼭 필요한 값은 에러로 멈추고, 없어도 되는 값은 빈 값으로 두는지를 여기서 고정한다.
+ * 예전 코드는 `page.icon?.emoji`, `page.cover?.external?.url` 처럼 종류를 보지 않고 읽었다.
+ * 이미지 아이콘이나 Notion 에 올린 커버가 조용히 빠지지 않는지를 여기서 고정한다.
  */
 import { type PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { describe, expect, it } from 'vitest';
 
-import { getCoverUrl, getFirstPlainText, getIconEmoji, requireNotionValue } from './notionValue';
-
-type RichText = Parameters<typeof getFirstPlainText>[0];
-
-const text = (plainText: string) => ({ type: 'text', plain_text: plainText }) as RichText[number];
-
-describe('getFirstPlainText 는 리치 텍스트의 첫 조각만 꺼낸다', () => {
-  it('조각이 여럿이어도 첫 조각만 돌려준다', () => {
-    expect(getFirstPlainText([text('useState '), text('동작 원리')])).toBe('useState ');
-  });
-
-  it('비어 있으면 undefined 다', () => {
-    expect(getFirstPlainText([])).toBeUndefined();
-  });
-});
-
-describe('requireNotionValue 는 발행에 꼭 필요한 값이 비면 멈춘다', () => {
-  it.each([
-    ['null', null],
-    ['undefined', undefined],
-    ['빈 문자열', ''],
-  ])('%s 이면 속성 이름을 적은 에러를 낸다', (_, value) => {
-    expect(() => requireNotionValue(value, 'category')).toThrow(
-      'Notion 페이지의 category 값이 비어 있습니다',
-    );
-  });
-
-  it('값이 있으면 그대로 돌려준다', () => {
-    expect(requireNotionValue('react', 'category')).toBe('react');
-  });
-});
+import { getCoverUrl, getIconEmoji } from './notionValue';
 
 describe('getIconEmoji 는 이모지 아이콘만 꺼낸다', () => {
   it('이모지 아이콘이면 이모지를 돌려준다', () => {

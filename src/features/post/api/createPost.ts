@@ -1,16 +1,12 @@
 import Logger from '$shared/helper/logger';
 import getNotionPage from '$shared/api/getNotionPage';
 import convertString from '$shared/lib/convertString';
-import {
-  getCoverUrl,
-  getFirstPlainText,
-  getIconEmoji,
-  requireNotionValue,
-} from '$shared/lib/notionValue';
+import { getCoverUrl, getIconEmoji } from '$shared/lib/notionValue';
 
 import { DEFAULT_THUMBNAIL } from '../constant';
 import getHtml from '../lib/getHtml';
 import getMarkdown from '../lib/getMarkdown';
+import { postNotionProperties } from '../model/notionProperties';
 import { IPost } from '../types/post';
 import deleteStore from './deleteStore';
 import uploadImage from './firebase/uploadImage';
@@ -26,10 +22,9 @@ export default async function createPost(pageId: string) {
     const post: IPost = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_POSTS_KEY,
-      'post',
+      postNotionProperties,
     ).then(async (page) => {
-      const { properties } = page;
-      const title = requireNotionValue(getFirstPlainText(properties.이름.title), '이름');
+      const { 이름: title, category, tags, description } = page.properties;
       Logger.log(`${page.id}/${title}를 찾았습니다`);
       const emoji = getIconEmoji(page.icon);
 
@@ -43,9 +38,9 @@ export default async function createPost(pageId: string) {
         title: emoji ? `${emoji} ${title}` : title,
         thumbnail: getCoverUrl(page.cover),
         plain_title: title,
-        category: requireNotionValue(properties.category.select?.name, 'category'),
-        description: getFirstPlainText(properties.description.rich_text) ?? '',
-        tags: properties.tags.multi_select.map((keyword) => keyword.name),
+        category,
+        description,
+        tags,
         createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
         last_editedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
           lastEditedTime,
