@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router';
 
 import Badge from '@/commons/ui/Badge';
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 
 import { ISnippet } from '../api/types';
 

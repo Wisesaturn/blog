@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 
 import { ISnippet } from '@/entities/snippet';
 
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 import Badge from '@/commons/ui/Badge';
 
 interface SnippetTitleProps extends GlobalAnimation, Omit<ISnippet, 'body'> {}

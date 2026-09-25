@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 import Button from '@/commons/ui/button/Button';
 
 import sharePage from '../lib/sharePage';

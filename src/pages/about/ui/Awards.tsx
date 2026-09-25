@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 import ProfileCategory from './ProfileCategory';
-import PROFILE from '../config/profile';
+import PROFILE from '../config/ProfileData';
 import ProfileBox from './ProfileBox';
 
 export default function Awards({ animation }: GlobalAnimation) {

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import PROFILE from '../config/profile';
+import PROFILE from '../config/ProfileData';
 import ProfileCategory from './ProfileCategory';
 import ProfileBox from './ProfileBox';
 

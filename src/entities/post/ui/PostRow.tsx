@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 import convertString from '@/commons/lib/convertString';
 
 import { IPost } from '../api/types';

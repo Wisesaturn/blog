@@ -1,24 +1,24 @@
 import React from 'react';
 
-import DarkIcon from './dark';
-import EmailIcon from './email';
-import GithubIcon from './github';
-import InstagramIcon from './instagram';
-import LightIcon from './light';
-import LinkedInIcon from './linkedin';
-import MenuIcon from './menu';
-import SearchIcon from './search';
-import CancelIcon from './cancel';
-import ArrowDownIcon from './arrowDown';
-import ViewIcon from './view';
-import ClockIcon from './clock';
-import ShareIcon from './share';
-import CopyIcon from './copy';
-import DateIcon from './date';
-import ArrowUpIcon from './arrowUp';
-import RefreshIcon from './refresh';
-import ListIcon from './list';
-import WebIcon from './web';
+import DarkIcon from './Dark';
+import EmailIcon from './Email';
+import GithubIcon from './Github';
+import InstagramIcon from './Instagram';
+import LightIcon from './Light';
+import LinkedInIcon from './Linkedin';
+import MenuIcon from './Menu';
+import SearchIcon from './Search';
+import CancelIcon from './Cancel';
+import ArrowDownIcon from './ArrowDown';
+import ViewIcon from './View';
+import ClockIcon from './Clock';
+import ShareIcon from './Share';
+import CopyIcon from './Copy';
+import DateIcon from './Date';
+import ArrowUpIcon from './ArrowUp';
+import RefreshIcon from './Refresh';
+import ListIcon from './List';
+import WebIcon from './Web';
 
 // global type
 declare global {

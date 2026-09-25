@@ -1,4 +1,4 @@
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 
 interface ArticleTitleInfo {
   createdAt: string;

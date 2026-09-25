@@ -2,11 +2,11 @@ import React from 'react';
 import { useLocation } from 'react-router';
 
 import Responsive from '@/commons/ui/Responsive';
-import HomeIcon from '@/commons/ui/icons/navigation-bar/home';
-import PostIcon from '@/commons/ui/icons/navigation-bar/post';
-import ProfileIcon from '@/commons/ui/icons/navigation-bar/profile';
-import PortfolioIcon from '@/commons/ui/icons/navigation-bar/portfolio';
-import SnippetIcon from '@/commons/ui/icons/navigation-bar/snippet';
+import HomeIcon from '@/commons/ui/icons/navigation-bar/Home';
+import PostIcon from '@/commons/ui/icons/navigation-bar/Post';
+import ProfileIcon from '@/commons/ui/icons/navigation-bar/Profile';
+import PortfolioIcon from '@/commons/ui/icons/navigation-bar/Portfolio';
+import SnippetIcon from '@/commons/ui/icons/navigation-bar/Snippet';
 
 import NavButton from './NavigationBarButton';
 

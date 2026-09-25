@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import useLayout from '@/commons/model/useLayout';
 import { Darkmode } from '@/commons/types/layout';
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 
 import createDarkmodeCookie from '../lib/createDarkmodeCookie';
 

@@ -4,6 +4,8 @@ import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+import checkFile from 'eslint-plugin-check-file';
+import fsd from 'eslint-plugin-fsd-lint';
 import { importX } from 'eslint-plugin-import-x';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
@@ -13,6 +15,24 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 const gitignore = fileURLToPath(new URL('.gitignore', import.meta.url));
+
+/**
+ * FSD 레이어 폴더 이름. 플러그인의 표준 이름(widgets, shared)을 이 프로젝트의 이름(modules, commons)에 잇는다.
+ * `no-public-api-sidestep` 은 `index.server.ts` 도 public API 로 본다. Firestore 와 Notion 을 부르는 서버 전용 진입점이다.
+ */
+const fsdOptions = {
+  rootPath: '/src/',
+  alias: { value: '@', withSlash: true },
+  layers: {
+    app: { pattern: 'app' },
+    pages: { pattern: 'pages' },
+    widgets: { pattern: 'modules' },
+    features: { pattern: 'features' },
+    entities: { pattern: 'entities' },
+    shared: { pattern: 'commons' },
+  },
+  ignoreImportPatterns: ['\\.css(\\?url)?$'],
+};
 
 /**
  * ESLint 9 flat config. #89 에서 `.eslintrc.cjs`(ESLint 8, airbnb-base) 를 옮겼다.
@@ -118,6 +138,45 @@ export default tseslint.config(
         { selector: 'interface', format: ['PascalCase'] },
         { selector: 'typeAlias', format: ['PascalCase'] },
       ],
+    },
+  },
+
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: { fsd, 'check-file': checkFile },
+    rules: {
+      'fsd/forbidden-imports': ['error', fsdOptions],
+      'fsd/no-cross-slice-dependency': ['error', fsdOptions],
+      'fsd/no-public-api-sidestep': [
+        'error',
+        { ...fsdOptions, publicApiFiles: ['index.ts', 'index.tsx', 'index.server.ts'] },
+      ],
+      'fsd/no-relative-imports': ['error', { ...fsdOptions, allowSameSlice: true }],
+      'fsd/no-ui-in-business-logic': ['error', fsdOptions],
+      'fsd/no-global-store-imports': 'error',
+      // import 순서는 import-x/order 가 정한다
+      'fsd/ordered-imports': 'off',
+    },
+  },
+
+  // 파일 이름은 .tsx 가 PascalCase, .ts 가 camelCase, 폴더는 kebab-case. `.test`, `.server` 같은 중간 확장자는 보지 않는다
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    // React Router 가 이름을 정하는 파일은 규칙에서 뺀다
+    ignores: [
+      'src/app/routes/**',
+      'src/app/root.tsx',
+      'src/app/entry.client.tsx',
+      'src/app/entry.server.tsx',
+    ],
+    plugins: { 'check-file': checkFile },
+    rules: {
+      'check-file/filename-naming-convention': [
+        'error',
+        { '**/*.tsx': 'PASCAL_CASE', '**/*.ts': 'CAMEL_CASE' },
+        { ignoreMiddleExtensions: true },
+      ],
+      'check-file/folder-naming-convention': ['error', { 'src/!(app)/**/': 'KEBAB_CASE' }],
     },
   },
 

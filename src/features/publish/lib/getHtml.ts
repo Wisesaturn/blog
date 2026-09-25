@@ -9,7 +9,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
-import HtmlConverter from './HtmlConverter';
+import HtmlConverter from './htmlConverter';
 
 /**
  * @summary markdown 문법을 html 태그로 변환하는 함수

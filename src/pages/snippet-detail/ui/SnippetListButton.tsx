@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
 
-import Icons from '@/commons/ui/icons';
+import Icons from '@/commons/ui/icons/Icons';
 import Button from '@/commons/ui/button/Button';
 
 export default function SnippetListButton(props: GlobalAnimation) {
