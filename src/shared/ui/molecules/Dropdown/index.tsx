@@ -4,7 +4,7 @@ import Icons from '$shared/ui/atoms/icons';
 
 interface DropdownProps<T extends string | number> {
   label: T;
-  items: T[];
+  items: readonly T[];
   handleSelect?: (_v: T) => void;
 }
 

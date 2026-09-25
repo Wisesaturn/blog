@@ -103,6 +103,8 @@ describe('parsePostsQuery 는 목록 URL 의 쿼리스트링을 조건으로 읽
     ['category=react,nextjs', { keyword: '', categories: ['react', 'nextjs'], orderBy: 'desc' }],
     ['keyword=%ED%83%80%EC%9E%85', { keyword: '타입', categories: [], orderBy: 'desc' }],
     ['orderby=mostView', { keyword: '', categories: [], orderBy: 'mostView' }],
+    // 예전에는 모르는 값을 그대로 넘겨서 정렬 드롭다운이 아무것도 선택하지 않은 채로 보였다
+    ['orderby=foo', { keyword: '', categories: [], orderBy: 'desc' }],
   ])('%s', (search, expected) => {
     expect(parsePostsQuery(new URLSearchParams(search))).toEqual(expected);
   });

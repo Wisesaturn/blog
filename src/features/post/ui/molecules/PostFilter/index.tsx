@@ -7,7 +7,8 @@ import {
   POST_SORT_FILTER,
 } from '$features/post/constant';
 import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import { PostsFilter, PostsOrderBy } from '$features/post/types/post';
+import parseOrderBy from '$features/post/model/parseOrderBy';
+import { PostsFilter } from '$features/post/types/post';
 
 import Dropdown from '$shared/ui/molecules/Dropdown';
 
@@ -17,7 +18,7 @@ export default function PostFilter(props: PostFilterProps) {
   const { animation } = props;
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
 
-  const orderBy = (searchParams.get('orderby') as PostsOrderBy) || 'desc';
+  const orderBy = parseOrderBy(searchParams.get('orderby'));
   const selectedFilter = ORDER_BY_TO_POST_FILTER[orderBy];
 
   const handleFilterRowClick = useCallback(

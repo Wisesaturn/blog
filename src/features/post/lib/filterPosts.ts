@@ -1,4 +1,5 @@
 import sortPosts from './sortPosts';
+import parseOrderBy from '../model/parseOrderBy';
 import { type IPost, type PostsOrderBy } from '../types/post';
 
 type PostRow = Omit<IPost, 'body'>;
@@ -23,7 +24,7 @@ export function parsePostsQuery(searchParams: URLSearchParams): PostsQuery {
   return {
     keyword: searchParams.get('keyword') ?? '',
     categories: category ? category.split(',').filter(Boolean) : [],
-    orderBy: (searchParams.get('orderby') as PostsOrderBy) || 'desc',
+    orderBy: parseOrderBy(searchParams.get('orderby')),
   };
 }
 
