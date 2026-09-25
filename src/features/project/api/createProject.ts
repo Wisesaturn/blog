@@ -4,7 +4,6 @@ import uploadImage from '$features/post/api/firebase/uploadImage';
 import deleteStore from '$features/post/api/deleteStore';
 import getHtml from '$features/post/lib/getHtml';
 import { DEFAULT_THUMBNAIL } from '$features/post/constant';
-import createImageOnUrl from '$features/post/lib/createImageOnUrl';
 
 import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
@@ -76,15 +75,17 @@ export default async function createProject(pageId: string) {
       const htmlBody = await getHtml(mdString);
       projectData.body = htmlBody;
 
-      // 4. upload thumbnail on Public Folder (use Vercel CDN)
+      // 4. upload thumbnail on Firebase Storage
+      // 본문 이미지와 같은 폴더에 올려 다시 발행할 때 deleteStore 가 함께 정리하게 한다
       if (projectData.thumbnail) {
-        const filePath = await createImageOnUrl({
-          savePath: `thumbnail`,
-          title: projectData.index,
-          url: projectData.thumbnail,
+        const thumbnailUrl = await uploadImage({
+          src: projectData.thumbnail,
+          collection: 'project',
+          category: `${projectData.category}-projects`,
+          title: convertString(projectData.plainTitle, 'spaceToDash'),
         });
-        projectData.thumbnail = filePath;
-        Logger.log(`썸네일 : ${filePath}`);
+        projectData.thumbnail = thumbnailUrl;
+        Logger.log(`썸네일 : ${thumbnailUrl}`);
       } else {
         projectData.thumbnail = DEFAULT_THUMBNAIL;
         Logger.log('기본 썸네일 설정');

@@ -3,11 +3,11 @@ import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
 
 import { DEFAULT_THUMBNAIL } from '../constant';
-import createImageOnUrl from '../lib/createImageOnUrl';
 import getHtml from '../lib/getHtml';
 import getMarkdown from '../lib/getMarkdown';
 import { IPost } from '../types/post';
 import deleteStore from './deleteStore';
+import uploadImage from './firebase/uploadImage';
 import replaceBodyImages from './firebase/replaceBodyImages';
 
 /**
@@ -67,15 +67,18 @@ export default async function createPost(pageId: string) {
       const htmlBody = await getHtml(mdString);
       postData.body = htmlBody;
 
-      // 3. upload thumbnail on Public Folder (use Vercel CDN)
+      // 3. upload thumbnail on Firebase Storage
+      // 본문 이미지와 같은 폴더에 올린다. 다시 발행할 때 위의 deleteStore 가 폴더를 비우므로
+      // 옛 썸네일이 함께 지워진다. 배포 환경은 /tmp 말고는 디스크에 쓸 수 없어 로컬 public/ 에 두지 않는다
       if (postData.thumbnail) {
-        const filePath = await createImageOnUrl({
-          savePath: `thumbnail`,
-          title: postData.index,
-          url: postData.thumbnail,
+        const thumbnailUrl = await uploadImage({
+          src: postData.thumbnail,
+          collection: 'post',
+          category: postData.category,
+          title: convertString(postData.plain_title, 'spaceToDash'),
         });
-        postData.thumbnail = filePath;
-        Logger.log(`썸네일 : ${filePath}`);
+        postData.thumbnail = thumbnailUrl;
+        Logger.log(`썸네일 : ${thumbnailUrl}`);
       } else {
         postData.thumbnail = DEFAULT_THUMBNAIL;
         Logger.log('기본 썸네일 설정');
