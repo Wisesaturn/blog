@@ -1,8 +1,9 @@
 import { collection, query, getDocs } from 'firebase/firestore';
 
-import { db } from '@/shared/middleware/firebase';
 import { PROJECTS_DATA } from '@/shared/constant/category';
-import { parseDocuments } from '@/shared/model/firestoreDocument';
+
+import { db } from '@/commons/api/firebase';
+import { parseDocuments } from '@/commons/lib/firestoreDocument';
 
 import { projectMeta } from '../model/projectDocument';
 

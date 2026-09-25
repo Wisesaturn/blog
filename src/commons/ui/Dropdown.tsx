@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import Icons from '@/shared/ui/atoms/icons';
+import Icons from './icons';
 
 interface DropdownProps<T extends string | number> {
   label: T;

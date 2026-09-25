@@ -3,11 +3,12 @@ import { ActionFunctionArgs } from 'react-router';
 import requestRedeploy from '@/shared/api/requestRedeploy';
 import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
 import { PRODUCTION_CATEGORY_DATA } from '@/shared/constant/category';
-import convertString from '@/shared/lib/convertString';
 import getWebhookPageId from '@/shared/lib/getWebhookPageId';
 
 import updatePost from '@/features/post/api/updatePost';
 import createPost from '@/features/post/api/createPost';
+
+import convertString from '@/commons/lib/convertString';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   // 시크릿이 없거나 다르면 Notion 을 읽기 전에 돌려보낸다

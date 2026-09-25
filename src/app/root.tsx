@@ -12,13 +12,14 @@ import {
 
 import useInitialScript from '@/shared/hooks/useInitialScript';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
-import formatStyleSheet from '@/shared/lib/formatStyleSheet';
-import getCookie from '@/shared/lib/getCookieOnHeader';
 import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
-import { DEFAULT_LAYOUT_VALUE } from '@/shared/middleware/layout';
-import globalStyles from '@/shared/styles/global.css?url';
-import Button from '@/shared/ui/molecules/Button';
 import Layout from '@/shared/ui/templates/Layout';
+
+import formatStyleSheet from '@/commons/lib/formatStyleSheet';
+import getCookie from '@/commons/lib/getCookieOnHeader';
+import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
+import globalStyles from '@/commons/styles/global.css?url';
+import Button from '@/commons/ui/button/Button';
 
 export const meta: MetaFunction = (args) => formatHeadTags(args);
 

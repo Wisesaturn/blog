@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import Badge from './index';
+import Badge from './Badge';
 
 describe('Badge', () => {
   it('받은 글자를 그린다', () => {

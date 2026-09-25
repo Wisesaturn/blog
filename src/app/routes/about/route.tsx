@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { MetaFunction } from 'react-router';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
 
 import ProfileTitle from '@/features/profile/ui/molecules/ProfileTitle';
@@ -12,6 +11,8 @@ import TechStacks from '@/features/profile/ui/organisms/TechStacks';
 import Activities from '@/features/profile/ui/organisms/Activities';
 import Experiences from '@/features/profile/ui/organisms/Experiences';
 import Works from '@/features/profile/ui/organisms/Works';
+
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 // meta
 export const meta: MetaFunction = (args) => {

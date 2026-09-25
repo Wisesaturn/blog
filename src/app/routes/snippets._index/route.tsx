@@ -1,13 +1,14 @@
 import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
-import { LIST_CACHE_CONTROL } from '@/shared/constant/cache';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
-import Title from '@/shared/ui/atoms/Title';
 
 import SnippetList from '@/features/snippet/ui/organisms/SnippetList';
 import getSnippets from '@/features/snippet/api/getSnippets';
+
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
+import Title from '@/commons/ui/Title';
 
 // meta
 export const meta: MetaFunction = (args) => {

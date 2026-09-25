@@ -1,9 +1,9 @@
 import { Link } from 'react-router';
 
-import Icons from '@/shared/ui/atoms/icons';
-import convertString from '@/shared/lib/convertString';
-
 import { IPost } from '@/features/post/types/post';
+
+import Icons from '@/commons/ui/icons';
+import convertString from '@/commons/lib/convertString';
 
 export default function PostRow(props: Omit<IPost, 'body'>) {
   // Firestore 문서의 필드명이 plain_title 이라 구조분해에서 이름을 바꿔 받는다

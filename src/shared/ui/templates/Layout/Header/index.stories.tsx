@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import LayoutContext, { DEFAULT_LAYOUT_VALUE } from '@/shared/middleware/layout';
+import LayoutContext, { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 
 import Header from './index';
 

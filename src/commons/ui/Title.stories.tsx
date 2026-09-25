@@ -1,4 +1,4 @@
-import Title from '.';
+import Title from './Title';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

@@ -1,9 +1,10 @@
 import { isFullPage } from '@notionhq/client';
 import { type z } from 'zod';
 
-import notion from '@/shared/middleware/notion';
 import { formatNotionIssues } from '@/shared/model/notionProperty';
 import { type NotionPage } from '@/shared/types/notion';
+
+import notion from '@/commons/api/notion';
 
 const normalizeId = (id: string) => id.replace(/-/g, '').toLowerCase();
 

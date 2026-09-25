@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import Icons from '@/shared/ui/atoms/icons';
+import Icons from '@/commons/ui/icons';
 
 export default function TopButton() {
   const [showButton, setShowButton] = useState(false);

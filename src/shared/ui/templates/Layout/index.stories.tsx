@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { createRoutesStub } from 'react-router';
 
 import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
-import { DEFAULT_LAYOUT_VALUE } from '@/shared/middleware/layout';
+
+import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 
 import Layout from './index';
 

@@ -1,14 +1,15 @@
 import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
-import { LIST_CACHE_CONTROL } from '@/shared/constant/cache';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
-import Title from '@/shared/ui/atoms/Title';
 
 import ProjectList from '@/features/project/ui/organisms/ProjectList';
 import sortProjects from '@/features/project/lib/sortProjects';
 import getProjects from '@/features/project/api/getProjects';
+
+import Title from '@/commons/ui/Title';
+import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 // meta
 export const meta: MetaFunction = (args) => {

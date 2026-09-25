@@ -1,4 +1,4 @@
-import styles from './style.module.css';
+import styles from './Spinner.module.css';
 
 interface SpinnerProps {
   layout?: 'full';

@@ -1,7 +1,7 @@
 {
   "include": ["react-router.env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"],
-  "files": ["src/shared/types/global.d.ts"],
+  "files": ["src/commons/types/global.d.ts"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },

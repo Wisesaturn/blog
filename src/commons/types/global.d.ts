@@ -1,5 +1,6 @@
 import { IMiddleware } from '@/shared/middleware/_index';
-import { ILayout } from '@/shared/middleware/layout';
+
+import { ILayout } from '@/commons/model/layout';
 
 declare global {
   type Hierarchy = 'primary' | 'secondary';

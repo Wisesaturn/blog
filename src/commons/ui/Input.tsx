@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react';
 import { motion } from 'motion/react';
 
-import Icons from '@/shared/ui/atoms/icons';
+import Icons from './icons';
 
 type InputType = 'normal' | 'search';
 interface InputProps

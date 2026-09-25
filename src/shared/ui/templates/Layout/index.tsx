@@ -4,8 +4,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import MiddlewareContext from '@/shared/middleware/_index';
-import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '@/shared/middleware/layout';
-import Spinner from '@/shared/ui/atoms/indicator/Spinner';
+
+import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '@/commons/model/layout';
+import Spinner from '@/commons/ui/spinner/Spinner';
 
 import Copyright from './Copyright';
 import Header from './Header';

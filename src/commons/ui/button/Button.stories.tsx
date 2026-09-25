@@ -1,6 +1,5 @@
-import Icons from '@/shared/ui/atoms/icons';
-
-import Button from '.';
+import Icons from '../icons';
+import Button from './Button';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

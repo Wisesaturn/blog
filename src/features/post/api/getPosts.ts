@@ -1,11 +1,12 @@
 import { collection, getDocs } from 'firebase/firestore';
 
 import { CATEGORY_DATA } from '@/shared/constant/category';
-import { db } from '@/shared/middleware/firebase';
-import { parseDocuments } from '@/shared/model/firestoreDocument';
 
 import { type IPost } from '@/features/post/types/post';
 import { postListItem } from '@/features/post/model/postDocument';
+
+import { db } from '@/commons/api/firebase';
+import { parseDocuments } from '@/commons/lib/firestoreDocument';
 
 /**
  * @description 모든 카테고리의 글 목록을 본문 없이 조회한다

@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 
-import { db } from '@/shared/middleware/firebase';
+import { db } from '@/commons/api/firebase';
 
 interface Props {
   title: string;

@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 
-import { ANIMATE_FADE_UP_CONTAINER } from '@/shared/constant/animation';
-
 import IntroduceSection from '@/features/home/ui/organisms/introduce-section';
+
+import { ANIMATE_FADE_UP_CONTAINER } from '@/commons/config/animation';
 
 export const MainPage = () => (
   <motion.main

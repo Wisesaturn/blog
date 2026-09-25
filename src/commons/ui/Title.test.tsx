@@ -7,7 +7,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import Title from './index';
+import Title from './Title';
 
 describe('Title', () => {
   it('제목을 h1 으로 그린다', () => {

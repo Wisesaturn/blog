@@ -1,4 +1,4 @@
-import Input from '.';
+import Input from './Input';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

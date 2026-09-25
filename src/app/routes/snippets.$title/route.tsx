@@ -9,17 +9,18 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
-import { DETAIL_CACHE_CONTROL } from '@/shared/constant/cache';
 import useViewCount from '@/shared/hooks/useViewCount';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
-import formatStyleSheet from '@/shared/lib/formatStyleSheet';
-import codeStyles from '@/shared/styles/etc/vscode-prism.css?url';
 
 import SnippetBox from '@/features/snippet/ui/organisms/SnippetBox';
 import SnippetButtons from '@/features/snippet/ui/molecules/SnippetButtons';
 import SnippetComments from '@/features/snippet/ui/atoms/SnippetComments';
 import getSnippet from '@/features/snippet/api/getSnippet';
+
+import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
+import formatStyleSheet from '@/commons/lib/formatStyleSheet';
+import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 // meta
 export const meta: MetaFunction = (args) => {

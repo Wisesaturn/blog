@@ -1,7 +1,7 @@
 import { doc, updateDoc, setDoc, getDoc, collection } from 'firebase/firestore';
 
-import { db } from '@/shared/middleware/firebase';
-import Logger from '@/shared/helper/logger';
+import { db } from '@/commons/api/firebase';
+import Logger from '@/commons/lib/logger';
 
 import { IProject } from '../types/project';
 

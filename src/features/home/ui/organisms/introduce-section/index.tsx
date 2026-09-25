@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 export default function IntroduceSection() {
   return (

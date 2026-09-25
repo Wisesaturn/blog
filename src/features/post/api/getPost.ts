@@ -1,8 +1,8 @@
 import { doc, getDoc } from 'firebase/firestore';
 
-import Logger from '@/shared/helper/logger';
-import { db } from '@/shared/middleware/firebase';
-import { parseDocument } from '@/shared/model/firestoreDocument';
+import Logger from '@/commons/lib/logger';
+import { db } from '@/commons/api/firebase';
+import { parseDocument } from '@/commons/lib/firestoreDocument';
 
 import { postDocument } from '../model/postDocument';
 

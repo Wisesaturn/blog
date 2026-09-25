@@ -2,7 +2,7 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
 import type { Preview } from '@storybook/react-vite';
 
-import '@/shared/styles/global.css';
+import '@/commons/styles/global.css';
 
 /**
  * 전역 decorator 로는 테마만 건다.

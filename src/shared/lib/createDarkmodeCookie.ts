@@ -1,4 +1,4 @@
-import { Darkmode } from '@/shared/types/layout';
+import { Darkmode } from '@/commons/types/layout';
 
 /**
  * @summary 다크모드 쿠키를 클라이언트단에서 만드는 함수

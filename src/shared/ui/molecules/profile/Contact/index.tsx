@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Icons from '@/shared/ui/atoms/icons';
+import Icons from '@/commons/ui/icons';
 
 function Contact() {
   return (

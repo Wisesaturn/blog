@@ -5,7 +5,7 @@ import { IProject } from '@/features/project/types/project';
 import { ISnippet } from '@/features/snippet/types/snippet';
 import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '@/features/post/constant';
 
-import convertString from './convertString';
+import convertString from '@/commons/lib/convertString';
 
 interface HeadTagFormat extends MetaArgs {
   title?: string;
