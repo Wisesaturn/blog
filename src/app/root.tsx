@@ -23,6 +23,9 @@ import Layout from '$shared/ui/templates/Layout';
 export const meta: MetaFunction = (args) => formatHeadTags(args);
 
 export const links: LinksFunction = () => [
+  // 썸네일과 본문 이미지는 모두 Firebase Storage 공개 주소에서 온다. 이미지는 CORS 없이 받는 요청이라
+  // crossorigin 을 붙이면 미리 연 연결을 이미지 요청이 재사용하지 못한다
+  { rel: 'preconnect', href: 'https://storage.googleapis.com' },
   formatStyleSheet(
     'https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable-dynamic-subset.min.css',
   ),
