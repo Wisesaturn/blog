@@ -5,22 +5,15 @@ import {
   MetaFunction,
   data,
   useLoaderData,
-  useParams,
 } from 'react-router';
-import { motion } from 'motion/react';
 
-import { useViewCount } from '@/features/view-count';
-import SnippetBox from '@/features/snippet/ui/organisms/SnippetBox';
-import SnippetButtons from '@/features/snippet/ui/molecules/SnippetButtons';
-import { SnippetComments } from '@/features/comments';
+import { SnippetDetailPage } from '@/pages/snippet-detail';
 
-import { snippetQueries } from '@/entities/snippet';
 import { getSnippet } from '@/entities/snippet/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -56,21 +49,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   );
 }
 
-export default function SnippetPage() {
+export default function Route() {
   const { snippet } = useLoaderData<typeof loader>();
-  const { title = '' } = useParams();
-  const views = useViewCount(snippetQueries.views(title), snippet.views || 0);
-
-  return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={ANIMATE_FADE_UP_CONTAINER}
-      className="layout min-h-screen"
-    >
-      <SnippetBox snippet={{ ...snippet, views }} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <SnippetButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <SnippetComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-    </motion.main>
-  );
+  return <SnippetDetailPage snippet={snippet} />;
 }

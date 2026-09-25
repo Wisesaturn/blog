@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
   HeadersFunction,
   data,
@@ -6,22 +5,12 @@ import {
   ShouldRevalidateFunction,
   useLoaderData,
 } from 'react-router';
-import { motion } from 'motion/react';
 
-import {
-  useUrlParamsUpdater,
-  filterPosts,
-  parsePostsQuery,
-  Categories,
-} from '@/features/post-filter';
-import PostList from '@/features/post/ui/organsims/PostList';
+import { PostsPage } from '@/pages/posts';
 
 import { getPosts } from '@/entities/post/index.server';
 
-import Input from '@/commons/ui/Input';
-import Title from '@/commons/ui/Title';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -64,40 +53,7 @@ export async function loader() {
   );
 }
 
-// page
-export default function PostsPage() {
+export default function Route() {
   const { posts } = useLoaderData<typeof loader>();
-  const { searchParams, setSelectedParams } = useUrlParamsUpdater();
-  const visiblePosts = useMemo(
-    () => filterPosts(posts, parsePostsQuery(searchParams)),
-    [posts, searchParams],
-  );
-
-  return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={ANIMATE_FADE_UP_CONTAINER}
-      className="layout min-h-screen"
-    >
-      <Title
-        animation={{
-          variants: ANIMATE_FADE_UP_ITEM,
-        }}
-        title="Post"
-        subtitle="문제를 해결하며 얻은 경험들을 담은 공간입니다"
-      />
-      <Input
-        inputType="search"
-        className="my-4"
-        placeholder="검색어를 입력하세요"
-        initialValue={searchParams.get('keyword') || ''}
-        animation={{ variants: ANIMATE_FADE_UP_ITEM }}
-        handleEsc={() => setSelectedParams('keyword', '', false)}
-        handleSearch={(_v) => setSelectedParams('keyword', _v, false)}
-      />
-      <Categories animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <PostList posts={visiblePosts} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-    </motion.main>
-  );
+  return <PostsPage posts={posts} />;
 }

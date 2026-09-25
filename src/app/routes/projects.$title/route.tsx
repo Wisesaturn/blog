@@ -5,22 +5,15 @@ import {
   MetaFunction,
   data,
   useLoaderData,
-  useParams,
 } from 'react-router';
-import { motion } from 'motion/react';
 
-import { useViewCount } from '@/features/view-count';
-import ProjectBox from '@/features/project/ui/organisms/ProjectBox';
-import ProjectButtons from '@/features/project/ui/molecules/ProjectButtons';
-import { ProjectComments } from '@/features/comments';
+import { ProjectDetailPage } from '@/pages/project-detail';
 
-import { projectQueries } from '@/entities/project';
 import { getProject } from '@/entities/project/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -56,21 +49,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   );
 }
 
-export default function ProjectPage() {
+export default function Route() {
   const { project } = useLoaderData<typeof loader>();
-  const { title = '' } = useParams();
-  const views = useViewCount(projectQueries.views(title), project.views || 0);
-
-  return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={ANIMATE_FADE_UP_CONTAINER}
-      className="layout min-h-screen"
-    >
-      <ProjectBox project={{ ...project, views }} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ProjectButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ProjectComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-    </motion.main>
-  );
+  return <ProjectDetailPage project={project} />;
 }

@@ -1,14 +1,11 @@
 import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
-import { motion } from 'motion/react';
 
-import ProjectList from '@/features/project/ui/organisms/ProjectList';
+import { ProjectsPage } from '@/pages/projects';
 
 import { sortProjects } from '@/entities/project';
 import { getProjects } from '@/entities/project/index.server';
 
-import Title from '@/commons/ui/Title';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -33,24 +30,7 @@ export async function loader() {
   return data({ projects: sortedProjects }, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
 }
 
-export default function ProjectsPage() {
+export default function Route() {
   const { projects } = useLoaderData<typeof loader>();
-
-  return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={ANIMATE_FADE_UP_CONTAINER}
-      className="layout min-h-screen"
-    >
-      <Title
-        animation={{
-          variants: ANIMATE_FADE_UP_ITEM,
-        }}
-        title="Projects"
-        subtitle="개발자로 성장해가며 만들었던 작품들입니다 (천천히 작성 중...)"
-      />
-      <ProjectList projects={projects} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-    </motion.main>
-  );
+  return <ProjectsPage projects={projects} />;
 }

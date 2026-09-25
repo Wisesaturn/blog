@@ -5,22 +5,15 @@ import {
   MetaFunction,
   data,
   useLoaderData,
-  useParams,
 } from 'react-router';
-import { motion } from 'motion/react';
 
-import { useViewCount } from '@/features/view-count';
-import ArticleBox from '@/features/post/ui/organsims/ArticleBox';
-import ArticleButtons from '@/features/post/ui/molecules/ArticleButtons';
-import { ArticleComments } from '@/features/comments';
+import { PostDetailPage } from '@/pages/post-detail';
 
-import { postQueries } from '@/entities/post';
 import { getPost } from '@/entities/post/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -60,22 +53,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   );
 }
 
-// page
-export default function ArticlePage() {
+export default function Route() {
   const { post } = useLoaderData<typeof loader>();
-  const { category = '', title = '' } = useParams();
-  const views = useViewCount(postQueries.views(category, title), post.views || 0);
-
-  return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={ANIMATE_FADE_UP_CONTAINER}
-      className="layout min-h-screen"
-    >
-      <ArticleBox post={{ ...post, views }} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ArticleButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <ArticleComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-    </motion.main>
-  );
+  return <PostDetailPage post={post} />;
 }

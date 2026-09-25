@@ -1,0 +1,17 @@
+import { motion } from 'motion/react';
+
+import { SnippetShareButton } from '@/features/share';
+
+import SnippetListButton from './SnippetListButton';
+
+export default function SnippetButtons({ animation }: GlobalAnimation) {
+  return (
+    <motion.div
+      className="flex items-center justify-center gap-2 w-full py-10"
+      variants={animation?.variants}
+    >
+      <SnippetShareButton />
+      <SnippetListButton />
+    </motion.div>
+  );
+}
