@@ -29,7 +29,7 @@ export default function TOC(props: TOCProps) {
   };
 
   return (
-    <motion.aside className="w-full max-md:max-w-layout max-w-64 md:ml-10 pt-6">
+    <motion.aside className="w-full max-md:max-w-layout md:w-56 md:shrink-0 md:ml-8 pt-6">
       <div className="md:top-24 md:sticky max-md:block">
         <h4 className="leading-relaxed pb-2">목차</h4>
         <div className="overflow-y-auto max-h-96">

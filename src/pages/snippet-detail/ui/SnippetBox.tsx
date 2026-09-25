@@ -20,7 +20,7 @@ export default function SnippetBox({ snippet, animation }: SnippetBoxProps) {
       >
         <motion.article
           variants={animation?.variants}
-          className="markdown-body w-full"
+          className="markdown-body w-full pt-10"
           dangerouslySetInnerHTML={{ __html: body }}
         />
       </motion.div>

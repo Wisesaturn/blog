@@ -37,13 +37,26 @@
     --blue-main: #0969da;
     --blue-bright: #54aeff;
     --blue-darker: #033d8b;
-    --strong: var(--black);
-    --strong-callout: var(--black);
     --skeleton: #eaeaea;
     --skeleton-line: rgba(255, 255, 255, 0.3);
-    --bg-thead: #f2f2f2;
-    --bg-callout: rgb(187, 250, 203, 0.5);
-    --border-table: #ddd;
+
+    /* 본문(.markdown-body) 토큰. 바탕은 중립 회색이고 초록은 포인트로만 쓴다 */
+    --md-text: #222;
+    --md-muted: #6b7280;
+    --md-border: #e5e7eb;
+    --md-border-strong: #d1d5db;
+    --md-code-bg: #f3f4f6;
+    --md-link: #3b82f6;
+    --md-link-hover: #1d4ed8;
+    --md-highlight: #b8ecd7;
+    --md-selection: rgba(59, 130, 246, 0.25);
+    --md-marker: #9ca3af;
+    --md-code-title-bg: #e5e7eb;
+    --md-copy-bg: rgba(255, 255, 255, 0.1);
+    --md-copy-bg-hover: rgba(255, 255, 255, 0.2);
+    --md-copy-icon: #aaa;
+    --md-copy-icon-hover: #fff;
+    --md-copy-done: #4ade80;
 
     accent-color: var(--green-main);
   }
@@ -63,13 +76,25 @@
     --blue-darker: #0969da;
     --blue-main: #54aeff;
     --blue-bright: #94ccfd;
-    --strong: var(--green-bright);
-    --strong-callout: var(--black);
     --skeleton: #494949;
     --skeleton-line: rgba(21, 21, 21, 0.3);
-    --bg-thead: #393939;
-    --bg-callout: rgba(16, 77, 31, 0.5);
-    --border-table: #191919;
+
+    --md-text: #e5e5e5;
+    --md-muted: #9ca3af;
+    --md-border: #333;
+    --md-border-strong: #4b5563;
+    --md-code-bg: #2a2a2a;
+    --md-link: #60a5fa;
+    --md-link-hover: #3b82f6;
+    --md-highlight: rgba(110, 231, 183, 0.3);
+    --md-selection: rgba(96, 165, 250, 0.35);
+    --md-marker: #6b7280;
+    --md-code-title-bg: #191919;
+    --md-copy-bg: rgba(255, 255, 255, 0.1);
+    --md-copy-bg-hover: rgba(255, 255, 255, 0.2);
+    --md-copy-icon: #aaa;
+    --md-copy-icon-hover: #fff;
+    --md-copy-done: #4ade80;
 
     accent-color: var(--green-main);
   }
@@ -188,57 +213,141 @@
     @apply text-base max-md:text-sm break-keep;
   }
 
-  span {
+  /* 본문 안의 span(코드 토큰, 강조 등)은 본문 글자 크기를 따른다 */
+  span:not(.markdown-body span) {
     @apply max-md:text-xs text-sm break-keep;
   }
 }
 
 /** layout */
 
-/** 
-* markdown-body 
-*/
+/**
+ * markdown-body
+ *
+ * 발행할 때 만든 본문 HTML 을 그린다. 구조는 건드리지 않고 스타일만 정한다 (#96).
+ * 간격은 요소가 아니라 이웃한 쌍에 건다. 요소마다 위 여백을 주면 "제목 바로 뒤 목록" 같은
+ * 예외 규칙이 계속 늘어서다. 우선순위는 뒤에 적은 규칙이 이긴다. `:where` 로 선택자 우선순위를 같게 맞췄다.
+ */
 @layer base {
   .markdown-body {
-    h2 {
-      @apply pt-16;
+    color: var(--md-text);
+    font-size: 17px;
+    line-height: 1.75;
+    word-break: keep-all;
+    /* keep-all 만 걸면 긴 영문 식별자에서 끊을 자리가 없어 390px 에서 넘친다 */
+    overflow-wrap: break-word;
+
+    @media (width < 48rem) {
+      font-size: 16px;
     }
 
-    h3 {
-      @apply pt-12;
+    /* 기본 p 와 li 크기(16/14px)를 덮고 본문 크기를 따른다 */
+    :where(p, li, ul, ol, table, details, summary, blockquote) {
+      font-size: inherit;
+      font-weight: 400;
+      line-height: inherit;
     }
 
-    h4 {
-      position: relative;
-      width: fit-content;
-      z-index: 2;
-
-      @apply pt-8;
+    /* 간격 — 기본 블록 사이 24px */
+    > :where(* + *) {
+      margin-top: 24px;
     }
 
-    h4:after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      left: 0%;
-      background-color: var(--green-main);
-      opacity: 50%;
-      z-index: 1;
-
-      @apply py-0.5 mt-7 max-md:mt-6;
+    > :where(:first-child) {
+      margin-top: 0;
     }
 
-    /* code */
-
-    :not(pre[class*='language-'], blockquote p) > code {
-      @apply bg-gray-200 dark:bg-[#191919] font-bold layout-text-color tracking-tight;
+    /* 제목 바로 뒤 16px */
+    > :where(h2, h3, h4, h5) + * {
+      margin-top: 16px;
     }
 
+    /* 이미지·코드블록·표 앞뒤 32px */
+    > :where(* + :is(img, pre, table, .code-block-wrapper, .table-wrap, figure, h5.code-title)),
+    > :where(:is(img, pre, table, .code-block-wrapper, .table-wrap, figure, .image-caption) + *) {
+      margin-top: 32px;
+    }
+
+    /* 캡션은 이미지에 붙인다 */
+    > :where(img + .image-caption) {
+      margin-top: 8px;
+    }
+
+    .image-caption:empty {
+      display: none;
+    }
+
+    /* 제목 앞 — 새 구획이 시작되는 자리라 가장 넓게 둔다 */
+    > :where(* + h2) {
+      margin-top: 64px;
+    }
+
+    > :where(* + h3) {
+      margin-top: 48px;
+    }
+
+    > :where(* + h4) {
+      margin-top: 32px;
+    }
+
+    /* 강조 — 본문 글(문단, 목록, 표 셀)의 굵게는 형광펜처럼 배경을 칠한다. 이 블로그의 굵게 표시다.
+       색만으로 강조하면 색각 이상 사용자에게 구분되지 않으므로 굵기와 함께 쓴다.
+       대비는 라이트 약 12:1, 다크 약 6:1 이다 */
+    strong {
+      font-weight: 700;
+    }
+
+    :where(p, li, td) strong {
+      padding-inline: 0.15em;
+      border-radius: 2px;
+      background-color: var(--md-highlight);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    /* 인용과 콜아웃은 박스 자체가 강조라 안에서 또 칠하지 않는다. .callout 은 #99 에서 생긴다 */
+    :where(blockquote, .callout) strong {
+      padding-inline: 0;
+      background-color: transparent;
+    }
+
+    /* 굵게 안의 인라인 코드는 형광펜이 끊기지 않게 배경을 빼고 글꼴로만 구분한다 */
+    :where(p, li, td) strong code {
+      padding-inline: 0;
+      background-color: transparent;
+    }
+
+    /* 선택 색 — 기본 선택 색(연민트)이 형광펜과 같은 계열이라 본문 안에서는 파랑 반투명을 쓴다 */
+    ::selection {
+      background-color: var(--md-selection);
+      color: inherit;
+    }
+
+    del {
+      color: var(--md-muted);
+    }
+
+    /* 인라인 코드 */
+    :not(pre) > code {
+      font-family:
+        ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+      font-size: 0.85em;
+      font-weight: 400;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      background-color: var(--md-code-bg);
+      color: var(--md-text);
+    }
+
+    /* 링크 — 예전 모양을 유지한다. inline-block 이면 긴 링크가 줄바꿈되지 않아 모바일에서 넘치므로 inline 이다 */
     a {
+      color: var(--md-link);
       text-decoration-line: underline;
-      display: inline-block;
+      transition: color 0.2s;
 
-      @apply text-blue-500 dark:text-blue-400 dark:hover:text-blue-500 transition-colors duration-200 hover:text-blue-700 break-keep;
+      &:hover {
+        color: var(--md-link-hover);
+      }
     }
 
     a:after {
@@ -257,162 +366,107 @@
       transform: translate(0.125rem, 25%);
     }
 
-    p {
-      @apply pt-5 leading-loose;
-
-      strong {
-        background-color: var(--green-bright);
-        color: var(--black);
-      }
-
-      + p:has(a) {
-        @apply pt-1;
-      }
-    }
-
     hr {
-      @apply mt-8 pb-8;
+      border-color: var(--md-border);
     }
 
-    details {
-      @apply pt-4 layout-text;
-    }
-
-    summary {
-      @apply hover:cursor-pointer layout-text;
-
-      ~ * {
-        @apply pt-0 ml-4;
-      }
-
-      + img {
-        @apply mt-2;
-      }
+    /* 목록 */
+    ul,
+    ol {
+      padding-left: 1.25em;
     }
 
     ul {
-      @apply pt-8 layout-text;
-
       list-style-type: disc;
-      padding-left: 1rem;
-
-      li {
-        padding-left: 0.35rem;
-        line-height: 200%;
-
-        &::marker {
-          color: var(--gray-darker);
-        }
-
-        ul {
-          @apply pt-0;
-        }
-      }
-    }
-
-    /* no padding ul instantly after heading */
-
-    :is(h2, h3, h4) + ul {
-      @apply pt-4;
     }
 
     ol {
-      @apply pt-8 layout-text;
-
       list-style-type: decimal;
-      padding-left: 1rem;
-
-      li {
-        padding-left: 0.35rem;
-        line-height: 200%;
-
-        &::marker {
-          color: var(--gray-darker);
-        }
-      }
-    }
-
-    /* no padding ol instantly after heading */
-
-    :is(h2, h3, h4) + ol {
-      @apply pt-4;
     }
 
     li {
+      padding-left: 0.25em;
+
+      + li {
+        margin-top: 4px;
+      }
+
+      &::marker {
+        color: var(--md-marker);
+      }
+
+      > :where(ul, ol) {
+        margin-top: 4px;
+      }
+
       img {
-        @apply mt-2;
-      }
-
-      strong {
-        background-color: var(--green-bright);
-        color: var(--black);
-        font-weight: bold;
-      }
-
-      p {
-        @apply pt-0;
+        margin-top: 8px;
       }
     }
 
+    /* 체크리스트는 체크박스가 표시라 불릿을 뺀다 */
+    li.task-list-item {
+      list-style-type: none;
+      margin-left: -1.25em;
+
+      input {
+        margin-right: 0.5em;
+      }
+    }
+
+    /* 토글 */
+    summary {
+      cursor: pointer;
+    }
+
+    details > :not(summary) {
+      margin-top: 16px;
+      margin-left: 1em;
+    }
+
+    /* 표 — 가로선만 두고 왼쪽 정렬 */
     table {
-      @apply mt-8 layout-text mx-auto;
-
-      thead {
-        @apply bg-gray-200 dark:bg-[#191919] font-bold;
-      }
-
-      tbody {
-        @apply font-normal;
-      }
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
 
       th,
       td {
-        @apply px-6 py-2.5 border text-center;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--md-border);
+      }
+
+      th {
+        font-weight: 600;
+        border-bottom-color: var(--md-border-strong);
       }
     }
 
+    /* 인용 — 왼쪽 선 */
     blockquote {
-      @apply bg-green-bright dark:bg-green-dark layout-rounded p-4 mt-8;
-
-      p {
-        @apply pt-0;
-
-        > strong:after {
-          display: none;
-        }
-
-        code {
-          @apply bg-green-brighter dark:bg-emerald-950;
-        }
-      }
-
-      ::selection {
-        background-color: var(--green-darker);
-        color: var(--white);
-      }
-
-      ::-moz-selection {
-        background-color: var(--green-darker);
-        color: var(--white);
-      }
+      padding-left: 16px;
+      border-left: 4px solid var(--md-border-strong);
+      color: var(--md-muted);
     }
 
+    /* 이미지 */
     img {
-      @apply mt-16 mx-auto w-fit rounded-3xl max-md:mt-8 max-md:rounded-xl object-contain object-top;
+      margin-inline: auto;
+      width: fit-content;
+      object-fit: contain;
+      object-position: top;
+      border-radius: 12px;
     }
 
-    /* no margin image instantly after heading or image */
-
-    :is(h4, h3, h2, img, div[class='image-caption']) + img {
-      @apply mt-4;
+    .image-caption {
+      font-size: 14px;
+      color: var(--md-muted);
+      text-align: center;
     }
 
-    /* code snippets */
-
+    /* 코드 블록 */
     .code-block-wrapper {
       position: relative;
-
-      @apply mt-8 max-w-layout;
 
       pre[class*='language-'] {
         overflow-x: auto;
@@ -436,8 +490,8 @@
         transition:
           opacity 0.2s,
           background-color 0.2s;
-        background: rgba(255, 255, 255, 0.1);
-        color: #aaa;
+        background: var(--md-copy-bg);
+        color: var(--md-copy-icon);
         cursor: pointer;
         z-index: 10;
         line-height: 0;
@@ -453,13 +507,13 @@
 
           .check-icon {
             display: block;
-            color: #4ade80;
+            color: var(--md-copy-done);
           }
         }
 
         &:hover {
-          background: rgba(255, 255, 255, 0.2);
-          color: white;
+          background: var(--md-copy-bg-hover);
+          color: var(--md-copy-icon-hover);
         }
       }
 
@@ -468,19 +522,20 @@
       }
     }
 
-    /* image caption */
+    /* 코드 블록 제목. 다음 코드 블록에 붙여 한 덩어리로 보이게 한다 (#98 에서 Shiki 로 바뀐다) */
+    h5.code-title {
+      font-size: 14px;
+      padding: 8px 16px;
+      background-color: var(--md-code-title-bg);
+      border-radius: 6px 6px 0 0;
 
-    div[class='image-caption'] {
-      @apply text-sm max-md:text-xs py-1 text-gray-500 dark:text-gray-300 font-light mx-auto w-full text-center;
-    }
+      + .code-block-wrapper {
+        margin-top: 0;
 
-    /* code block title */
-
-    h5[class='code-title'] {
-      @apply text-sm max-md:text-xs no-underline bg-gray-300 dark:bg-[#191919] w-full py-2 px-4 translate-y-8 rounded-t-md;
-
-      + pre {
-        @apply rounded-t-none;
+        pre {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
       }
     }
   }

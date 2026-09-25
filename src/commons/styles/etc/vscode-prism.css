@@ -46,7 +46,8 @@ code[class*='language-'] *::selection {
 
 pre[class*='language-'] {
   padding: 1em;
-  margin: 0.75rem 0 1.15rem;
+  /* 코드 블록 앞뒤 간격은 .markdown-body 의 이웃 규칙이 정한다 */
+  margin: 0;
   overflow: auto;
   background: var(--bg-code);
 }

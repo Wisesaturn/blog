@@ -22,7 +22,7 @@ export default function ProjectBox({ project, animation }: ProjectBoxProps) {
       >
         <motion.article
           variants={animation?.variants}
-          className="markdown-body md:w-3/4 w-full"
+          className="markdown-body w-full min-w-0 pt-10 md:max-w-[768px] md:flex-1"
           dangerouslySetInnerHTML={{ __html: body }}
         />
         <TOC body={body} />
