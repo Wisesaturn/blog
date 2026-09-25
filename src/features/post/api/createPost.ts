@@ -1,6 +1,12 @@
 import Logger from '$shared/helper/logger';
-import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
+import convertString from '$shared/lib/convertString';
+import {
+  getCoverUrl,
+  getFirstPlainText,
+  getIconEmoji,
+  requireNotionValue,
+} from '$shared/lib/notionValue';
 
 import { DEFAULT_THUMBNAIL } from '../constant';
 import getHtml from '../lib/getHtml';
@@ -17,12 +23,15 @@ import replaceBodyImages from './firebase/replaceBodyImages';
  */
 export default async function createPost(pageId: string) {
   try {
-    const post: IPost = await getNotionPage<'post'>(
+    const post: IPost = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_POSTS_KEY,
+      'post',
     ).then(async (page) => {
-      const title = page.properties.이름.title[0]?.plain_text ?? '';
+      const { properties } = page;
+      const title = requireNotionValue(getFirstPlainText(properties.이름.title), '이름');
       Logger.log(`${page.id}/${title}를 찾았습니다`);
+      const emoji = getIconEmoji(page.icon);
 
       // post date format
       const createdTime = new Date(page.created_time);
@@ -31,14 +40,12 @@ export default async function createPost(pageId: string) {
       // ////////////////// data /////////////////// //
       const postData: IPost = {
         index: page.id,
-        title: `${page.icon?.emoji ? `${page.icon.emoji} ` : ''}${
-          page.properties.이름.title[0].plain_text
-        }`,
-        thumbnail: page.cover?.external?.url || page.cover?.file?.url || '',
-        plain_title: page.properties.이름.title[0].plain_text,
-        category: page.properties.category.select.name,
-        description: page.properties.description.rich_text[0]?.plain_text || '',
-        tags: page.properties.tags.multi_select.map((keyword) => keyword.name),
+        title: emoji ? `${emoji} ${title}` : title,
+        thumbnail: getCoverUrl(page.cover),
+        plain_title: title,
+        category: requireNotionValue(properties.category.select?.name, 'category'),
+        description: getFirstPlainText(properties.description.rich_text) ?? '',
+        tags: properties.tags.multi_select.map((keyword) => keyword.name),
         createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
         last_editedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
           lastEditedTime,

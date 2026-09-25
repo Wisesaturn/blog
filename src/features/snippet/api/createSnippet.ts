@@ -5,6 +5,7 @@ import getHtml from '$features/post/lib/getHtml';
 
 import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
+import { getFirstPlainText, getIconEmoji, requireNotionValue } from '$shared/lib/notionValue';
 import Logger from '$shared/helper/logger';
 
 import { ISnippet } from '../types/snippet';
@@ -16,12 +17,15 @@ import { ISnippet } from '../types/snippet';
  */
 export default async function createSnippet(pageId: string) {
   try {
-    const snippet: ISnippet = await getNotionPage<'snippet'>(
+    const snippet: ISnippet = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_SNIPPETS_KEY,
+      'snippet',
     ).then(async (page) => {
-      const title = page.properties.이름.title[0]?.plain_text ?? '';
+      const { properties } = page;
+      const title = requireNotionValue(getFirstPlainText(properties.이름.title), '이름');
       Logger.log(`${page.id}/${title}를 찾았습니다`);
+      const emoji = getIconEmoji(page.icon);
 
       // post date format
       const createdTime = new Date(page.created_time);
@@ -29,16 +33,14 @@ export default async function createSnippet(pageId: string) {
       // ////////////////// data /////////////////// //
       const snippetData: ISnippet = {
         index: page.id,
-        title: `${page.icon?.emoji ? `${page.icon.emoji} ` : ''}${
-          page.properties.이름.title[0].plain_text
-        }`,
-        plainTitle: page.properties.이름.title[0].plain_text,
+        title: emoji ? `${emoji} ${title}` : title,
+        plainTitle: title,
         createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
         lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
           lastEditedTime,
         ),
-        description: page.properties.description.rich_text[0].plain_text,
-        skills: page.properties.skills.multi_select.map((skill) => skill.name),
+        description: getFirstPlainText(properties.description.rich_text) ?? '',
+        skills: properties.skills.multi_select.map((skill) => skill.name),
         lastmod: new Intl.DateTimeFormat('fr-CA', {
           month: '2-digit',
           day: '2-digit',

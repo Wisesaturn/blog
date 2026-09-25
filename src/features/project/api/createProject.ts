@@ -7,6 +7,12 @@ import { DEFAULT_THUMBNAIL } from '$features/post/constant';
 
 import convertString from '$shared/lib/convertString';
 import getNotionPage from '$shared/api/getNotionPage';
+import {
+  getCoverUrl,
+  getFirstPlainText,
+  getIconEmoji,
+  requireNotionValue,
+} from '$shared/lib/notionValue';
 import Logger from '$shared/helper/logger';
 
 import { IProject } from '../types/project';
@@ -18,12 +24,16 @@ import { IProject } from '../types/project';
  */
 export default async function createProject(pageId: string) {
   try {
-    const project: IProject = await getNotionPage<'project'>(
+    const project: IProject = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_PROJECTS_KEY,
+      'project',
     ).then(async (page) => {
-      const title = page.properties.이름.title[0]?.plain_text ?? '';
+      const { properties } = page;
+      const title = requireNotionValue(getFirstPlainText(properties.이름.title), '이름');
       Logger.log(`${page.id}/${title}를 찾았습니다`);
+      const emoji = getIconEmoji(page.icon);
+      const date = requireNotionValue(properties.date.date, 'date');
 
       // post date format
       const createdTime = new Date(page.created_time);
@@ -31,30 +41,28 @@ export default async function createProject(pageId: string) {
       // ////////////////// data /////////////////// //
       const projectData: IProject = {
         index: page.id,
-        title: `${page.icon?.emoji ? `${page.icon.emoji} ` : ''}${
-          page.properties.이름.title[0].plain_text
-        }`,
-        plainTitle: page.properties.이름.title[0].plain_text,
-        theme: page.properties.theme.rich_text[0].plain_text,
-        thumbnail: page.cover?.external?.url || page.cover?.file?.url || '',
-        category: page.properties.category.select.name,
+        title: emoji ? `${emoji} ${title}` : title,
+        plainTitle: title,
+        theme: getFirstPlainText(properties.theme.rich_text) ?? '',
+        thumbnail: getCoverUrl(page.cover),
+        category: requireNotionValue(properties.category.select?.name, 'category'),
         createdAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(createdTime),
         lastEditedAt: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium' }).format(
           lastEditedTime,
         ),
-        description: page.properties.description.rich_text[0].plain_text,
-        skills: page.properties.skills.multi_select.map((skill) => skill.name),
-        role: page.properties.role.multi_select.map((role) => role.name),
-        github: page.properties.github.url,
-        website: page.properties.website.url,
+        description: getFirstPlainText(properties.description.rich_text) ?? '',
+        skills: properties.skills.multi_select.map((skill) => skill.name),
+        role: properties.role.multi_select.map((role) => role.name),
+        github: properties.github.url,
+        website: properties.website.url,
         lastmod: new Intl.DateTimeFormat('fr-CA', {
           month: '2-digit',
           day: '2-digit',
           year: 'numeric',
         }).format(lastEditedTime),
         date: {
-          start: page.properties.date.date.start,
-          end: page.properties.date.date.end,
+          start: date.start,
+          end: date.end,
         },
         views: 0,
         body: '',
