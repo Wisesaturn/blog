@@ -1,9 +1,9 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import sharp from 'sharp';
 
-import Logger from '$shared/helper/logger';
-import { storage } from '$shared/middleware/firebase';
-import { IFireStore } from '$shared/types/global';
+import Logger from '@/shared/helper/logger';
+import { storage } from '@/shared/middleware/firebase';
+import { IFireStore } from '@/shared/types/global';
 
 interface Props extends IFireStore {
   src: string;

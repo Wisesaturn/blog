@@ -1,6 +1,6 @@
 import { createCookie } from 'react-router';
 
-import viewCookieName, { type ViewKind } from '$shared/lib/viewCookieName';
+import viewCookieName, { type ViewKind } from '@/shared/lib/viewCookieName';
 
 /** 조회수 API 가 돌려주는 JSON 본문. 문서가 없으면 `views` 가 `null` 이다 */
 export type ViewCountBody = { views: number | null };

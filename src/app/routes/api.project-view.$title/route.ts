@@ -1,9 +1,9 @@
 import { type ActionFunctionArgs } from 'react-router';
 
-import getProject from '$features/project/api/getProject';
-import increaseProjectViews from '$features/project/api/increaseProjectViews';
+import { countView, viewCountResponse } from '@/shared/api/viewCount';
 
-import { countView, viewCountResponse } from '$shared/api/viewCount';
+import getProject from '@/features/project/api/getProject';
+import increaseProjectViews from '@/features/project/api/increaseProjectViews';
 
 /** 프로젝트 조회수를 올린다. 상세 페이지가 화면을 그린 뒤 한 번 부른다. */
 export async function action({ request, params }: ActionFunctionArgs) {

@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 
-import ProjectTitle from '$features/project/ui/molecules/ProjectTitle';
-import { IProject } from '$features/project/types/project';
-import TOC from '$features/post/ui/molecules/TOC';
+import ProjectTitle from '@/features/project/ui/molecules/ProjectTitle';
+import { IProject } from '@/features/project/types/project';
+import TOC from '@/features/post/ui/molecules/TOC';
 
 interface ProjectBoxProps extends GlobalAnimation {
   project: IProject;

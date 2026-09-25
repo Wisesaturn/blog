@@ -106,7 +106,3 @@ container.querySelector('.text-\\[3\\.5rem\\]');
 클래스를 직접 보는 것은 **그 클래스가 동작을 결정할 때만** 한다. `whitespace-nowrap` 처럼 없으면 레이아웃이 깨지는 것들이다.
 
 ---
-
-## 7. alias 를 추가하면 두 곳을 고친다
-
-`tsconfig.paths.json` 과 `vitest.config.ts` 의 `resolve.alias` 가 같은 값을 손으로 들고 있다. 한쪽만 고치면 테스트에서만 모듈을 찾지 못한다.

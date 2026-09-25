@@ -1,12 +1,12 @@
-import getMarkdown from '$features/post/lib/getMarkdown';
-import replaceBodyImages from '$features/post/api/firebase/replaceBodyImages';
-import deleteStore from '$features/post/api/deleteStore';
-import getHtml from '$features/post/lib/getHtml';
+import convertString from '@/shared/lib/convertString';
+import getNotionPage from '@/shared/api/getNotionPage';
+import { getIconEmoji } from '@/shared/lib/notionValue';
+import Logger from '@/shared/helper/logger';
 
-import convertString from '$shared/lib/convertString';
-import getNotionPage from '$shared/api/getNotionPage';
-import { getIconEmoji } from '$shared/lib/notionValue';
-import Logger from '$shared/helper/logger';
+import getMarkdown from '@/features/post/lib/getMarkdown';
+import replaceBodyImages from '@/features/post/api/firebase/replaceBodyImages';
+import deleteStore from '@/features/post/api/deleteStore';
+import getHtml from '@/features/post/lib/getHtml';
 
 import { snippetNotionProperties } from '../model/notionProperties';
 import { ISnippet } from '../types/snippet';

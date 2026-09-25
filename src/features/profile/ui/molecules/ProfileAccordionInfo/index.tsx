@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { IProfile } from '$features/profile/types/profile';
+import { IProfile } from '@/features/profile/types/profile';
 
 import Accordion from '../../atoms/Accordion';
 

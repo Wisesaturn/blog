@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { type ViewCountBody } from '$shared/api/viewCount';
+import { type ViewCountBody } from '@/shared/api/viewCount';
 
 /**
  * @description 조회수 API 를 한 번 부르고, 응답이 오면 그 값을 조회수로 쓴다

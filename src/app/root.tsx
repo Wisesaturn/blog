@@ -10,15 +10,15 @@ import {
   type ShouldRevalidateFunction,
 } from 'react-router';
 
-import useInitialScript from '$shared/hooks/useInitialScript';
-import formatHeadTags from '$shared/lib/formatHeadTags';
-import formatStyleSheet from '$shared/lib/formatStyleSheet';
-import getCookie from '$shared/lib/getCookieOnHeader';
-import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
-import { DEFAULT_LAYOUT_VALUE } from '$shared/middleware/layout';
-import globalStyles from '$shared/styles/global.css?url';
-import Button from '$shared/ui/molecules/Button';
-import Layout from '$shared/ui/templates/Layout';
+import useInitialScript from '@/shared/hooks/useInitialScript';
+import formatHeadTags from '@/shared/lib/formatHeadTags';
+import formatStyleSheet from '@/shared/lib/formatStyleSheet';
+import getCookie from '@/shared/lib/getCookieOnHeader';
+import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
+import { DEFAULT_LAYOUT_VALUE } from '@/shared/middleware/layout';
+import globalStyles from '@/shared/styles/global.css?url';
+import Button from '@/shared/ui/molecules/Button';
+import Layout from '@/shared/ui/templates/Layout';
 
 export const meta: MetaFunction = (args) => formatHeadTags(args);
 

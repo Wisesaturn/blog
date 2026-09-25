@@ -9,17 +9,17 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import getProject from '$features/project/api/getProject';
-import ProjectComments from '$features/project/ui/atoms/ProjectComments';
-import ProjectButtons from '$features/project/ui/molecules/ProjectButtons';
-import ProjectBox from '$features/project/ui/organisms/ProjectBox';
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
+import { DETAIL_CACHE_CONTROL } from '@/shared/constant/cache';
+import useViewCount from '@/shared/hooks/useViewCount';
+import formatHeadTags from '@/shared/lib/formatHeadTags';
+import formatStyleSheet from '@/shared/lib/formatStyleSheet';
+import codeStyles from '@/shared/styles/etc/vscode-prism.css?url';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import { DETAIL_CACHE_CONTROL } from '$shared/constant/cache';
-import useViewCount from '$shared/hooks/useViewCount';
-import formatHeadTags from '$shared/lib/formatHeadTags';
-import formatStyleSheet from '$shared/lib/formatStyleSheet';
-import codeStyles from '$shared/styles/etc/vscode-prism.css?url';
+import ProjectBox from '@/features/project/ui/organisms/ProjectBox';
+import ProjectButtons from '@/features/project/ui/molecules/ProjectButtons';
+import ProjectComments from '@/features/project/ui/atoms/ProjectComments';
+import getProject from '@/features/project/api/getProject';
 
 // meta
 export const meta: MetaFunction = (args) => {

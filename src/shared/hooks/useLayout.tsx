@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import LayoutContext, { ILayoutContext } from '$shared/middleware/layout';
+import LayoutContext, { ILayoutContext } from '@/shared/middleware/layout';
 
 /**
  * @summary Layout용 hook

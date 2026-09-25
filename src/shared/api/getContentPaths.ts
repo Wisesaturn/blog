@@ -1,8 +1,8 @@
-import getPosts from '$features/post/api/getPosts';
-import getProjects from '$features/project/api/getProjects';
-import getSnippets from '$features/snippet/api/getSnippets';
+import convertString from '@/shared/lib/convertString';
 
-import convertString from '$shared/lib/convertString';
+import getPosts from '@/features/post/api/getPosts';
+import getProjects from '@/features/project/api/getProjects';
+import getSnippets from '@/features/snippet/api/getSnippets';
 
 export interface ContentPath {
   /** 앞에 `/` 가 붙은 URL 경로. 한글은 인코딩하지 않은 그대로다 */

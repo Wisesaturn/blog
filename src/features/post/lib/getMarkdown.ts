@@ -3,7 +3,7 @@ import path from 'path';
 
 import { NotionToMarkdown } from 'notion-to-md';
 
-import notion from '$shared/middleware/notion';
+import notion from '@/shared/middleware/notion';
 
 import checkJSX from './checkJSX';
 

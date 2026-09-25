@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import MiddlewareContext, { IMiddleware } from '$shared/middleware/_index';
+import MiddlewareContext, { IMiddleware } from '@/shared/middleware/_index';
 
 /**
  * @summary environment 등 서버에서 내려주는 데이터 확인 hook

@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import { DEFAULT_MIDDLEWARE_VALUE } from '$shared/middleware/_index';
+import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
 
 import NavigationBar from './index';
 

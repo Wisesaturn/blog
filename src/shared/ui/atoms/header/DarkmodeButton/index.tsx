@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import useLayout from '$shared/hooks/useLayout';
-import { Darkmode } from '$shared/types/layout';
-import Icons from '$shared/ui/atoms/icons';
-import createDarkmodeCookie from '$shared/lib/createDarkmodeCookie';
+import useLayout from '@/shared/hooks/useLayout';
+import { Darkmode } from '@/shared/types/layout';
+import Icons from '@/shared/ui/atoms/icons';
+import createDarkmodeCookie from '@/shared/lib/createDarkmodeCookie';
 
 export default function DarkmodeButton() {
   const { layout, updateLayout } = useLayout();

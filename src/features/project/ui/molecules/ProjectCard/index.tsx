@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
 
-import { IProject } from '$features/project/types/project';
+import Badge from '@/shared/ui/atoms/Badge';
 
-import Badge from '$shared/ui/atoms/Badge';
+import { IProject } from '@/features/project/types/project';
 
 interface Props extends Omit<IProject, 'body'>, GlobalAnimation {}
 

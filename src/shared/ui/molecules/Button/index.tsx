@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ButtonIcon from '$shared/ui/atoms/button/_Icon';
-import ButtonText from '$shared/ui/atoms/button/_Text';
+import ButtonIcon from '@/shared/ui/atoms/button/_Icon';
+import ButtonText from '@/shared/ui/atoms/button/_Text';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   hierarchy?: Hierarchy;

@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import DUMMY_POSTS from '$features/post/constant/dummy';
+import DUMMY_POSTS from '@/features/post/constant/dummy';
 
 import PostRow from '.';
 

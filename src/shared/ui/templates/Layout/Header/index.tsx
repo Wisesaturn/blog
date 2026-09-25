@@ -1,8 +1,8 @@
-import ProgressBar from '$shared/ui/atoms/header/ProgressBar';
-import Logo from '$shared/ui/atoms/header/Logo';
-import Menus from '$shared/ui/molecules/header/Menus';
-import Responsive from '$shared/ui/templates/Responsive';
-import DarkmodeButton from '$shared/ui/atoms/header/DarkmodeButton';
+import ProgressBar from '@/shared/ui/atoms/header/ProgressBar';
+import Logo from '@/shared/ui/atoms/header/Logo';
+import Menus from '@/shared/ui/molecules/header/Menus';
+import Responsive from '@/shared/ui/templates/Responsive';
+import DarkmodeButton from '@/shared/ui/atoms/header/DarkmodeButton';
 
 import { HeaderMenu } from './constant';
 

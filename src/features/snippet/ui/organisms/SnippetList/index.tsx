@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { ISnippet } from '$features/snippet/types/snippet';
+import { ISnippet } from '@/features/snippet/types/snippet';
 
 import SnippetCard from '../../molecules/SnippetCard';
 

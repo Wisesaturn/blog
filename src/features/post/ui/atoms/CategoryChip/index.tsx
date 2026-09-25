@@ -1,4 +1,4 @@
-import { ICategory } from '$shared/constant/category';
+import { ICategory } from '@/shared/constant/category';
 
 interface CategoryChipProps extends ICategory {
   selected?: boolean;

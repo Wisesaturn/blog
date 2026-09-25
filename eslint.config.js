@@ -47,7 +47,7 @@ export default tseslint.config(
         { name: 'NavLink', linkAttribute: 'to' },
       ],
       'import-x/resolver-next': [createTypeScriptImportResolver({ alwaysTryTypes: true })],
-      'import-x/internal-regex': '^(@/|\\$)',
+      'import-x/internal-regex': '^@/',
     },
     plugins: { 'react-hooks': reactHooks },
     rules: {
@@ -91,11 +91,6 @@ export default tseslint.config(
             { pattern: '@/features/**', group: 'internal', position: 'after' },
             { pattern: '@/entities/**', group: 'internal', position: 'after' },
             { pattern: '@/commons/**', group: 'internal', position: 'after' },
-            // legacy alias. #89 에서 @/* 로 옮기면 없어진다
-            { pattern: '$app/**', group: 'internal', position: 'after' },
-            { pattern: '$pages/**', group: 'internal', position: 'after' },
-            { pattern: '$features/**', group: 'internal', position: 'after' },
-            { pattern: '$shared/**', group: 'internal', position: 'after' },
           ],
           'newlines-between': 'always',
         },

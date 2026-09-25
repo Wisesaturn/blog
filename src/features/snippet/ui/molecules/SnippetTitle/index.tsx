@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 
-import { ISnippet } from '$features/snippet/types/snippet';
+import Icons from '@/shared/ui/atoms/icons';
+import Badge from '@/shared/ui/atoms/Badge';
 
-import Icons from '$shared/ui/atoms/icons';
-import Badge from '$shared/ui/atoms/Badge';
+import { ISnippet } from '@/features/snippet/types/snippet';
 
 interface SnippetTitleProps extends GlobalAnimation, Omit<ISnippet, 'body'> {}
 

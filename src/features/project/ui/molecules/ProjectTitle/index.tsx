@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { IProject } from '$features/project/types/project';
+import { IProject } from '@/features/project/types/project';
 
 import ProjectTitleInfo from '../../atoms/ProjectTitleInfo';
 import ProjectTitleLink from '../../atoms/ProjectTitleLink';

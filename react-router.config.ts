@@ -7,7 +7,7 @@ import type getContentPathsFn from './src/shared/api/getContentPaths';
 /**
  * 경로 목록을 앱 코드의 `getContentPaths` 로 만든다.
  *
- * 이 설정 파일은 앱과 다른 로더로 읽혀서 `$features` 같은 alias 가 풀리지 않는다. 그래서 여기서만
+ * 이 설정 파일은 앱과 다른 로더로 읽혀서 `@/features` 같은 alias 가 풀리지 않는다. 그래서 여기서만
  * Vite 를 잠깐 띄워 `vite-tsconfig-paths` 로 alias 를 풀고 모듈을 불러온 뒤 바로 닫는다.
  * 앱 코드를 상대경로 import 로 바꾸지 않으려고 이렇게 했다.
  */

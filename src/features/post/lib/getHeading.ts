@@ -1,4 +1,4 @@
-import { IHeading } from '$features/post/types/article';
+import { IHeading } from '@/features/post/types/article';
 
 /**
  * @summary body 태그 내에서 모든 Heading를 찾는 함수

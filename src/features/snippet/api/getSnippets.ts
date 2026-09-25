@@ -1,7 +1,7 @@
 import { collection, getDocs } from 'firebase/firestore';
 
-import { db } from '$shared/middleware/firebase';
-import { parseDocuments } from '$shared/model/firestoreDocument';
+import { db } from '@/shared/middleware/firebase';
+import { parseDocuments } from '@/shared/model/firestoreDocument';
 
 import { snippetDocument } from '../model/snippetDocument';
 

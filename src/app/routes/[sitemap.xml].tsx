@@ -1,5 +1,5 @@
-import getContentPaths from '$shared/api/getContentPaths';
-import { ISitemap } from '$shared/types/global';
+import getContentPaths from '@/shared/api/getContentPaths';
+import { ISitemap } from '@/shared/types/global';
 
 export const HOST_URL = `https://jaehan.blog`;
 

@@ -1,10 +1,10 @@
 import { type ActionFunctionArgs } from 'react-router';
 
-import getPost from '$features/post/api/getPost';
-import increasePostViews from '$features/post/api/increasePostViews';
+import { countView, viewCountResponse } from '@/shared/api/viewCount';
+import { CATEGORY_DATA } from '@/shared/constant/category';
 
-import { countView, viewCountResponse } from '$shared/api/viewCount';
-import { CATEGORY_DATA } from '$shared/constant/category';
+import getPost from '@/features/post/api/getPost';
+import increasePostViews from '@/features/post/api/increasePostViews';
 
 /**
  * 글 조회수를 올린다. 상세 페이지가 화면을 그린 뒤 한 번 부른다.

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import Badge from '$shared/ui/atoms/Badge';
+import Badge from '@/shared/ui/atoms/Badge';
 
 interface ArticleTagsProps extends GlobalAnimation {
   tags: string[];

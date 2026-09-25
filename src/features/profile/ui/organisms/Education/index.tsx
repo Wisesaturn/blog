@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
-import PROFILE from '$features/profile/constant/profile';
-import ProfileCategory from '$features/profile/ui/atoms/ProfileCategory';
+import PROFILE from '@/features/profile/constant/profile';
+import ProfileCategory from '@/features/profile/ui/atoms/ProfileCategory';
 
 import ProfileBox from '../ProfileBox';
 

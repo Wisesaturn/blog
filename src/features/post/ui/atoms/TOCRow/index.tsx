@@ -1,4 +1,4 @@
-import { IHeading } from '$features/post/types/article';
+import { IHeading } from '@/features/post/types/article';
 
 interface TOCRowProps extends IHeading {
   className: string;

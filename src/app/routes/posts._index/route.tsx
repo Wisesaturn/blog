@@ -8,17 +8,17 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import getPosts from '$features/post/api/getPosts';
-import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import filterPosts, { parsePostsQuery } from '$features/post/lib/filterPosts';
-import Categories from '$features/post/ui/molecules/Categories';
-import PostList from '$features/post/ui/organsims/PostList';
+import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/shared/constant/animation';
+import { LIST_CACHE_CONTROL } from '@/shared/constant/cache';
+import formatHeadTags from '@/shared/lib/formatHeadTags';
+import Title from '@/shared/ui/atoms/Title';
+import Input from '@/shared/ui/molecules/Input';
 
-import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '$shared/constant/animation';
-import { LIST_CACHE_CONTROL } from '$shared/constant/cache';
-import formatHeadTags from '$shared/lib/formatHeadTags';
-import Title from '$shared/ui/atoms/Title';
-import Input from '$shared/ui/molecules/Input';
+import getPosts from '@/features/post/api/getPosts';
+import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
+import filterPosts, { parsePostsQuery } from '@/features/post/lib/filterPosts';
+import Categories from '@/features/post/ui/molecules/Categories';
+import PostList from '@/features/post/ui/organsims/PostList';
 
 // meta
 export const meta: MetaFunction = (args) => {

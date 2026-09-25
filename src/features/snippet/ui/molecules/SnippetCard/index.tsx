@@ -1,10 +1,10 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
 
-import { ISnippet } from '$features/snippet/types/snippet';
+import Badge from '@/shared/ui/atoms/Badge';
+import Icons from '@/shared/ui/atoms/icons';
 
-import Badge from '$shared/ui/atoms/Badge';
-import Icons from '$shared/ui/atoms/icons';
+import { ISnippet } from '@/features/snippet/types/snippet';
 
 interface Props extends Omit<ISnippet, 'body'>, GlobalAnimation {}
 

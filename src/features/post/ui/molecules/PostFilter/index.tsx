@@ -1,16 +1,16 @@
 import { motion } from 'motion/react';
 import { useCallback } from 'react';
 
+import Dropdown from '@/shared/ui/molecules/Dropdown';
+
 import {
   ORDER_BY_TO_POST_FILTER,
   POST_FILTER_TO_ORDER_BY,
   POST_SORT_FILTER,
-} from '$features/post/constant';
-import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import parseOrderBy from '$features/post/model/parseOrderBy';
-import { PostsFilter } from '$features/post/types/post';
-
-import Dropdown from '$shared/ui/molecules/Dropdown';
+} from '@/features/post/constant';
+import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
+import parseOrderBy from '@/features/post/model/parseOrderBy';
+import { PostsFilter } from '@/features/post/types/post';
 
 interface PostFilterProps extends GlobalAnimation {}
 

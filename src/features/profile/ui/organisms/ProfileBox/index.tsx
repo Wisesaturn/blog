@@ -1,4 +1,4 @@
-import { IProfile } from '$features/profile/types/profile';
+import { IProfile } from '@/features/profile/types/profile';
 
 import ProfileDefaultInfo from '../../molecules/ProfileDefaultInfo';
 import ProfileAccordionInfo from '../../molecules/ProfileAccordionInfo';

@@ -1,4 +1,4 @@
-import Icons from '$shared/ui/atoms/icons';
+import Icons from '@/shared/ui/atoms/icons';
 
 interface ProjectTitleLink {
   github?: string | null;

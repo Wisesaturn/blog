@@ -1,7 +1,7 @@
-import Logger from '$shared/helper/logger';
-import getNotionPage from '$shared/api/getNotionPage';
-import convertString from '$shared/lib/convertString';
-import { getCoverUrl, getIconEmoji } from '$shared/lib/notionValue';
+import Logger from '@/shared/helper/logger';
+import getNotionPage from '@/shared/api/getNotionPage';
+import convertString from '@/shared/lib/convertString';
+import { getCoverUrl, getIconEmoji } from '@/shared/lib/notionValue';
 
 import { DEFAULT_THUMBNAIL } from '../constant';
 import getHtml from '../lib/getHtml';

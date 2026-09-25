@@ -1,5 +1,5 @@
-import { IMiddleware } from '$shared/middleware/_index';
-import { ILayout } from '$shared/middleware/layout';
+import { IMiddleware } from '@/shared/middleware/_index';
+import { ILayout } from '@/shared/middleware/layout';
 
 declare global {
   type Hierarchy = 'primary' | 'secondary';

@@ -1,9 +1,9 @@
 import { type ActionFunctionArgs } from 'react-router';
 
-import getSnippet from '$features/snippet/api/getSnippet';
-import increaseSnippetViews from '$features/snippet/api/increaseSnippetViews';
+import { countView, viewCountResponse } from '@/shared/api/viewCount';
 
-import { countView, viewCountResponse } from '$shared/api/viewCount';
+import getSnippet from '@/features/snippet/api/getSnippet';
+import increaseSnippetViews from '@/features/snippet/api/increaseSnippetViews';
 
 /** 스니펫 조회수를 올린다. 상세 페이지가 화면을 그린 뒤 한 번 부른다. */
 export async function action({ request, params }: ActionFunctionArgs) {

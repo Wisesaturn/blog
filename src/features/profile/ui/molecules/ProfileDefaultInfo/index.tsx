@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 
-import { IProfile } from '$features/profile/types/profile';
+import Badge from '@/shared/ui/atoms/Badge';
 
-import Badge from '$shared/ui/atoms/Badge';
+import { IProfile } from '@/features/profile/types/profile';
 
 interface Props extends GlobalAnimation {
   info: IProfile<'default'>;

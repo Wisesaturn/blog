@@ -1,4 +1,4 @@
-import Logger from '$shared/helper/logger';
+import Logger from '@/shared/helper/logger';
 
 type ConvertType = 'spaceToDash' | 'dashToSpace';
 

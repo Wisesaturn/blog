@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 
-import { IProfile } from '$features/profile/types/profile';
+import { IProfile } from '@/features/profile/types/profile';
 
 interface Props {
   item: IProfile<'accordion'>['items'][number];

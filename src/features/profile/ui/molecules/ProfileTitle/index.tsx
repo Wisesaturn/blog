@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
 
-import Title from '$shared/ui/atoms/Title';
-import profile from '$shared/assets/profile.jpg';
-import Button from '$shared/ui/molecules/Button';
+import Title from '@/shared/ui/atoms/Title';
+import profile from '@/shared/assets/profile.jpg';
+import Button from '@/shared/ui/molecules/Button';
 
 export default function ProfileTitle({ animation }: GlobalAnimation) {
   const navigate = useNavigate();

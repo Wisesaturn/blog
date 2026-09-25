@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 
-import useUrlParamsUpdater from '$features/post/hooks/useUrlParamsUpdater';
-import CategoryChip from '$features/post/ui/atoms/CategoryChip';
+import { CATEGORY_DATA } from '@/shared/constant/category';
 
-import { CATEGORY_DATA } from '$shared/constant/category';
+import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
+import CategoryChip from '@/features/post/ui/atoms/CategoryChip';
 
 interface CategoriesProps extends GlobalAnimation {}
 

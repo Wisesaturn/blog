@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import Giscus from '@giscus/react';
 
-import useLayout from '$shared/hooks/useLayout';
+import useLayout from '@/shared/hooks/useLayout';
 
 export default function ArticleComments(props: GlobalAnimation) {
   const { layout } = useLayout();

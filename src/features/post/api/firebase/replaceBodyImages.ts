@@ -1,5 +1,5 @@
-import Logger from '$shared/helper/logger';
-import { IFireStore } from '$shared/types/global';
+import Logger from '@/shared/helper/logger';
+import { IFireStore } from '@/shared/types/global';
 
 import uploadImage from './uploadImage';
 import filterNotionUrl from '../../lib/filterNotionUrl';

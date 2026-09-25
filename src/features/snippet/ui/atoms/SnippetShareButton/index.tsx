@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 
-import sharePage from '$features/post/lib/sharePage';
+import Icons from '@/shared/ui/atoms/icons';
+import Button from '@/shared/ui/molecules/Button';
 
-import Icons from '$shared/ui/atoms/icons';
-import Button from '$shared/ui/molecules/Button';
+import sharePage from '@/features/post/lib/sharePage';
 
 export default function SnippetShareButton(props: GlobalAnimation) {
   const { animation } = props;

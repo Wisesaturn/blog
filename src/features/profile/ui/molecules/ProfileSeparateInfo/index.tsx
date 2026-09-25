@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import React from 'react';
 
-import { IProfile } from '$features/profile/types/profile';
+import { IProfile } from '@/features/profile/types/profile';
 
 interface Props extends GlobalAnimation {
   info: IProfile<'separate'>;

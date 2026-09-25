@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { createRoutesStub } from 'react-router';
 
-import DUMMY_POSTS from '$features/post/constant/dummy';
+import DUMMY_POSTS from '@/features/post/constant/dummy';
 
 import PostList from '.';
 

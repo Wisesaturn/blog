@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 
-import TOCRow from '$features/post/ui/atoms/TOCRow';
-import useTOC from '$features/post/hooks/useTOC';
-import getHeading from '$features/post/lib/getHeading';
+import TOCRow from '@/features/post/ui/atoms/TOCRow';
+import useTOC from '@/features/post/hooks/useTOC';
+import getHeading from '@/features/post/lib/getHeading';
 
 interface TOCProps {
   body: string;

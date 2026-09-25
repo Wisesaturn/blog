@@ -1,4 +1,4 @@
-import Contact from '$shared/ui/molecules/profile/Contact';
+import Contact from '@/shared/ui/molecules/profile/Contact';
 
 export default function Copyright() {
   const currentYear = new Date().getFullYear();

@@ -1,9 +1,9 @@
 import { createContext, useState, startTransition } from 'react';
 
-import { Darkmode } from '$shared/types/layout';
-import Spinner from '$shared/ui/atoms/indicator/Spinner';
-import useLoading from '$shared/hooks/useLoading';
-import useDelayedTrue from '$shared/hooks/useDelayedTrue';
+import { Darkmode } from '@/shared/types/layout';
+import Spinner from '@/shared/ui/atoms/indicator/Spinner';
+import useLoading from '@/shared/hooks/useLoading';
+import useDelayedTrue from '@/shared/hooks/useDelayedTrue';
 
 export interface ILayout {
   loading: boolean;

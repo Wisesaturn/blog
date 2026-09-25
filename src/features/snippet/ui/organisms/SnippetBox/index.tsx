@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
-import SnippetTitle from '$features/snippet/ui/molecules/SnippetTitle';
-import { ISnippet } from '$features/snippet/types/snippet';
+import SnippetTitle from '@/features/snippet/ui/molecules/SnippetTitle';
+import { ISnippet } from '@/features/snippet/types/snippet';
 
 interface SnippetBoxProps extends GlobalAnimation {
   snippet: ISnippet;

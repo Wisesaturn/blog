@@ -2,8 +2,8 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
 
-import Icons from '$shared/ui/atoms/icons';
-import Button from '$shared/ui/molecules/Button';
+import Icons from '@/shared/ui/atoms/icons';
+import Button from '@/shared/ui/molecules/Button';
 
 export default function ArticleListButton(props: GlobalAnimation) {
   const { animation } = props;

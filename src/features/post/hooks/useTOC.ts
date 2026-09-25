@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import getIntersectionObserver from '$features/post/lib/getIntersectionObserver';
+import getIntersectionObserver from '@/features/post/lib/getIntersectionObserver';
 
 /**
  * @summary TOC 컴포넌트에서 사용하는 훅

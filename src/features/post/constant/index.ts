@@ -1,4 +1,4 @@
-import { CATEGORY_DATA } from '$shared/constant/category';
+import { CATEGORY_DATA } from '@/shared/constant/category';
 
 import { PostsFilter, PostsOrderBy } from '../types/post';
 

@@ -9,7 +9,7 @@
  */
 import { describe, expect, it } from 'vitest';
 
-import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '$features/post/constant';
+import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '@/features/post/constant';
 
 import formatHeadTags from './formatHeadTags';
 

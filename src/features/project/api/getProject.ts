@@ -1,8 +1,8 @@
 import { collection, getDocs, query } from 'firebase/firestore';
 
-import { db } from '$shared/middleware/firebase';
-import Logger from '$shared/helper/logger';
-import { parseDocument } from '$shared/model/firestoreDocument';
+import { db } from '@/shared/middleware/firebase';
+import Logger from '@/shared/helper/logger';
+import { parseDocument } from '@/shared/model/firestoreDocument';
 
 import { projectBody, projectMeta } from '../model/projectDocument';
 
