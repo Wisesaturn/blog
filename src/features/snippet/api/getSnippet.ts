@@ -2,8 +2,9 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
+import { parseDocument } from '$shared/model/firestoreDocument';
 
-import { ISnippet } from '../types/snippet';
+import { snippetDocument } from '../model/snippetDocument';
 
 interface Props {
   title: string;
@@ -20,5 +21,5 @@ export default async function getSnippet(props: Props) {
     throw NotFoundError;
   }
 
-  return docSnap.data() as ISnippet;
+  return parseDocument(snippetDocument, docSnap);
 }

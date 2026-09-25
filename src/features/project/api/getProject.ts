@@ -2,8 +2,9 @@ import { collection, getDocs, query } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
 import Logger from '$shared/helper/logger';
+import { parseDocument } from '$shared/model/firestoreDocument';
 
-import { IProject } from '../types/project';
+import { projectBody, projectMeta } from '../model/projectDocument';
 
 interface Props {
   title: string;
@@ -15,8 +16,6 @@ export default async function getProject(props: Props) {
   const bodyQ = query(collection(db, 'projects', title, 'body'));
   const queryMetaSnapshot = await getDocs(metaQ);
   const queryBodySnapshot = await getDocs(bodyQ);
-  const meta = queryMetaSnapshot.docs.map((doc) => doc.data() as Omit<IProject, 'body'>);
-  const body = queryBodySnapshot.docs.map((doc) => doc.data() as Pick<IProject, 'body'>);
 
   if (queryMetaSnapshot.empty || queryBodySnapshot.empty) {
     const NotFoundError = new Error(`${title}에 해당하는 프로젝트가 없습니다`);
@@ -24,5 +23,8 @@ export default async function getProject(props: Props) {
     throw NotFoundError;
   }
 
-  return { ...meta[0], ...body[0] };
+  return {
+    ...parseDocument(projectMeta, queryMetaSnapshot.docs[0]),
+    ...parseDocument(projectBody, queryBodySnapshot.docs[0]),
+  };
 }

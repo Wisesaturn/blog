@@ -1,12 +1,5 @@
-export interface ISnippet {
-  index: string;
-  createdAt: string;
-  lastEditedAt: Date | string;
-  lastmod: string;
-  title: string;
-  plainTitle: string;
-  skills: string[];
-  description: string;
-  views: number;
-  body: string;
-}
+import { type z } from 'zod';
+
+import { type snippetDocument } from '../model/snippetDocument';
+
+export type ISnippet = z.infer<typeof snippetDocument>;

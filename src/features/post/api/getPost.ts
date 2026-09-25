@@ -2,8 +2,9 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import Logger from '$shared/helper/logger';
 import { db } from '$shared/middleware/firebase';
+import { parseDocument } from '$shared/model/firestoreDocument';
 
-import { IPost } from '../types/post';
+import { postDocument } from '../model/postDocument';
 
 interface Props {
   category: string;
@@ -21,5 +22,5 @@ export default async function getPost(props: Props) {
     throw NotFoundError;
   }
 
-  return docSnap.data() as IPost;
+  return parseDocument(postDocument, docSnap);
 }

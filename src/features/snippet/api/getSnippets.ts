@@ -1,8 +1,9 @@
 import { collection, getDocs } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
+import { parseDocuments } from '$shared/model/firestoreDocument';
 
-import { ISnippet } from '../types/snippet';
+import { snippetDocument } from '../model/snippetDocument';
 
 /**
  * @description 스니펫 전체 목록을 조회한다
@@ -10,5 +11,5 @@ import { ISnippet } from '../types/snippet';
  */
 export default async function getSnippets() {
   const snapshot = await getDocs(collection(db, 'snippets'));
-  return snapshot.docs.map((doc) => doc.data()) as ISnippet[];
+  return parseDocuments(snippetDocument, snapshot.docs);
 }

@@ -2,24 +2,17 @@ import { collection, query, getDocs } from 'firebase/firestore';
 
 import { db } from '$shared/middleware/firebase';
 import { PROJECTS_DATA } from '$shared/constant/category';
+import { parseDocuments } from '$shared/model/firestoreDocument';
 
-import { IProject } from '../types/project';
+import { projectMeta } from '../model/projectDocument';
 
 export default async function getProjects() {
-  const originProjects = await Promise.all(
+  const perProject = await Promise.all(
     PROJECTS_DATA.map(async (project) => {
-      const q = query(collection(db, 'projects', project.name, 'meta'));
-      const querySnapshot = await getDocs(q);
-      const projects = querySnapshot.docs.map((doc) => doc.data());
-      return { data: projects };
+      const querySnapshot = await getDocs(query(collection(db, 'projects', project.name, 'meta')));
+      return parseDocuments(projectMeta, querySnapshot.docs);
     }),
   );
 
-  const projects = originProjects.reduce((acc, cur) => {
-    acc.data.push(...cur.data);
-
-    return acc;
-  });
-
-  return projects.data as Omit<IProject, 'body'>[];
+  return perProject.flat();
 }

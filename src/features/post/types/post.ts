@@ -1,39 +1,9 @@
-import { POST_SORT_FILTER, POST_SORT_ORDER_BY } from '../constant';
+import { type z } from 'zod';
 
-export interface IPost {
-  body: string;
-  category: string;
-  createdAt: string;
-  last_editedAt: Date | string;
-  description: string;
-  index: string;
-  lastmod: string;
-  plain_title: string;
-  tags: string[];
-  thumbnail: string;
-  title: string;
-  views: number;
-}
+import { type POST_SORT_FILTER, type POST_SORT_ORDER_BY } from '../constant';
+import { type postDocument } from '../model/postDocument';
+
+export type IPost = z.infer<typeof postDocument>;
 
 export type PostsOrderBy = (typeof POST_SORT_ORDER_BY)[number];
 export type PostsFilter = (typeof POST_SORT_FILTER)[number];
-
-// IPost Type Guard
-export function isIPost(obj: unknown): obj is IPost {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    'body' in obj &&
-    'category' in obj &&
-    'createdAt' in obj &&
-    'description' in obj &&
-    'index' in obj &&
-    'lastmod' in obj &&
-    'last_editedAt' in obj &&
-    'plain_title' in obj &&
-    'tags' in obj &&
-    'thumbnail' in obj &&
-    'title' in obj &&
-    'views' in obj
-  );
-}
