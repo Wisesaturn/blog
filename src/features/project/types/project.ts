@@ -14,9 +14,10 @@ export interface IProject {
   thumbnail: string;
   date: {
     start: string;
-    end: string;
+    // 진행 중인 프로젝트는 Notion 에서 끝 날짜가 비어 있어 null 로 저장된다
+    end: string | null;
   };
-  website?: string;
-  github?: string;
+  website?: string | null;
+  github?: string | null;
   views: number;
 }

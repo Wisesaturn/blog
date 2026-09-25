@@ -1,8 +1,8 @@
 import Icons from '$shared/ui/atoms/icons';
 
 interface ProjectTitleLink {
-  github?: string;
-  website?: string;
+  github?: string | null;
+  website?: string | null;
 }
 
 export default function ProjectTitleLink({ github, website }: ProjectTitleLink) {

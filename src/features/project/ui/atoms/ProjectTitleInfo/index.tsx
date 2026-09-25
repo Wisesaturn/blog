@@ -3,7 +3,7 @@ import Icons from '$shared/ui/atoms/icons';
 interface ProjectTitleInfo {
   date: {
     start: string;
-    end: string;
+    end: string | null;
   };
   views: number;
 }
