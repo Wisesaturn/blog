@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { type ActionFunctionArgs } from 'react-router';
 
 import getProject from '$features/project/api/getProject';

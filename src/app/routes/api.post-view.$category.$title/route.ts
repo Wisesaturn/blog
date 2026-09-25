@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { type ActionFunctionArgs } from 'react-router';
 
 import getPost from '$features/post/api/getPost';

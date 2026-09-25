@@ -11,7 +11,7 @@ export default function checkJSX(jsxString: string): boolean {
       presets: ['@babel/preset-react'],
     });
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

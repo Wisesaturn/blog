@@ -23,7 +23,7 @@ pnpm storybook    # Storybook 개발 서버
 - **Animation**: motion (`motion/react` 에서 import 한다. `framer-motion` 은 쓰지 않는다)
 - **Database**: Firebase (Firestore + Storage)
 - **State**: Remix loader 가 처리한다. 별도 상태 라이브러리는 설치되어 있지 않다
-- **Lint/Format**: ESLint 8 + Prettier
+- **Lint/Format**: ESLint 9 (flat config) + Prettier
 - **Test**: Vitest + Testing Library (jsdom)
 - **Component Dev**: Storybook
 
@@ -106,19 +106,20 @@ src/
 
 ## ESLint Rules
 
-ESLint 8 이고 `.eslintrc.cjs` 를 쓴다. flat config 전환과 아래 「목표」 플러그인 도입은 [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 한다.
+ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰지 않는다. 아래 「목표」 플러그인 도입은 [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 한다.
 
 ### 지금 켜져 있는 것
 
-- **extends**: `airbnb-base`, `eslint-config-prettier`. 파일 종류별로 react, jsx-a11y, react-hooks, @typescript-eslint, import, storybook 을 override 로 얹는다
-- **import/order**: `@/app` → `@/pages` → `@/modules` → `@/features` → `@/entities` → `@/commons` → `$*`(legacy) 순 (error)
+- **기반**: `@eslint/js` recommended, `typescript-eslint` recommended, `eslint-plugin-import-x`, `eslint-plugin-react`, `eslint-plugin-jsx-a11y`, `eslint-plugin-storybook`, `eslint-plugin-prettier`
+- **react-hooks**: `rules-of-hooks`(error), `exhaustive-deps`(warn) 만 켠다. v7 의 나머지 규칙은 React Compiler 용이다
+- **import-x/order**: `@/app` → `@/pages` → `@/modules` → `@/features` → `@/entities` → `@/commons` → `$*`(legacy) 순 (error)
 - **prettier/prettier**: 포맷을 error 로 막는다
 - **@typescript-eslint/naming-convention**: interface 와 typeAlias 는 PascalCase, 변수는 camelCase / UPPER_CASE / PascalCase (error)
 - **@typescript-eslint/no-unused-vars**: `^_` 로 시작하지 않는 미사용 변수는 warn
 - **no-warning-comments**: TODO, FIXME, XXX, BUG, HOLD 를 warn
-- **no-nested-ternary**, **eqeqeq**: `airbnb-base` 에서 상속
+- **no-nested-ternary**, **eqeqeq**: airbnb 에서 받던 것을 직접 켰다 (error)
 
-> **`no-console` 은 `'off'` 다.** 규칙으로는 `console.log` 를 금지하지만 린트가 막지 않는다.
+> **`no-console` 은 켜져 있지 않다.** 규칙으로는 `console.log` 를 금지하지만 린트가 막지 않는다.
 > **`consistent-type-imports` 는 설정되어 있지 않다.** 인라인 type import 도 규칙일 뿐 강제되지 않는다.
 
 ### 목표 (#89)

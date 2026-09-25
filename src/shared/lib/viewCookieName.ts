@@ -17,9 +17,8 @@ export type ViewKind = 'post' | 'snippet' | 'project';
 export default function viewCookieName(kind: ViewKind, key: string): string {
   let hash = 0x811c9dc5;
   new TextEncoder().encode(key).forEach((byte) => {
-    // eslint-disable-next-line no-bitwise
     hash = Math.imul(hash ^ byte, 0x01000193);
   });
-  // eslint-disable-next-line no-bitwise
+
   return `view-${kind}-${(hash >>> 0).toString(16).padStart(8, '0')}`;
 }

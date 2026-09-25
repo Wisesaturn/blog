@@ -47,7 +47,6 @@ export const SearchWithLabel: Story = {
     inputType: 'search',
     label: 'Label',
     placeholder: 'answer the question',
-    // eslint-disable-next-line no-alert
     handleSearch: (v: string) => alert(`Search Value : ${v}`),
   },
 };

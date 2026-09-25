@@ -1,6 +1,6 @@
-import type { Preview } from '@storybook/react-vite';
-
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+
+import type { Preview } from '@storybook/react-vite';
 
 import '$shared/styles/global.css';
 

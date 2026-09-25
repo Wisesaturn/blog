@@ -13,7 +13,6 @@ export default function getHeading(body: string): IHeading[] {
 
   let match;
 
-  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(body)) !== null) {
     const level = parseInt(match[1], 10);
     const id = match[2];

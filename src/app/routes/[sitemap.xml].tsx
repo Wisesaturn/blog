@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 import getContentPaths from '$shared/api/getContentPaths';
 import { ISitemap } from '$shared/types/global';
 

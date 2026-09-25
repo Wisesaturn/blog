@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { useSearchParams } from 'react-router';
 import { useCallback } from 'react';
 

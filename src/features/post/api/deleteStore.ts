@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { deleteObject, listAll, ref } from 'firebase/storage';
 
 import Logger from '$shared/helper/logger';

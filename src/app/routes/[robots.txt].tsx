@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const loader = () => {
   // handle "GET" request
   // set up our text content that will be returned in the response

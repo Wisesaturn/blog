@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { ActionFunctionArgs } from 'react-router';
 
 import createSnippet from '$features/snippet/api/createSnippet';

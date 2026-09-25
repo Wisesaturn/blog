@@ -32,7 +32,6 @@ export default function Layout({
     // 인라인 스크립트가 color-theme 을 바꾸므로 서버 HTML 과 다를 수 있다
     <html lang="ko" color-theme={data.layout.darkmode} suppressHydrationWarning>
       <head>
-        {/* eslint-disable-next-line react/no-danger */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <meta charSet="utf-8" />
         <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
