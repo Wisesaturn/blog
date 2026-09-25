@@ -1,6 +1,8 @@
 import getNotionPage from '@/shared/api/getNotionPage';
 import { getCoverUrl, getIconEmoji } from '@/shared/lib/notionValue';
 
+import { IPost } from '@/entities/post';
+
 import Logger from '@/commons/lib/logger';
 import convertString from '@/commons/lib/convertString';
 
@@ -8,7 +10,6 @@ import { DEFAULT_THUMBNAIL } from '../constant';
 import getHtml from '../lib/getHtml';
 import getMarkdown from '../lib/getMarkdown';
 import { postNotionProperties } from '../model/notionProperties';
-import { IPost } from '../types/post';
 import deleteStore from './deleteStore';
 import uploadImage from './firebase/uploadImage';
 import replaceBodyImages from './firebase/replaceBodyImages';

@@ -1,6 +1,8 @@
 import { DocumentData } from 'firebase/firestore';
 
-import { IPost, PostsOrderBy } from '../types/post';
+import { IPost } from '@/entities/post';
+
+import { PostsOrderBy } from '../types/postsQuery';
 
 /**
  * @summary 게시물 리스트를 정렬하는 함수

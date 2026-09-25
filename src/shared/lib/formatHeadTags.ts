@@ -1,9 +1,10 @@
 import { MetaArgs, MetaDescriptor } from 'react-router';
 
-import { IPost } from '@/features/post/types/post';
-import { IProject } from '@/features/project/types/project';
-import { ISnippet } from '@/features/snippet/types/snippet';
 import { DEFAULT_DESCRIPTION, DEFAULT_THUMBNAIL } from '@/features/post/constant';
+
+import { IPost } from '@/entities/post';
+import { IProject } from '@/entities/project';
+import { ISnippet } from '@/entities/snippet';
 
 import convertString from '@/commons/lib/convertString';
 

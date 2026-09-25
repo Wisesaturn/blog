@@ -1,6 +1,8 @@
+import { type IPost } from '@/entities/post';
+
 import sortPosts from './sortPosts';
 import parseOrderBy from '../model/parseOrderBy';
-import { type IPost, type PostsOrderBy } from '../types/post';
+import { type PostsOrderBy } from '../types/postsQuery';
 
 type PostRow = Omit<IPost, 'body'>;
 

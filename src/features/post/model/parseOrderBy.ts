@@ -2,7 +2,7 @@
 import * as z from 'zod/mini';
 
 import { POST_SORT_ORDER_BY } from '../constant';
-import { type PostsOrderBy } from '../types/post';
+import { type PostsOrderBy } from '../types/postsQuery';
 
 const postsOrderBy = z.catch(z.enum(POST_SORT_ORDER_BY), 'desc');
 

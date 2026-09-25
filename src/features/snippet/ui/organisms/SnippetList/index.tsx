@@ -1,8 +1,6 @@
 import { motion } from 'motion/react';
 
-import { ISnippet } from '@/features/snippet/types/snippet';
-
-import SnippetCard from '../../molecules/SnippetCard';
+import { ISnippet, SnippetCard } from '@/entities/snippet';
 
 interface Props extends GlobalAnimation {
   snippets: Omit<ISnippet, 'body'>[];

@@ -1,6 +1,6 @@
-import { CATEGORY_DATA } from '@/shared/constant/category';
+import { CATEGORY_DATA } from '@/entities/post';
 
-import { PostsFilter, PostsOrderBy } from '../types/post';
+import { PostsFilter, PostsOrderBy } from '../types/postsQuery';
 
 export const POST_SORT_FILTER = ['최신순', '오래된순', '조회수'] as const;
 export const POST_SORT_ORDER_BY = ['desc', 'asc', 'mostView'] as const;

@@ -15,7 +15,9 @@ import formatHeadTags from '@/shared/lib/formatHeadTags';
 import ArticleBox from '@/features/post/ui/organsims/ArticleBox';
 import ArticleButtons from '@/features/post/ui/molecules/ArticleButtons';
 import ArticleComments from '@/features/post/ui/atoms/ArticleComments';
-import getPost from '@/features/post/api/getPost';
+
+import { postQueries } from '@/entities/post';
+import { getPost } from '@/entities/post/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
@@ -62,10 +64,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function ArticlePage() {
   const { post } = useLoaderData<typeof loader>();
   const { category = '', title = '' } = useParams();
-  const views = useViewCount(
-    `/api/post-view/${encodeURIComponent(category)}/${encodeURIComponent(title)}`,
-    post.views || 0,
-  );
+  const views = useViewCount(postQueries.views(category, title), post.views || 0);
 
   return (
     <motion.main

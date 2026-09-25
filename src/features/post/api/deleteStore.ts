@@ -1,7 +1,7 @@
 import { deleteObject, listAll, ref } from 'firebase/storage';
 
 import Logger from '@/commons/lib/logger';
-import { storage } from '@/commons/api/firebase';
+import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
 export default async function deleteStore(props: IFireStore) {

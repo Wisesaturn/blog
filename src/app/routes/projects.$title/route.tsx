@@ -15,7 +15,9 @@ import formatHeadTags from '@/shared/lib/formatHeadTags';
 import ProjectBox from '@/features/project/ui/organisms/ProjectBox';
 import ProjectButtons from '@/features/project/ui/molecules/ProjectButtons';
 import ProjectComments from '@/features/project/ui/atoms/ProjectComments';
-import getProject from '@/features/project/api/getProject';
+
+import { projectQueries } from '@/entities/project';
+import { getProject } from '@/entities/project/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
@@ -57,7 +59,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function ProjectPage() {
   const { project } = useLoaderData<typeof loader>();
   const { title = '' } = useParams();
-  const views = useViewCount(`/api/project-view/${encodeURIComponent(title)}`, project.views || 0);
+  const views = useViewCount(projectQueries.views(title), project.views || 0);
 
   return (
     <motion.main

@@ -1,8 +1,6 @@
 import { motion } from 'motion/react';
 
-import { IProject } from '@/features/project/types/project';
-
-import ProjectCard from '../../molecules/ProjectCard';
+import { IProject, ProjectCard } from '@/entities/project';
 
 interface Props extends GlobalAnimation {
   projects: Omit<IProject, 'body'>[];

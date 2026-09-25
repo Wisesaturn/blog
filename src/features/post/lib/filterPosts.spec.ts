@@ -11,8 +11,9 @@
  */
 import { describe, expect, it } from 'vitest';
 
+import { type IPost } from '@/entities/post';
+
 import filterPosts, { parsePostsQuery, type PostsQuery } from './filterPosts';
-import { type IPost } from '../types/post';
 
 type PostRow = Omit<IPost, 'body'>;
 

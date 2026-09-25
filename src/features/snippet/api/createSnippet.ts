@@ -6,11 +6,12 @@ import replaceBodyImages from '@/features/post/api/firebase/replaceBodyImages';
 import deleteStore from '@/features/post/api/deleteStore';
 import getHtml from '@/features/post/lib/getHtml';
 
+import { ISnippet } from '@/entities/snippet';
+
 import Logger from '@/commons/lib/logger';
 import convertString from '@/commons/lib/convertString';
 
 import { snippetNotionProperties } from '../model/notionProperties';
-import { ISnippet } from '../types/snippet';
 
 /**
  * @summary Notion에서 작성한 스니펫을 마크다운으로 변환하여 게시물을 생성하는 함수

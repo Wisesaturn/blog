@@ -15,7 +15,9 @@ import formatHeadTags from '@/shared/lib/formatHeadTags';
 import SnippetBox from '@/features/snippet/ui/organisms/SnippetBox';
 import SnippetButtons from '@/features/snippet/ui/molecules/SnippetButtons';
 import SnippetComments from '@/features/snippet/ui/atoms/SnippetComments';
-import getSnippet from '@/features/snippet/api/getSnippet';
+
+import { snippetQueries } from '@/entities/snippet';
+import { getSnippet } from '@/entities/snippet/index.server';
 
 import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
@@ -57,7 +59,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
   const { title = '' } = useParams();
-  const views = useViewCount(`/api/snippet-view/${encodeURIComponent(title)}`, snippet.views || 0);
+  const views = useViewCount(snippetQueries.views(title), snippet.views || 0);
 
   return (
     <motion.main

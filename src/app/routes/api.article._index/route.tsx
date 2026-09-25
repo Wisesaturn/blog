@@ -2,11 +2,12 @@ import { ActionFunctionArgs } from 'react-router';
 
 import requestRedeploy from '@/shared/api/requestRedeploy';
 import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
-import { PRODUCTION_CATEGORY_DATA } from '@/shared/constant/category';
 import getWebhookPageId from '@/shared/lib/getWebhookPageId';
 
-import updatePost from '@/features/post/api/updatePost';
 import createPost from '@/features/post/api/createPost';
+
+import { PRODUCTION_CATEGORY_DATA } from '@/entities/post';
+import { updatePost } from '@/entities/post/index.server';
 
 import convertString from '@/commons/lib/convertString';
 

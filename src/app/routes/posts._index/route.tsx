@@ -10,11 +10,12 @@ import { motion } from 'motion/react';
 
 import formatHeadTags from '@/shared/lib/formatHeadTags';
 
-import getPosts from '@/features/post/api/getPosts';
 import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
 import filterPosts, { parsePostsQuery } from '@/features/post/lib/filterPosts';
 import Categories from '@/features/post/ui/molecules/Categories';
 import PostList from '@/features/post/ui/organsims/PostList';
+
+import { getPosts } from '@/entities/post/index.server';
 
 import Input from '@/commons/ui/Input';
 import Title from '@/commons/ui/Title';

@@ -2,7 +2,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import sharp from 'sharp';
 
 import Logger from '@/commons/lib/logger';
-import { storage } from '@/commons/api/firebase';
+import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
 interface Props extends IFireStore {

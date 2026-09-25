@@ -4,8 +4,9 @@ import requestRedeploy from '@/shared/api/requestRedeploy';
 import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
 import getWebhookPageId from '@/shared/lib/getWebhookPageId';
 
-import updateProject from '@/features/project/api/updateProject';
 import createProject from '@/features/project/api/createProject';
+
+import { updateProject } from '@/entities/project/index.server';
 
 import convertString from '@/commons/lib/convertString';
 

@@ -8,7 +8,7 @@ import {
 } from '@/features/post/constant';
 import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
 import parseOrderBy from '@/features/post/model/parseOrderBy';
-import { PostsFilter } from '@/features/post/types/post';
+import { PostsFilter } from '@/features/post/types/postsQuery';
 
 import Dropdown from '@/commons/ui/Dropdown';
 

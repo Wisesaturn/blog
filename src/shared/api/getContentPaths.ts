@@ -1,6 +1,6 @@
-import getPosts from '@/features/post/api/getPosts';
-import getProjects from '@/features/project/api/getProjects';
-import getSnippets from '@/features/snippet/api/getSnippets';
+import { getPosts } from '@/entities/post/index.server';
+import { getProjects } from '@/entities/project/index.server';
+import { getSnippets } from '@/entities/snippet/index.server';
 
 import convertString from '@/commons/lib/convertString';
 

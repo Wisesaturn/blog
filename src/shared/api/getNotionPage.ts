@@ -4,7 +4,7 @@ import { type z } from 'zod';
 import { formatNotionIssues } from '@/shared/model/notionProperty';
 import { type NotionPage } from '@/shared/types/notion';
 
-import notion from '@/commons/api/notion';
+import notion from '@/commons/api/notion.server';
 
 const normalizeId = (id: string) => id.replace(/-/g, '').toLowerCase();
 

@@ -4,8 +4,9 @@ import requestRedeploy from '@/shared/api/requestRedeploy';
 import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
 import getWebhookPageId from '@/shared/lib/getWebhookPageId';
 
-import updateSnippet from '@/features/snippet/api/updateSnippet';
 import createSnippet from '@/features/snippet/api/createSnippet';
+
+import { updateSnippet } from '@/entities/snippet/index.server';
 
 import convertString from '@/commons/lib/convertString';
 

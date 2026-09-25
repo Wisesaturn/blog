@@ -7,8 +7,9 @@
  */
 import { describe, expect, it } from 'vitest';
 
+import { type IPost } from '@/entities/post';
+
 import sortPosts from './sortPosts';
-import { type IPost } from '../types/post';
 
 type PostRow = Omit<IPost, 'body'>;
 

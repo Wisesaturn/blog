@@ -4,8 +4,9 @@ import { motion } from 'motion/react';
 import formatHeadTags from '@/shared/lib/formatHeadTags';
 
 import ProjectList from '@/features/project/ui/organisms/ProjectList';
-import sortProjects from '@/features/project/lib/sortProjects';
-import getProjects from '@/features/project/api/getProjects';
+
+import { sortProjects } from '@/entities/project';
+import { getProjects } from '@/entities/project/index.server';
 
 import Title from '@/commons/ui/Title';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { ISnippet } from '@/features/snippet/types/snippet';
+import { ISnippet } from '@/entities/snippet';
 
 import Icons from '@/commons/ui/icons';
 import Badge from '@/commons/ui/Badge';

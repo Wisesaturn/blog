@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 
-import { IPost } from '@/features/post/types/post';
 import PostFilter from '@/features/post/ui/molecules/PostFilter';
-import PostRow from '@/features/post/ui/molecules/PostRow';
 import PostEmptyRow from '@/features/post/ui/atoms/PostEmptyRow';
+
+import { IPost, PostRow } from '@/entities/post';
 
 interface PostListProps extends GlobalAnimation {
   posts: Omit<IPost, 'body'>[];

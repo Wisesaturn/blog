@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
 
-import { IPost } from '@/features/post/types/post';
 import ArticleTitleInfo from '@/features/post/ui/atoms/ArticleTitleInfo';
+
+import { IPost } from '@/entities/post';
 
 interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags'> {}
 

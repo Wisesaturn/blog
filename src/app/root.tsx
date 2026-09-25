@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
 import {
   Outlet,
   isRouteErrorResponse,
@@ -63,13 +65,17 @@ export const loader: LoaderFunction = ({ request }) => {
 
 export default function App() {
   const data = useLoaderData<GlobalLoaderData>();
+  // 서버에서 요청마다 새로 만들고, 브라우저에서는 한 번만 만든다. 모듈 전역에 두면 서버에서 사람끼리 캐시가 섞인다
+  const [queryClient] = useState(() => new QueryClient());
 
   useInitialScript();
 
   return (
-    <Layout data={data}>
-      <Outlet />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Layout data={data}>
+        <Outlet />
+      </Layout>
+    </QueryClientProvider>
   );
 }
 
