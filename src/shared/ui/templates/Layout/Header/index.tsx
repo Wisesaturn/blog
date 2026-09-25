@@ -1,7 +1,8 @@
 import ProgressBar from '@/shared/ui/atoms/header/ProgressBar';
 import Logo from '@/shared/ui/atoms/header/Logo';
 import Menus from '@/shared/ui/molecules/header/Menus';
-import DarkmodeButton from '@/shared/ui/atoms/header/DarkmodeButton';
+
+import { DarkmodeButton } from '@/features/darkmode';
 
 import Responsive from '@/commons/ui/Responsive';
 

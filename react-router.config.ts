@@ -2,7 +2,7 @@ import { createServer } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import type { Config } from '@react-router/dev/config';
-import type getContentPathsFn from './src/shared/api/getContentPaths';
+import type getContentPathsFn from './src/app/lib/getContentPaths';
 
 /**
  * 경로 목록을 앱 코드의 `getContentPaths` 로 만든다.
@@ -25,7 +25,7 @@ async function loadContentPaths(): ReturnType<typeof getContentPathsFn> {
     optimizeDeps: { noDiscovery: true, include: [] },
   });
   try {
-    const mod = await server.ssrLoadModule('/src/shared/api/getContentPaths.ts');
+    const mod = await server.ssrLoadModule('/src/app/lib/getContentPaths.ts');
     return await (mod.default as typeof getContentPathsFn)();
   } finally {
     await server.close();

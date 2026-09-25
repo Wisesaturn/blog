@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import Categories from '.';
+import { Categories } from '@/features/post-filter';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

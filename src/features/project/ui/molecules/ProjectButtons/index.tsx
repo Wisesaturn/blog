@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 
-import ProjectShareButton from '../../atoms/ProjectShareButton';
+import { ProjectShareButton } from '@/features/share';
+
 import ProjectListButton from '../../atoms/ProjectListButton';
 
 export default function ProjectButtons({ animation }: GlobalAnimation) {

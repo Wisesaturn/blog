@@ -12,8 +12,6 @@ import {
   type ShouldRevalidateFunction,
 } from 'react-router';
 
-import useInitialScript from '@/shared/hooks/useInitialScript';
-import formatHeadTags from '@/shared/lib/formatHeadTags';
 import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
 import Layout from '@/shared/ui/templates/Layout';
 
@@ -22,6 +20,9 @@ import getCookie from '@/commons/lib/getCookieOnHeader';
 import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 import globalStyles from '@/commons/styles/global.css?url';
 import Button from '@/commons/ui/button/Button';
+
+import formatHeadTags from './lib/formatHeadTags';
+import useInitialScript from './lib/useGoogleTag';
 
 export const meta: MetaFunction = (args) => formatHeadTags(args);
 

@@ -1,10 +1,11 @@
 import { ActionFunctionArgs } from 'react-router';
 
-import requestRedeploy from '@/shared/api/requestRedeploy';
-import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
-import getWebhookPageId from '@/shared/lib/getWebhookPageId';
-
-import createSnippet from '@/features/snippet/api/createSnippet';
+import {
+  requestRedeploy,
+  verifyWebhookSecret,
+  getWebhookPageId,
+  createSnippet,
+} from '@/features/publish/index.server';
 
 import { updateSnippet } from '@/entities/snippet/index.server';
 

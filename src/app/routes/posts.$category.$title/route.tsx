@@ -9,12 +9,10 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import useViewCount from '@/shared/hooks/useViewCount';
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
+import { useViewCount } from '@/features/view-count';
 import ArticleBox from '@/features/post/ui/organsims/ArticleBox';
 import ArticleButtons from '@/features/post/ui/molecules/ArticleButtons';
-import ArticleComments from '@/features/post/ui/atoms/ArticleComments';
+import { ArticleComments } from '@/features/comments';
 
 import { postQueries } from '@/entities/post';
 import { getPost } from '@/entities/post/index.server';
@@ -23,6 +21,8 @@ import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

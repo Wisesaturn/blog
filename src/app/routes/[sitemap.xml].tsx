@@ -1,6 +1,6 @@
-import getContentPaths from '@/shared/api/getContentPaths';
-
 import { ISitemap } from '@/commons/types/global';
+
+import getContentPaths from '../lib/getContentPaths';
 
 export const HOST_URL = `https://jaehan.blog`;
 

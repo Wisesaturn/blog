@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 
-import SnippetShareButton from '../../atoms/SnippetShareButton';
+import { SnippetShareButton } from '@/features/share';
+
 import SnippetListButton from '../../atoms/SnippetListButton';
 
 export default function SnippetButtons({ animation }: GlobalAnimation) {

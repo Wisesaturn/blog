@@ -1,6 +1,6 @@
 import { type ActionFunctionArgs } from 'react-router';
 
-import { countView, viewCountResponse } from '@/shared/api/viewCount';
+import { countView, viewCountResponse } from '@/features/view-count';
 
 import { getProject, increaseProjectViews } from '@/entities/project/index.server';
 

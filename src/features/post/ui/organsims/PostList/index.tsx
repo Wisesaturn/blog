@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import PostFilter from '@/features/post/ui/molecules/PostFilter';
+import { PostFilter } from '@/features/post-filter';
 import PostEmptyRow from '@/features/post/ui/atoms/PostEmptyRow';
 
 import { IPost, PostRow } from '@/entities/post';

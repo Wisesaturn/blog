@@ -1,8 +1,6 @@
 import { motion } from 'motion/react';
 import { MetaFunction } from 'react-router';
 
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
 import ProfileTitle from '@/features/profile/ui/molecules/ProfileTitle';
 import Education from '@/features/profile/ui/organisms/Education';
 import Awards from '@/features/profile/ui/organisms/Awards';
@@ -13,6 +11,8 @@ import Experiences from '@/features/profile/ui/organisms/Experiences';
 import Works from '@/features/profile/ui/organisms/Works';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

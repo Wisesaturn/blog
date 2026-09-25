@@ -1,8 +1,6 @@
 import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
 
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
 import SnippetList from '@/features/snippet/ui/organisms/SnippetList';
 
 import { getSnippets } from '@/entities/snippet/index.server';
@@ -10,6 +8,8 @@ import { getSnippets } from '@/entities/snippet/index.server';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
 import Title from '@/commons/ui/Title';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

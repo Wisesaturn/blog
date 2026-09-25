@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 
-import ArticleShareButton from '../../atoms/ArticleShareButton';
+import { ArticleShareButton } from '@/features/share';
+
 import ArticleListButton from '../../atoms/ArticleListButton';
 
 export default function ArticleButtons({ animation }: GlobalAnimation) {

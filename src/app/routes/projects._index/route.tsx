@@ -1,8 +1,6 @@
 import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
 import { motion } from 'motion/react';
 
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
 import ProjectList from '@/features/project/ui/organisms/ProjectList';
 
 import { sortProjects } from '@/entities/project';
@@ -11,6 +9,8 @@ import { getProjects } from '@/entities/project/index.server';
 import Title from '@/commons/ui/Title';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

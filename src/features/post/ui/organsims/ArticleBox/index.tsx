@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 
 import ArticleTitle from '@/features/post/ui/molecules/ArticleTitle';
 import ArticleTags from '@/features/post/ui/atoms/ArticleTags';
-import TOC from '@/features/post/ui/molecules/TOC';
+import { TOC } from '@/features/toc';
 import useCodePen from '@/features/post/hooks/useCodePen';
 
 import { IPost } from '@/entities/post';

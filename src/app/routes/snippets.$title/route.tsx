@@ -9,12 +9,10 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import useViewCount from '@/shared/hooks/useViewCount';
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
+import { useViewCount } from '@/features/view-count';
 import SnippetBox from '@/features/snippet/ui/organisms/SnippetBox';
 import SnippetButtons from '@/features/snippet/ui/molecules/SnippetButtons';
-import SnippetComments from '@/features/snippet/ui/atoms/SnippetComments';
+import { SnippetComments } from '@/features/comments';
 
 import { snippetQueries } from '@/entities/snippet';
 import { getSnippet } from '@/entities/snippet/index.server';
@@ -23,6 +21,8 @@ import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

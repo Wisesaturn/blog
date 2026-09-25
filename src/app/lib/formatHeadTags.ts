@@ -1,0 +1,151 @@
+import { MetaArgs, MetaDescriptor } from 'react-router';
+
+import { IPost } from '@/entities/post';
+import { IProject } from '@/entities/project';
+import { ISnippet } from '@/entities/snippet';
+
+import { DEFAULT_THUMBNAIL } from '@/commons/config/site';
+import convertString from '@/commons/lib/convertString';
+
+import { DEFAULT_DESCRIPTION } from '../config/meta';
+
+interface HeadTagFormat extends MetaArgs {
+  title?: string;
+  description?: string;
+  thumbnail?: string;
+  urlPrefix?: string;
+}
+
+// Type Guard
+function isPost(obj: unknown): obj is { post: IPost } {
+  return typeof obj === 'object' && obj !== null && 'post' in obj;
+}
+
+function isProject(obj: unknown): obj is { project: IProject } {
+  return typeof obj === 'object' && obj !== null && 'project' in obj;
+}
+
+function isSnippet(obj: unknown): obj is { snippet: ISnippet } {
+  return typeof obj === 'object' && obj !== null && 'snippet' in obj;
+}
+
+/**
+ * @summary meta tag 및 link tag 포맷을 추출하는 함수
+ * @returns
+ */
+export default function formatHeadTags(props: HeadTagFormat): MetaDescriptor[] {
+  const { title, description, urlPrefix, thumbnail, ...args } = props;
+  const { data, params } = args;
+
+  // calculate data
+  const prefix = urlPrefix || '';
+  const HOST_URL = `https://jaehan.blog/${prefix}`;
+  const convertTitle = `${params.title ? `${convertString(params.title, 'dashToSpace')}` : title || '사툰사툰'}`;
+
+  let convertThumbnail = thumbnail || DEFAULT_THUMBNAIL;
+  let convertDescription = description || DEFAULT_DESCRIPTION;
+  let convertUrl = HOST_URL;
+  let convertSuffix = '';
+
+  // thumbnail
+  if (isPost(data) && data.post.thumbnail) {
+    convertThumbnail = data.post.thumbnail;
+  } else if (isProject(data) && data.project.thumbnail) {
+    convertThumbnail = data.project.thumbnail;
+  }
+
+  // description
+  if (isPost(data) && data.post.description && data.post.tags) {
+    convertDescription = `${data.post.description} | ${data.post.tags.map((tag) => tag).join(' ')}`;
+  } else if (isProject(data) && data.project.description) {
+    convertDescription = `${data.project.description}`;
+  } else if (isSnippet(data) && data.snippet.description) {
+    convertDescription = data.snippet.skills?.length
+      ? `${data.snippet.description} | ${data.snippet.skills.map((skill) => skill).join(' ')}`
+      : data.snippet.description;
+  }
+
+  // url
+  if (params.category && params.title) {
+    convertUrl = `${HOST_URL}/${params.category}/${convertTitle}`;
+  } else if (params.category) {
+    convertUrl = `${HOST_URL}/${params.category}`;
+  } else if (params.title) {
+    convertUrl = `${HOST_URL}/${convertTitle}`;
+  }
+
+  // Title Suffix
+  if (params.category && params.title) {
+    convertSuffix = ` - 사툰사툰 ${params.category.toUpperCase()}`;
+  } else if (params.title && prefix) {
+    convertSuffix = ` - 사툰사툰 ${prefix.toUpperCase()}`;
+  } else if (prefix) {
+    convertSuffix = ` - 사툰사툰`;
+  }
+
+  // metadata object
+  const metadata = {
+    title: convertTitle + convertSuffix || '사툰사툰',
+    description: convertDescription,
+    url: convertString(convertUrl, 'spaceToDash'),
+    thumbnail: convertThumbnail,
+  };
+
+  return [
+    {
+      title: metadata.title,
+    },
+    {
+      name: 'thumbnail',
+      content: metadata.thumbnail,
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: metadata.url,
+    },
+    {
+      name: 'description',
+      content: metadata.description,
+    },
+    {
+      property: 'og:url',
+      content: metadata.url,
+    },
+    {
+      property: 'og:title',
+      content: metadata.title,
+    },
+    {
+      property: 'og:image',
+      content: metadata.thumbnail,
+    },
+    {
+      property: 'og:description',
+      content: metadata.description,
+    },
+    {
+      name: 'twitter:url',
+      content: metadata.url,
+    },
+    {
+      name: 'twitter:title',
+      content: metadata.title,
+    },
+    {
+      property: 'twitter:image',
+      content: metadata.thumbnail,
+    },
+    {
+      name: 'twitter:description',
+      content: metadata.description,
+    },
+    // social media : og graph
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'ko_KR' },
+    { property: 'og:image:width', content: '1200' },
+    { property: 'og:image:height', content: '630' },
+    // only X (before twitter)
+    { name: 'twitter:card', content: 'summary' },
+  ];
+}

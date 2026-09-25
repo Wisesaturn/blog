@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 import ProjectTitle from '@/features/project/ui/molecules/ProjectTitle';
-import TOC from '@/features/post/ui/molecules/TOC';
+import { TOC } from '@/features/toc';
 
 import { IProject } from '@/entities/project';
 

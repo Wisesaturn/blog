@@ -8,11 +8,12 @@ import {
 } from 'react-router';
 import { motion } from 'motion/react';
 
-import formatHeadTags from '@/shared/lib/formatHeadTags';
-
-import useUrlParamsUpdater from '@/features/post/hooks/useUrlParamsUpdater';
-import filterPosts, { parsePostsQuery } from '@/features/post/lib/filterPosts';
-import Categories from '@/features/post/ui/molecules/Categories';
+import {
+  useUrlParamsUpdater,
+  filterPosts,
+  parsePostsQuery,
+  Categories,
+} from '@/features/post-filter';
 import PostList from '@/features/post/ui/organsims/PostList';
 
 import { getPosts } from '@/entities/post/index.server';
@@ -21,6 +22,8 @@ import Input from '@/commons/ui/Input';
 import Title from '@/commons/ui/Title';
 import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
+
+import formatHeadTags from '../../lib/formatHeadTags';
 
 // meta
 export const meta: MetaFunction = (args) => {

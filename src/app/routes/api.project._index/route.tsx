@@ -1,10 +1,11 @@
 import { ActionFunctionArgs } from 'react-router';
 
-import requestRedeploy from '@/shared/api/requestRedeploy';
-import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
-import getWebhookPageId from '@/shared/lib/getWebhookPageId';
-
-import createProject from '@/features/project/api/createProject';
+import {
+  requestRedeploy,
+  verifyWebhookSecret,
+  getWebhookPageId,
+  createProject,
+} from '@/features/publish/index.server';
 
 import { updateProject } from '@/entities/project/index.server';
 

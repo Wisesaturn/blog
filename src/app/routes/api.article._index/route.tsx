@@ -1,10 +1,11 @@
 import { ActionFunctionArgs } from 'react-router';
 
-import requestRedeploy from '@/shared/api/requestRedeploy';
-import verifyWebhookSecret from '@/shared/api/verifyWebhookSecret';
-import getWebhookPageId from '@/shared/lib/getWebhookPageId';
-
-import createPost from '@/features/post/api/createPost';
+import {
+  requestRedeploy,
+  verifyWebhookSecret,
+  getWebhookPageId,
+  createPost,
+} from '@/features/publish/index.server';
 
 import { PRODUCTION_CATEGORY_DATA } from '@/entities/post';
 import { updatePost } from '@/entities/post/index.server';
