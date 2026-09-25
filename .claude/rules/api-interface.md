@@ -6,9 +6,8 @@ paths:
 
 # API 인터페이스 규칙
 
-> **상태: 목표 규칙.** `entities/` 레이어와 `@tanstack/react-query` 가 아직 없다.
-> 현재 Firestore 호출 위치는 `CLAUDE.md` 의 「Architecture > 현재」를 본다.
-> 이 문서의 3파일 구조(apis, queries, types)는 [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 적용한다.
+> 조회는 서버에서 loader 가 부른다. `queries.ts` 에는 브라우저가 직접 부르는 데이터만 둔다 (지금은 조회수).
+> Firestore 를 부르는 `apis.ts` 는 슬라이스의 `index.server.ts` 로만 내보낸다.
 
 entities 레이어의 Firebase API는 3파일 구조로 구성한다.
 features에서 mutation은 apis.ts 함수를 직접 import해 사용한다.
@@ -31,7 +30,7 @@ entities/{domain}/api/
 ```typescript
 // ✅ entities/post/api/apis.ts
 import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
-import { db } from '@/commons/api';
+import { db } from '@/commons/api/firebase.server';
 import { type PostDocument, type CreatePostInput } from './types';
 
 /**

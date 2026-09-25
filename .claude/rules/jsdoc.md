@@ -8,8 +8,6 @@ paths:
 
 > `@description` 을 쓴다. `@summary` 는 그 전에 쓰던 표기라 기존 코드에 남아 있다.
 > 새 JSDoc 은 `@description` 으로 적고, 기존 파일을 고칠 때 그 파일의 `@summary` 를 함께 바꾼다. 일괄 치환은 하지 않는다.
->
-> 아래 경로 표기는 목표 구조 기준이다. 현재 구조는 `CLAUDE.md` 의 「Architecture」를 본다.
 
 ## 1. API 함수 (`entities/[domain]/api/apis.ts`)
 

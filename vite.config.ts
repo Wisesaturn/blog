@@ -10,8 +10,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
  *
  * 라우트 규약과 빌드 동작은 `react-router.config.ts` 가 들고 있다. 이 파일은 Vite 쪽 설정만 둔다.
  *
- * alias 는 `tsconfig.paths.json` 하나를 `vite-tsconfig-paths` 가 읽어 쓴다. 다만 `vitest.config.ts`
- * 는 여전히 같은 값을 손으로 들고 있으므로, alias 를 추가할 때 두 파일을 함께 고친다.
+ * alias 는 `tsconfig.paths.json` 하나를 `vite-tsconfig-paths` 가 읽어 쓴다. Storybook 과 Vitest 도 같은 파일을 읽는다.
  */
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],

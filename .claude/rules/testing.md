@@ -19,10 +19,10 @@ pnpm test:watch   # 파일을 보며 돌린다
 | 컴포넌트 (`ui/`) | `{이름}.test.tsx` | jsdom |
 
 ```
-src/shared/lib/convertString.ts
-src/shared/lib/convertString.spec.ts     ← 옆에 둔다
-src/shared/ui/atoms/Badge/index.tsx
-src/shared/ui/atoms/Badge/index.test.tsx ← 옆에 둔다
+src/commons/lib/convertString.ts
+src/commons/lib/convertString.spec.ts ← 옆에 둔다
+src/commons/ui/Badge.tsx
+src/commons/ui/Badge.test.tsx         ← 옆에 둔다
 ```
 
 ---

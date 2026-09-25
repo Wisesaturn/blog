@@ -19,7 +19,9 @@
 
 ### Architecture
 - FSD 기반 폴더 구조를 나누었습니다
-- app, (routes = pages), features, shared
+- app → pages → modules → features → entities → commons 순으로만 import 합니다
+- `modules` 는 FSD 의 widgets, `commons` 는 shared 자리입니다
+- 레이어 규칙은 `eslint-plugin-fsd-lint` 가 검사합니다
 
 ### Convention
 - Function : camelCase

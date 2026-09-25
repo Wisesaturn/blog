@@ -15,62 +15,47 @@ pnpm storybook    # Storybook 개발 서버
 
 ## Tech Stack
 
-- **Framework**: Remix (React Router v6)
-- **Language**: TypeScript 5, React 18
+- **Framework**: React Router v7 (framework mode, Vite). 상세 페이지는 prerender 하고 나머지는 SSR 이다
+- **Language**: TypeScript 5, React 19
 - **Package Manager**: pnpm
 - **CMS**: Notion (`@notionhq/client`, `notion-to-md`)
-- **Styling**: Tailwind CSS + clsx + tailwind-merge → `cn()` 유틸, cva (class-variance-authority)
+- **Styling**: Tailwind CSS v4 + clsx + tailwind-merge → `cn()` 유틸, cva (class-variance-authority)
 - **Animation**: motion (`motion/react` 에서 import 한다. `framer-motion` 은 쓰지 않는다)
 - **Database**: Firebase (Firestore + Storage)
-- **State**: Remix loader 가 처리한다. 별도 상태 라이브러리는 설치되어 있지 않다
+- **Data**: 서버 데이터는 loader 가 읽는다. 브라우저에서 부르는 API(조회수)는 TanStack Query 5 로 읽는다
+- **Validation**: zod 4 (클라이언트 번들에 들어가는 곳은 `zod/mini`)
 - **Lint/Format**: ESLint 9 (flat config) + Prettier
 - **Test**: Vitest + Testing Library (jsdom)
 - **Component Dev**: Storybook
 
 ## Architecture — FSD (Feature-Sliced Design)
 
-> **현재 구조와 목표 구조가 다르다.** 목표 구조는 [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 적용한다.
-> 그 전까지 새 코드를 쓸 때는 아래 「현재」의 위치와 alias 를 쓴다.
-
-### 현재
-
 ```
 src/
-├── app/routes/     # Remix route 파일 (실제 구현이 여기 들어 있다)
-├── features/       # 도메인 단위 (post, snippet, project, profile, home)
-│   └── {domain}/   # api, ui, types, lib, hooks, constant, helper
-│                   # ui/ 내부는 atomic design (atoms, molecules, organisms)
-├── shared/         # 공유 코드 대부분
-│   └── ui, lib, api, middleware, types, styles, constant, hooks, helper, assets
-└── commons/        # lib, model 일부만 있다
-```
-
-- alias: `$app/*`, `$features/*`, `$shared/*`, `@/*` (`tsconfig.paths.json`)
-- `$pages/*` 가 alias 에 정의되어 있으나 `src/pages/` 는 없다
-- `pages/`, `modules/`, `entities/` 레이어는 아직 없다
-- Firestore 직접 호출은 `features/{domain}/api/` 에 있다
-
-### 목표 (#89)
-
-```
-src/
-├── app/            # Remix 라우팅 전용 (routes/ 파일은 src/pages/ import 브릿지)
-│   └── routes/     # Remix route 파일
-├── pages/          # 페이지 조합 레이어
-├── modules/        # 전역 레이아웃 컴포넌트 (Header, Footer, Nav 등)
-├── features/       # 사용자 행동 단위 (검색, 좋아요, 댓글 등)
-├── entities/       # 비즈니스 엔티티 + Firebase API 함수
-└── commons/        # 공유 코드 (의존성 없음)
-    ├── api/        # Firebase 싱글턴 초기화만 (auth, db export)
-    ├── config/     # 환경변수, 앱 상수
-    ├── lib/        # 유틸 함수 (cn.ts 등)
+├── app/            # React Router 루트와 라우팅
+│   ├── routes/     # route 파일. loader, meta, headers 를 두고 화면은 pages 에서 가져온다
+│   ├── lib/        # formatHeadTags, getContentPaths(sitemap·prerender 경로) 등 라우팅 전용 코드
+│   ├── config/     # meta 기본값
+│   └── ui/         # Document (<html>, <head>, <body>)
+├── pages/          # 페이지 조합. 슬라이스마다 {Page} 컴포넌트 하나를 내보낸다
+├── modules/        # 전역 레이아웃 (AppShell: 헤더, 내비게이션, 푸터). FSD 의 widgets 자리다
+├── features/       # 사용자 행동 단위 (publish, post-filter, view-count, share, comments, toc, darkmode)
+├── entities/       # 비즈니스 엔티티 (post, snippet, project) + Firestore API
+└── commons/        # 의존성 없는 공용 코드. FSD 의 shared 자리다
+    ├── api/        # firebase.server.ts, notion.server.ts, 브라우저용 postViewCount
+    ├── config/     # 앱 상수 (animation, cache, site)
+    ├── lib/        # 유틸 함수 (cn, cva, logger, convertString 등)
+    ├── model/      # 레이아웃 context, 공용 훅
     ├── types/      # 공통 TypeScript 타입
-    └── ui/         # 재사용 기본 UI 컴포넌트
+    ├── ui/         # 재사용 기본 UI 컴포넌트
+    └── styles/, assets/
 ```
 
 **의존 방향**: `app → pages → modules → features → entities → commons`
 
-> `shared/`, `widgets/` 레이어는 목표 구조에서 쓰지 않는다. `shared/` 는 `commons/` 로 옮긴다.
+- alias 는 `@/*` 하나다 (`tsconfig.paths.json`). Vite, Storybook, Vitest 가 모두 이 파일을 읽는다
+- route 파일의 default 는 `useLoaderData` 로 읽은 값을 page 에 props 로 넘기는 브리지다. pages 가 app 의 loader 타입을 가져오지 않게 하기 위해서다
+- 서버 전용 코드는 `.server` 이름을 쓴다. entities 와 `features/publish` 는 Firestore·Notion 을 부르는 API 를 `index.server.ts` 로, 나머지를 `index.ts` 로 내보낸다. `.server` 모듈이 클라이언트 번들에 섞이면 React Router 가 빌드를 실패시킨다
 
 ## Naming Conventions
 
@@ -87,47 +72,34 @@ src/
 
 ## Conventions
 
-### 지금 지키는 것
-
-- `@/*` 는 `src/*` 로 매핑된다. `$app/*`, `$features/*`, `$shared/*` 도 함께 쓰이는데 legacy 다. 새 코드는 `@/*` 를 쓴다
+- `@/*` 가 `src/*` 로 매핑된다. 다른 alias 는 없다
 - type import 는 인라인으로 적는다: `import { type Foo } from '...'`
-- 슬라이스 public API 는 `index.ts` 를 거쳐 import 한다
+- 슬라이스(pages, modules, features, entities) 밖에서는 `index.ts` 나 `index.server.ts` 를 거쳐 import 한다. commons 는 세그먼트 안의 파일을 바로 가져와도 된다
+- Firestore 직접 호출은 `entities/{domain}/api/apis.ts` 에서만 한다. Storage 와 Notion 호출은 `features/publish` 에 있다
+- Firebase 싱글턴은 `import { db } from '@/commons/api/firebase.server'` 로 가져온다
+- `cn()`, `cva` 는 `@/commons/lib` 에서 가져온다
+- 외부에서 들어오는 데이터(Notion, Firestore 문서, 웹훅 본문, 쿼리스트링)는 zod 스키마로 검사한다
 - `console.log` 를 쓰지 않는다. `console.warn` 과 `console.error` 만 쓴다
-- import 순서는 `import/order` 가 강제한다
 
-> 위 네 가지 중 `import/order` 만 린트가 막는다. 나머지는 규칙이고 자동 검사가 없다. [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 린트로 옮긴다.
-
-### #89 이후 지킬 것
-
-- alias 를 `@/*` 로 통일한다. `$*` alias 는 그때 없어진다
-- Firestore 직접 호출은 `entities/{domain}/api/apis.ts` 에서만 허용한다. 지금은 `features/{domain}/api/` 에 있다
-- Firebase 싱글턴을 `import { db } from '@/commons/api'` 로 가져온다. 지금은 `$shared/middleware/firebase` 다
-- `cn()`, `cva` 를 `@/commons/lib` 에서 가져온다
+> import 순서, FSD 레이어, public API, 파일 이름은 린트가 막는다. type import 형식과 `console.log` 금지는 규칙이고 자동 검사가 없다.
 
 ## ESLint Rules
 
-ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰지 않는다. 아래 「목표」 플러그인 도입은 [#89](https://github.com/Wisesaturn/blog/issues/89) 에서 한다.
-
-### 지금 켜져 있는 것
+ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰지 않는다.
 
 - **기반**: `@eslint/js` recommended, `typescript-eslint` recommended, `eslint-plugin-import-x`, `eslint-plugin-react`, `eslint-plugin-jsx-a11y`, `eslint-plugin-storybook`, `eslint-plugin-prettier`
 - **react-hooks**: `rules-of-hooks`(error), `exhaustive-deps`(warn) 만 켠다. v7 의 나머지 규칙은 React Compiler 용이다
-- **import-x/order**: `@/app` → `@/pages` → `@/modules` → `@/features` → `@/entities` → `@/commons` → `$*`(legacy) 순 (error)
+- **import-x/order**: `@/app` → `@/pages` → `@/modules` → `@/features` → `@/entities` → `@/commons` 순 (error)
 - **prettier/prettier**: 포맷을 error 로 막는다
 - **@typescript-eslint/naming-convention**: interface 와 typeAlias 는 PascalCase, 변수는 camelCase / UPPER_CASE / PascalCase (error)
 - **@typescript-eslint/no-unused-vars**: `^_` 로 시작하지 않는 미사용 변수는 warn
 - **no-warning-comments**: TODO, FIXME, XXX, BUG, HOLD 를 warn
 - **no-nested-ternary**, **eqeqeq**: airbnb 에서 받던 것을 직접 켰다 (error)
+- **eslint-plugin-fsd-lint**: `forbidden-imports`(상위에서 하위로만), `no-cross-slice-dependency`, `no-public-api-sidestep`(`index.server.ts` 도 public API 로 본다), `no-relative-imports`(같은 슬라이스는 허용), `no-ui-in-business-logic`. 레이어 폴더 이름은 `fsdOptions` 가 widgets → modules, shared → commons 로 잇는다
+- **eslint-plugin-check-file**: `*.tsx` 는 PascalCase, `*.ts` 는 camelCase, `src/` 하위 폴더는 kebab-case. `.test`, `.stories`, `.server` 같은 중간 확장자는 보지 않는다. `app/routes` 와 `root`, `entry.*` 는 예외
 
 > **`no-console` 은 켜져 있지 않다.** 규칙으로는 `console.log` 를 금지하지만 린트가 막지 않는다.
 > **`consistent-type-imports` 는 설정되어 있지 않다.** 인라인 type import 도 규칙일 뿐 강제되지 않는다.
-
-### 목표 (#89)
-
-아래 플러그인은 **아직 설치되어 있지 않다.**
-
-- **eslint-plugin-fsd-lint**: `fsd/forbidden-imports`(상위에서 하위로만 import), `fsd/no-relative-imports`, `fsd/no-public-api-sidestep`, `fsd/no-cross-slice-dependency`, `fsd/no-ui-in-business-logic`
-- **eslint-plugin-check-file**: `*.tsx` 는 PascalCase, `*.ts` 는 camelCase, `src/` 하위 폴더는 kebab-case. Remix 규약 파일은 예외
 
 ## Git 커밋 규칙
 
