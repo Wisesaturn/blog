@@ -12,15 +12,13 @@ import {
   type ShouldRevalidateFunction,
 } from 'react-router';
 
-import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
-import Layout from '@/shared/ui/templates/Layout';
-
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import getCookie from '@/commons/lib/getCookieOnHeader';
 import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 import globalStyles from '@/commons/styles/global.css?url';
 import Button from '@/commons/ui/button/Button';
 
+import Document from './ui/Document';
 import formatHeadTags from './lib/formatHeadTags';
 import useInitialScript from './lib/useGoogleTag';
 
@@ -60,7 +58,6 @@ export const loader: LoaderFunction = ({ request }) => {
     layout: {
       darkmode,
     },
-    middleware: {},
   };
 };
 
@@ -73,9 +70,9 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Layout data={data}>
+      <Document data={data}>
         <Outlet />
-      </Layout>
+      </Document>
     </QueryClientProvider>
   );
 }
@@ -89,7 +86,6 @@ export function ErrorBoundary() {
   const navigate = useNavigate();
   const data = {
     layout: DEFAULT_LAYOUT_VALUE,
-    middleware: DEFAULT_MIDDLEWARE_VALUE,
   };
 
   const goToBack = () => {
@@ -98,7 +94,7 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <Layout data={data}>
+      <Document data={data}>
         <h1 className="w-full text-center pt-16 pb-8">
           {error.status} {error.statusText}
         </h1>
@@ -107,12 +103,12 @@ export function ErrorBoundary() {
             <Button.Text>뒤로가기</Button.Text>
           </Button>
         </div>
-      </Layout>
+      </Document>
     );
   }
   if (error instanceof Error) {
     return (
-      <Layout data={data}>
+      <Document data={data}>
         <h1 className="w-full text-center pt-16 pb-2">{error.name}</h1>
         <p className="w-full text-center max-w-layout mx-auto break-keep pt-4 pb-8">
           {error.message}
@@ -130,17 +126,17 @@ export function ErrorBoundary() {
             <Button.Text>뒤로가기</Button.Text>
           </Button>
         </div>
-      </Layout>
+      </Document>
     );
   }
   return (
-    <Layout data={data}>
+    <Document data={data}>
       <h1 className="w-full text-center pt-16 pb-8">Unknown Error</h1>
       <div className="w-fit mx-auto h-screen">
         <Button onClick={goToBack}>
           <Button.Text>뒤로가기</Button.Text>
         </Button>
       </div>
-    </Layout>
+    </Document>
   );
 }

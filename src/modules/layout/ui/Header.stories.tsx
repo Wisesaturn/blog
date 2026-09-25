@@ -2,7 +2,7 @@ import { MemoryRouter } from 'react-router';
 
 import LayoutContext, { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 
-import Header from './index';
+import Header from './Header';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

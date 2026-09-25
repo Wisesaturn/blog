@@ -1,8 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import { DEFAULT_MIDDLEWARE_VALUE } from '@/shared/middleware/_index';
-
-import NavigationBar from './index';
+import NavigationBar from './NavigationBar';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

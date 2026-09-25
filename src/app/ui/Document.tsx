@@ -3,15 +3,9 @@ import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
-import MiddlewareContext from '@/shared/middleware/_index';
+import { AppShell } from '@/modules/layout';
 
-import { DEFAULT_LAYOUT_VALUE, LayoutProvider } from '@/commons/model/layout';
 import Spinner from '@/commons/ui/spinner/Spinner';
-
-import Copyright from './Copyright';
-import Header from './Header';
-import NavigationBar from './NavigationBar';
-import TopButton from './TopButton';
 
 /**
  * 페인트 전에 `<html color-theme>` 를 정한다. 사용자가 고른 테마(쿠키)가 먼저고, 없으면 시스템 설정을 따른다.
@@ -22,7 +16,11 @@ import TopButton from './TopButton';
  */
 const THEME_SCRIPT = `(function(){try{var m=document.cookie.match(/(?:^|; )color-theme=(dark|light)/);var t=m?m[1]:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('color-theme',t);}catch(e){}})();`;
 
-export default function Layout({
+/* -------------------------------------------------------------------------------------------------
+ * Document
+ * `<html>` 부터 그리는 문서 셸. 테마 스크립트와 meta, 아이콘, 분석 스크립트를 넣고 본문은 `AppShell` 에 맡긴다.
+ * -----------------------------------------------------------------------------------------------*/
+export default function Document({
   children,
   data,
 }: {
@@ -82,15 +80,7 @@ export default function Layout({
       </head>
       <body>
         <Suspense fallback={<Spinner layout="full" />}>
-          <MiddlewareContext.Provider value={data.middleware}>
-            <LayoutProvider initialLayout={{ ...DEFAULT_LAYOUT_VALUE, ...data.layout }}>
-              <Header />
-              {children}
-              <TopButton />
-              <NavigationBar />
-              <Copyright />
-            </LayoutProvider>
-          </MiddlewareContext.Provider>
+          <AppShell layout={data.layout}>{children}</AppShell>
         </Suspense>
         <ScrollRestoration />
         <Analytics />

@@ -1,12 +1,9 @@
-import { IMiddleware } from '@/shared/middleware/_index';
-
 import { ILayout } from '@/commons/model/layout';
 
 declare global {
   type Hierarchy = 'primary' | 'secondary';
   interface GlobalLoaderData {
     layout: ILayout;
-    middleware: IMiddleware;
   }
   interface GlobalAnimation {
     animation?: {

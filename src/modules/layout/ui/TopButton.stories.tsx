@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 
-import TopButton from './index';
+import TopButton from './TopButton';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

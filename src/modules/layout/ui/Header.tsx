@@ -1,12 +1,11 @@
-import ProgressBar from '@/shared/ui/atoms/header/ProgressBar';
-import Logo from '@/shared/ui/atoms/header/Logo';
-import Menus from '@/shared/ui/molecules/header/Menus';
-
 import { DarkmodeButton } from '@/features/darkmode';
 
 import Responsive from '@/commons/ui/Responsive';
 
-import { HeaderMenu } from './constant';
+import ProgressBar from './ProgressBar';
+import Logo from './HeaderLogo';
+import Menus from './HeaderMenus';
+import { HeaderMenu } from '../config/menu';
 
 const Header = () => {
   // style
