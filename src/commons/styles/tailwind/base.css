@@ -290,7 +290,8 @@
       margin-top: 32px;
     }
 
-    /* 강조 — 본문 글(문단, 목록, 표 셀)의 굵게는 형광펜처럼 배경을 칠한다. 이 블로그의 굵게 표시다.
+    /* 강조 — 본문 글(문단, 목록, 표 셀)의 굵게는 형광펜처럼 아래쪽 60% 를 칠한다. 이 블로그의 굵게 표시다.
+       위를 비워 두면 박스가 아니라 형광펜으로 그은 것처럼 보인다.
        색만으로 강조하면 색각 이상 사용자에게 구분되지 않으므로 굵기와 함께 쓴다.
        대비는 라이트 약 12:1, 다크 약 6:1 이다 */
     strong {
@@ -300,7 +301,7 @@
     :where(p, li, td) strong {
       padding-inline: 0.15em;
       border-radius: 2px;
-      background-color: var(--md-highlight);
+      background: linear-gradient(transparent 40%, var(--md-highlight) 40%);
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
     }
@@ -308,13 +309,7 @@
     /* 인용과 콜아웃은 박스 자체가 강조라 안에서 또 칠하지 않는다. .callout 은 #99 에서 생긴다 */
     :where(blockquote, .callout) strong {
       padding-inline: 0;
-      background-color: transparent;
-    }
-
-    /* 굵게 안의 인라인 코드는 형광펜이 끊기지 않게 배경을 빼고 글꼴로만 구분한다 */
-    :where(p, li, td) strong code {
-      padding-inline: 0;
-      background-color: transparent;
+      background: none;
     }
 
     /* 선택 색 — 기본 선택 색(연민트)이 형광펜과 같은 계열이라 본문 안에서는 파랑 반투명을 쓴다 */
@@ -337,6 +332,13 @@
       border-radius: 4px;
       background-color: var(--md-code-bg);
       color: var(--md-text);
+    }
+
+    /* 굵게 안의 인라인 코드는 형광펜이 끊기지 않게 배경을 빼고 글꼴로만 구분한다.
+       인라인 코드 규칙과 우선순위가 같아서 그 뒤에 둬야 이긴다 */
+    :where(p, li, td) strong code {
+      padding-inline: 0;
+      background-color: transparent;
     }
 
     /* 링크 — 예전 모양을 유지한다. inline-block 이면 긴 링크가 줄바꿈되지 않아 모바일에서 넘치므로 inline 이다 */
