@@ -15,7 +15,8 @@ export default defineConfig({
   },
   plugins: [tsconfigPaths()],
   test: {
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    // .github/scripts 는 워크플로가 부르는 유틸이다 (#107)
+    include: ['src/**/*.{test,spec}.{ts,tsx}', '.github/scripts/**/*.spec.ts'],
     exclude: ['**/node_modules/**', '**/build/**', '**/storybook-static/**'],
     environment: 'jsdom',
     globals: true,

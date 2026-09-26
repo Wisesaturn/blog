@@ -49,6 +49,12 @@ git log --oneline --no-merges "$BASE"..HEAD
 
 **3. PR 제목 + 본문 작성** ([rules/pr-convention.md](rules/pr-convention.md) 참고)
 
+**3-1. 버전 레이블 결정**
+
+[rules/pr-convention.md 의 「버전 레이블」](rules/pr-convention.md#버전-레이블) 로 `patch`, `minor`, `major` 중 하나를 고르거나 붙이지 않는다. 판단이 갈리면 사용자에게 확인한다.
+
+- 완료: 레이블(또는 "없음")과 그 이유 한 줄을 사용자에게 보여줬다
+
 **4. 브랜치 push**
 
 ```bash
@@ -61,11 +67,17 @@ git push -u origin {current-branch}
 gh pr create \
   --base "$BASE" \
   --title "{title}" \
+  --label "{version-label}" \
   --body "$(cat <<'EOF'
 {body}
 EOF
 )"
 ```
+
+버전 레이블이 없으면 `--label` 줄을 뺀다.
+
+PR 이 열리면 `version-bump` 체크가 레이블대로 `package.json` 버전을 올리는 bump commit 을 PR 브랜치에 push 한다. 이 체크가 통과해야 머지할 수 있다.
+그 뒤에 로컬에서 더 커밋해 push 하려면 먼저 `git pull --rebase` 로 bot 커밋을 받는다.
 
 **6. 코드 리뷰 실행**
 

@@ -25,6 +25,8 @@ src/commons/ui/Badge.tsx
 src/commons/ui/Badge.test.tsx         ← 옆에 둔다
 ```
 
+워크플로가 부르는 유틸(`.github/scripts/`)도 같은 규칙으로 옆에 `{이름}.spec.ts` 를 둔다. `vitest.config.ts` 의 `include` 가 `src/**` 와 `.github/scripts/**` 를 본다.
+
 ---
 
 ## 2. 무엇을 먼저 쓰는가
