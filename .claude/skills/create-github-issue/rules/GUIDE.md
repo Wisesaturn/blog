@@ -147,3 +147,10 @@ gh repo view Wisesaturn/blog --json defaultBranchRef -q .defaultBranchRef.name
 git checkout -b refactor/#{번호}
 git checkout -b feat/#{번호}
 ```
+
+에픽이면 기본 브랜치에서 에픽 브랜치 `feature/#{에픽 번호}` 를 따서 push 해 두고, sub-issue 브랜치는 **에픽 브랜치에서** 딴다. sub-issue PR 은 에픽 브랜치로, 에픽 PR 은 기본 브랜치로 간다 (pr-convention 의 「에픽 브랜치 흐름」).
+
+```bash
+git checkout -b feature/#{에픽 번호} origin/{기본 브랜치} && git push -u origin feature/#{에픽 번호}
+git checkout -b feat/#{sub-issue 번호} origin/feature/#{에픽 번호}
+```

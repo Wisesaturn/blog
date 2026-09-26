@@ -117,6 +117,7 @@ ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰
 - `package.json` 의 `version` 은 손으로 고치지 않는다. 체크가 매번 base 브랜치 끝 버전 + 레이블로 덮어쓴다
 - bump commit 뒤 로컬에서 더 커밋하려면 먼저 `git pull --rebase` 로 bot 커밋을 받는다
 - 릴리즈 브랜치에는 직접 push 할 수 없다. 문서나 설정 변경도 레이블 없는 PR 로 올린다
+- 에픽은 sub-issue PR 을 에픽 브랜치 `feature/#{에픽}` 에 모은 뒤 에픽 PR 하나로 릴리즈 브랜치에 올린다. 버전 레이블과 `closes` 는 에픽 PR 에만 쓴다 (`/pr-convention` 의 「에픽 브랜치 흐름」)
 - PR 이 여러 개 열려 있으면 모두 같은 다음 버전을 잡는다. 하나가 머지되면 룰셋(up-to-date 요구)이 나머지의 머지를 막고, `sync-release-prs` 워크플로가 그 PR 들에 base 를 merge 해 새 base 기준으로 버전을 다시 맞춘다. `version` 줄 충돌은 bot 이 풀고, 다른 파일이 충돌하면 PR 에 코멘트만 남긴다
 - 워크플로 단계는 `.github/actions/` 의 composite action 이다. 설정은 `release-config`, 버전은 `ensure-version`(`version-label` → `semver-bump` → `commit-version`), 갱신은 `sync-base`, 발행은 `release-notes` → `publish-release`
 - 판단 규칙은 spec 이 있는 스크립트에만 둔다: 레이블은 `.github/scripts/getBumpType.ts`, 노트 형식은 `.github/scripts/buildReleaseNotes.ts`
