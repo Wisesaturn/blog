@@ -3,18 +3,13 @@ import { useState } from 'react';
 import {
   Outlet,
   isRouteErrorResponse,
-  useLoaderData,
   useNavigate,
   useRouteError,
   type LinksFunction,
-  type LoaderFunction,
   type MetaFunction,
-  type ShouldRevalidateFunction,
 } from 'react-router';
 
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
-import getCookie from '@/commons/lib/getCookieOnHeader';
-import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
 import globalStyles from '@/commons/styles/global.css?url';
 import Button from '@/commons/ui/button/Button';
 
@@ -35,34 +30,11 @@ export const links: LinksFunction = () => [
 ];
 
 /**
- * root loader 는 테마 쿠키만 읽으므로 쿼리스트링이 바뀌어도 결과가 같다.
- * 목록의 검색과 필터는 쿼리스트링만 바꾸는데, 이걸 막지 않으면 조작할 때마다 root 의 `.data` 요청이
- * 서버 함수까지 간다. 경로가 바뀌거나 action 을 거칠 때는 기본 동작대로 다시 읽는다.
+ * root 에는 loader 를 두지 않는다. 예전 loader 는 테마 쿠키를 읽어 `<html color-theme>` 에 넣었는데,
+ * 상세는 빌드 때 굽고 목록은 CDN 에 캐시해서 그 값이 지금 보는 사람의 것이 아니었다 (#106).
+ * 사람마다 다른 값은 root 응답에 싣지 않는다. 테마는 `@/commons/lib/theme` 가 브라우저에서 정한다.
  */
-export const shouldRevalidate: ShouldRevalidateFunction = ({
-  currentUrl,
-  nextUrl,
-  formMethod,
-  defaultShouldRevalidate,
-}) => {
-  if (formMethod) return defaultShouldRevalidate;
-  if (currentUrl.pathname === nextUrl.pathname) return false;
-  return defaultShouldRevalidate;
-};
-
-export const loader: LoaderFunction = ({ request }) => {
-  const cookieHeader = request.headers.get('cookie');
-  const darkmode = getCookie(cookieHeader, 'color-theme') || 'light';
-
-  return {
-    layout: {
-      darkmode,
-    },
-  };
-};
-
 export default function App() {
-  const data = useLoaderData<GlobalLoaderData>();
   // 서버에서 요청마다 새로 만들고, 브라우저에서는 한 번만 만든다. 모듈 전역에 두면 서버에서 사람끼리 캐시가 섞인다
   const [queryClient] = useState(() => new QueryClient());
 
@@ -70,7 +42,7 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Document data={data}>
+      <Document>
         <Outlet />
       </Document>
     </QueryClientProvider>
@@ -84,9 +56,6 @@ export function ErrorBoundary() {
   const error = useRouteError();
   console.error(error);
   const navigate = useNavigate();
-  const data = {
-    layout: DEFAULT_LAYOUT_VALUE,
-  };
 
   const goToBack = () => {
     navigate(-1);
@@ -94,7 +63,7 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <Document data={data}>
+      <Document>
         <h1 className="w-full text-center pt-16 pb-8">
           {error.status} {error.statusText}
         </h1>
@@ -108,7 +77,7 @@ export function ErrorBoundary() {
   }
   if (error instanceof Error) {
     return (
-      <Document data={data}>
+      <Document>
         <h1 className="w-full text-center pt-16 pb-2">{error.name}</h1>
         <p className="w-full text-center max-w-layout mx-auto break-keep pt-4 pb-8">
           {error.message}
@@ -130,7 +99,7 @@ export function ErrorBoundary() {
     );
   }
   return (
-    <Document data={data}>
+    <Document>
       <h1 className="w-full text-center pt-16 pb-8">Unknown Error</h1>
       <div className="w-fit mx-auto h-screen">
         <Button onClick={goToBack}>

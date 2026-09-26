@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import { createRoutesStub } from 'react-router';
 
-import { DEFAULT_LAYOUT_VALUE } from '@/commons/model/layout';
-
 import AppShell from './AppShell';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -36,7 +34,6 @@ function WithRouterStub({ storyComponent }: { storyComponent: React.ComponentTyp
 export const Default: Story = {
   args: {
     children: <main className="p-8">본문</main>,
-    layout: DEFAULT_LAYOUT_VALUE,
   },
   decorators: [(StoryChildren) => <WithRouterStub storyComponent={StoryChildren} />],
 };

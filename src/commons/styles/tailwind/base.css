@@ -69,6 +69,7 @@
     --md-copy-done: #16a34a;
 
     accent-color: var(--green-main);
+    color-scheme: light;
   }
 
   /** dark theme */
@@ -117,6 +118,7 @@
     --md-copy-done: #4ade80;
 
     accent-color: var(--green-main);
+    color-scheme: dark;
   }
 }
 
