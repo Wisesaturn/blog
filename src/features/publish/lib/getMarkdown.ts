@@ -6,6 +6,7 @@ import { NotionToMarkdown } from 'notion-to-md';
 import notion from '@/commons/api/notion.server';
 
 import checkJSX from './checkJSX';
+import formatCallout from './formatCallout';
 
 const n2m = new NotionToMarkdown({
   notionClient: notion,
@@ -109,6 +110,26 @@ ${content}
 ${content}
 \`\`\`
   `;
+});
+
+/**
+ * callout settings
+ * 서식과 하위 블록은 notion-to-md 의 공개 기능으로 만들고, 바깥 틀만 인용 대신 콜아웃으로 바꾼다
+ */
+n2m.setCustomTransformer('callout', async (block: any) => {
+  const { rich_text: richText, icon } = block.callout;
+  const text = richText
+    .map((item: any) => {
+      const annotated = n2m.annotatePlainText(item.plain_text, item.annotations);
+      return item.href ? `[${annotated}](${item.href})` : annotated;
+    })
+    .join('');
+  const children = block.has_children
+    ? n2m.toMarkdownString(await n2m.pageToMarkdown(block.id)).parent
+    : '';
+  const emoji = icon?.type === 'emoji' ? icon.emoji : '';
+
+  return formatCallout(emoji, [text, children].filter(Boolean).join('\n\n'));
 });
 
 /**

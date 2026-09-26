@@ -50,6 +50,8 @@
     --md-link-hover: #1d4ed8;
     --md-highlight: #b8ecd7;
     --md-selection: rgba(59, 130, 246, 0.25);
+    --md-callout-bg: #eefaf4;
+    --md-callout-line: #cdeedd;
     --md-marker: #9ca3af;
     --md-code-title-bg: #eaeaeb;
     --md-copy-bg: rgba(0, 0, 0, 0.04);
@@ -88,6 +90,8 @@
     --md-link-hover: #3b82f6;
     --md-highlight: rgba(110, 231, 183, 0.3);
     --md-selection: rgba(96, 165, 250, 0.35);
+    --md-callout-bg: rgba(110, 231, 183, 0.08);
+    --md-callout-line: rgba(110, 231, 183, 0.22);
     --md-marker: #6b7280;
     --md-code-title-bg: #21252b;
     --md-copy-bg: rgba(255, 255, 255, 0.1);
@@ -449,6 +453,32 @@
       padding-left: 16px;
       border-left: 4px solid var(--md-border-strong);
       color: var(--md-muted);
+    }
+
+    /* 콜아웃 — Notion 콜아웃을 발행 때 aside.callout 으로 바꾼다 (#99). 인용(왼쪽 선)과 구분되도록
+       블로그 포인트 색인 민트를 옅게 채운 둥근 상자로 그린다 */
+    .callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 16px 18px;
+      border-radius: 10px;
+      background-color: var(--md-callout-bg);
+      outline: 1px solid var(--md-callout-line);
+      outline-offset: -1px;
+    }
+
+    .callout-icon {
+      flex: none;
+      font-size: 1.15em;
+    }
+
+    .callout-content {
+      min-width: 0;
+
+      > * + * {
+        margin-top: 12px;
+      }
     }
 
     /* 이미지 */
