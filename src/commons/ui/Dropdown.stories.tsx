@@ -10,7 +10,7 @@ const meta = {
     layout: 'padded',
   },
   args: {
-    label: 'Dropdown',
+    label: 'menu1',
     items: ['menu1', 'menu2', 'menu3'],
   },
 } satisfies Meta<typeof Dropdown>;
