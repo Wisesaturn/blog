@@ -430,11 +430,19 @@
       margin-left: 1em;
     }
 
-    /* 표 — 가로선만 두고 왼쪽 정렬 */
+    /* 표 — 가로선만 두고 왼쪽 정렬. 넓은 표는 표 안에서만 가로로 스크롤한다 (#99).
+       감싸는 요소가 없는 기존 본문에도 적용되도록 표 자체를 스크롤 상자로 만든다. 다만 block 이면
+       좁은 표가 폭 100% 로 늘어나지 않아서, 넘침이 생기는 모바일에서만 바꾼다 */
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
+
+      @media (width < 48rem) {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
       th,
       td {
