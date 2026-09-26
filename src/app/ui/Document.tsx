@@ -5,31 +5,18 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { AppShell } from '@/modules/layout';
 
+import { THEME_SCRIPT } from '@/commons/lib/theme';
 import Spinner from '@/commons/ui/spinner/Spinner';
-
-/**
- * 페인트 전에 `<html color-theme>` 를 정한다. 사용자가 고른 테마(쿠키)가 먼저고, 없으면 시스템 설정을 따른다.
- *
- * 상세 페이지는 빌드 때 구운 HTML 이나 CDN 에 캐시된 HTML 로 나가서, 서버가 쿠키를 읽어 넣은 테마가
- * 지금 보는 사람의 것이 아닐 수 있다. 하이드레이션을 기다리면 다크 모드 사용자에게 밝은 화면이 먼저
- * 보이므로 `<head>` 안에서 동기로 실행한다.
- */
-const THEME_SCRIPT = `(function(){try{var m=document.cookie.match(/(?:^|; )color-theme=(dark|light)/);var t=m?m[1]:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('color-theme',t);}catch(e){}})();`;
 
 /* -------------------------------------------------------------------------------------------------
  * Document
  * `<html>` 부터 그리는 문서 셸. 테마 스크립트와 meta, 아이콘, 분석 스크립트를 넣고 본문은 `AppShell` 에 맡긴다.
  * -----------------------------------------------------------------------------------------------*/
-export default function Document({
-  children,
-  data,
-}: {
-  children: React.ReactNode;
-  data: GlobalLoaderData;
-}) {
+export default function Document({ children }: { children: React.ReactNode }) {
   return (
-    // 인라인 스크립트가 color-theme 을 바꾸므로 서버 HTML 과 다를 수 있다
-    <html lang="ko" color-theme={data.layout.darkmode} suppressHydrationWarning>
+    // color-theme 은 React 가 그리지 않는다. THEME_SCRIPT 가 페인트 전에 넣고 버튼이 바꾼다.
+    // 서버 HTML 에 없던 속성이 생기므로 하이드레이션 경고를 막는다
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <meta charSet="utf-8" />
@@ -80,7 +67,7 @@ export default function Document({
       </head>
       <body>
         <Suspense fallback={<Spinner layout="full" />}>
-          <AppShell layout={data.layout}>{children}</AppShell>
+          <AppShell>{children}</AppShell>
         </Suspense>
         <ScrollRestoration />
         <Analytics />
