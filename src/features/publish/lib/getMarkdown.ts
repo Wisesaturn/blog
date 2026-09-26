@@ -7,6 +7,7 @@ import notion from '@/commons/api/notion.server';
 
 import checkJSX from './checkJSX';
 import formatCallout from './formatCallout';
+import mergeAdjacentBold from './mergeAdjacentBold';
 
 const n2m = new NotionToMarkdown({
   notionClient: notion,
@@ -154,5 +155,5 @@ n2m.setCustomTransformer('video', async (block: any) => {
 export default async function getMarkdown(notionPageId: string): Promise<string> {
   const mdblocks = await n2m.pageToMarkdown(notionPageId);
   const mdString = n2m.toMarkdownString(mdblocks);
-  return mdString.parent;
+  return mergeAdjacentBold(mdString.parent);
 }
