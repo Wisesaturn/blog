@@ -51,6 +51,7 @@
     --md-highlight: #b8ecd7;
     --md-selection: rgba(59, 130, 246, 0.25);
     --md-callout-bg: #eefaf4;
+    --md-heading-underline: rgba(5, 150, 105, 0.45);
 
     /* 목차. 비선택 항목은 배경(#fff) 대비 4.8:1 */
     --toc-muted: #6b7280;
@@ -98,6 +99,7 @@
     --md-highlight: rgba(110, 231, 183, 0.3);
     --md-selection: rgba(96, 165, 250, 0.35);
     --md-callout-bg: rgba(110, 231, 183, 0.08);
+    --md-heading-underline: rgba(110, 231, 183, 0.45);
 
     /* 목차. 비선택 항목은 배경(#222) 대비 6.2:1. 예전 #6b7280 은 3.29:1 이었다 */
     --toc-muted: #9ca3af;
@@ -266,9 +268,11 @@
       font-size: 16px;
     }
 
-    /* 목차 링크로 이동했을 때 제목이 고정 헤더(모바일 48px, 데스크톱 64px)에 가리지 않게 한다 */
+    /* 목차 링크로 이동했을 때 제목이 고정 헤더(모바일 48px, 데스크톱 64px)에 가리지 않게 한다.
+       한글 제목은 기본 자간에서 글자 사이가 벌어져 보여 살짝 좁힌다 */
     :where(h2, h3, h4, h5) {
       scroll-margin-top: 64px;
+      letter-spacing: -0.02em;
 
       @media (width >= 48rem) {
         scroll-margin-top: 96px;
@@ -327,6 +331,16 @@
     /* h5 는 Notion 제목 4 다. 코드 제목(h5.code-title)과 구분해서 가장 작은 제목으로 그린다 */
     > :where(* + h5:not(.code-title)) {
       margin-top: 28px;
+    }
+
+    /* Notion 제목 3 은 본문 글자와 크기 차이가 작아서 반투명 민트 밑줄로 작은 절의 시작을 표시한다.
+       ::after 막대(v2)와 달리 text-decoration 이라 제목이 두 줄이 되어도 줄마다 따라간다 */
+    h4 {
+      text-decoration-line: underline;
+      text-decoration-color: var(--md-heading-underline);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 7px;
+      text-decoration-skip-ink: none;
     }
 
     h5:not(.code-title) {
