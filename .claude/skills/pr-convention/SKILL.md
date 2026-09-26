@@ -23,22 +23,28 @@ PR 생성 후 `code-review:code-review` 스킬로 자동 리뷰를 수행하고 
 
 ## 실행 절차
 
-**1. base 브랜치와 닫을 이슈 번호 확보**
+**1. PR 종류, base 브랜치, 이슈 번호 확보**
 
-base 브랜치를 고정값으로 적지 않는다. 현재 값을 확인해서 쓴다.
-
-```bash
-BASE=$(gh repo view --json defaultBranchRef -q .defaultBranchRef.name)
-git branch --show-current
-```
-
-브랜치명에 `#N` 이 있으면 그 번호를 닫는다. 브랜치 하나에서 sub-issue 여럿을 처리했으면 **커밋 제목에서 번호를 모은다.**
+base 브랜치를 고정값으로 적지 않는다. 브랜치명의 `#N` 으로 PR 종류를 가린다 ([rules/pr-convention.md 의 「에픽 브랜치 흐름」](rules/pr-convention.md#에픽-브랜치-흐름)).
 
 ```bash
-git log --no-merges --format=%s "$BASE"..HEAD | grep -o "#[0-9]*" | sort -u
+DEFAULT=$(gh repo view --json defaultBranchRef -q .defaultBranchRef.name)
+BRANCH=$(git branch --show-current)          # 예: feat/#117, feature/#122
+N=$(echo "$BRANCH" | grep -o '#[0-9]*' | tr -d '#')
+PARENT=$(gh api "repos/{owner}/{repo}/issues/$N/parent" --jq .number 2>/dev/null)   # 부모 에픽. 없으면 빈 값
 ```
 
-모인 번호를 본문에 `closes #N` 으로 각각 적는다.
+| 종류 | 조건 | base | 이슈 표기 | 버전 레이블 |
+| --- | --- | --- | --- | --- |
+| sub-issue PR | `PARENT` 가 있고 원격에 `feature/#$PARENT` 가 있다 | `feature/#$PARENT` | `refs #N` | 붙이지 않는다 |
+| 에픽 PR | `#N` 이 에픽(`🎗 Epic`)이다 | `$DEFAULT` | 에픽과 sub-issue 전부 `closes` | 3-1 로 정한다 |
+| 일반 PR | 그 밖 | `$DEFAULT` | `closes #N` | 3-1 로 정한다 |
+
+에픽 브랜치가 원격에 없으면 sub-issue 라도 일반 PR 로 올린다. 에픽 PR 의 sub-issue 목록은 `gh api "repos/{owner}/{repo}/issues/$N/sub_issues" --jq '.[].number'` 로 모은다.
+
+표의 base 를 `BASE` 로 두고 아래 단계에서 쓴다.
+
+- 완료: PR 종류와 `BASE`, 본문에 적을 이슈 표기를 정했다
 
 **2. diff 분석**
 
