@@ -85,6 +85,11 @@ n2m.setCustomTransformer('heading_3', async (block: any) => {
   return `#### ${text}`;
 });
 
+n2m.setCustomTransformer('heading_4' as never, async (block: any) => {
+  const text = block.heading_4.rich_text[0].plain_text;
+  return `##### ${text}`;
+});
+
 /**
  * code block settings
  */

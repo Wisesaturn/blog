@@ -16,7 +16,9 @@ export default function useTOC() {
   // TOC Intersection Observer
   useEffect(() => {
     const Observer = getIntersectionObserver(handleSelectId, [0.5], '0% 0px -65% -0px');
-    const HeadingElements = Array.from(document.querySelectorAll('.markdown-body h2,h3,h4'));
+    const HeadingElements = Array.from(
+      document.querySelectorAll('.markdown-body :is(h2, h3, h4, h5)[id]'),
+    );
     const ArticleTitleElement = document.querySelectorAll('#article-title');
 
     HeadingElements.forEach((head) => Observer.observe(head));

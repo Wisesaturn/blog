@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 
 import getHeading from './getHeading';
 
-describe('id 가 붙은 h2 부터 h4 까지 뽑는다', () => {
+describe('id 가 붙은 h2 부터 h5 까지 뽑는다', () => {
   it('level 과 id, text 를 담는다', () => {
     const body = '<h2 id="intro">들어가며</h2>';
 
@@ -20,6 +20,8 @@ describe('id 가 붙은 h2 부터 h4 까지 뽑는다', () => {
     [2, '<h2 id="a">A</h2>'],
     [3, '<h3 id="a">A</h3>'],
     [4, '<h4 id="a">A</h4>'],
+    // Notion 제목 4 가 h5 로 나온다
+    [5, '<h5 id="a">A</h5>'],
   ])('h%i 를 뽑는다', (level, body) => {
     expect(getHeading(body)).toEqual([{ level, id: 'a', text: 'A' }]);
   });
@@ -42,8 +44,18 @@ describe('id 가 붙은 h2 부터 h4 까지 뽑는다', () => {
 });
 
 describe('목차에 넣지 않는 것', () => {
-  it('h1 과 h5 는 뽑지 않는다', () => {
-    expect(getHeading('<h1 id="a">A</h1><h5 id="b">B</h5>')).toEqual([]);
+  it('h1 과 h6 은 뽑지 않는다', () => {
+    expect(getHeading('<h1 id="a">A</h1><h6 id="b">B</h6>')).toEqual([]);
+  });
+
+  /**
+   * 코드 제목도 h5 다. 마크다운 안의 원본 HTML 이라 rehype-slug 가 id 를 붙이지 않아서 목차에 섞이지 않는다.
+   * 코드 제목에 id 가 붙게 바뀌면 이 테스트가 깨진다.
+   */
+  it('id 없는 코드 제목(h5.code-title)은 뽑지 않는다', () => {
+    expect(getHeading('<h5 class="code-title">blog/getPost.ts</h5><h5 id="a">A</h5>')).toEqual([
+      { level: 5, id: 'a', text: 'A' },
+    ]);
   });
 
   it('id 가 없는 heading 은 뽑지 않는다', () => {

@@ -6,7 +6,7 @@ interface TOCRowProps extends IHeading {
   selected: boolean;
 }
 
-const INDENT: Record<number, string> = { 2: 'pl-3', 3: 'pl-6', 4: 'pl-9' };
+const INDENT: Record<number, string> = { 2: 'pl-3', 3: 'pl-6', 4: 'pl-9', 5: 'pl-12' };
 
 /* -------------------------------------------------------------------------------------------------
  * TOCRow

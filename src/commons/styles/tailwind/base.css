@@ -267,7 +267,7 @@
     }
 
     /* 목차 링크로 이동했을 때 제목이 고정 헤더(모바일 48px, 데스크톱 64px)에 가리지 않게 한다 */
-    :where(h2, h3, h4) {
+    :where(h2, h3, h4, h5) {
       scroll-margin-top: 64px;
 
       @media (width >= 48rem) {
@@ -322,6 +322,17 @@
 
     > :where(* + h4) {
       margin-top: 32px;
+    }
+
+    /* h5 는 Notion 제목 4 다. 코드 제목(h5.code-title)과 구분해서 가장 작은 제목으로 그린다 */
+    > :where(* + h5:not(.code-title)) {
+      margin-top: 28px;
+    }
+
+    h5:not(.code-title) {
+      font-size: 1.1em;
+      font-weight: 600;
+      line-height: 1.5;
     }
 
     /* 강조 — 본문 글(문단, 목록, 표 셀)의 굵게는 형광펜처럼 아래쪽 60% 를 칠한다. 이 블로그의 굵게 표시다.

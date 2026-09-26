@@ -8,8 +8,9 @@ import { IHeading } from '../model/types';
 export default function getHeading(body: string): IHeading[] {
   const headings: IHeading[] = [];
 
-  // 정규식 패턴을 사용하여 <h2>, <h3>, <h4> 태그와 ID를 추출
-  const regex = /<h([2-4])\s*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1>/gi;
+  // <h2> ~ <h5> 태그와 ID 를 추출한다. Notion 제목 1~4 가 한 단계씩 내려 h2~h5 가 된다.
+  // 코드 제목(h5.code-title)은 마크다운 안의 원본 HTML 이라 id 가 없어 뽑히지 않는다
+  const regex = /<h([2-5])\s*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1>/gi;
 
   let match;
 
