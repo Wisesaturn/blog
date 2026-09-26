@@ -1,10 +1,10 @@
 import { motion } from 'motion/react';
 import Giscus from '@giscus/react';
 
-import useLayout from '@/commons/model/useLayout';
+import useDarkmode from '@/commons/model/useDarkmode';
 
 export default function SnippetComments(props: GlobalAnimation) {
-  const { layout } = useLayout();
+  const darkmode = useDarkmode();
 
   return (
     <motion.div className="pt-20" variants={props.animation?.variants}>
@@ -18,7 +18,7 @@ export default function SnippetComments(props: GlobalAnimation) {
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
-        theme={layout.darkmode}
+        theme={darkmode}
         lang="ko"
       />
     </motion.div>
