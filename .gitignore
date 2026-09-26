@@ -8,6 +8,8 @@ node_modules
 .DS_Store
 *.pem
 *.env
+# 버전 관리 설정이라 비밀 값이 없다 (#107)
+!.github/release.env
 
 # debug
 npm-debug.log*
