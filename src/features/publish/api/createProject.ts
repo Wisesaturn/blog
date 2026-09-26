@@ -9,7 +9,6 @@ import { getCoverUrl, getIconEmoji } from '../lib/notionValue';
 import getMarkdown from '../lib/getMarkdown';
 import replaceBodyImages from './replaceBodyImages';
 import uploadImage from './uploadImage';
-import deleteStore from './deleteStore';
 import getHtml from '../lib/getHtml';
 import { projectNotionProperties } from '../model/projectNotionProperties';
 
@@ -70,22 +69,15 @@ export default async function createProject(pageId: string) {
       };
       // ////////////////// data /////////////////// //
 
-      // 1. delete previous storage
-      await deleteStore({
-        collection: 'project',
-        category: `${projectData.category}-projects`,
-        title: convertString(projectData.plainTitle, 'spaceToDash'),
-      });
-
-      // 2. get markdown
+      // 1. get markdown
       const mdString = await getMarkdown(page.id);
 
-      // 3. get html tag
+      // 2. get html tag
       const htmlBody = await getHtml(mdString);
       projectData.body = htmlBody;
 
-      // 4. upload thumbnail on Firebase Storage
-      // 본문 이미지와 같은 폴더에 올려 다시 발행할 때 deleteStore 가 함께 정리하게 한다
+      // 3. upload thumbnail on Firebase Storage
+      // 본문 이미지와 같은 폴더에 올린다. 저장이 성공하면 라우트가 이 폴더의 옛 파일을 deleteStore 로 정리한다
       if (projectData.thumbnail) {
         const thumbnailUrl = await uploadImage({
           src: projectData.thumbnail,
@@ -100,7 +92,7 @@ export default async function createProject(pageId: string) {
         Logger.log('기본 썸네일 설정');
       }
 
-      // 5. upload image on firebase
+      // 4. upload image on firebase
       if (projectData.body) {
         const replaceBody = await replaceBodyImages({
           collection: 'project',

@@ -9,7 +9,6 @@ import getNotionPage from './getNotionPage';
 import getHtml from '../lib/getHtml';
 import getMarkdown from '../lib/getMarkdown';
 import { postNotionProperties } from '../model/postNotionProperties';
-import deleteStore from './deleteStore';
 import uploadImage from './uploadImage';
 import replaceBodyImages from './replaceBodyImages';
 
@@ -56,23 +55,16 @@ export default async function createPost(pageId: string) {
       };
       // ////////////////// data /////////////////// //
 
-      // 1. delete previous storage
-      await deleteStore({
-        collection: 'post',
-        category: postData.category,
-        title: convertString(postData.plain_title, 'spaceToDash'),
-      });
-
-      // 2. get markdown
+      // 1. get markdown
       const mdString = await getMarkdown(page.id);
 
-      // 3. get html tag
+      // 2. get html tag
       const htmlBody = await getHtml(mdString);
       postData.body = htmlBody;
 
       // 3. upload thumbnail on Firebase Storage
-      // 본문 이미지와 같은 폴더에 올린다. 다시 발행할 때 위의 deleteStore 가 폴더를 비우므로
-      // 옛 썸네일이 함께 지워진다. 배포 환경은 /tmp 말고는 디스크에 쓸 수 없어 로컬 public/ 에 두지 않는다
+      // 본문 이미지와 같은 폴더에 올린다. 저장이 성공하면 라우트가 이 폴더의 옛 파일을 deleteStore 로 정리한다.
+      // 배포 환경은 /tmp 말고는 디스크에 쓸 수 없어 로컬 public/ 에 두지 않는다
       if (postData.thumbnail) {
         const thumbnailUrl = await uploadImage({
           src: postData.thumbnail,

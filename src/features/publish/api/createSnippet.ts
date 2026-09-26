@@ -7,7 +7,6 @@ import getNotionPage from './getNotionPage';
 import { getIconEmoji } from '../lib/notionValue';
 import getMarkdown from '../lib/getMarkdown';
 import replaceBodyImages from './replaceBodyImages';
-import deleteStore from './deleteStore';
 import getHtml from '../lib/getHtml';
 import { snippetNotionProperties } from '../model/snippetNotionProperties';
 
@@ -51,21 +50,14 @@ export default async function createSnippet(pageId: string) {
       };
       // ////////////////// data /////////////////// //
 
-      // 1. delete previous storage
-      await deleteStore({
-        collection: 'snippet',
-        category: `snippets`,
-        title: convertString(snippetData.plainTitle, 'spaceToDash'),
-      });
-
-      // 2. get markdown
+      // 1. get markdown
       const mdString = await getMarkdown(page.id);
 
-      // 3. get html tag
+      // 2. get html tag
       const htmlBody = await getHtml(mdString);
       snippetData.body = htmlBody;
 
-      // 4. upload image on firebase
+      // 3. upload image on firebase
       if (snippetData.body) {
         const replaceBody = await replaceBodyImages({
           collection: 'snippet',
