@@ -54,6 +54,26 @@ export function extractWorkSection(body: string): string | null {
   return section || null;
 }
 
+/** 작업 내용 안에 있어도 노트에 싣지 않는 소제목. 방문자가 아니라 리뷰어가 읽는 내용이다 (#115) */
+export const EXCLUDED_HEADINGS = ['검증', '참고', '테스트'];
+
+/**
+ * @description 작업 내용에서 `EXCLUDED_HEADINGS` 소제목 블록을 뺀다. 블록은 다음 `###` 소제목이나 절 끝까지다
+ * @param section 작업 내용 절
+ * @returns 뺀 절. 남은 내용이 없으면 빈 문자열
+ * @example
+ * removeExcludedHeadings('### 기능\n- a\n### 검증\n- 테스트 통과'); // '### 기능\n- a'
+ */
+export function removeExcludedHeadings(section: string): string {
+  let skipping = false;
+  const kept = section.split('\n').filter((line) => {
+    const heading = /^###[ \t]+(?:\d+\.[ \t]*)?(.+?)[ \t]*$/.exec(line)?.[1];
+    if (heading !== undefined) skipping = EXCLUDED_HEADINGS.includes(heading);
+    return !skipping;
+  });
+  return kept.join('\n').trim();
+}
+
 /**
  * @description 작업 내용의 소제목을 노트 형식으로 바꾼다. `### 1. 제목` 의 번호를 떼고 끝에 `(#PR)` 을 붙인다
  * @param section 작업 내용 절
@@ -77,7 +97,7 @@ export function formatHeadings(section: string, prNumber: number): string {
  */
 export function buildReleaseNotes(input: ReleaseNotesInput): { notes: string; fallback: boolean } {
   const { title, body, prNumber, tag, prevTag, repo } = input;
-  const section = extractWorkSection(body);
+  const section = removeExcludedHeadings(extractWorkSection(body) ?? '') || null;
   const summary = title.replace(/^[a-z]+!?:\s*/, '').trim();
 
   const content = section ? formatHeadings(section, prNumber) : `### ${summary} (#${prNumber})`;

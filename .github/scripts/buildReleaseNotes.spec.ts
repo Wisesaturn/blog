@@ -5,6 +5,7 @@ import {
   extractWorkSection,
   formatHeadings,
   getSection,
+  removeExcludedHeadings,
 } from './buildReleaseNotes';
 
 /**
@@ -74,6 +75,43 @@ describe('extractWorkSection 은 작업 내용 절만 꺼낸다', () => {
   });
 });
 
+describe('removeExcludedHeadings 는 리뷰어용 소제목 블록을 뺀다', () => {
+  it('검증, 참고 블록을 다음 소제목이나 절 끝까지 뺀다', () => {
+    const section = [
+      '### 1. 기능',
+      '- 바뀐 동작',
+      '### 검증',
+      '- 테스트 통과',
+      '### 2. 다른 기능',
+      '- 또 바뀐 동작',
+      '### 참고',
+      '- 배포 직후 새로고침',
+    ].join('\n');
+
+    expect(removeExcludedHeadings(section)).toBe(
+      '### 1. 기능\n- 바뀐 동작\n### 2. 다른 기능\n- 또 바뀐 동작',
+    );
+  });
+
+  it.each(['### 검증', '### 3. 테스트', '###   참고  '])(
+    '"%s" 처럼 번호나 공백이 붙어도 뺀다',
+    (heading) => {
+      expect(removeExcludedHeadings(`### 기능\n- a\n${heading}\n- 빠질 내용`)).toBe(
+        '### 기능\n- a',
+      );
+    },
+  );
+
+  it('제목에 검증이라는 말이 들어 있을 뿐인 소제목은 남긴다', () => {
+    const section = '### 웹훅 검증을 추가\n- 시크릿 확인';
+    expect(removeExcludedHeadings(section)).toBe(section);
+  });
+
+  it('전부 빠지면 빈 문자열이다', () => {
+    expect(removeExcludedHeadings('### 검증\n- 테스트')).toBe('');
+  });
+});
+
 describe('formatHeadings 는 소제목을 노트 형식으로 바꾼다', () => {
   it('번호를 떼고 끝에 PR 번호를 붙인다', () => {
     expect(formatHeadings('### 1. 옛 파일 정리\n\n- 내용', 105)).toBe(
@@ -125,6 +163,53 @@ describe('buildReleaseNotes 는 v3.0.0, v3.0.1 과 같은 형식의 노트를 �
 
     expect(fallback).toBe(true);
     expect(notes).toContain('## Etc\n\n### 푸터 버전 표시 (#105)');
+  });
+
+  /**
+   * v3.0.2 노트에 `### 검증 (#112)`, `### 참고 (#112)` 가 섞였던 본문 구조다.
+   * 작업 내용 절 안에 검증과 참고를 `###` 로 두었다.
+   */
+  it('#112 처럼 작업 내용 안에 검증과 참고를 둔 본문도 기능 소제목만 싣는다', () => {
+    const body = `## 작업 내용
+
+### 1. 서버 응답에서 테마를 뺐다
+
+문단
+
+### 2. 테마를 사용자별로 localStorage 에 둔다
+
+문단
+
+### 검증
+
+- 단위 테스트
+
+### 참고
+
+- 배포 직후 새로고침
+`;
+    const { notes, fallback } = buildReleaseNotes({
+      ...base,
+      prNumber: 112,
+      title: 'fix: 테마',
+      body,
+    });
+
+    expect(fallback).toBe(false);
+    expect(notes).toContain('### 서버 응답에서 테마를 뺐다 (#112)');
+    expect(notes).toContain('### 테마를 사용자별로 localStorage 에 둔다 (#112)');
+    expect(notes).not.toContain('검증');
+    expect(notes).not.toContain('참고');
+  });
+
+  it('작업 내용이 검증뿐이면 PR 제목으로 대신한다', () => {
+    const { notes, fallback } = buildReleaseNotes({
+      ...base,
+      title: 'fix: 제목 요약',
+      body: '## 작업 내용\n\n### 검증\n\n- 테스트',
+    });
+    expect(fallback).toBe(true);
+    expect(notes).toContain('### 제목 요약 (#105)');
   });
 
   it('직전 태그가 없으면 Full Changelog 를 쓰지 않는다', () => {
