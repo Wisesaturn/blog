@@ -82,7 +82,7 @@ jobs:
           base-ref: ${{ github.base_ref }}
           head-ref: ${{ matrix.pr.head }}
           version-file: ${{ steps.config.outputs.version-file }}
-          commit-message: 'chore/#${{ matrix.pr.number }}: merge {base}'
+          commit-message: 'chore/#${{ matrix.pr.number }}: merge {base} from #${{ github.event.pull_request.number }} ({version})'
 
       - name: 충돌하면 PR 에 알리기
         if: steps.sync.outputs.status == 'conflict'

@@ -19,7 +19,7 @@ inputs:
     required: false
     default: 'package.json'
   commit-message:
-    description: 'merge 커밋 메시지. {base} 자리에 base 브랜치 이름이 들어갑니다'
+    description: 'merge 커밋 메시지. {base} 자리에 base 브랜치 이름, {version} 자리에 base 끝의 버전이 들어갑니다'
     required: false
     default: 'chore: merge {base}'
 
@@ -45,7 +45,10 @@ runs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        # 지금 checkout 된 것이 base 끝이라 여기서 읽는 버전이 이 갱신의 기준 버전이다
+        base_version=$(jq -r .version "$VERSION_FILE")
         message="${COMMIT_MESSAGE//\{base\}/$BASE_REF}"
+        message="${message//\{version\}/$base_version}"
 
         git fetch --quiet origin "$HEAD_REF"
         if git merge-base --is-ancestor HEAD FETCH_HEAD; then
