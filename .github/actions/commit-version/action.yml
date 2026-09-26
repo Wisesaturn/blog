@@ -1,0 +1,57 @@
+name: 'Commit Version'
+description: '버전 파일의 version 을 기대 버전과 비교하고, 다르면 덮어써서 커밋하고 push 합니다.'
+
+# push 는 checkout 에 넘긴 토큰으로 한다. 워크플로를 다시 돌려야 하면 GITHUB_TOKEN 이 아닌 PAT 로 checkout 한다
+
+inputs:
+  version:
+    description: '기대 버전 (ex. 3.0.2)'
+    required: true
+  ref:
+    description: 'push 할 브랜치 (ex. PR 의 head 브랜치)'
+    required: true
+  version-file:
+    description: '버전을 읽고 쓰는 파일'
+    required: false
+    default: 'package.json'
+
+outputs:
+  committed:
+    description: '커밋해 push 했으면 true, 이미 같았으면 false'
+    value: ${{ steps.commit.outputs.committed }}
+  previous:
+    description: '커밋 전 버전'
+    value: ${{ steps.commit.outputs.previous }}
+
+runs:
+  using: 'composite'
+  steps:
+    # 누적해서 올리지 않고 기대 버전으로 덮어쓴다. 레이블을 바꿔 다시 돌아도 매번 맞는 값이 된다
+    - name: 버전 비교, 다르면 커밋
+      id: commit
+      shell: bash
+      env:
+        EXPECTED: ${{ inputs.version }}
+        REF: ${{ inputs.ref }}
+        VERSION_FILE: ${{ inputs.version-file }}
+      run: |
+        current=$(jq -r .version "$VERSION_FILE")
+        echo "previous=$current" >> "$GITHUB_OUTPUT"
+
+        if [ "$current" = "$EXPECTED" ]; then
+          echo "committed=false" >> "$GITHUB_OUTPUT"
+          echo "버전이 맞습니다: $current"
+          exit 0
+        fi
+
+        jq --arg v "$EXPECTED" '.version = $v' "$VERSION_FILE" > "$VERSION_FILE.tmp"
+        mv "$VERSION_FILE.tmp" "$VERSION_FILE"
+
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add "$VERSION_FILE"
+        git commit -m "chore: 버전을 $EXPECTED 로 맞춤"
+        git push origin "HEAD:$REF"
+
+        echo "committed=true" >> "$GITHUB_OUTPUT"
+        echo "$current → $EXPECTED 커밋을 $REF 에 push 했습니다"

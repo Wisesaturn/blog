@@ -1,0 +1,45 @@
+name: 'Release Config'
+description: '.github/release.env 를 읽어, 이 PR 의 base 브랜치가 버전 관리 대상인지와 버전 파일 경로를 돌려줍니다.'
+
+inputs:
+  base-ref:
+    description: 'PR 의 base 브랜치 이름 (ex. v3)'
+    required: true
+  config-file:
+    description: '설정 파일 경로'
+    required: false
+    default: '.github/release.env'
+
+outputs:
+  enabled:
+    description: 'base 브랜치가 RELEASE_BRANCHES 에 있으면 true'
+    value: ${{ steps.config.outputs.enabled }}
+  version-file:
+    description: '버전을 읽고 쓰는 파일 (ex. package.json)'
+    value: ${{ steps.config.outputs.version-file }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 설정 읽기
+      id: config
+      shell: bash
+      env:
+        BASE_REF: ${{ inputs.base-ref }}
+        CONFIG_FILE: ${{ inputs.config-file }}
+      run: |
+        if [ ! -f "$CONFIG_FILE" ]; then
+          echo "::error::설정 파일이 없습니다: $CONFIG_FILE"
+          exit 1
+        fi
+        # shellcheck disable=SC1090
+        source "$CONFIG_FILE"
+
+        enabled=false
+        for branch in $RELEASE_BRANCHES; do
+          [ "$branch" = "$BASE_REF" ] && enabled=true
+        done
+
+        echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
+        echo "version-file=${VERSION_FILE:-package.json}" >> "$GITHUB_OUTPUT"
+        echo "base=$BASE_REF, 대상=[$RELEASE_BRANCHES] → enabled=$enabled"

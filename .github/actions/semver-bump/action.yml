@@ -1,0 +1,44 @@
+name: 'Semver Bump'
+description: 'X.Y.Z 버전을 major, minor, patch 중 한 자리 올린 다음 버전을 돌려줍니다. none 이면 그대로 돌려줍니다.'
+
+inputs:
+  version:
+    description: '현재 버전 (ex. 3.0.1). 프리릴리즈 표기는 받지 않습니다'
+    required: true
+  bump:
+    description: '올릴 자리 (major | minor | patch | none)'
+    required: true
+
+outputs:
+  next:
+    description: '다음 버전 (ex. 3.0.2)'
+    value: ${{ steps.bump.outputs.next }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 다음 버전 계산
+      id: bump
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+        BUMP: ${{ inputs.bump }}
+      run: |
+        if [[ ! "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+          echo "::error::버전 형식이 X.Y.Z 가 아닙니다: $VERSION"
+          exit 1
+        fi
+        major=${BASH_REMATCH[1]}
+        minor=${BASH_REMATCH[2]}
+        patch=${BASH_REMATCH[3]}
+
+        case "$BUMP" in
+          major) next="$((major + 1)).0.0" ;;
+          minor) next="${major}.$((minor + 1)).0" ;;
+          patch) next="${major}.${minor}.$((patch + 1))" ;;
+          none) next="$VERSION" ;;
+          *) echo "::error::bump 는 major, minor, patch, none 중 하나여야 합니다: $BUMP"; exit 1 ;;
+        esac
+
+        echo "next=$next" >> "$GITHUB_OUTPUT"
+        echo "$VERSION --($BUMP)--> $next"

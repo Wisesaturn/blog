@@ -1,0 +1,28 @@
+name: 'Version Label'
+description: 'PR 레이블에서 버전 레이블(major, minor, patch)을 찾아 올릴 자리를 돌려줍니다. 없으면 none, 둘 이상이면 실패합니다.'
+
+inputs:
+  labels:
+    description: 'PR 레이블 이름의 JSON 배열 (ex. toJSON(github.event.pull_request.labels.*.name))'
+    required: true
+
+outputs:
+  bump:
+    description: '올릴 자리 (major | minor | patch | none)'
+    value: ${{ steps.label.outputs.bump }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Node 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
+    # 판단 규칙은 spec 이 있는 스크립트 하나에만 둔다
+    - name: 버전 레이블 읽기
+      id: label
+      shell: bash
+      env:
+        PR_LABELS: ${{ inputs.labels }}
+      run: node "$GITHUB_ACTION_PATH/../../scripts/getBumpType.ts"
