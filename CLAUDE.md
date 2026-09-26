@@ -107,6 +107,18 @@ ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰
 코드 작업이 끝나면 변경 내용을 보여주고 사용자 확인을 받은 뒤 커밋한다.
 플랜이나 작업 흐름에 커밋 단계가 포함되어 있어도 실행 전 사용자 승인이 우선이다.
 
+## 버전 관리
+
+릴리즈 브랜치(`.github/release.env` 의 `RELEASE_BRANCHES`, 지금은 `v3`)에 머지되는 PR 하나가 릴리즈 하나다.
+
+- 버전은 PR 레이블로 정한다: `major`, `minor`, `patch` 중 하나, 해당 없으면 붙이지 않는다. 기준은 `/pr-convention` 의 「버전 레이블」
+- `version-bump` 체크(`.github/workflows/version-bump.yml`)가 레이블대로 `package.json` 의 `version` 을 올리는 bump commit(`chore/#{PR번호}: bump version to x.y.z`)을 PR 브랜치에 push 한다. 이 체크가 통과해야 머지된다
+- `package.json` 의 `version` 은 손으로 고치지 않는다. 체크가 매번 base 브랜치 끝 버전 + 레이블로 덮어쓴다
+- bump commit 뒤 로컬에서 더 커밋하려면 먼저 `git pull --rebase` 로 bot 커밋을 받는다
+- 릴리즈 브랜치에는 직접 push 할 수 없다. 문서나 설정 변경도 레이블 없는 PR 로 올린다
+- PR 이 여러 개 열려 있으면 모두 같은 다음 버전을 잡는다. 하나가 머지되면 나머지는 룰셋이 브랜치 갱신을 요구하고, 갱신하면 새 base 기준으로 다시 계산된다. 레이블이 다른 PR 끼리는 갱신 때 `version` 줄이 충돌할 수 있는데, 아무 값으로 풀어도 체크가 다시 덮어쓴다
+- 워크플로 단계는 `.github/actions/` 의 composite action(`release-config`, `version-label`, `semver-bump`, `commit-version`)이고, 레이블 판단 규칙은 spec 이 있는 `.github/scripts/getBumpType.ts` 에만 둔다
+
 ## 설계 규칙
 
 @.claude/rules/fsd-instructure.md
