@@ -9,9 +9,8 @@ interface DropdownProps<T extends string | number> {
 }
 
 export default function Dropdown<T extends string | number>(props: DropdownProps<T>) {
-  const { items, handleSelect } = props;
+  const { label: selectedItem, items, handleSelect } = props;
   const [opened, setOpened] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<T>(items[0]);
 
   const handleLabelClick = useCallback(() => {
     setOpened((prev) => !prev);
@@ -22,7 +21,6 @@ export default function Dropdown<T extends string | number>(props: DropdownProps
       handleSelect(item);
     }
     setOpened(false);
-    setSelectedItem(item);
   };
 
   return (
