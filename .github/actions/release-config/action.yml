@@ -1,5 +1,5 @@
 name: 'Release Config'
-description: '.github/release.env 를 읽어, 이 PR 의 base 브랜치가 버전 관리 대상인지와 버전 파일 경로를 돌려줍니다.'
+description: '.github/release.env 를 읽어, 이 PR 의 base 브랜치가 버전 관리 대상인지와 버전 파일 경로, 태그 앞 글자를 돌려줍니다.'
 
 inputs:
   base-ref:
@@ -17,6 +17,9 @@ outputs:
   version-file:
     description: '버전을 읽고 쓰는 파일 (ex. package.json)'
     value: ${{ steps.config.outputs.version-file }}
+  tag-prefix:
+    description: '릴리즈 태그 앞 글자 (ex. v)'
+    value: ${{ steps.config.outputs.tag-prefix }}
 
 runs:
   using: 'composite'
@@ -42,4 +45,5 @@ runs:
 
         echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
         echo "version-file=${VERSION_FILE:-package.json}" >> "$GITHUB_OUTPUT"
+        echo "tag-prefix=${TAG_PREFIX-v}" >> "$GITHUB_OUTPUT"
         echo "base=$BASE_REF, 대상=[$RELEASE_BRANCHES] → enabled=$enabled"

@@ -113,11 +113,13 @@ ESLint 9 이고 `eslint.config.js`(flat config) 를 쓴다. airbnb 계열은 쓰
 
 - 버전은 PR 레이블로 정한다: `major`, `minor`, `patch` 중 하나, 해당 없으면 붙이지 않는다. 기준은 `/pr-convention` 의 「버전 레이블」
 - `version-bump` 체크(`.github/workflows/version-bump.yml`)가 레이블대로 `package.json` 의 `version` 을 올리는 bump commit(`chore/#{PR번호}: bump version to x.y.z`)을 PR 브랜치에 push 한다. 이 체크가 통과해야 머지된다
+- 버전이 오른 PR 이 머지되면 `release` 워크플로가 머지 커밋에 `v{버전}` 태그를 달고 GitHub 릴리즈를 Latest 로 발행한다. 노트는 PR 본문의 「## 작업 내용」 절이다. 여러 PR 을 묶어 다시 써야 하면 `/write-release-note` 로 본문만 고친다
 - `package.json` 의 `version` 은 손으로 고치지 않는다. 체크가 매번 base 브랜치 끝 버전 + 레이블로 덮어쓴다
 - bump commit 뒤 로컬에서 더 커밋하려면 먼저 `git pull --rebase` 로 bot 커밋을 받는다
 - 릴리즈 브랜치에는 직접 push 할 수 없다. 문서나 설정 변경도 레이블 없는 PR 로 올린다
-- PR 이 여러 개 열려 있으면 모두 같은 다음 버전을 잡는다. 하나가 머지되면 나머지는 룰셋이 브랜치 갱신을 요구하고, 갱신하면 새 base 기준으로 다시 계산된다. 레이블이 다른 PR 끼리는 갱신 때 `version` 줄이 충돌할 수 있는데, 아무 값으로 풀어도 체크가 다시 덮어쓴다
-- 워크플로 단계는 `.github/actions/` 의 composite action(`release-config`, `version-label`, `semver-bump`, `commit-version`)이고, 레이블 판단 규칙은 spec 이 있는 `.github/scripts/getBumpType.ts` 에만 둔다
+- PR 이 여러 개 열려 있으면 모두 같은 다음 버전을 잡는다. 하나가 머지되면 룰셋(up-to-date 요구)이 나머지의 머지를 막고, `sync-release-prs` 워크플로가 그 PR 들에 base 를 merge 해 새 base 기준으로 버전을 다시 맞춘다. `version` 줄 충돌은 bot 이 풀고, 다른 파일이 충돌하면 PR 에 코멘트만 남긴다
+- 워크플로 단계는 `.github/actions/` 의 composite action 이다. 설정은 `release-config`, 버전은 `ensure-version`(`version-label` → `semver-bump` → `commit-version`), 갱신은 `sync-base`, 발행은 `release-notes` → `publish-release`
+- 판단 규칙은 spec 이 있는 스크립트에만 둔다: 레이블은 `.github/scripts/getBumpType.ts`, 노트 형식은 `.github/scripts/buildReleaseNotes.ts`
 
 ## 설계 규칙
 

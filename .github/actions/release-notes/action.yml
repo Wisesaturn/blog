@@ -1,0 +1,56 @@
+name: 'Release Notes'
+description: '머지된 PR 의 제목과 본문 「작업 내용」으로 릴리즈 노트 파일을 만듭니다. 형식은 .github/scripts/buildReleaseNotes.ts 가 정합니다.'
+
+inputs:
+  title:
+    description: 'PR 제목'
+    required: true
+  body:
+    description: 'PR 본문'
+    required: false
+    default: ''
+  number:
+    description: 'PR 번호'
+    required: true
+  version:
+    description: '이번 버전 (ex. 3.0.2)'
+    required: true
+  previous-tag:
+    description: '직전 태그. 비우면 Full Changelog 를 쓰지 않습니다'
+    required: false
+    default: ''
+  tag-prefix:
+    description: '태그 앞 글자'
+    required: false
+    default: 'v'
+
+outputs:
+  notes-file:
+    description: '만든 노트 파일 경로'
+    value: ${{ steps.notes.outputs.notes-file }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Node 설정
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
+    # 노트 형식은 spec 이 있는 스크립트 하나에만 둔다
+    - name: 노트 만들기
+      id: notes
+      shell: bash
+      env:
+        PR_TITLE: ${{ inputs.title }}
+        PR_BODY: ${{ inputs.body }}
+        PR_NUMBER: ${{ inputs.number }}
+        VERSION: ${{ inputs.version }}
+        PREV_TAG: ${{ inputs.previous-tag }}
+        TAG_PREFIX: ${{ inputs.tag-prefix }}
+        REPO: ${{ github.repository }}
+        NOTES_FILE: ${{ runner.temp }}/release-notes.md
+      run: |
+        node "$GITHUB_ACTION_PATH/../../scripts/buildReleaseNotes.ts"
+        echo "notes-file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+        cat "$NOTES_FILE"
