@@ -61,10 +61,11 @@ jobs:
       group: sync-release-pr-${{ matrix.pr.number }}
       cancel-in-progress: false
     steps:
-      - name: PR 브랜치 가져오기
+      # PR 브랜치가 아니라 base 를 checkout 한다. 액션이 생기기 전에 딴 PR 에는 .github/actions 가 없다 (sync-base 참고)
+      - name: base 브랜치 가져오기
         uses: actions/checkout@v4
         with:
-          ref: ${{ matrix.pr.head }}
+          ref: ${{ github.base_ref }}
           token: ${{ secrets.RELEASE_BOT_TOKEN }}
           fetch-depth: 0
 
@@ -74,11 +75,12 @@ jobs:
         with:
           base-ref: ${{ github.base_ref }}
 
-      - name: base 를 merge
+      - name: PR 브랜치를 base 위에 merge
         id: sync
         uses: ./.github/actions/sync-base
         with:
           base-ref: ${{ github.base_ref }}
+          head-ref: ${{ matrix.pr.head }}
           version-file: ${{ steps.config.outputs.version-file }}
           commit-message: 'chore/#${{ matrix.pr.number }}: merge {base}'
 
