@@ -1,0 +1,113 @@
+name: sync-release-prs
+
+# 릴리즈 브랜치에 PR 이 머지되면, 같은 브랜치로 열려 있는 다른 PR 을 bot 이 갱신한다 (#107).
+# 룰셋의 "Require branches to be up to date" 가 뒤처진 PR 의 머지를 막고, 이 워크플로가 그 PR 을 풀어 준다.
+#
+# PR 마다: base 를 merge → 버전 파일만 충돌하면 base 쪽 값으로 풀기 → 새 base 기준으로 버전 다시 맞추기 → push.
+# 다른 파일이 충돌하면 손대지 않고 PR 에 코멘트를 남긴다.
+#
+# push 는 RELEASE_BOT_TOKEN(PAT) 으로 한다. 그 push 로 각 PR 의 version-bump 체크가 다시 돈다.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  list:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      prs: ${{ steps.list.outputs.prs }}
+    steps:
+      - name: 설정 파일 가져오기
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+          sparse-checkout: .github
+
+      - name: 설정 읽기
+        id: config
+        uses: ./.github/actions/release-config
+        with:
+          base-ref: ${{ github.base_ref }}
+
+      # fork 에서 온 PR 은 PAT 로 push 할 수 없어 뺀다
+      - name: 열린 PR 목록
+        id: list
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          prs=$(gh pr list --repo "$GITHUB_REPOSITORY" --base "$BASE_REF" --state open --limit 100 \
+            --json number,headRefName,isCrossRepository,labels \
+            --jq '[.[] | select(.isCrossRepository | not) | {number, head: .headRefName, labels: [.labels[].name]}]')
+          echo "prs=$prs" >> "$GITHUB_OUTPUT"
+          echo "갱신할 PR: $(echo "$prs" | jq -r '[.[].number] | join(", ")')"
+
+  sync:
+    needs: list
+    if: needs.list.outputs.prs != '' && needs.list.outputs.prs != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pr: ${{ fromJSON(needs.list.outputs.prs) }}
+    concurrency:
+      group: sync-release-pr-${{ matrix.pr.number }}
+      cancel-in-progress: false
+    steps:
+      - name: PR 브랜치 가져오기
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.pr.head }}
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: 설정 읽기
+        id: config
+        uses: ./.github/actions/release-config
+        with:
+          base-ref: ${{ github.base_ref }}
+
+      - name: base 를 merge
+        id: sync
+        uses: ./.github/actions/sync-base
+        with:
+          base-ref: ${{ github.base_ref }}
+          version-file: ${{ steps.config.outputs.version-file }}
+          commit-message: 'chore/#${{ matrix.pr.number }}: merge {base}'
+
+      - name: 충돌하면 PR 에 알리기
+        if: steps.sync.outputs.status == 'conflict'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ matrix.pr.number }}
+          BASE_REF: ${{ github.base_ref }}
+          CONFLICTS: ${{ steps.sync.outputs.conflicts }}
+          MERGED: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "#$MERGED 이 \`$BASE_REF\` 에 머지되어 이 PR 을 자동으로 갱신하려 했지만, 버전 파일 밖에서 충돌했습니다: \`$CONFLICTS\`
+          충돌을 직접 풀고 push 하면 \`version-bump\` 체크가 버전을 다시 맞춥니다."
+
+      - name: 버전 맞추기
+        id: version
+        if: steps.sync.outputs.status == 'merged'
+        uses: ./.github/actions/ensure-version
+        with:
+          base-ref: ${{ github.base_ref }}
+          labels: ${{ toJSON(matrix.pr.labels) }}
+          ref: ${{ matrix.pr.head }}
+          version-file: ${{ steps.config.outputs.version-file }}
+          commit-message: 'chore/#${{ matrix.pr.number }}: bump version to {version}'
+
+      # 버전이 이미 맞으면 ensure-version 이 push 하지 않으므로 merge 커밋을 여기서 올린다
+      - name: merge 커밋 push
+        if: steps.sync.outputs.status == 'merged' && steps.version.outputs.committed != 'true'
+        env:
+          HEAD_REF: ${{ matrix.pr.head }}
+        run: git push origin "HEAD:$HEAD_REF"

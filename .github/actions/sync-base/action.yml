@@ -1,0 +1,66 @@
+name: 'Sync Base'
+description: 'base 브랜치를 지금 브랜치에 merge 합니다. 충돌이 버전 파일 하나뿐이면 base 쪽 값으로 풀고, 다른 파일이 충돌하면 merge 를 취소합니다. push 는 하지 않습니다.'
+
+inputs:
+  base-ref:
+    description: '합칠 base 브랜치 (ex. v3)'
+    required: true
+  version-file:
+    description: '충돌해도 자동으로 풀 버전 파일. 풀린 값은 뒤이어 ensure-version 이 다시 맞춘다'
+    required: false
+    default: 'package.json'
+  commit-message:
+    description: 'merge 커밋 메시지. {base} 자리에 base 브랜치 이름이 들어갑니다'
+    required: false
+    default: 'chore: merge {base}'
+
+outputs:
+  status:
+    description: 'up-to-date(이미 최신) | merged(merge 커밋을 만듦) | conflict(다른 파일이 충돌해 취소함)'
+    value: ${{ steps.sync.outputs.status }}
+  conflicts:
+    description: 'conflict 일 때 충돌한 파일 목록 (공백 구분)'
+    value: ${{ steps.sync.outputs.conflicts }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: base 를 merge
+      id: sync
+      shell: bash
+      env:
+        BASE_REF: ${{ inputs.base-ref }}
+        VERSION_FILE: ${{ inputs.version-file }}
+        COMMIT_MESSAGE: ${{ inputs.commit-message }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        message="${COMMIT_MESSAGE//\{base\}/$BASE_REF}"
+
+        git fetch --quiet origin "$BASE_REF"
+        if git merge-base --is-ancestor FETCH_HEAD HEAD; then
+          echo "status=up-to-date" >> "$GITHUB_OUTPUT"
+          echo "이미 $BASE_REF 를 포함합니다"
+          exit 0
+        fi
+
+        if git merge --no-ff --no-edit -m "$message" FETCH_HEAD; then
+          echo "status=merged" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        conflicts=$(git diff --name-only --diff-filter=U | tr '\n' ' ' | sed 's/ $//')
+        if [ "$conflicts" = "$VERSION_FILE" ]; then
+          # 두 쪽이 다른 버전을 적어 둔 것뿐이다. base 쪽 값을 두면 ensure-version 이 기대 버전으로 덮어쓴다
+          git checkout --theirs -- "$VERSION_FILE"
+          git add "$VERSION_FILE"
+          git commit --no-edit --quiet
+          echo "status=merged" >> "$GITHUB_OUTPUT"
+          echo "$VERSION_FILE 충돌을 $BASE_REF 쪽 값으로 풀었습니다"
+          exit 0
+        fi
+
+        git merge --abort
+        echo "status=conflict" >> "$GITHUB_OUTPUT"
+        echo "conflicts=$conflicts" >> "$GITHUB_OUTPUT"
+        echo "::warning::$BASE_REF 와 충돌해 merge 를 취소했습니다: $conflicts"

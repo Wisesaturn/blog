@@ -1,0 +1,71 @@
+name: 'Ensure Version'
+description: '버전 파일의 version 을 "base 브랜치 끝 버전 + PR 버전 레이블" 로 맞추고, 다르면 커밋해 push 합니다.'
+
+# version-label → base 버전 읽기 → semver-bump → commit-version 을 잇는다.
+# version-bump(PR 체크)와 sync-release-prs(머지 뒤 갱신)가 같은 규칙으로 버전을 정하도록 한곳에 모았다
+
+inputs:
+  base-ref:
+    description: 'PR 의 base 브랜치 (ex. v3)'
+    required: true
+  labels:
+    description: 'PR 레이블 이름의 JSON 배열'
+    required: true
+  ref:
+    description: 'push 할 브랜치 (PR 의 head 브랜치)'
+    required: true
+  version-file:
+    description: '버전을 읽고 쓰는 파일'
+    required: false
+    default: 'package.json'
+  commit-message:
+    description: '커밋 메시지. {version} 자리에 기대 버전이 들어갑니다'
+    required: false
+    default: 'chore: bump version to {version}'
+
+outputs:
+  committed:
+    description: '커밋해 push 했으면 true'
+    value: ${{ steps.commit.outputs.committed }}
+  previous:
+    description: '맞추기 전 버전'
+    value: ${{ steps.commit.outputs.previous }}
+  next:
+    description: '기대 버전'
+    value: ${{ steps.next.outputs.next }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 버전 레이블 읽기
+      id: label
+      uses: ./.github/actions/version-label
+      with:
+        labels: ${{ inputs.labels }}
+
+    # PR 의 base SHA 는 PR 을 연 시점 값이라 오래됐을 수 있다. 지금 base 브랜치 끝을 기준으로 삼는다
+    - name: base 브랜치 끝의 버전 읽기
+      id: base
+      shell: bash
+      env:
+        BASE_REF: ${{ inputs.base-ref }}
+        VERSION_FILE: ${{ inputs.version-file }}
+      run: |
+        git fetch --quiet origin "$BASE_REF"
+        echo "version=$(git show "FETCH_HEAD:$VERSION_FILE" | jq -r .version)" >> "$GITHUB_OUTPUT"
+
+    - name: 기대 버전 계산
+      id: next
+      uses: ./.github/actions/semver-bump
+      with:
+        version: ${{ steps.base.outputs.version }}
+        bump: ${{ steps.label.outputs.bump }}
+
+    - name: 버전이 다르면 커밋
+      id: commit
+      uses: ./.github/actions/commit-version
+      with:
+        version: ${{ steps.next.outputs.next }}
+        ref: ${{ inputs.ref }}
+        version-file: ${{ inputs.version-file }}
+        commit-message: ${{ inputs.commit-message }}

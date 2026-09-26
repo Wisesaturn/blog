@@ -4,7 +4,7 @@ name: version-bump
 # PR 의 버전 레이블(patch, minor, major)에 맞게 올려 둔다 (#107). 버전 레이블이 없으면 그대로 둔다.
 # 룰셋이 이 체크를 필수로 걸어, bump commit 이 없으면 머지할 수 없다.
 #
-# on.pull_request.branches 는 파일을 읽을 수 없어 모든 PR 에서 돌고, 대상 브랜치가 아니면 첫 단계 뒤에 끝난다.
+# on.pull_request.branches 는 파일을 읽을 수 없어 모든 PR 에서 돌고, 대상 브랜치가 아니면 설정 단계 뒤에 끝난다.
 #
 # bump commit 은 RELEASE_BOT_TOKEN(PAT) 으로 push 한다. GITHUB_TOKEN 으로 push 하면 GitHub 이 이 워크플로를
 # 다시 돌리지 않아, 새 head 커밋에 필수 체크가 영영 달리지 않는다.
@@ -36,48 +36,23 @@ jobs:
         with:
           base-ref: ${{ github.base_ref }}
 
-      - name: 버전 레이블 읽기
-        id: label
+      - name: 버전 맞추기
+        id: version
         if: steps.config.outputs.enabled == 'true'
-        uses: ./.github/actions/version-label
+        uses: ./.github/actions/ensure-version
         with:
+          base-ref: ${{ github.base_ref }}
           labels: ${{ toJSON(github.event.pull_request.labels.*.name) }}
-
-      # PR 의 base SHA 는 PR 을 연 시점 값이라 오래됐을 수 있다. 지금 base 브랜치 끝을 기준으로 삼는다
-      - name: base 브랜치 끝의 버전 읽기
-        id: base
-        if: steps.config.outputs.enabled == 'true'
-        env:
-          BASE_REF: ${{ github.base_ref }}
-          VERSION_FILE: ${{ steps.config.outputs.version-file }}
-        run: |
-          git fetch --depth=1 origin "$BASE_REF"
-          echo "version=$(git show "FETCH_HEAD:$VERSION_FILE" | jq -r .version)" >> "$GITHUB_OUTPUT"
-
-      - name: 기대 버전 계산
-        id: next
-        if: steps.config.outputs.enabled == 'true'
-        uses: ./.github/actions/semver-bump
-        with:
-          version: ${{ steps.base.outputs.version }}
-          bump: ${{ steps.label.outputs.bump }}
-
-      - name: 버전이 다르면 bump commit
-        id: commit
-        if: steps.config.outputs.enabled == 'true'
-        uses: ./.github/actions/commit-version
-        with:
-          version: ${{ steps.next.outputs.next }}
           ref: ${{ github.event.pull_request.head.ref }}
           version-file: ${{ steps.config.outputs.version-file }}
           commit-message: 'chore/#${{ github.event.pull_request.number }}: bump version to {version}'
 
       # 이 실행은 옛 head 커밋의 결과다. 방금 push 로 새 커밋에서 다시 도는 실행이 통과를 낸다
       - name: bump commit 을 올렸으면 새 커밋의 체크로 넘기기
-        if: steps.commit.outputs.committed == 'true'
+        if: steps.version.outputs.committed == 'true'
         env:
-          PREVIOUS: ${{ steps.commit.outputs.previous }}
-          NEXT: ${{ steps.next.outputs.next }}
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          NEXT: ${{ steps.version.outputs.next }}
         run: |
           echo "::error::버전이 $PREVIOUS 라서 $NEXT 로 올리는 커밋을 push 했습니다. 새 커밋의 체크를 기다립니다."
           exit 1
