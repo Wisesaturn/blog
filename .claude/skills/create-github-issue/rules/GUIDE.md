@@ -38,7 +38,7 @@
 | 상태 개선 | `✨ Fix` |
 | 버그 | `👻 Bug` |
 | 리팩토링 | `♻️ Refactor` |
-| 핫픽스 | `😎 Hotfix` |
+| 핫픽스 | `🔥 Hotfix` |
 | 에픽 | `🎗 Epic` |
 | 배포 | `📃 Release` |
 
