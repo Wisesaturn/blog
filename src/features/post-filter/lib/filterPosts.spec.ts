@@ -21,9 +21,9 @@ function post(plainTitle: string, category: string, createdAt: string, views = 0
   return { plain_title: plainTitle, category, createdAt, views } as unknown as PostRow;
 }
 
-const TS_FUNC = post('함수 타입 선언하기', 'typescript', '2023-06-27', 1600);
-const REACT_HOOK = post('useLens 파헤치기', 'react', '2026-07-07', 70);
-const NEXT_CACHE = post('Next.js 캐시 전략', 'nextjs', '2025-01-10', 300);
+const TS_FUNC = post('함수 타입 선언하기', 'typescript', '2023. 6. 27.', 1600);
+const REACT_HOOK = post('useLens 파헤치기', 'react', '2026. 7. 7.', 70);
+const NEXT_CACHE = post('Next.js 캐시 전략', 'nextjs', '2025. 1. 10.', 300);
 const ALL = [TS_FUNC, REACT_HOOK, NEXT_CACHE];
 
 const query = (overrides: Partial<PostsQuery> = {}): PostsQuery => ({
