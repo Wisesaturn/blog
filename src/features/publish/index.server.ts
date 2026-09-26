@@ -2,6 +2,8 @@
 export { default as createPost } from './api/createPost';
 export { default as createProject } from './api/createProject';
 export { default as createSnippet } from './api/createSnippet';
+export { default as deleteStore } from './api/deleteStore';
+export { default as getStoragePaths } from './lib/getStoragePaths';
 export { default as requestRedeploy } from './api/requestRedeploy';
 export { default as verifyWebhookSecret, WEBHOOK_SECRET_HEADER } from './api/verifyWebhookSecret';
 export { default as getWebhookPageId } from './lib/getWebhookPageId';

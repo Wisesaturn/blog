@@ -25,6 +25,15 @@ export default async function uploadImage(props: Props): Promise<string> {
   const formatImageSrc = src.replace(/#x26;/g, '&');
 
   const response = await fetch(formatImageSrc);
+  // 끊어진 링크는 404 HTML 을 돌려준다. 그대로 sharp 에 넘기면 원인을 알 수 없는 디코딩 에러가 난다 (#104)
+  const contentType = response.headers.get('content-type') ?? '';
+  if (!response.ok || !contentType.startsWith('image/')) {
+    const NotImageError = new Error(
+      `이미지를 받지 못했습니다. ${response.status} ${contentType || '(content-type 없음)'} : ${formatImageSrc}`,
+    );
+    Logger.error(NotImageError);
+    throw NotImageError;
+  }
   const rawBuffer = await response.arrayBuffer();
   // `sharp`로 이미지 파일을 webp로 변환
   const webpBuffer = await sharp(rawBuffer)
