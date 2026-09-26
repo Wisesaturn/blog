@@ -474,6 +474,8 @@
       background-color: var(--md-callout-bg);
       outline: 1px solid var(--md-callout-line);
       outline-offset: -1px;
+      /* 상자 안은 짧은 메모라 본문(1.75)보다 줄 간격을 좁힌다 */
+      line-height: 1.6;
     }
 
     .callout-icon {
