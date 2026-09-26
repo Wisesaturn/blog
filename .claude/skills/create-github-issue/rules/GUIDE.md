@@ -76,7 +76,7 @@ blocked by #N
 | 쓰지 않음 | 대신 |
 | --- | --- |
 | 정상 동작 확인 | `pnpm build` 성공 |
-| 빌드 개선 | `remix.config.js` 의 `serverDependenciesToBundle` 제거 |
+| 빌드 개선 | `vite.config.ts` 의 `ssr.noExternal` 에서 쓰지 않는 패키지 제거 |
 | 배포 확인 | Vercel 프리뷰에서 글 상세와 목록이 렌더됨 |
 
 ### 에픽은 한 블록을 더 쓴다

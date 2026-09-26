@@ -10,7 +10,7 @@ export default function Copyright() {
         {' '}
         © 2023-{currentYear} Copyright{' '}
         <span className="text-gray-500 dark:text-white">사툰사툰</span>, based on{' '}
-        <span className="text-gray-500 dark:text-white">remix</span>
+        <span className="text-gray-500 dark:text-white">React Router</span>
       </span>
       <div className="max-md:min-h-[44px] ios-notch-margin-bottom hidden max-md:block" />
     </footer>

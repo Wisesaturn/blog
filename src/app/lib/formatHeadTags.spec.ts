@@ -106,9 +106,9 @@ describe('description', () => {
   });
 
   it('post 는 description 뒤에 태그를 이어 붙인다', () => {
-    const data = { post: { description: '본문 요약', tags: ['react', 'remix'] } };
+    const data = { post: { description: '본문 요약', tags: ['react', 'react-router'] } };
 
-    expect(contentOf(run({ data }), 'description')).toBe('본문 요약 | react remix');
+    expect(contentOf(run({ data }), 'description')).toBe('본문 요약 | react react-router');
   });
 
   it('post 에 태그가 없으면 기본값으로 남는다', () => {

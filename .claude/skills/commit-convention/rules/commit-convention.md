@@ -67,7 +67,7 @@ feat/#1: 포스트 좋아요 기능 구현
 
 - 💡 설계 이유
 
-  - Remix loader 대신 TQ mutation 을 썼다. 낙관적 업데이트로 반응이 즉시 보인다
+  - React Router loader 대신 TQ mutation 을 썼다. 낙관적 업데이트로 반응이 즉시 보인다
   - 클라이언트 상태라 loader 캐시 무효화 없이 처리 가능
 ```
 

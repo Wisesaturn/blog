@@ -163,7 +163,7 @@ export const postAPI = {
 #### `queries.ts` — queryOptions 팩토리
 
 TanStack Query v5 `queryOptions()`로 queryKey와 queryFn을 묶는다.
-**Remix loader로 처리하는 서버사이드 데이터는 여기에 두지 않는다. 클라이언트사이드 fetch가 필요한 경우에만** 사용한다.
+**React Router loader로 처리하는 서버사이드 데이터는 여기에 두지 않는다. 클라이언트사이드 fetch가 필요한 경우에만** 사용한다.
 
 ```typescript
 // ✅ entities/post/api/queries.ts
@@ -253,7 +253,7 @@ import { type PostDocument } from '@x/entities/post';
 | 함수/변수 | camelCase | `createPost`, `postList` |
 | 상수 | UPPER_SNAKE_CASE | `MAX_POST_COUNT` |
 | 타입/인터페이스 | PascalCase | `PostDocument`, `SnippetType` |
-| Remix 규약 파일 | 예외 | `route.tsx`, `loader.ts` |
+| React Router 규약 파일 | 예외 | `route.tsx`, `loader.ts` |
 
 ---
 
