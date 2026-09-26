@@ -51,12 +51,12 @@
     --md-highlight: #b8ecd7;
     --md-selection: rgba(59, 130, 246, 0.25);
     --md-marker: #9ca3af;
-    --md-code-title-bg: #e5e7eb;
-    --md-copy-bg: rgba(255, 255, 255, 0.1);
-    --md-copy-bg-hover: rgba(255, 255, 255, 0.2);
-    --md-copy-icon: #aaa;
-    --md-copy-icon-hover: #fff;
-    --md-copy-done: #4ade80;
+    --md-code-title-bg: #eaeaeb;
+    --md-copy-bg: rgba(0, 0, 0, 0.04);
+    --md-copy-bg-hover: rgba(0, 0, 0, 0.08);
+    --md-copy-icon: #6b7280;
+    --md-copy-icon-hover: #383a42;
+    --md-copy-done: #16a34a;
 
     accent-color: var(--green-main);
   }
@@ -89,7 +89,7 @@
     --md-highlight: rgba(110, 231, 183, 0.3);
     --md-selection: rgba(96, 165, 250, 0.35);
     --md-marker: #6b7280;
-    --md-code-title-bg: #191919;
+    --md-code-title-bg: #21252b;
     --md-copy-bg: rgba(255, 255, 255, 0.1);
     --md-copy-bg-hover: rgba(255, 255, 255, 0.2);
     --md-copy-icon: #aaa;
@@ -530,6 +530,9 @@
       padding: 8px 16px;
       background-color: var(--md-code-title-bg);
       border-radius: 6px 6px 0 0;
+      /* 아래 코드 블록과 같은 테두리를 둘러 한 상자로 보이게 한다 */
+      outline: 1px solid var(--code-border);
+      outline-offset: -1px;
 
       + .code-block-wrapper {
         margin-top: 0;

@@ -11,7 +11,7 @@ import { SnippetDetailPage } from '@/pages/snippet-detail';
 
 import { getSnippet } from '@/entities/snippet/index.server';
 
-import codeStyles from '@/commons/styles/etc/vscode-prism.css?url';
+import codeStyles from '@/commons/styles/etc/code-theme.css?url';
 import formatStyleSheet from '@/commons/lib/formatStyleSheet';
 import { DETAIL_CACHE_CONTROL } from '@/commons/config/cache';
 
