@@ -70,6 +70,7 @@ jobs:
           version: ${{ steps.next.outputs.next }}
           ref: ${{ github.event.pull_request.head.ref }}
           version-file: ${{ steps.config.outputs.version-file }}
+          commit-message: 'chore/#${{ github.event.pull_request.number }}: bump version to {version}'
 
       # 이 실행은 옛 head 커밋의 결과다. 방금 push 로 새 커밋에서 다시 도는 실행이 통과를 낸다
       - name: bump commit 을 올렸으면 새 커밋의 체크로 넘기기

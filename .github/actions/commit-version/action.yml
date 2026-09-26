@@ -14,6 +14,10 @@ inputs:
     description: '버전을 읽고 쓰는 파일'
     required: false
     default: 'package.json'
+  commit-message:
+    description: '커밋 메시지. {version} 자리에 기대 버전이 들어갑니다'
+    required: false
+    default: 'chore: bump version to {version}'
 
 outputs:
   committed:
@@ -34,6 +38,7 @@ runs:
         EXPECTED: ${{ inputs.version }}
         REF: ${{ inputs.ref }}
         VERSION_FILE: ${{ inputs.version-file }}
+        COMMIT_MESSAGE: ${{ inputs.commit-message }}
       run: |
         current=$(jq -r .version "$VERSION_FILE")
         echo "previous=$current" >> "$GITHUB_OUTPUT"
@@ -50,7 +55,7 @@ runs:
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add "$VERSION_FILE"
-        git commit -m "chore: 버전을 $EXPECTED 로 맞춤"
+        git commit -m "${COMMIT_MESSAGE//\{version\}/$EXPECTED}"
         git push origin "HEAD:$REF"
 
         echo "committed=true" >> "$GITHUB_OUTPUT"
