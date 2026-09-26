@@ -1,0 +1,84 @@
+name: release
+
+# 릴리즈 브랜치(.github/release.env 의 RELEASE_BRANCHES)에 PR 이 머지되면 태그를 달고 GitHub 릴리즈를 발행한다 (#108).
+# version-bump 가 머지 전에 버전을 올려 두므로, 머지 커밋의 버전이 머지 직전 base 의 버전과 다를 때만 발행한다.
+# 버전 레이블이 없는 PR 은 버전이 그대로라 건너뛴다.
+#
+# 노트는 PR 본문의 「## 작업 내용」 절로 만든다. 섹션은 PR 제목 타입(feat → Feature, fix → Fix, 나머지 → Etc)이다.
+# 태그와 릴리즈는 GITHUB_TOKEN 으로 만든다. 이 발행으로 다른 워크플로를 돌릴 일이 없다.
+
+on:
+  pull_request:
+    types: [closed]
+
+concurrency:
+  group: release-${{ github.base_ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: 머지 커밋 가져오기
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+
+      - name: 설정 읽기
+        id: config
+        uses: ./.github/actions/release-config
+        with:
+          base-ref: ${{ github.base_ref }}
+
+      # 룰셋이 merge commit 만 허용해 머지 커밋의 첫 부모가 머지 직전 base 다
+      - name: 발행할지 판단
+        id: check
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          VERSION_FILE: ${{ steps.config.outputs.version-file }}
+          TAG_PREFIX: ${{ steps.config.outputs.tag-prefix }}
+        run: |
+          version=$(jq -r .version "$VERSION_FILE")
+          before=$(git show "HEAD^1:$VERSION_FILE" | jq -r .version)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+          if [ "$version" = "$before" ]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "버전이 $version 그대로라 발행하지 않습니다"
+            exit 0
+          fi
+
+          # 정식 버전 태그 중 가장 높은 것. v2.0.0-beta 같은 프리릴리즈 태그는 뺀다
+          prefix_re=$(printf '%s' "$TAG_PREFIX" | sed 's/[.[\*^$]/\\&/g')
+          previous=$(git tag --list "${TAG_PREFIX}*" --sort=-v:refname | grep -E "^${prefix_re}[0-9]+\.[0-9]+\.[0-9]+$" | head -1 || true)
+
+          echo "publish=true" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG_PREFIX}${version}" >> "$GITHUB_OUTPUT"
+          echo "previous-tag=$previous" >> "$GITHUB_OUTPUT"
+          echo "$before → $version, 직전 태그 ${previous:-없음}"
+
+      - name: 노트 만들기
+        id: notes
+        if: steps.check.outputs.publish == 'true'
+        uses: ./.github/actions/release-notes
+        with:
+          title: ${{ github.event.pull_request.title }}
+          body: ${{ github.event.pull_request.body }}
+          number: ${{ github.event.pull_request.number }}
+          version: ${{ steps.check.outputs.version }}
+          previous-tag: ${{ steps.check.outputs.previous-tag }}
+          tag-prefix: ${{ steps.config.outputs.tag-prefix }}
+
+      - name: 릴리즈 발행
+        if: steps.check.outputs.publish == 'true'
+        uses: ./.github/actions/publish-release
+        with:
+          tag: ${{ steps.check.outputs.tag }}
+          target: ${{ github.event.pull_request.merge_commit_sha }}
+          notes-file: ${{ steps.notes.outputs.notes-file }}
+          token: ${{ github.token }}

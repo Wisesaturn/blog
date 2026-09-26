@@ -1,0 +1,46 @@
+name: 'Publish Release'
+description: '커밋에 태그를 달고 GitHub 릴리즈를 Latest 로 발행합니다. 같은 태그가 이미 있으면 실패합니다.'
+
+inputs:
+  tag:
+    description: '태그 (ex. v3.0.2). 릴리즈 제목도 이 값입니다'
+    required: true
+  target:
+    description: '태그를 달 커밋의 전체 SHA. 짧은 SHA 나 브랜치 이름은 쓰지 않습니다'
+    required: true
+  notes-file:
+    description: '릴리즈 노트 파일 경로'
+    required: true
+  token:
+    description: 'contents: write 권한이 있는 토큰'
+    required: true
+
+outputs:
+  url:
+    description: '발행한 릴리즈 주소'
+    value: ${{ steps.publish.outputs.url }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 릴리즈 발행
+      id: publish
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        TAG: ${{ inputs.tag }}
+        TARGET: ${{ inputs.target }}
+        NOTES_FILE: ${{ inputs.notes-file }}
+      run: |
+        # 버전이 겹쳐 머지되면 여기서 드러나야 한다. 조용히 덮어쓰지 않는다
+        if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+          || git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+          echo "::error::$TAG 가 이미 있습니다. 같은 버전이 두 번 머지됐는지 확인하세요."
+          exit 1
+        fi
+
+        # --target 은 전체 SHA 로 준다. 브랜치 이름이면 발행 시점의 끝 커밋에 태그가 붙는다
+        url=$(gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+          --target "$TARGET" --title "$TAG" --notes-file "$NOTES_FILE" --latest)
+        echo "url=$url" >> "$GITHUB_OUTPUT"
+        echo "$TAG 를 $TARGET 에 발행했습니다: $url"
