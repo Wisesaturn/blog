@@ -51,6 +51,13 @@
     --md-highlight: #b8ecd7;
     --md-selection: rgba(59, 130, 246, 0.25);
     --md-callout-bg: #eefaf4;
+
+    /* 목차. 비선택 항목은 배경(#fff) 대비 4.8:1 */
+    --toc-muted: #6b7280;
+    --toc-active: #111827;
+    --toc-line: #e2e8f0;
+    --toc-active-line: #64748b;
+    --toc-hover-bg: #f1f5f9;
     --md-callout-line: #cdeedd;
     --md-marker: #9ca3af;
     --md-code-title-bg: #eaeaeb;
@@ -91,6 +98,13 @@
     --md-highlight: rgba(110, 231, 183, 0.3);
     --md-selection: rgba(96, 165, 250, 0.35);
     --md-callout-bg: rgba(110, 231, 183, 0.08);
+
+    /* 목차. 비선택 항목은 배경(#222) 대비 6.2:1. 예전 #6b7280 은 3.29:1 이었다 */
+    --toc-muted: #9ca3af;
+    --toc-active: #f9fafb;
+    --toc-line: #454545;
+    --toc-active-line: #e2e8f0;
+    --toc-hover-bg: #111111;
     --md-callout-line: rgba(110, 231, 183, 0.22);
     --md-marker: #6b7280;
     --md-code-title-bg: #21252b;
@@ -144,6 +158,13 @@
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+  }
+
+  /* 목차 같은 페이지 안 링크를 부드럽게 스크롤한다. 움직임을 줄이는 설정이면 바로 이동한다 */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -243,6 +264,15 @@
 
     @media (width < 48rem) {
       font-size: 16px;
+    }
+
+    /* 목차 링크로 이동했을 때 제목이 고정 헤더(모바일 48px, 데스크톱 64px)에 가리지 않게 한다 */
+    :where(h2, h3, h4) {
+      scroll-margin-top: 64px;
+
+      @media (width >= 48rem) {
+        scroll-margin-top: 96px;
+      }
     }
 
     /* 기본 p 와 li 크기(16/14px)를 덮고 본문 크기를 따른다 */
