@@ -3,7 +3,7 @@
 ## Commands
 
 ```bash
-pnpm dev          # 개발 서버 (Remix)
+pnpm dev          # 개발 서버 (React Router)
 pnpm build        # 프로덕션 빌드
 pnpm start        # 프로덕션 서버
 pnpm lint         # ESLint 검사
@@ -68,7 +68,7 @@ src/
 | 함수/변수 | camelCase | `createPost` |
 | 상수 | UPPER_SNAKE_CASE | `MAX_POST_COUNT` |
 | 타입/인터페이스 | PascalCase | `PostDocument` |
-| Remix 규약 파일 | 예외 | `route.tsx`, `loader.ts` |
+| React Router 규약 파일 | 예외 | `route.tsx`, `loader.ts` |
 
 ## Conventions
 

@@ -34,7 +34,7 @@ src/commons/ui/Badge.test.tsx         ← 옆에 둔다
 쓰지 않는 것도 정해 둔다.
 
 - 외부 API 를 직접 부르는 함수 (`getPost`, `createPost` 등) 는 지금 쓰지 않는다. 목 없이 못 돌고, 목을 세우면 목이 맞는지를 다시 확인해야 한다
-- Remix loader 와 action 은 지금 쓰지 않는다. 라우트 구조가 바뀌는 중이라 곧 다시 써야 한다
+- React Router loader 와 action 은 지금 쓰지 않는다. 라우트 구조가 바뀌는 중이라 곧 다시 써야 한다
 
 ---
 

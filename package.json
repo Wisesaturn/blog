@@ -1,13 +1,13 @@
 {
   "name": "jaehan-blog",
-  "description": "Jae han's dev blog by Remix v2",
+  "description": "Jae han's dev blog by React Router v7",
   "private": true,
   "sideEffects": true,
   "type": "module",
   "version": "3.0.0",
   "packageManager": "pnpm@9.15.0",
   "keywords": [
-    "remix",
+    "react-router",
     "dev",
     "blog",
     "송재한",

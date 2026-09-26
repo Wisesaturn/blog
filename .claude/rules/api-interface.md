@@ -60,7 +60,7 @@ export const postAPI = {
 ### queries.ts — queryOptions 팩토리
 
 TanStack Query v5 `queryOptions()`로 queryKey와 queryFn을 묶는다.
-**Remix loader로 처리하는 데이터는 여기에 두지 않는다.**
+**React Router loader로 처리하는 데이터는 여기에 두지 않는다.**
 클라이언트사이드 fetch(좋아요 수, 실시간 댓글 등)에만 사용한다.
 
 ```typescript
