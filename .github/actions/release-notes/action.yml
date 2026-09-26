@@ -33,9 +33,11 @@ runs:
   using: 'composite'
   steps:
     - name: Node 설정
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version: 24
+        # 의존성 설치 없이 Node 만 쓴다. packageManager 가 npm 으로 바뀌어도 캐시를 찾지 않게 끈다
+        package-manager-cache: false
 
     # 노트 형식은 spec 이 있는 스크립트 하나에만 둔다
     - name: 노트 만들기

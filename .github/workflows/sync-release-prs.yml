@@ -24,7 +24,7 @@ jobs:
       prs: ${{ steps.list.outputs.prs }}
     steps:
       - name: 설정 파일 가져오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.base_ref }}
           sparse-checkout: .github
@@ -63,7 +63,7 @@ jobs:
     steps:
       # PR 브랜치가 아니라 base 를 checkout 한다. 액션이 생기기 전에 딴 PR 에는 .github/actions 가 없다 (sync-base 참고)
       - name: base 브랜치 가져오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.base_ref }}
           token: ${{ secrets.RELEASE_BOT_TOKEN }}
