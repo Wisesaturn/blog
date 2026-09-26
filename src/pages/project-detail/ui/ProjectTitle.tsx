@@ -45,9 +45,9 @@ export default function ProjectTitle(props: ProjectTitleProps) {
         </span>
         <div className="md:[&>:not(:first-child)]:mt-1">
           <h1 className="text-4xl max-md:text-2xl">{title}</h1>
-          <h2 className="font-semibold text-2xl max-md:text-lg">{theme}</h2>
+          <p className="font-semibold text-2xl max-md:text-lg">{theme}</p>
         </div>
-        <h3 className="text-xl max-md:text-base font-light py-2">{description}</h3>
+        <p className="text-xl max-md:text-base font-light py-2">{description}</p>
         <div className="flex justify-between items-center max-md:items-start max-md:gap-1 max-md:flex-col-reverse">
           <ProjectTitleInfo date={date} views={views} />
           <ProjectTitleLink github={github} website={website} />

@@ -18,7 +18,7 @@ export default function SnippetTitle(props: SnippetTitleProps) {
         variants={animation?.variants}
       >
         <h1 className="text-4xl max-md:text-2xl">{title}</h1>
-        <h3 className="text-xl max-md:text-base font-light">{description}</h3>
+        <p className="text-xl max-md:text-base font-light">{description}</p>
         <div className="flex gap-1 items-center align-middle pt-2 text-gray-600 dark:text-gray-300">
           <Icons.View className="icons-size-small pr-1" />
           <p className="layout-text">{views}</p>

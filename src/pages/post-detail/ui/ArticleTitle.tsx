@@ -37,7 +37,7 @@ export default function ArticleTitle(props: ArticleTitleProps) {
           {category.toLocaleUpperCase()}
         </span>
         <h1 className="text-4xl max-md:text-2xl">{title}</h1>
-        <h2 className="text-xl max-md:text-base font-light">{description}</h2>
+        <p className="text-xl max-md:text-base font-light">{description}</p>
         <div className="flex justify-between items-end">
           <ArticleTitleInfo createdAt={createdAt} views={views} />
         </div>
