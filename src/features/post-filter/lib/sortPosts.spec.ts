@@ -17,15 +17,26 @@ function post(createdAt: string, views?: number): PostRow {
   return { createdAt, views, plain_title: createdAt } as unknown as PostRow;
 }
 
-const OLD = '2024-01-01';
-const MID = '2025-06-15';
-const NEW = '2026-03-20';
+const OLD = '2024. 1. 1.';
+const MID = '2025. 6. 15.';
+const NEW = '2026. 3. 20.';
 
 describe('desc 는 최신 글을 앞에 둔다', () => {
   it('날짜 내림차순으로 정렬한다', () => {
     const rows = [post(OLD), post(NEW), post(MID)];
 
     expect(sortPosts(rows, 'desc').map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+  });
+
+  it('두 자리 월이 한 자리 월보다 뒤라는 것을 안다', () => {
+    // 문자열로 비교하면 '2023. 12. 1.' 이 '2023. 5. 19.' 보다 앞선다
+    const rows = [post('2023. 12. 1.'), post('2024. 5. 19.'), post('2023. 5. 19.')];
+
+    expect(sortPosts(rows, 'desc').map((p) => p.createdAt)).toEqual([
+      '2024. 5. 19.',
+      '2023. 12. 1.',
+      '2023. 5. 19.',
+    ]);
   });
 
   it('알 수 없는 값이 오면 desc 로 본다', () => {
