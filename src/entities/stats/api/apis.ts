@@ -69,6 +69,23 @@ export async function increaseViews(kind: StatKind, key: string): Promise<number
 }
 
 /**
+ * @description 좋아요를 `count` 만큼 올리고, 올린 뒤의 값을 돌려준다
+ *
+ * 브라우저가 쓰로틀로 모은 클릭 수를 한 번에 보낸다. `increaseViews` 처럼 통계 문서가 없으면 실패하고
+ * 없는 키로 문서를 만들지 않는다.
+ * @param kind 콘텐츠 종류
+ * @param key 콘텐츠 키
+ * @param count 올릴 수. 호출하는 쪽이 1~100 으로 검사한다
+ * @returns 올린 뒤의 좋아요 수
+ * @throws 통계 문서가 없으면 에러
+ */
+export async function increaseLikes(kind: StatKind, key: string, count: number): Promise<number> {
+  const ref = statRef(kind, key);
+  await updateDoc(ref, { likes: increment(count) });
+  return toValues((await getDoc(ref)).data()).likes;
+}
+
+/**
  * @description 발행한 콘텐츠의 통계 문서를 만들거나 Notion 페이지 ID 를 갱신한다
  *
  * `merge` 로 쓰므로 이미 있는 `views`, `likes` 는 건드리지 않는다.

@@ -6,6 +6,7 @@
 import { requestJson } from '@/commons/api/requestJson';
 
 import {
+  likeResult,
   statMap,
   statValues,
   viewResult,
@@ -72,4 +73,26 @@ export async function postView(kind: StatKind, key: string, signal?: AbortSignal
     signal,
   });
   return views;
+}
+
+/**
+ * @description 쓰로틀로 모은 좋아요를 보내고 올린 뒤의 값을 받는다 (브라우저)
+ * @param kind 콘텐츠 종류
+ * @param key 콘텐츠 키
+ * @param count 올릴 수 (1~100)
+ * @param keepalive 페이지를 떠나는 중이면 true. 탭을 닫아도 요청이 끝까지 간다
+ * @returns 올린 뒤의 좋아요 수
+ */
+export async function postLike(
+  kind: StatKind,
+  key: string,
+  count: number,
+  keepalive = false,
+): Promise<number> {
+  const { likes } = await requestJson(statPath(kind, key, 'like'), likeResult, {
+    method: 'POST',
+    json: { count },
+    keepalive,
+  });
+  return likes;
 }
