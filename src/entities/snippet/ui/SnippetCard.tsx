@@ -3,10 +3,14 @@ import { Link } from 'react-router';
 
 import Badge from '@/commons/ui/Badge';
 import Icons from '@/commons/ui/icons/Icons';
+import StatCount from '@/commons/ui/StatCount';
 
 import { ISnippet } from '../api/types';
 
-interface Props extends Omit<ISnippet, 'body'>, GlobalAnimation {}
+interface Props extends Omit<ISnippet, 'body'>, GlobalAnimation {
+  /** 목록 통계에서 받은 조회수. 받는 중이면 `undefined`, 받지 못하면 `null` */
+  views: number | null | undefined;
+}
 
 export default function SnippetCard(props: Props) {
   const { skills, views, title, description, animation } = props;
@@ -29,7 +33,7 @@ export default function SnippetCard(props: Props) {
             </div>
             <div className="flex items-center gap-1 text-gray-600 dark:text-gray-300">
               <Icons.View className="icons-size-small pr-1" />
-              {views || 0}
+              <StatCount value={views} label="조회수" />
             </div>
           </div>
         </div>

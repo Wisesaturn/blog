@@ -1,11 +1,17 @@
 import { Link } from 'react-router';
 
 import Icons from '@/commons/ui/icons/Icons';
+import StatCount from '@/commons/ui/StatCount';
 import convertString from '@/commons/lib/convertString';
 
 import { IPost } from '../api/types';
 
-export default function PostRow(props: Omit<IPost, 'body'>) {
+interface PostRowProps extends Omit<IPost, 'body'> {
+  /** 목록 통계에서 받은 조회수. 받는 중이면 `undefined`, 받지 못하면 `null` */
+  views: number | null | undefined;
+}
+
+export default function PostRow(props: PostRowProps) {
   // Firestore 문서의 필드명이 plain_title 이라 구조분해에서 이름을 바꿔 받는다
   const { createdAt, title, description, category, views, plain_title: plainTitle } = props;
 
@@ -28,7 +34,7 @@ export default function PostRow(props: Omit<IPost, 'body'>) {
         <h3 className="layout-text">{description}</h3>
         <div className="flex items-center gap-1">
           <Icons.View size="small" className="icons-size-small pr-1" />
-          {views || 0}
+          <StatCount value={views} label="조회수" />
         </div>
       </div>
     </Link>
