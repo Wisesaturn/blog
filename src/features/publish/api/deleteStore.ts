@@ -4,6 +4,8 @@ import Logger from '@/commons/lib/logger';
 import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
+import getStorageFolder from '../lib/getStorageFolder';
+
 interface Props extends IFireStore {
   /** 지우지 않을 파일의 Storage 경로. 방금 저장한 문서가 가리키는 파일이다 (`getStoragePaths`) */
   keep: Set<string>;
@@ -17,7 +19,7 @@ interface Props extends IFireStore {
  */
 export default async function deleteStore(props: Props): Promise<void> {
   const { category, title, collection, keep } = props;
-  const folder = `${collection}/${category}/${title}`;
+  const folder = getStorageFolder({ collection, category, title });
 
   try {
     const res = await listAll(ref(storage, folder));

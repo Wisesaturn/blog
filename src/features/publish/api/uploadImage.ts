@@ -5,14 +5,18 @@ import Logger from '@/commons/lib/logger';
 import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
+import getStorageFolder from '../lib/getStorageFolder';
+import toStorageFileName from '../lib/toStorageFileName';
+
 interface Props extends IFireStore {
   src: string;
 }
 
 /**
- * @summary firebase에 image를 업로드하는 함수
- * @param props
- * @returns
+ * @description 원본 이미지를 받아 webp(gif 는 그대로)로 바꾸고 Firebase Storage 의 문서 폴더에 올린다
+ * @param props 원본 이미지 주소와 문서 폴더(collection/category/title)
+ * @returns 올린 파일의 GCP 공개 주소
+ * @throws 주소가 비었거나 이미지가 아닌 응답을 받으면 에러
  */
 export default async function uploadImage(props: Props): Promise<string> {
   const { src, collection, category, title } = props;
@@ -50,11 +54,7 @@ export default async function uploadImage(props: Props): Promise<string> {
   const data = ext === 'gif' ? rawBuffer : webpBuffer;
 
   // 파일 이름
-  const filename = decodeURIComponent(
-    String(String(formatImageSrc.split('/').pop()).split('?').shift())
-      .split('.')
-      .shift()!,
-  );
+  const filename = toStorageFileName(formatImageSrc);
 
   // 메타데이터
   const metadata = {
@@ -65,10 +65,8 @@ export default async function uploadImage(props: Props): Promise<string> {
   // 유닉스 타임
   const hashTime = new Date().getTime();
 
-  const collectionRef = ref(
-    storage,
-    `${collection}/${category}/${title}/${filename}-${hashTime}.${formatExt}`,
-  );
+  const folder = getStorageFolder({ collection, category, title });
+  const collectionRef = ref(storage, `${folder}/${filename}-${hashTime}.${formatExt}`);
 
   // firebase에 올린 파일 주소 얻기
   const imgFirebaseUrl = await uploadBytes(collectionRef, data, metadata).then(async () => {

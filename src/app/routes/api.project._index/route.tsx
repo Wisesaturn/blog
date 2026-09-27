@@ -2,6 +2,7 @@ import { ActionFunctionArgs } from 'react-router';
 
 import {
   requestRedeploy,
+  runInBackground,
   verifyWebhookSecret,
   getWebhookPageId,
   createProject,
@@ -20,8 +21,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return new Response('Unauthorized', { status: 401 });
   }
 
+  let pageId: string;
   try {
-    const pageId = getWebhookPageId(await request.json());
+    pageId = getWebhookPageId(await request.json());
+  } catch (err) {
+    const message = err instanceof Error ? err.message : '요청 본문을 읽지 못했습니다.';
+    return new Response(message, {
+      status: 400,
+      headers: {
+        'Content-Type': 'text/plain',
+        encoding: 'UTF-8',
+      },
+    });
+  }
+
+  // Notion 버튼은 응답을 오래 기다리지 않는다. 발행은 응답 뒤에 이어 가고 결과는 로그로 확인한다 (#134)
+  runInBackground(`${pageId} 프로젝트 발행`, async () => {
     const { body: projectBody, ...project } = await createProject(pageId);
     const title = convertString({ str: project.plainTitle, type: 'spaceToDash' });
     await updateProject({
@@ -40,20 +55,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       keep: getStoragePaths(project.thumbnail, projectBody),
     });
     await requestRedeploy();
-    return Response.json(project);
-  } catch (err) {
-    if (err instanceof Error) {
-      // create* 는 원인을 cause 에 담는다. 로그를 열지 않아도 끊어진 커버 주소 같은 원인이 보이게 함께 돌려준다
-      const message =
-        err.cause instanceof Error ? `${err.message}\n${err.cause.message}` : err.message;
-      return new Response(message, {
-        status: 400,
-        headers: {
-          'Content-Type': 'text/plain',
-          encoding: 'UTF-8',
-        },
-      });
-    }
-    return null;
-  }
+  });
+
+  return Response.json({ pageId }, { status: 202 });
 };
