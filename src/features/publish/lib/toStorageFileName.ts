@@ -1,5 +1,4 @@
-/** 파일 이름에 남길 문자. 이 밖의 문자가 이어지면 `-` 하나로 바꾼다 */
-const UNSAFE_CHARS_PATTERN = /[^\p{L}\p{N}_-]+/gu;
+import toSafePathSegment from './toSafePathSegment';
 
 /**
  * @description 이미지 주소에서 Storage 에 올릴 파일 이름을 만든다.
@@ -18,9 +17,9 @@ export default function toStorageFileName(src: string): string {
   // 2. 첫 `.` 앞까지만 남겨 확장자를 뗀다
   const basename = lastSegment.split('.')[0];
 
-  // 3. 퍼센트 인코딩을 풀고, 자모가 나뉜(NFD) 이름은 결합 문자가 `-` 로 바뀌지 않게 먼저 합친다
-  const decoded = decodeURIComponent(basename).normalize('NFC');
+  // 3. 퍼센트 인코딩을 푼다
+  const decoded = decodeURIComponent(basename);
 
   // 4. 문자, 숫자, `-`, `_` 이외의 문자를 `-` 로 바꾼다
-  return decoded.replace(UNSAFE_CHARS_PATTERN, '-');
+  return toSafePathSegment(decoded);
 }

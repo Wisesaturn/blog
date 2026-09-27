@@ -5,6 +5,7 @@ import Logger from '@/commons/lib/logger';
 import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
+import getStorageFolder from '../lib/getStorageFolder';
 import toStorageFileName from '../lib/toStorageFileName';
 
 interface Props extends IFireStore {
@@ -63,10 +64,8 @@ export default async function uploadImage(props: Props): Promise<string> {
   // 유닉스 타임
   const hashTime = new Date().getTime();
 
-  const collectionRef = ref(
-    storage,
-    `${collection}/${category}/${title}/${filename}-${hashTime}.${formatExt}`,
-  );
+  const folder = getStorageFolder({ collection, category, title });
+  const collectionRef = ref(storage, `${folder}/${filename}-${hashTime}.${formatExt}`);
 
   // firebase에 올린 파일 주소 얻기
   const imgFirebaseUrl = await uploadBytes(collectionRef, data, metadata).then(async () => {
