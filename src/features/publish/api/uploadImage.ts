@@ -13,9 +13,10 @@ interface Props extends IFireStore {
 }
 
 /**
- * @summary firebase에 image를 업로드하는 함수
- * @param props
- * @returns
+ * @description 원본 이미지를 받아 webp(gif 는 그대로)로 바꾸고 Firebase Storage 의 문서 폴더에 올린다
+ * @param props 원본 이미지 주소와 문서 폴더(collection/category/title)
+ * @returns 올린 파일의 GCP 공개 주소
+ * @throws 주소가 비었거나 이미지가 아닌 응답을 받으면 에러
  */
 export default async function uploadImage(props: Props): Promise<string> {
   const { src, collection, category, title } = props;
