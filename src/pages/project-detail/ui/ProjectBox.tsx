@@ -7,7 +7,8 @@ import { IProject } from '@/entities/project';
 import ProjectTitle from './ProjectTitle';
 
 interface ProjectBoxProps extends GlobalAnimation {
-  project: IProject;
+  /** 조회수는 통계 API 에서 받는다. 받는 중이면 `undefined`, 받지 못하면 `null` */
+  project: Omit<IProject, 'views'> & { views: number | null | undefined };
 }
 
 export default function ProjectBox({ project, animation }: ProjectBoxProps) {

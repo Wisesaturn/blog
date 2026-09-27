@@ -5,7 +5,8 @@ import { ISnippet } from '@/entities/snippet';
 import SnippetTitle from './SnippetTitle';
 
 interface SnippetBoxProps extends GlobalAnimation {
-  snippet: ISnippet;
+  /** 조회수는 통계 API 에서 받는다. 받는 중이면 `undefined`, 받지 못하면 `null` */
+  snippet: Omit<ISnippet, 'views'> & { views: number | null | undefined };
 }
 
 export default function SnippetBox({ snippet, animation }: SnippetBoxProps) {

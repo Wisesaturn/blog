@@ -9,7 +9,8 @@ import ArticleTags from './ArticleTags';
 import useCodePen from '../model/useCodePen';
 
 interface ArticeBoxProps extends GlobalAnimation {
-  post: IPost;
+  /** 조회수는 통계 API 에서 받는다. 받는 중이면 `undefined`, 받지 못하면 `null` */
+  post: Omit<IPost, 'views'> & { views: number | null | undefined };
 }
 
 export default function ArticleBox({ post, animation }: ArticeBoxProps) {

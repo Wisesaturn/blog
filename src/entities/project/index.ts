@@ -1,4 +1,3 @@
-export { projectQueries } from './api/queries';
 export { type IProject } from './api/types';
 export { PROJECTS_DATA } from './config/projects';
 export { default as sortProjects } from './lib/sortProjects';

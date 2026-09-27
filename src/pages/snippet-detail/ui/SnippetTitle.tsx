@@ -3,9 +3,12 @@ import { motion } from 'motion/react';
 import { ISnippet } from '@/entities/snippet';
 
 import Icons from '@/commons/ui/icons/Icons';
+import StatCount from '@/commons/ui/StatCount';
 import Badge from '@/commons/ui/Badge';
 
-interface SnippetTitleProps extends GlobalAnimation, Omit<ISnippet, 'body'> {}
+interface SnippetTitleProps extends GlobalAnimation, Omit<ISnippet, 'body' | 'views'> {
+  views: number | null | undefined;
+}
 
 export default function SnippetTitle(props: SnippetTitleProps) {
   const { animation, description, views, skills, title } = props;
@@ -21,7 +24,7 @@ export default function SnippetTitle(props: SnippetTitleProps) {
         <p className="text-xl max-md:text-base font-light">{description}</p>
         <div className="flex gap-1 items-center align-middle pt-2 text-gray-600 dark:text-gray-300">
           <Icons.View className="icons-size-small pr-1" />
-          <p className="layout-text">{views}</p>
+          <StatCount value={views} label="조회수" />
         </div>
       </motion.section>
     </>

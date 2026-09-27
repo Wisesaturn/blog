@@ -5,7 +5,9 @@ import { IProject } from '@/entities/project';
 import ProjectTitleInfo from './ProjectTitleInfo';
 import ProjectTitleLink from './ProjectTitleLink';
 
-interface ProjectTitleProps extends GlobalAnimation, Omit<IProject, 'body'> {}
+interface ProjectTitleProps extends GlobalAnimation, Omit<IProject, 'body' | 'views'> {
+  views: number | null | undefined;
+}
 
 export default function ProjectTitle(props: ProjectTitleProps) {
   const {

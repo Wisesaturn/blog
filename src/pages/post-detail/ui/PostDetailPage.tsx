@@ -2,9 +2,9 @@ import { motion } from 'motion/react';
 import { useParams } from 'react-router';
 
 import { ArticleComments } from '@/features/comments';
-import { useViewCount } from '@/features/view-count';
+import { useContentStats } from '@/features/view-count';
 
-import { type IPost, postQueries } from '@/entities/post';
+import { type IPost } from '@/entities/post';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
@@ -21,7 +21,7 @@ interface PostDetailPageProps {
  * -----------------------------------------------------------------------------------------------*/
 export default function PostDetailPage({ post }: PostDetailPageProps) {
   const { category = '', title = '' } = useParams();
-  const views = useViewCount(postQueries.views(category, title), post.views || 0);
+  const { views } = useContentStats('post', `${category}/${title}`);
 
   return (
     <motion.main

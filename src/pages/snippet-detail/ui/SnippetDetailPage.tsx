@@ -2,9 +2,9 @@ import { motion } from 'motion/react';
 import { useParams } from 'react-router';
 
 import { SnippetComments } from '@/features/comments';
-import { useViewCount } from '@/features/view-count';
+import { useContentStats } from '@/features/view-count';
 
-import { type ISnippet, snippetQueries } from '@/entities/snippet';
+import { type ISnippet } from '@/entities/snippet';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
@@ -21,7 +21,7 @@ interface SnippetDetailPageProps {
  * -----------------------------------------------------------------------------------------------*/
 export default function SnippetDetailPage({ snippet }: SnippetDetailPageProps) {
   const { title = '' } = useParams();
-  const views = useViewCount(snippetQueries.views(title), snippet.views || 0);
+  const { views } = useContentStats('snippet', title);
 
   return (
     <motion.main
