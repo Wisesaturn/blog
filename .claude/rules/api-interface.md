@@ -2,6 +2,7 @@
 paths:
   - 'src/entities/**'
   - 'src/features/**'
+  - 'src/commons/**'
 ---
 
 # API 인터페이스 규칙
@@ -17,6 +18,46 @@ paths:
 - 브라우저는 `apis.ts` 를 부르지 않는다. `apis.client.ts` 로 우리 API 라우트(BFF)를 부르고, 라우트가 `apis.ts` 를 부른다
 - 이름의 `.server`, `.client` 를 React Router 가 강제한다. `.server` 모듈이 클라이언트 번들에 섞이면 빌드가 실패하고, `.client` 모듈은 서버 번들에서 빈 모듈이 된다
 - 페이지 내용은 loader 가 읽는다. prerender 하는 페이지에서 발행 뒤에도 바뀌는 값(조회수, 좋아요, 댓글)은 loader 에 두지 않고 브라우저에서 `queries.ts` 로 받는다. 서버에서 prefetch 하면 빌드 시점의 값이 HTML 에 굳는다
+
+---
+
+## 0. 인자는 객체 하나로 받는다
+
+`lib/` 와 `api/` 의 export 함수, `queries.ts` 의 팩토리는 **인자가 둘 이상이면 객체 하나로 받는다.** 레이어(commons, entities, features, pages, app)와 상관없다.
+
+`postLike(kind, key, 3, true)` 만 보면 `3` 과 `true` 가 무엇인지 함수 정의를 열어야 안다. 객체로 받으면 부르는 곳에 이름이 남는다.
+
+```typescript
+// ✅ 부르는 곳에서 뜻이 읽힌다
+await postLike({ kind: 'post', key: 'react/글-제목', count: 3, keepalive: true });
+sortPosts({ posts: rows, orderBy: 'mostView', viewsOf });
+
+// ❌ 위치로 받는다
+await postLike('post', 'react/글-제목', 3, true);
+sortPosts(rows, 'mostView', viewsOf);
+```
+
+- 인자가 하나면 그대로 둔다 (`getStats(kind)`, `parsePostsQuery(searchParams)`)
+- 기본값은 구조분해에서 준다 (`{ keepalive = false }`)
+- 늘 함께 다니는 값은 타입 하나로 묶는다. 통계의 종류와 키는 `StatTarget = { kind, key }` 다. 더 받을 것이 있으면 `StatTarget & { count: number }` 처럼 붙인다
+- `fetch` 옵션처럼 넘기기만 하는 값도 같은 객체에 펼친다 (`requestJson({ url, schema, method, signal })`)
+- JSDoc 은 필드마다 적는다. 객체 이름은 `params`, 묶은 타입 하나만 받으면 그 이름(`target`)을 쓴다
+
+```typescript
+/**
+ * @description 좋아요를 `count` 만큼 올리고, 올린 뒤의 값을 돌려준다
+ * @param params.kind 콘텐츠 종류
+ * @param params.key 콘텐츠 키
+ * @param params.count 올릴 수. 호출하는 쪽이 1~100 으로 검사한다
+ * @returns 올린 뒤의 좋아요 수
+ */
+export async function increaseLikes({
+  count,
+  ...target
+}: StatTarget & { count: number }): Promise<number> { ... }
+```
+
+**예외**: React Router 가 시그니처를 정한 함수(`handleRequest`, `loader`, `action`)와 모듈 안에서만 쓰는 비교 함수(`sort` 에 넘기는 `(a, b)`)는 그대로 둔다.
 
 ---
 
@@ -78,22 +119,27 @@ export const postAPI = {
   - 본문은 `json` 옵션으로 넘긴다. 직렬화와 `Content-Type` 을 `requestJson` 이 한다
 - `AbortSignal` 을 받아 넘긴다. 화면을 떠나면 TanStack Query 가 요청을 끊는다
 - 경로는 경로 함수 하나에서 만든다. 라우트와 모양이 어긋나지 않게 한다
+- 인자는 객체 하나로 받는다 ([0. 인자는 객체 하나로 받는다](#0-인자는-객체-하나로-받는다))
 
 ```typescript
 // ✅ entities/stats/api/apis.client.ts
 import { requestJson } from '@/commons/api/requestJson';
 
-import { statValues, type StatKind, type StatValues } from '../model/stat';
+import { statValues, type StatTarget, type StatValues } from '../model/stat';
 
 /**
  * @description 콘텐츠 하나의 통계를 받는다 (브라우저)
- * @param kind 콘텐츠 종류
- * @param key 콘텐츠 키
- * @param signal 화면을 떠나면 요청을 끊는 신호
+ * @param params.kind 콘텐츠 종류
+ * @param params.key 콘텐츠 키
+ * @param params.signal 화면을 떠나면 요청을 끊는 신호
  * @returns `{ views, likes }`
  */
-export async function fetchStat(kind: StatKind, key: string, signal?: AbortSignal): Promise<StatValues> {
-  return requestJson(statPath(kind, key), statValues, { signal });
+export async function fetchStat({
+  kind,
+  key,
+  signal,
+}: StatTarget & { signal?: AbortSignal }): Promise<StatValues> {
+  return requestJson({ url: statPath({ kind, key }), schema: statValues, signal });
 }
 ```
 
@@ -102,7 +148,7 @@ export async function fetchStat(kind: StatKind, key: string, signal?: AbortSigna
 import { getStat } from '@/entities/stats/index.server';
 
 // ❌ 금지 — fetch 를 직접 부르고 응답을 검사하지 않고 단언
-const res = await fetch(statPath(kind, key));
+const res = await fetch(statPath({ kind, key }));
 return (await res.json()) as StatValues;
 ```
 
@@ -125,14 +171,14 @@ export const statsQueries = {
   list: (kind: StatKind) =>
     queryOptions({
       queryKey: [...statsQueries.ALL, kind, 'list'] as const,
-      queryFn: ({ signal }) => fetchStats(kind, signal),
+      queryFn: ({ signal }) => fetchStats({ kind, signal }),
       staleTime: 60_000,
     }),
 
-  detail: (kind: StatKind, key: string) =>
+  detail: ({ kind, key }: StatTarget) =>
     queryOptions({
       queryKey: [...statsQueries.ALL, kind, 'detail', key] as const,
-      queryFn: ({ signal }) => fetchStat(kind, key, signal),
+      queryFn: ({ signal }) => fetchStat({ kind, key, signal }),
     }),
 };
 ```
@@ -168,7 +214,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { statsQueries } from '@/entities/stats';
 
-const detail = useQuery(statsQueries.detail(kind, key));
+const detail = useQuery(statsQueries.detail({ kind, key }));
 ```
 
 - 서버에 요청하는 조회는 `useQuery` 를 쓴다. `useSuspenseQuery` 는 서버 렌더와 prerender 에서도 요청을 시도해 상대 경로가 실패하거나 빌드 시점 값이 굳는다
@@ -176,19 +222,24 @@ const detail = useQuery(statsQueries.detail(kind, key));
 
 ### 조건부 실행 — skipToken
 
-`enabled` 대신 `queryFn`에 `skipToken`을 사용한다.
+`enabled` 대신 `queryFn`에 `skipToken`을 사용한다. 조건부로 부를 쿼리는 팩토리가 `skipToken` 을 받게 한다.
 
 ```typescript
-import { skipToken, useQuery } from '@tanstack/react-query';
+import { skipToken, useQuery, type SkipToken } from '@tanstack/react-query';
+
+// 팩토리
+detail: ({ kind, key }: { kind: StatKind; key: string | SkipToken }) =>
+  queryOptions({
+    queryKey: [...statsQueries.ALL, kind, 'detail', key] as const,
+    queryFn: key === skipToken ? skipToken : ({ signal }) => fetchStat({ kind, key, signal }),
+  }),
 
 // ✅ skipToken
-const { data } = useQuery({
-  ...statsQueries.detail(kind, key ?? skipToken),
-});
+const { data } = useQuery(statsQueries.detail({ kind, key: key ?? skipToken }));
 
 // ❌ enabled
 const { data } = useQuery({
-  ...statsQueries.detail(kind, key ?? ''),
+  ...statsQueries.detail({ kind, key: key ?? '' }),
   enabled: !!key,
 });
 ```
@@ -204,10 +255,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLike, statsQueries } from '@/entities/stats';
 
 const queryClient = useQueryClient();
-const { queryKey } = statsQueries.detail(kind, key);
+const { queryKey } = statsQueries.detail({ kind, key });
 
 const { mutate } = useMutation({
-  mutationFn: (count: number) => postLike(kind, key, count),
+  mutationFn: (count: number) => postLike({ kind, key, count }),
   onSuccess: (likes) => queryClient.setQueryData(queryKey, (prev) => prev && { ...prev, likes }),
 });
 ```

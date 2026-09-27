@@ -33,6 +33,8 @@ export async function createPost(input: CreatePostInput): Promise<void> { ... }
 
 > `@returns`는 반환값이 `void`이면 생략한다.
 
+> 인자를 객체 하나로 받으면(`api-interface.md` 의 「0. 인자는 객체 하나로 받는다」) 필드마다 `@param params.{필드}` 로 적는다. 묶은 타입 하나만 받으면 `@param target.kind` 처럼 그 이름을 쓴다.
+
 ---
 
 ## 2. 컴포넌트 (`*.tsx`)

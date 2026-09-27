@@ -79,6 +79,7 @@ src/
 - Firebase 싱글턴은 `import { db } from '@/commons/api/firebase.server'` 로 가져온다
 - `cn()`, `cva` 는 `@/commons/lib` 에서 가져온다
 - 외부에서 들어오는 데이터(Notion, Firestore 문서, 웹훅 본문, 쿼리스트링)는 zod 스키마로 검사한다
+- `lib/`, `api/` 의 함수와 `queries.ts` 팩토리는 인자가 둘 이상이면 객체 하나로 받는다: `postLike({ kind, key, count })` (`.claude/rules/api-interface.md` 의 「0. 인자는 객체 하나로 받는다」)
 - `console.log` 를 쓰지 않는다. `console.warn` 과 `console.error` 만 쓴다
 
 > import 순서, FSD 레이어, public API, 파일 이름은 린트가 막는다. type import 형식과 `console.log` 금지는 규칙이고 자동 검사가 없다.
