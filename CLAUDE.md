@@ -55,7 +55,7 @@ src/
 
 - alias 는 `@/*` 하나다 (`tsconfig.paths.json`). Vite, Storybook, Vitest 가 모두 이 파일을 읽는다
 - route 파일의 default 는 `useLoaderData` 로 읽은 값을 page 에 props 로 넘기는 브리지다. pages 가 app 의 loader 타입을 가져오지 않게 하기 위해서다
-- 서버 전용 코드는 `.server` 이름을 쓴다. entities 와 `features/publish` 는 Firestore·Notion 을 부르는 API 를 `index.server.ts` 로, 나머지를 `index.ts` 로 내보낸다. `.server` 모듈이 클라이언트 번들에 섞이면 React Router 가 빌드를 실패시킨다
+- 서버 전용 코드는 `.server` 이름을 쓴다. entities 와 `features/publish` 는 서버에서만 쓰는 것(Firestore, Notion, Storage 를 부르는 API, 웹훅 검사, `waitUntil` 등)을 `index.server.ts` 로, 클라이언트에서도 쓰는 것을 `index.ts` 로 내보낸다. 기준은 외부 서비스를 부르는지가 아니라 서버에서만 쓰는지다. `.server` 모듈이 클라이언트 번들에 섞이면 React Router 가 빌드를 실패시킨다
 
 ## Naming Conventions
 
