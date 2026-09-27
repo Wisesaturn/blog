@@ -1,4 +1,4 @@
-// Notion 과 Firestore, Storage 를 부르는 서버 전용 발행 기능. 이름의 .server 때문에 클라이언트 번들에 섞이면 빌드가 실패한다
+// 서버에서만 쓰는 발행 기능 (Notion, Firestore, Storage 호출, 웹훅 검사, waitUntil). 이름의 .server 때문에 클라이언트 번들에 섞이면 빌드가 실패한다
 export { default as createPost } from './api/createPost';
 export { default as createProject } from './api/createProject';
 export { default as createSnippet } from './api/createSnippet';

@@ -117,7 +117,9 @@ entities/
 ### 진입점 — `index.ts` 와 `index.server.ts`
 
 - `index.ts`: 클라이언트에서 써도 되는 것 (타입, 상수, 스키마, UI, queries)
-- `index.server.ts`: Firestore 를 부르는 `apis.ts`
+- `index.server.ts`: 서버에서만 쓰는 것 (Firestore 를 부르는 `apis.ts`, 웹훅 검사, `waitUntil` 같은 서버 런타임 코드)
+
+외부 서비스를 부르지 않아도 서버에서만 쓰면 `index.server.ts` 로 내보낸다. `index.ts` 에 두면 클라이언트가 가져올 수 있는 진입점이 생긴다. `features/publish` 처럼 슬라이스 전체가 서버 전용이면 `index.ts` 없이 `index.server.ts` 하나만 둔다.
 
 하나로 합치면 클라이언트 코드가 상수 하나를 가져올 때 Firebase 초기화까지 끌려온다. 초기화는 모듈 최상단 부수 효과라 tree shaking 으로 떨어지지 않는다.
 

@@ -18,7 +18,7 @@ const gitignore = fileURLToPath(new URL('.gitignore', import.meta.url));
 
 /**
  * FSD 레이어 폴더 이름. 플러그인의 표준 이름(widgets, shared)을 이 프로젝트의 이름(modules, commons)에 잇는다.
- * `no-public-api-sidestep` 은 `index.server.ts` 도 public API 로 본다. Firestore 와 Notion 을 부르는 서버 전용 진입점이다.
+ * `no-public-api-sidestep` 은 `index.server.ts` 도 public API 로 본다. 서버에서만 쓰는 코드를 내보내는 진입점이다.
  */
 const fsdOptions = {
   rootPath: '/src/',
