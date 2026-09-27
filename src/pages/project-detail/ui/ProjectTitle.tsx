@@ -8,7 +8,7 @@ import ProjectTitleLink from './ProjectTitleLink';
 
 interface ProjectTitleProps extends GlobalAnimation, Omit<IProject, 'body' | 'views'> {
   views: number | null | undefined;
-  /** 정보 줄 오른쪽에 두는 좋아요 버튼 (#120) */
+  /** 정보 줄에서 조회수 바로 옆에 두는 좋아요 버튼 (#120) */
   likeSlot?: ReactNode;
 }
 

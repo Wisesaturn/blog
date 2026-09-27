@@ -6,7 +6,7 @@ import { ISnippet } from '@/entities/snippet';
 import SnippetTitle from './SnippetTitle';
 
 interface SnippetBoxProps extends GlobalAnimation {
-  /** 제목 정보 줄 오른쪽에 두는 좋아요 버튼 */
+  /** 제목 정보 줄에서 조회수 바로 옆에 두는 좋아요 버튼 */
   likeSlot?: ReactNode;
   /** 조회수는 통계 API 에서 받는다. 받는 중이면 `undefined`, 받지 못하면 `null` */
   snippet: Omit<ISnippet, 'views'> & { views: number | null | undefined };
