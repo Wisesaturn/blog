@@ -19,14 +19,20 @@ function getCauseMessages(err: unknown): string[] {
  * Notion 버튼은 응답을 오래 기다리지 않아, 이미지가 많은 문서는 발행이 성공해도 시간 초과가 뜬다 (#134).
  * 응답이 이미 나갔으므로 에러는 던지지 않고 원인을 모두 모아 로그로 남긴다.
  * Vercel 밖(로컬 개발 서버)에서는 `waitUntil` 이 아무것도 하지 않지만 작업은 그대로 끝까지 돈다
- * @param label 로그에 남길 작업 이름
- * @param task 응답 뒤에 이어 갈 작업
+ * @param params.label 로그에 남길 작업 이름
+ * @param params.task 응답 뒤에 이어 갈 작업
  * @returns 작업이 끝나면 풀리는 Promise. 실패해도 reject 하지 않는다
  * @example
- * runInBackground(`${pageId} 프로젝트 발행`, async () => { ... });
+ * runInBackground({ label: `${pageId} 프로젝트 발행`, task: async () => { ... } });
  * return Response.json({ pageId }, { status: 202 });
  */
-export default function runInBackground(label: string, task: () => Promise<void>): Promise<void> {
+export default function runInBackground({
+  label,
+  task,
+}: {
+  label: string;
+  task: () => Promise<void>;
+}): Promise<void> {
   const promise = task()
     .then(() => Logger.success(`${label}을 마쳤습니다.`))
     .catch((err: unknown) => {

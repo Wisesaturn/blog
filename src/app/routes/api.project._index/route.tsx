@@ -36,25 +36,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   // Notion 버튼은 응답을 오래 기다리지 않는다. 발행은 응답 뒤에 이어 가고 결과는 로그로 확인한다 (#134)
-  runInBackground(`${pageId} 프로젝트 발행`, async () => {
-    const { body: projectBody, ...project } = await createProject(pageId);
-    const title = convertString({ str: project.plainTitle, type: 'spaceToDash' });
-    await updateProject({
-      title,
-      meta: project,
-      body: projectBody,
-      isUpdateProject: true,
-    });
-    // 조회수와 좋아요를 두는 stats 문서를 만들고 댓글을 달 Notion 페이지를 기록한다 (#117)
-    await ensureStat({ kind: 'project', key: title, notionPageId: project.index });
-    // 저장이 성공한 뒤에 옛 파일을 지운다. 그 전에 실패하면 운영 문서가 가리키는 파일이 남아 있어야 한다 (#104)
-    await deleteStore({
-      collection: 'project',
-      category: `${project.category}-projects`,
-      title,
-      keep: getStoragePaths(project.thumbnail, projectBody),
-    });
-    await requestRedeploy();
+  runInBackground({
+    label: `${pageId} 프로젝트 발행`,
+    task: async () => {
+      const { body: projectBody, ...project } = await createProject(pageId);
+      const title = convertString({ str: project.plainTitle, type: 'spaceToDash' });
+      await updateProject({
+        title,
+        meta: project,
+        body: projectBody,
+        isUpdateProject: true,
+      });
+      // 조회수와 좋아요를 두는 stats 문서를 만들고 댓글을 달 Notion 페이지를 기록한다 (#117)
+      await ensureStat({ kind: 'project', key: title, notionPageId: project.index });
+      // 저장이 성공한 뒤에 옛 파일을 지운다. 그 전에 실패하면 운영 문서가 가리키는 파일이 남아 있어야 한다 (#104)
+      await deleteStore({
+        collection: 'project',
+        category: `${project.category}-projects`,
+        title,
+        keep: getStoragePaths(project.thumbnail, projectBody),
+      });
+      await requestRedeploy();
+    },
   });
 
   return Response.json({ pageId }, { status: 202 });
