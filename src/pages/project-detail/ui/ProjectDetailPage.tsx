@@ -2,9 +2,9 @@ import { motion } from 'motion/react';
 import { useParams } from 'react-router';
 
 import { ProjectComments } from '@/features/comments';
-import { useViewCount } from '@/features/view-count';
+import { useContentStats } from '@/features/view-count';
 
-import { type IProject, projectQueries } from '@/entities/project';
+import { type IProject } from '@/entities/project';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 
@@ -21,7 +21,7 @@ interface ProjectDetailPageProps {
  * -----------------------------------------------------------------------------------------------*/
 export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const { title = '' } = useParams();
-  const views = useViewCount(projectQueries.views(title), project.views || 0);
+  const { views } = useContentStats('project', title);
 
   return (
     <motion.main

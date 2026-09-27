@@ -19,7 +19,7 @@ import { projectNotionProperties } from '../model/projectNotionProperties';
  */
 export default async function createProject(pageId: string) {
   try {
-    const project: IProject = await getNotionPage(
+    const project: Omit<IProject, 'views'> = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_PROJECTS_KEY,
       projectNotionProperties,
@@ -42,7 +42,7 @@ export default async function createProject(pageId: string) {
       const createdTime = new Date(page.created_time);
       const lastEditedTime = new Date(page.last_edited_time);
       // ////////////////// data /////////////////// //
-      const projectData: IProject = {
+      const projectData: Omit<IProject, 'views'> = {
         index: page.id,
         title: emoji ? `${emoji} ${title}` : title,
         plainTitle: title,
@@ -64,7 +64,6 @@ export default async function createProject(pageId: string) {
           year: 'numeric',
         }).format(lastEditedTime),
         date,
-        views: 0,
         body: '',
       };
       // ////////////////// data /////////////////// //

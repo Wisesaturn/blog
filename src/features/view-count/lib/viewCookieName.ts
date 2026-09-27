@@ -1,4 +1,4 @@
-export type ViewKind = 'post' | 'snippet' | 'project';
+import { type StatKind } from '@/entities/stats';
 
 /**
  * @description 조회수 중복 방지 쿠키의 이름을 글마다 다르게 만든다
@@ -14,7 +14,7 @@ export type ViewKind = 'post' | 'snippet' | 'project';
  * @example
  * viewCookieName('post', 'typescript/함수-타입-선언하기'); // 'view-post-…'
  */
-export default function viewCookieName(kind: ViewKind, key: string): string {
+export default function viewCookieName(kind: StatKind, key: string): string {
   let hash = 0x811c9dc5;
   new TextEncoder().encode(key).forEach((byte) => {
     hash = Math.imul(hash ^ byte, 0x01000193);

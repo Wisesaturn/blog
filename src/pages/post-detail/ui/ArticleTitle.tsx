@@ -4,7 +4,9 @@ import { IPost } from '@/entities/post';
 
 import ArticleTitleInfo from './ArticleTitleInfo';
 
-interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags'> {}
+interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags' | 'views'> {
+  views: number | null | undefined;
+}
 
 export default function ArticleTitle(props: ArticleTitleProps) {
   const { animation, description, createdAt, thumbnail, views, category, title } = props;

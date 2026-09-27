@@ -23,7 +23,8 @@ export const projectDocument = z.object({
   lastEditedAt: z.string(),
   lastmod: z.string(),
   body: z.string(),
-  views: z.number(),
+  /** 조회수는 stats 문서로 옮겼다 (#117). 옛 문서에만 남아 있고 새로 발행한 문서에는 없다 */
+  views: z.number().default(0),
 });
 
 /** `projects/{이름}/meta` 문서 */

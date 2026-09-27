@@ -1,31 +1,12 @@
 import { createCookie } from 'react-router';
 
-import { type ViewCountBody } from '@/commons/api/postViewCount';
+import { type StatKind } from '@/entities/stats';
 
-import viewCookieName, { type ViewKind } from '../lib/viewCookieName';
-
-/**
- * @description 조회수 API 의 응답을 만든다. 인자는 `new Response(body, init)` 와 같은 순서다
- *
- * 본문은 `{ views }` JSON 이고, 사람마다 결과가 다르므로 언제나 `Cache-Control: no-store` 를 붙인다.
- * @param views 지금 조회수. 문서가 없으면 `null`
- * @param init `status` 와 `headers` 등. 넘긴 헤더 위에 `Content-Type` 과 `Cache-Control` 을 덮어쓴다
- * @returns JSON 응답
- * @example
- * return viewCountResponse(views, { headers: { 'Set-Cookie': setCookie } });
- * return viewCountResponse(null, { status: 404 });
- */
-export function viewCountResponse(views: number | null, init: ResponseInit = {}): Response {
-  const headers = new Headers(init.headers);
-  headers.set('Content-Type', 'application/json');
-  headers.set('Cache-Control', 'no-store');
-  const body: ViewCountBody = { views };
-  return new Response(JSON.stringify(body), { ...init, headers });
-}
+import viewCookieName from '../lib/viewCookieName';
 
 interface CountViewOptions {
   request: Request;
-  kind: ViewKind;
+  kind: StatKind;
   /** 쿠키 이름을 만들 글 키. 글은 `카테고리/제목`, 스니펫과 프로젝트는 제목 */
   key: string;
   /** 조회수를 1 올리고 올린 뒤의 값을 돌려준다 */

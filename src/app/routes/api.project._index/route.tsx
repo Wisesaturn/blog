@@ -10,6 +10,7 @@ import {
 } from '@/features/publish/index.server';
 
 import { updateProject } from '@/entities/project/index.server';
+import { ensureStat } from '@/entities/stats/index.server';
 
 import convertString from '@/commons/lib/convertString';
 
@@ -29,6 +30,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       body: projectBody,
       isUpdateProject: true,
     });
+    // 조회수와 좋아요를 두는 stats 문서를 만들고 댓글을 달 Notion 페이지를 기록한다 (#117)
+    await ensureStat('project', title, project.index);
     // 저장이 성공한 뒤에 옛 파일을 지운다. 그 전에 실패하면 운영 문서가 가리키는 파일이 남아 있어야 한다 (#104)
     await deleteStore({
       collection: 'project',

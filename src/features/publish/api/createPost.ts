@@ -19,7 +19,7 @@ import replaceBodyImages from './replaceBodyImages';
  */
 export default async function createPost(pageId: string) {
   try {
-    const post: IPost = await getNotionPage(
+    const post: Omit<IPost, 'views'> = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_POSTS_KEY,
       postNotionProperties,
@@ -33,7 +33,7 @@ export default async function createPost(pageId: string) {
       const lastEditedTime = new Date(page.last_edited_time);
 
       // ////////////////// data /////////////////// //
-      const postData: IPost = {
+      const postData: Omit<IPost, 'views'> = {
         index: page.id,
         title: emoji ? `${emoji} ${title}` : title,
         thumbnail: getCoverUrl(page.cover),
@@ -51,7 +51,6 @@ export default async function createPost(pageId: string) {
           year: 'numeric',
         }).format(lastEditedTime),
         body: '',
-        views: 0,
       };
       // ////////////////// data /////////////////// //
 

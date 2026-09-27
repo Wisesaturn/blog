@@ -17,7 +17,7 @@ import { snippetNotionProperties } from '../model/snippetNotionProperties';
  */
 export default async function createSnippet(pageId: string) {
   try {
-    const snippet: ISnippet = await getNotionPage(
+    const snippet: Omit<ISnippet, 'views'> = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_SNIPPETS_KEY,
       snippetNotionProperties,
@@ -30,7 +30,7 @@ export default async function createSnippet(pageId: string) {
       const createdTime = new Date(page.created_time);
       const lastEditedTime = new Date(page.last_edited_time);
       // ////////////////// data /////////////////// //
-      const snippetData: ISnippet = {
+      const snippetData: Omit<ISnippet, 'views'> = {
         index: page.id,
         title: emoji ? `${emoji} ${title}` : title,
         plainTitle: title,
@@ -45,7 +45,6 @@ export default async function createSnippet(pageId: string) {
           day: '2-digit',
           year: 'numeric',
         }).format(lastEditedTime),
-        views: 0,
         body: '',
       };
       // ////////////////// data /////////////////// //
