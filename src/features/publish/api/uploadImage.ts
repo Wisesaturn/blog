@@ -5,6 +5,8 @@ import Logger from '@/commons/lib/logger';
 import { storage } from '@/commons/api/firebase.server';
 import { IFireStore } from '@/commons/types/global';
 
+import toStorageFileName from '../lib/toStorageFileName';
+
 interface Props extends IFireStore {
   src: string;
 }
@@ -50,11 +52,7 @@ export default async function uploadImage(props: Props): Promise<string> {
   const data = ext === 'gif' ? rawBuffer : webpBuffer;
 
   // 파일 이름
-  const filename = decodeURIComponent(
-    String(String(formatImageSrc.split('/').pop()).split('?').shift())
-      .split('.')
-      .shift()!,
-  );
+  const filename = toStorageFileName(formatImageSrc);
 
   // 메타데이터
   const metadata = {
