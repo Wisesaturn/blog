@@ -33,6 +33,17 @@ function WithRouterStub({ storyComponent }: { storyComponent: React.ComponentTyp
 }
 
 export const Default: Story = {
-  args: { posts: DUMMY_POSTS },
+  args: { posts: DUMMY_POSTS, viewsFor: () => 120, likesFor: () => 7, viewsReady: true },
   decorators: [(StoryChildren) => <WithRouterStub storyComponent={StoryChildren} />],
+};
+
+/** 목록 통계를 받는 중이다. 조회수는 skeleton, 정렬 드롭다운의 조회수는 스피너로 보인다 */
+export const LoadingViews: Story = {
+  ...Default,
+  args: {
+    posts: DUMMY_POSTS,
+    viewsFor: () => undefined,
+    likesFor: () => undefined,
+    viewsReady: false,
+  },
 };

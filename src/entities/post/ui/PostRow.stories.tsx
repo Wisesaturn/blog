@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { ...DUMMY_POSTS[0] },
+  args: { ...DUMMY_POSTS[0], views: 1633, likes: 42 },
   decorators: [
     (StoryChlidren) => (
       <MemoryRouter initialEntries={['/']}>
@@ -25,4 +25,16 @@ export const Default: Story = {
       </MemoryRouter>
     ),
   ],
+};
+
+/** 목록 통계를 받는 중이다. 조회수 자리에 skeleton 이 보인다 */
+export const LoadingViews: Story = {
+  ...Default,
+  args: { ...DUMMY_POSTS[0], views: undefined, likes: undefined },
+};
+
+/** 목록 통계를 받지 못했다. 조회수 자리에 – 가 보인다 */
+export const FailedViews: Story = {
+  ...Default,
+  args: { ...DUMMY_POSTS[0], views: null, likes: null },
 };

@@ -7,15 +7,19 @@ import {
   ORDER_BY_TO_POST_FILTER,
   POST_FILTER_TO_ORDER_BY,
   POST_SORT_FILTER,
+  VIEW_SORT_FILTER,
 } from '../config/sortOptions';
 import useUrlParamsUpdater from '../model/useUrlParamsUpdater';
 import parseOrderBy from '../model/parseOrderBy';
 import { PostsFilter } from '../model/types';
 
-interface PostFilterProps extends GlobalAnimation {}
+interface PostFilterProps extends GlobalAnimation {
+  /** 조회수를 받았는지. 받기 전에는 조회순을 고를 수 없고 그 자리에 스피너가 보인다 */
+  viewsReady: boolean;
+}
 
 export default function PostFilter(props: PostFilterProps) {
-  const { animation } = props;
+  const { animation, viewsReady } = props;
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
 
   const orderBy = parseOrderBy(searchParams.get('orderby'));
@@ -37,6 +41,7 @@ export default function PostFilter(props: PostFilterProps) {
         label={selectedFilter}
         items={POST_SORT_FILTER}
         handleSelect={handleFilterRowClick}
+        pendingItems={viewsReady ? [] : VIEW_SORT_FILTER}
       />
     </motion.div>
   );

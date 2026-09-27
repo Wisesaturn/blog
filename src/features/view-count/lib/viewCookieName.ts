@@ -1,4 +1,4 @@
-export type ViewKind = 'post' | 'snippet' | 'project';
+import { type StatTarget } from '@/entities/stats';
 
 /**
  * @description 조회수 중복 방지 쿠키의 이름을 글마다 다르게 만든다
@@ -8,13 +8,13 @@ export type ViewKind = 'post' | 'snippet' | 'project';
  * 나눠 썼다. 한 글을 읽으면 그 카테고리의 다른 글도 30분 동안 조회수가 오르지 않았다.
  *
  * 쿠키 이름에는 한글을 넣을 수 없어서 글 키를 UTF-8 바이트 기준 FNV-1a 32비트 해시로 바꿔 붙인다.
- * @param kind 콘텐츠 종류
- * @param key Firestore 문서를 가리키는 키. 글은 `카테고리/제목`, 스니펫과 프로젝트는 제목
+ * @param target.kind 콘텐츠 종류
+ * @param target.key Firestore 문서를 가리키는 키. 글은 `카테고리/제목`, 스니펫과 프로젝트는 제목
  * @returns `view-{kind}-{16진수 8자리}`
  * @example
- * viewCookieName('post', 'typescript/함수-타입-선언하기'); // 'view-post-…'
+ * viewCookieName({ kind: 'post', key: 'typescript/함수-타입-선언하기' }); // 'view-post-…'
  */
-export default function viewCookieName(kind: ViewKind, key: string): string {
+export default function viewCookieName({ kind, key }: StatTarget): string {
   let hash = 0x811c9dc5;
   new TextEncoder().encode(key).forEach((byte) => {
     hash = Math.imul(hash ^ byte, 0x01000193);

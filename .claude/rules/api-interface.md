@@ -2,51 +2,102 @@
 paths:
   - 'src/entities/**'
   - 'src/features/**'
+  - 'src/commons/**'
 ---
 
 # API 인터페이스 규칙
 
-> 조회는 서버에서 loader 가 부른다. `queries.ts` 에는 브라우저가 직접 부르는 데이터만 둔다 (지금은 조회수).
-> Firestore 를 부르는 `apis.ts` 는 슬라이스의 `index.server.ts` 로만 내보낸다.
+데이터를 읽고 쓰는 경로는 두 가지다. 어느 쪽에서 부르느냐로 파일이 갈린다.
 
-entities 레이어의 Firebase API는 3파일 구조로 구성한다.
-features에서 mutation은 apis.ts 함수를 직접 import해 사용한다.
+```
+서버   loader · action · API 라우트 ──→ apis.ts ──→ Firestore
+브라우저  컴포넌트 · 훅 ──→ queries.ts ──→ apis.client.ts ──fetch──→ API 라우트(/api/…) ──→ apis.ts
+```
+
+- `apis.ts` 는 Firestore SDK 를 부르는 서버 전용 코드다. 슬라이스의 `index.server.ts` 로만 내보낸다. 클라이언트 번들에 섞이면 React Router 가 빌드를 실패시킨다
+- 브라우저는 `apis.ts` 를 부르지 않는다. `apis.client.ts` 로 우리 API 라우트(BFF)를 부르고, 라우트가 `apis.ts` 를 부른다
+- 이름의 `.server`, `.client` 를 React Router 가 강제한다. `.server` 모듈이 클라이언트 번들에 섞이면 빌드가 실패하고, `.client` 모듈은 서버 번들에서 빈 모듈이 된다
+- 페이지 내용은 loader 가 읽는다. prerender 하는 페이지에서 발행 뒤에도 바뀌는 값(조회수, 좋아요, 댓글)은 loader 에 두지 않고 브라우저에서 `queries.ts` 로 받는다. 서버에서 prefetch 하면 빌드 시점의 값이 HTML 에 굳는다
 
 ---
 
-## 1. entities `api/` 3파일 구조
+## 0. 인자는 객체 하나로 받는다
 
-```
-entities/{domain}/api/
-├── apis.ts      # 개별 async 함수 — Firestore 직접 호출
-├── queries.ts   # queryOptions() 팩토리 — TanStack Query 래핑
-└── types.ts     # API 입출력 타입
-```
+`lib/` 와 `api/` 의 export 함수, `queries.ts` 의 팩토리는 **인자가 둘 이상이면 객체 하나로 받는다.** 레이어(commons, entities, features, pages, app)와 상관없다.
 
-### apis.ts — 개별 함수 export
-
-**API 객체로 묶지 않는다.** 각 함수를 개별 `export async function`으로 선언한다.
+`postLike(kind, key, 3, true)` 만 보면 `3` 과 `true` 가 무엇인지 함수 정의를 열어야 안다. 객체로 받으면 부르는 곳에 이름이 남는다.
 
 ```typescript
-// ✅ entities/post/api/apis.ts
-import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
+// ✅ 부르는 곳에서 뜻이 읽힌다
+await postLike({ kind: 'post', key: 'react/글-제목', count: 3, keepalive: true });
+sortPosts({ posts: rows, orderBy: 'mostView', viewsOf });
+
+// ❌ 위치로 받는다
+await postLike('post', 'react/글-제목', 3, true);
+sortPosts(rows, 'mostView', viewsOf);
+```
+
+- 인자가 하나면 그대로 둔다 (`getStats(kind)`, `parsePostsQuery(searchParams)`)
+- 기본값은 구조분해에서 준다 (`{ keepalive = false }`)
+- 늘 함께 다니는 값은 타입 하나로 묶는다. 통계의 종류와 키는 `StatTarget = { kind, key }` 다. 더 받을 것이 있으면 `StatTarget & { count: number }` 처럼 붙인다
+- `fetch` 옵션처럼 넘기기만 하는 값도 같은 객체에 펼친다 (`requestJson({ url, schema, method, signal })`)
+- JSDoc 은 필드마다 적는다. 객체 이름은 `params`, 묶은 타입 하나만 받으면 그 이름(`target`)을 쓴다
+
+```typescript
+/**
+ * @description 좋아요를 `count` 만큼 올리고, 올린 뒤의 값을 돌려준다
+ * @param params.kind 콘텐츠 종류
+ * @param params.key 콘텐츠 키
+ * @param params.count 올릴 수. 호출하는 쪽이 1~100 으로 검사한다
+ * @returns 올린 뒤의 좋아요 수
+ */
+export async function increaseLikes({
+  count,
+  ...target
+}: StatTarget & { count: number }): Promise<number> { ... }
+```
+
+**예외**: React Router 가 시그니처를 정한 함수(`handleRequest`, `loader`, `action`)와 모듈 안에서만 쓰는 비교 함수(`sort` 에 넘기는 `(a, b)`)는 그대로 둔다.
+
+---
+
+## 1. entities `api/` 구조
+
+```
+entities/{domain}/
+├── api/
+│   ├── apis.ts         # 서버. 개별 async 함수 — Firestore 직접 호출           → index.server.ts
+│   ├── apis.client.ts  # 브라우저. 개별 async 함수 — API 라우트 fetch + 응답 검사 → queries.ts, mutation
+│   └── queries.ts      # 브라우저. queryOptions() 팩토리 — apis.client.ts 를 부름 → index.ts
+└── model/
+    └── {name}.ts    # zod 스키마와 z.infer 타입
+```
+
+필요한 파일만 둔다. 브라우저가 부를 일이 없는 슬라이스는 `apis.client.ts`, `queries.ts` 가 없다. 같은 API 를 서버와 브라우저 어느 쪽에서 부르느냐로 `apis.ts` 와 `apis.client.ts` 가 갈린다.
+
+### apis.ts — 서버, 개별 함수 export
+
+**API 객체로 묶지 않는다.** 각 함수를 개별 `export async function`으로 선언한다. Firestore 에서 읽은 문서는 `parseDocuments` / `parseDocument` 로 zod 스키마 검사를 거친다.
+
+```typescript
+// ✅ entities/stats/api/apis.ts
+import { collection, getDocs, query, where } from 'firebase/firestore';
+
 import { db } from '@/commons/api/firebase.server';
-import { type PostDocument, type CreatePostInput } from './types';
+import { parseDocuments } from '@/commons/lib/firestoreDocument';
+
+import { statDocument } from '../model/statDocument';
 
 /**
- * @description 전체 포스트 목록 조회
+ * @description 한 종류의 통계를 전부 읽는다
+ * @param kind 콘텐츠 종류
+ * @returns 콘텐츠 키별 `{ views, likes }`
  */
-export async function getPosts(): Promise<PostDocument[]> {
-  const snap = await getDocs(collection(db, 'posts'));
-  return snap.docs.map((d) => d.data() as PostDocument);
-}
-
-/**
- * @description 포스트 생성
- * @param input 생성할 포스트 데이터
- */
-export async function createPost(input: CreatePostInput): Promise<void> {
-  await addDoc(collection(db, 'posts'), input);
+export async function getStats(kind: StatKind): Promise<StatMap> {
+  const snapshot = await getDocs(query(collection(db, 'stats'), where('kind', '==', kind)));
+  return Object.fromEntries(
+    parseDocuments(statDocument, snapshot.docs).map((stat) => [stat.key, toValues(stat)]),
+  );
 }
 ```
 
@@ -57,97 +108,158 @@ export const postAPI = {
 } as const;
 ```
 
-### queries.ts — queryOptions 팩토리
+### apis.client.ts — 브라우저, API 라우트(BFF) 호출
 
-TanStack Query v5 `queryOptions()`로 queryKey와 queryFn을 묶는다.
-**React Router loader로 처리하는 데이터는 여기에 두지 않는다.**
-클라이언트사이드 fetch(좋아요 수, 실시간 댓글 등)에만 사용한다.
+브라우저가 우리 API 라우트(`/api/…`)를 부르는 fetch 함수다. **Firestore 를 import 하지 않는다.** 조회 함수는 `queries.ts` 가 감싸서 내보내고, mutation 에 쓰는 함수(좋아요, 댓글 작성 등)만 `index.ts` 로 직접 내보낸다.
+
+- 개별 `export async function` 으로 선언한다
+- 호출은 `fetch` 를 직접 쓰지 않고 **`commons/api/requestJson`** 으로 한다. 응답을 zod 스키마로 검사하고(`as T` 단언 금지), 실패를 던져 `useQuery`·`useMutation` 이 에러로 받게 한다
+  - 상태 코드가 실패면 `ApiError` (`status`, `url`, `body`). 화면은 `error instanceof ApiError && error.status === 429` 처럼 상태 코드로 다르게 반응한다
+  - 응답 모양이 스키마와 다르면 zod 검사 에러(`z.core.$ZodError`). 서버와 클라이언트의 약속이 깨졌다는 뜻이다
+  - 본문은 `json` 옵션으로 넘긴다. 직렬화와 `Content-Type` 을 `requestJson` 이 한다
+- `AbortSignal` 을 받아 넘긴다. 화면을 떠나면 TanStack Query 가 요청을 끊는다
+- 경로는 경로 함수 하나에서 만든다. 라우트와 모양이 어긋나지 않게 한다
+- 인자는 객체 하나로 받는다 ([0. 인자는 객체 하나로 받는다](#0-인자는-객체-하나로-받는다))
 
 ```typescript
-// entities/post/api/queries.ts
+// ✅ entities/stats/api/apis.client.ts
+import { requestJson } from '@/commons/api/requestJson';
+
+import { statValues, type StatTarget, type StatValues } from '../model/stat';
+
+/**
+ * @description 콘텐츠 하나의 통계를 받는다 (브라우저)
+ * @param params.kind 콘텐츠 종류
+ * @param params.key 콘텐츠 키
+ * @param params.signal 화면을 떠나면 요청을 끊는 신호
+ * @returns `{ views, likes }`
+ */
+export async function fetchStat({
+  kind,
+  key,
+  signal,
+}: StatTarget & { signal?: AbortSignal }): Promise<StatValues> {
+  return requestJson({ url: statPath({ kind, key }), schema: statValues, signal });
+}
+```
+
+```typescript
+// ❌ 금지 — 브라우저 코드에서 apis.ts 를 부름 (빌드 실패)
+import { getStat } from '@/entities/stats/index.server';
+
+// ❌ 금지 — fetch 를 직접 부르고 응답을 검사하지 않고 단언
+const res = await fetch(statPath({ kind, key }));
+return (await res.json()) as StatValues;
+```
+
+### queries.ts — queryOptions 팩토리
+
+TanStack Query v5 `queryOptions()` 로 queryKey 와 queryFn 을 묶는다. **queryFn 은 `apis.client.ts` 의 함수만 부른다.** `queries.ts` 는 서버 렌더에서도 import 되지만 queryFn 은 브라우저에서만 실행된다.
+
+- `staleTime` 은 API 라우트의 `Cache-Control` 과 맞춘다. 라우트가 60초 캐시되면 브라우저도 60초 동안 다시 부르지 않는다
+- 조회수처럼 부르는 것 자체가 값을 올리는 요청은 `staleTime: Infinity`, `retry: false` 로 한 번만 부른다
+
+```typescript
+// ✅ entities/stats/api/queries.ts
 import { queryOptions } from '@tanstack/react-query';
-import { getPosts, getPostById } from './apis';
 
-export const postQueries = {
-  ALL: ['post'] as const,
+import { fetchStat, fetchStats } from './apis.client';
 
-  list: () =>
+export const statsQueries = {
+  ALL: ['stats'] as const,
+
+  list: (kind: StatKind) =>
     queryOptions({
-      queryKey: [...postQueries.ALL, 'list'] as const,
-      queryFn: () => getPosts(),
+      queryKey: [...statsQueries.ALL, kind, 'list'] as const,
+      queryFn: ({ signal }) => fetchStats({ kind, signal }),
+      staleTime: 60_000,
     }),
 
-  byId: (id: string) =>
+  detail: ({ kind, key }: StatTarget) =>
     queryOptions({
-      queryKey: [...postQueries.ALL, 'detail', id] as const,
-      queryFn: () => getPostById(id),
+      queryKey: [...statsQueries.ALL, kind, 'detail', key] as const,
+      queryFn: ({ signal }) => fetchStat({ kind, key, signal }),
     }),
 };
 ```
 
-### types.ts — 타입 정의
+### model — zod 스키마와 타입
 
-각 도메인 타입을 구분선 주석으로 분리한다.
+타입은 따로 쓰지 않고 **zod 스키마에서 `z.infer` 로 뽑는다.** 스키마 하나가 검사와 타입을 함께 맡는다.
+
+- 클라이언트 번들에 들어가는 스키마(`apis.client.ts`, 화면이 쓰는 것)는 `zod/mini` 로 쓴다
+- 서버에서만 쓰는 Firestore 문서 스키마는 `zod` 로 쓴다. `parseDocuments` 가 `zod` 타입을 받는다
+- 라우트 파라미터와 쿼리스트링도 같은 스키마로 검사한다 (`statKind.safeParse(params.kind)`)
 
 ```typescript
-// entities/post/api/types.ts
-import { type Timestamp } from 'firebase/firestore';
+// entities/stats/model/stat.ts
+import * as z from 'zod/mini';
 
-/* -------------------------------------------------------------------------------------------------
- * post
- * -----------------------------------------------------------------------------------------------*/
+export const statKind = z.enum(['post', 'snippet', 'project']);
+export type StatKind = z.infer<typeof statKind>;
 
-export type PostDocument = {
-  id: string;
-  title: string;
-  createdAt: Timestamp;
-};
-
-export type CreatePostInput = Omit<PostDocument, 'id'>;
+export const statValues = z.object({ views: z.number(), likes: z.number() });
+export type StatValues = z.infer<typeof statValues>;
 ```
 
 ---
 
 ## 2. features에서 API 사용 패턴
 
-### 조회 — queryOptions 사용 (클라이언트 fetch)
+### 조회 — queryOptions 사용
 
 ```typescript
-// features/post-like/ui/LikeButton.tsx
-import { postQueries } from '@/entities/post';
-import { skipToken, useQuery } from '@tanstack/react-query';
+// features/view-count/model/useContentStats.ts
+import { useQuery } from '@tanstack/react-query';
 
-const { data } = useQuery(postQueries.byId(postId));
+import { statsQueries } from '@/entities/stats';
+
+const detail = useQuery(statsQueries.detail({ kind, key }));
 ```
+
+- 서버에 요청하는 조회는 `useQuery` 를 쓴다. `useSuspenseQuery` 는 서버 렌더와 prerender 에서도 요청을 시도해 상대 경로가 실패하거나 빌드 시점 값이 굳는다
+- 받는 중(`undefined`)과 받지 못함(에러)을 화면에서 다르게 보여 준다. 실패를 따로 그리지 않으면 skeleton 이 영영 남는다
 
 ### 조건부 실행 — skipToken
 
-`enabled` 대신 `queryFn`에 `skipToken`을 사용한다.
+`enabled` 대신 `queryFn`에 `skipToken`을 사용한다. 조건부로 부를 쿼리는 팩토리가 `skipToken` 을 받게 한다.
 
 ```typescript
-import { skipToken, useQuery } from '@tanstack/react-query';
+import { skipToken, useQuery, type SkipToken } from '@tanstack/react-query';
+
+// 팩토리
+detail: ({ kind, key }: { kind: StatKind; key: string | SkipToken }) =>
+  queryOptions({
+    queryKey: [...statsQueries.ALL, kind, 'detail', key] as const,
+    queryFn: key === skipToken ? skipToken : ({ signal }) => fetchStat({ kind, key, signal }),
+  }),
 
 // ✅ skipToken
-const { data } = useQuery({
-  ...postQueries.byId(id ?? skipToken),
-});
+const { data } = useQuery(statsQueries.detail({ kind, key: key ?? skipToken }));
 
 // ❌ enabled
 const { data } = useQuery({
-  ...postQueries.byId(id ?? ''),
-  enabled: !!id,
+  ...statsQueries.detail({ kind, key: key ?? '' }),
+  enabled: !!key,
 });
 ```
 
-### 뮤테이션 — apis.ts 직접 import
+### 뮤테이션 — apis.client.ts 함수 + 캐시 직접 갱신
+
+`mutationFn` 에는 `apis.client.ts` 의 함수를 넘긴다. 슬라이스는 이 함수를 `index.ts` 로 내보낸다. 낙관적 업데이트는 `setQueryData` 로 해당 쿼리 캐시를 고치고, 응답이 오면 서버 값으로 맞춘다.
 
 ```typescript
-// features/post-create/ui/PostCreateForm.tsx
-import { createPost } from '@/entities/post';
+// features/like/model/useLike.ts
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { postLike, statsQueries } from '@/entities/stats';
+
+const queryClient = useQueryClient();
+const { queryKey } = statsQueries.detail({ kind, key });
 
 const { mutate } = useMutation({
-  mutationFn: createPost,
-  onSuccess: () => queryClient.invalidateQueries({ queryKey: postQueries.ALL }),
+  mutationFn: (count: number) => postLike({ kind, key, count }),
+  onSuccess: (likes) => queryClient.setQueryData(queryKey, (prev) => prev && { ...prev, likes }),
 });
 ```
 

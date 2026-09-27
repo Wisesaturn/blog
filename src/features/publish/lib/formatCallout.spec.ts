@@ -12,7 +12,7 @@ import getHtml from './getHtml';
 
 describe('콜아웃을 인용과 다른 틀로 감싼다', () => {
   it('aside.callout 안에 아이콘과 내용이 들어간다', async () => {
-    const html = await getHtml(formatCallout('💡', '콜아웃 테스트'));
+    const html = await getHtml(formatCallout({ icon: '💡', content: '콜아웃 테스트' }));
 
     expect(html).toContain('<aside class="callout">');
     expect(html).toContain('<span class="callout-icon" aria-hidden="true">💡</span>');
@@ -21,7 +21,9 @@ describe('콜아웃을 인용과 다른 틀로 감싼다', () => {
   });
 
   it('안쪽의 굵게와 목록이 마크다운으로 파싱된다', async () => {
-    const html = await getHtml(formatCallout('💡', '콜아웃 **강조 테스트**\n\n- 항목'));
+    const html = await getHtml(
+      formatCallout({ icon: '💡', content: '콜아웃 **강조 테스트**\n\n- 항목' }),
+    );
 
     expect(html).toContain('<p>콜아웃 <strong>강조 테스트</strong></p>');
     expect(html).toContain('<li>항목</li>');
@@ -29,7 +31,7 @@ describe('콜아웃을 인용과 다른 틀로 감싼다', () => {
   });
 
   it('이모지 아이콘이 없으면 아이콘 자리를 만들지 않는다', async () => {
-    const html = await getHtml(formatCallout('', '아이콘 없음'));
+    const html = await getHtml(formatCallout({ icon: '', content: '아이콘 없음' }));
 
     expect(html).toContain('<aside class="callout">');
     expect(html).not.toContain('callout-icon');

@@ -7,8 +7,9 @@ import {
   parsePostsQuery,
   useUrlParamsUpdater,
 } from '@/features/post-filter';
+import { useListStats } from '@/features/view-count';
 
-import { type IPost } from '@/entities/post';
+import { type IPost, postStatKey } from '@/entities/post';
 
 import { ANIMATE_FADE_UP_CONTAINER, ANIMATE_FADE_UP_ITEM } from '@/commons/config/animation';
 import Input from '@/commons/ui/Input';
@@ -23,13 +24,19 @@ interface PostsPageProps {
 /* -------------------------------------------------------------------------------------------------
  * PostsPage
  * 글 목록. 쿼리스트링의 검색어, 카테고리, 정렬로 받은 목록을 걸러서 그린다.
+ * 목록은 숫자 없이 prerender 하고, 조회수는 화면을 그린 뒤 목록 통계로 받아 끼운다.
  * -----------------------------------------------------------------------------------------------*/
 export default function PostsPage({ posts }: PostsPageProps) {
   const { searchParams, setSelectedParams } = useUrlParamsUpdater();
-  const visiblePosts = useMemo(
-    () => filterPosts(posts, parsePostsQuery(searchParams)),
-    [posts, searchParams],
-  );
+  const stats = useListStats('post');
+  const visiblePosts = useMemo(() => {
+    const { viewsOf } = stats;
+    return filterPosts({
+      posts,
+      query: parsePostsQuery(searchParams),
+      viewsOf: viewsOf && ((post) => viewsOf(postStatKey(post))),
+    });
+  }, [posts, searchParams, stats]);
 
   return (
     <motion.main
@@ -55,7 +62,13 @@ export default function PostsPage({ posts }: PostsPageProps) {
         handleSearch={(_v) => setSelectedParams('keyword', _v, false)}
       />
       <Categories animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
-      <PostList posts={visiblePosts} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <PostList
+        posts={visiblePosts}
+        viewsFor={(post) => stats.views(postStatKey(post))}
+        likesFor={(post) => stats.likes(postStatKey(post))}
+        viewsReady={stats.isReady}
+        animation={{ variants: ANIMATE_FADE_UP_ITEM }}
+      />
     </motion.main>
   );
 }

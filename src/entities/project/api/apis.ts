@@ -3,7 +3,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  increment,
   limit,
   query,
   setDoc,
@@ -36,8 +35,8 @@ export async function getProject(props: GetProjectProps) {
   }
 
   return {
-    ...parseDocument(projectMeta, queryMetaSnapshot.docs[0]),
-    ...parseDocument(projectBody, queryBodySnapshot.docs[0]),
+    ...parseDocument({ schema: projectMeta, doc: queryMetaSnapshot.docs[0] }),
+    ...parseDocument({ schema: projectBody, doc: queryBodySnapshot.docs[0] }),
   };
 }
 
@@ -45,36 +44,11 @@ export async function getProjects() {
   const perProject = await Promise.all(
     PROJECTS_DATA.map(async (project) => {
       const querySnapshot = await getDocs(query(collection(db, 'projects', project.name, 'meta')));
-      return parseDocuments(projectMeta, querySnapshot.docs);
+      return parseDocuments({ schema: projectMeta, docs: querySnapshot.docs });
     }),
   );
 
   return perProject.flat();
-}
-
-interface IncreaseProjectViewsProps {
-  title: string;
-}
-
-/**
- * @description 프로젝트 조회수를 1 올리고, 올린 뒤의 값을 돌려준다
- *
- * 프로젝트는 `projects/{title}/meta/{index}` 에 조회수가 있다. `index` 를 모르므로 `meta` 의
- * 첫 문서를 찾아 올린다. `getProject` 도 같은 문서를 읽는다.
- *
- * 동시 요청에서 조회수가 빠지지 않도록 `increment()` 로 올린다.
- * @param props.title 프로젝트 이름. URL 의 제목 그대로다
- * @returns 올린 뒤의 조회수
- * @throws `meta` 문서가 없으면 에러가 발생한다
- */
-export async function increaseProjectViews({ title }: IncreaseProjectViewsProps): Promise<number> {
-  const metaSnap = await getDocs(query(collection(db, 'projects', title, 'meta'), limit(1)));
-  if (metaSnap.empty) throw new Error(`${title}에 해당하는 프로젝트가 없습니다`);
-
-  const docRef = metaSnap.docs[0].ref;
-  await updateDoc(docRef, { views: increment(1) });
-  const snap = await getDoc(docRef);
-  return snap.data()?.views ?? 0;
 }
 
 interface UpdateProjectProps {
@@ -91,10 +65,8 @@ export async function updateProject(props: UpdateProjectProps) {
     const docMetaSnap = await getDoc(docMetaRef);
 
     if (docMetaSnap.exists()) {
-      const updatedMeta = isUpdateProject
-        ? { ...meta, views: docMetaSnap.data().views || meta.views }
-        : meta;
-      await updateDoc(docMetaRef, updatedMeta);
+      // 조회수와 좋아요는 stats 문서에 있다 (#117). 메타 문서만 덮어쓴다
+      await updateDoc(docMetaRef, meta);
     } else {
       await setDoc(docMetaRef, meta);
     }
@@ -110,11 +82,7 @@ export async function updateProject(props: UpdateProjectProps) {
       }
     }
 
-    if (isUpdateProject) {
-      Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
-    } else {
-      Logger.log(`${title} views update : ${meta.views}`);
-    }
+    if (isUpdateProject) Logger.success(`${title}에 프로젝트를 업데이트하였습니다.`);
   } catch (err) {
     if (err instanceof Error) {
       const NotFoundError = new Error(`${title}에 해당하는 프로젝트가 없습니다`, { cause: err });

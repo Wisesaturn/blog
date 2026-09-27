@@ -1,16 +1,8 @@
-import {
-  HeadersFunction,
-  data,
-  MetaFunction,
-  ShouldRevalidateFunction,
-  useLoaderData,
-} from 'react-router';
+import { MetaFunction, ShouldRevalidateFunction, useLoaderData } from 'react-router';
 
 import { PostsPage } from '@/pages/posts';
 
 import { getPosts } from '@/entities/post/index.server';
-
-import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -22,14 +14,8 @@ export const meta: MetaFunction = (args) => {
 };
 
 /**
- * loader 가 `data()` 에 넣은 헤더는 이 export 가 있어야 문서 응답과 `.data` 응답에 실린다.
- * 없으면 `Cache-Control` 이 빠져 CDN 이 캐시하지 않는다.
- */
-export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
-
-/**
  * 검색과 카테고리, 정렬은 쿼리스트링만 바꾸므로 loader 를 다시 부르지 않는다.
- * 다시 부르면 조건마다 다른 `.data` URL 로 요청이 나가 CDN 캐시가 갈라진다.
+ * 목록은 prerender 로 한 벌만 구워 두어, 다시 불러도 같은 `.data` 가 오고 요청만 낭비된다.
  */
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
@@ -41,16 +27,10 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 };
 
 // loader
-// 쿼리스트링을 읽지 않는다. 응답이 URL 과 무관하게 한 벌이어야 CDN 이 하나로 캐시한다
+// 빌드 때 prerender 로 한 번 돈다 (#119). 쿼리스트링을 읽지 않아야 URL 과 무관하게 한 벌로 구워진다.
+// 조회수는 목록 통계로 브라우저가 받는다
 export async function loader() {
-  const posts = await getPosts();
-
-  return data(
-    { posts },
-    {
-      headers: { 'Cache-Control': LIST_CACHE_CONTROL },
-    },
-  );
+  return { posts: await getPosts() };
 }
 
 export default function Route() {

@@ -11,5 +11,4 @@ export const snippetDocument = z.object({
   lastEditedAt: z.string(),
   lastmod: z.string(),
   body: z.string(),
-  views: z.number(),
 });

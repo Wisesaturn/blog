@@ -19,11 +19,11 @@ import { projectNotionProperties } from '../model/projectNotionProperties';
  */
 export default async function createProject(pageId: string) {
   try {
-    const project: IProject = await getNotionPage(
+    const project: IProject = await getNotionPage({
       pageId,
-      process.env.NOTION_DATABASE_PROJECTS_KEY,
-      projectNotionProperties,
-    ).then(async (page) => {
+      databaseId: process.env.NOTION_DATABASE_PROJECTS_KEY,
+      schema: projectNotionProperties,
+    }).then(async (page) => {
       const {
         이름: title,
         theme,
@@ -64,7 +64,6 @@ export default async function createProject(pageId: string) {
           year: 'numeric',
         }).format(lastEditedTime),
         date,
-        views: 0,
         body: '',
       };
       // ////////////////// data /////////////////// //
@@ -83,7 +82,7 @@ export default async function createProject(pageId: string) {
           src: projectData.thumbnail,
           collection: 'project',
           category: `${projectData.category}-projects`,
-          title: convertString(projectData.plainTitle, 'spaceToDash'),
+          title: convertString({ str: projectData.plainTitle, type: 'spaceToDash' }),
         });
         projectData.thumbnail = thumbnailUrl;
         Logger.log(`썸네일 : ${thumbnailUrl}`);
@@ -98,7 +97,7 @@ export default async function createProject(pageId: string) {
           collection: 'project',
           body: projectData.body,
           category: `${projectData.category}-projects`,
-          title: convertString(projectData.plainTitle, 'spaceToDash'),
+          title: convertString({ str: projectData.plainTitle, type: 'spaceToDash' }),
         });
         projectData.body = replaceBody;
       }

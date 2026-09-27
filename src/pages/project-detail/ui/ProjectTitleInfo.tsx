@@ -1,11 +1,12 @@
 import Icons from '@/commons/ui/icons/Icons';
+import StatCount from '@/commons/ui/StatCount';
 
 interface ProjectTitleInfo {
   date: {
     start: string;
     end: string | null;
   };
-  views: number;
+  views: number | null | undefined;
 }
 
 export default function ProjectTitleInfo(props: ProjectTitleInfo) {
@@ -22,7 +23,7 @@ export default function ProjectTitleInfo(props: ProjectTitleInfo) {
       </div>
       <div className="flex gap-1 items-center align-middle">
         <Icons.View className="icons-size-small pr-1" />
-        <p className="layout-text">{views}</p>
+        <StatCount value={views} label="조회수" />
       </div>
     </div>
   );

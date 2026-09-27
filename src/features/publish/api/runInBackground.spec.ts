@@ -18,7 +18,7 @@ describe('runInBackground 는 응답 뒤의 발행 작업을 끝까지 돌리고
   it('작업이 끝나면 성공 로그를 남긴다', async () => {
     const success = vi.spyOn(Logger, 'success').mockImplementation(() => {});
 
-    await runInBackground('page-1 게시물 발행', async () => {});
+    await runInBackground({ label: 'page-1 게시물 발행', task: async () => {} });
 
     expect(success).toHaveBeenCalledWith('page-1 게시물 발행을 마쳤습니다.');
   });
@@ -27,8 +27,11 @@ describe('runInBackground 는 응답 뒤의 발행 작업을 끝까지 돌리고
     vi.spyOn(Logger, 'error').mockImplementation(() => {});
 
     await expect(
-      runInBackground('page-1 게시물 발행', async () => {
-        throw new Error('실패');
+      runInBackground({
+        label: 'page-1 게시물 발행',
+        task: async () => {
+          throw new Error('실패');
+        },
       }),
     ).resolves.toBeUndefined();
   });
@@ -38,8 +41,11 @@ describe('runInBackground 는 응답 뒤의 발행 작업을 끝까지 돌리고
     const cover = new Error('이미지를 받지 못했습니다. 404');
     const create = new Error('page-1 게시물 생성에 실패하였습니다.', { cause: cover });
 
-    await runInBackground('page-1 게시물 발행', async () => {
-      throw create;
+    await runInBackground({
+      label: 'page-1 게시물 발행',
+      task: async () => {
+        throw create;
+      },
     });
 
     const logged = error.mock.calls[0][0];
@@ -52,7 +58,7 @@ describe('runInBackground 는 응답 뒤의 발행 작업을 끝까지 돌리고
   it('Error 가 아닌 값을 던져도 그 값을 남긴다', async () => {
     const error = vi.spyOn(Logger, 'error').mockImplementation(() => {});
 
-    await runInBackground('page-1 게시물 발행', () => Promise.reject('timeout'));
+    await runInBackground({ label: 'page-1 게시물 발행', task: () => Promise.reject('timeout') });
 
     expect(error.mock.calls[0][0].cause).toBe('timeout');
   });

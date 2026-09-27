@@ -1,6 +1,6 @@
 import { type IPost } from '@/entities/post';
 
-import sortPosts from './sortPosts';
+import sortPosts, { type ViewsOf } from './sortPosts';
 import parseOrderBy from '../model/parseOrderBy';
 import { type PostsOrderBy } from '../model/types';
 
@@ -32,11 +32,22 @@ export function parsePostsQuery(searchParams: URLSearchParams): PostsQuery {
 
 /**
  * @description 전체 글 목록에 검색어와 카테고리를 걸고 정렬한 새 배열을 돌려준다
- * @param posts loader 가 준 전체 글 목록. 바꾸지 않는다
- * @param query `parsePostsQuery` 가 읽은 조건
+ * @param params.posts loader 가 준 전체 글 목록. 바꾸지 않는다
+ * @param params.query `parsePostsQuery` 가 읽은 조건
+ * @param params.viewsOf 조회순에 쓸 조회수 조회 함수. 통계를 받기 전이면 없고, 그동안 조회순은 최신순으로 대신한다
  * @returns 조건에 맞는 글만 담아 정렬한 새 배열
+ * @example
+ * filterPosts({ posts, query: parsePostsQuery(searchParams), viewsOf });
  */
-export default function filterPosts(posts: PostRow[], query: PostsQuery): PostRow[] {
+export default function filterPosts({
+  posts,
+  query,
+  viewsOf,
+}: {
+  posts: PostRow[];
+  query: PostsQuery;
+  viewsOf?: ViewsOf;
+}): PostRow[] {
   const keyword = query.keyword.trim().toLowerCase();
 
   const matched = posts.filter((post) => {
@@ -47,5 +58,5 @@ export default function filterPosts(posts: PostRow[], query: PostsQuery): PostRo
 
   // `sortPosts` 는 받은 배열을 제자리에서 정렬한다. `filter` 가 이미 새 배열을 만들었으므로
   // loader 가 준 원본은 건드리지 않는다
-  return sortPosts(matched, query.orderBy);
+  return sortPosts({ posts: matched, orderBy: query.orderBy, viewsOf });
 }

@@ -18,7 +18,7 @@ function request(headerValue?: string) {
 
 describe('시크릿이 같을 때만 통과시킨다', () => {
   it('헤더가 시크릿과 같으면 통과한다', () => {
-    expect(verifyWebhookSecret(request(SECRET), SECRET)).toBe(true);
+    expect(verifyWebhookSecret({ request: request(SECRET), secret: SECRET })).toBe(true);
   });
 
   it.each([
@@ -28,7 +28,7 @@ describe('시크릿이 같을 때만 통과시킨다', () => {
     ['앞부분만 같아도', 'a1b2c3'],
     ['뒤에 글자가 붙어도', `${SECRET}0`],
   ])('%s 막는다', (_, value) => {
-    expect(verifyWebhookSecret(request(value), SECRET)).toBe(false);
+    expect(verifyWebhookSecret({ request: request(value), secret: SECRET })).toBe(false);
   });
 });
 
@@ -38,12 +38,12 @@ describe('서버에 시크릿이 없으면 무엇이 와도 막는다', () => {
     ['시크릿이 빈 문자열이고 헤더도 비었을 때', '', ''],
     ['시크릿이 없는데 헤더에 값이 있을 때', undefined, SECRET],
   ])('%s', (_, secret, value) => {
-    expect(verifyWebhookSecret(request(value), secret)).toBe(false);
+    expect(verifyWebhookSecret({ request: request(value), secret: secret })).toBe(false);
   });
 });
 
 it('헤더 이름은 대소문자를 가리지 않는다', () => {
   const headers = new Headers({ 'X-Webhook-Secret': SECRET });
   const req = new Request('https://example.com/api/article', { method: 'POST', headers });
-  expect(verifyWebhookSecret(req, SECRET)).toBe(true);
+  expect(verifyWebhookSecret({ request: req, secret: SECRET })).toBe(true);
 });

@@ -23,7 +23,6 @@ export const projectDocument = z.object({
   lastEditedAt: z.string(),
   lastmod: z.string(),
   body: z.string(),
-  views: z.number(),
 });
 
 /** `projects/{이름}/meta` 문서 */

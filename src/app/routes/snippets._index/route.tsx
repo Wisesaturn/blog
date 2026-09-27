@@ -1,10 +1,8 @@
-import { HeadersFunction, MetaFunction, data, useLoaderData } from 'react-router';
+import { MetaFunction, useLoaderData } from 'react-router';
 
 import { SnippetsPage } from '@/pages/snippets';
 
 import { getSnippets } from '@/entities/snippet/index.server';
-
-import { LIST_CACHE_CONTROL } from '@/commons/config/cache';
 
 import formatHeadTags from '../../lib/formatHeadTags';
 
@@ -15,17 +13,10 @@ export const meta: MetaFunction = (args) => {
   return formatHeadTags({ urlPrefix, title, ...args });
 };
 
-/**
- * loader 가 `data()` 에 넣은 헤더는 이 export 가 있어야 문서 응답과 `.data` 응답에 실린다.
- * 없으면 `Cache-Control` 이 빠져 CDN 이 캐시하지 않는다.
- */
-export const headers: HeadersFunction = ({ loaderHeaders }) => loaderHeaders;
-
 // loader
+// 빌드 때 prerender 로 한 번 돈다 (#119). 조회수는 목록 통계로 브라우저가 받는다
 export async function loader() {
-  const snippets = await getSnippets();
-
-  return data({ snippets }, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
+  return { snippets: await getSnippets() };
 }
 
 export default function Route() {

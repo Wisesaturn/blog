@@ -46,13 +46,18 @@ export default {
   appDirectory: 'src/app',
 
   /**
-   * 글과 프로젝트, 스니펫의 상세 페이지만 빌드 때 HTML 로 굽는다. 경로는 sitemap 과 같은 함수로 만든다.
+   * 글과 프로젝트, 스니펫의 목록과 상세를 빌드 때 HTML 로 굽는다. 상세 경로는 sitemap 과 같은 함수로 만든다.
    *
-   * 목록 페이지는 굽지 않는다. 목록은 쿼리스트링(`?category=react`)으로 필터링하는데, 정적 파일은
-   * 쿼리를 무시하고 같은 HTML 을 돌려주므로 필터가 적용되지 않은 목록이 나간다.
+   * 목록의 검색, 카테고리, 정렬은 브라우저에서 쿼리스트링으로 걸러서(`filterPosts`) 한 벌을 구워도 된다.
+   * 발행 뒤에도 바뀌는 조회수와 좋아요는 굽지 않고 브라우저가 통계 API 로 받아 끼운다 (#119).
    */
   async prerender() {
     const { posts, projects, snippets } = await loadContentPaths();
-    return [...posts, ...projects, ...snippets].map(({ path }) => path);
+    return [
+      '/posts',
+      '/snippets',
+      '/projects',
+      ...[...posts, ...projects, ...snippets].map(({ path }) => path),
+    ];
   },
 } satisfies Config;

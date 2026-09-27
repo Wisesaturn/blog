@@ -22,7 +22,7 @@ pnpm storybook    # Storybook 개발 서버
 - **Styling**: Tailwind CSS v4 + clsx + tailwind-merge → `cn()` 유틸, cva (class-variance-authority)
 - **Animation**: motion (`motion/react` 에서 import 한다. `framer-motion` 은 쓰지 않는다)
 - **Database**: Firebase (Firestore + Storage)
-- **Data**: 서버 데이터는 loader 가 읽는다. 브라우저에서 부르는 API(조회수)는 TanStack Query 5 로 읽는다
+- **Data**: 페이지 내용은 loader 가 읽는다. 발행 뒤에도 바뀌는 값(조회수, 좋아요)은 브라우저가 우리 API 라우트를 TanStack Query 5 로 부른다 (`apis.ts` 서버, `apis.client.ts` 브라우저, `.claude/rules/api-interface.md`)
 - **Validation**: zod 4 (클라이언트 번들에 들어가는 곳은 `zod/mini`)
 - **Lint/Format**: ESLint 9 (flat config) + Prettier
 - **Test**: Vitest + Testing Library (jsdom)
@@ -42,7 +42,7 @@ src/
 ├── features/       # 사용자 행동 단위 (publish, post-filter, view-count, share, comments, toc, darkmode)
 ├── entities/       # 비즈니스 엔티티 (post, snippet, project) + Firestore API
 └── commons/        # 의존성 없는 공용 코드. FSD 의 shared 자리다
-    ├── api/        # firebase.server.ts, notion.server.ts, 브라우저용 postViewCount
+    ├── api/        # 바깥과 통신하는 공용 코드: firebase.server.ts, notion.server.ts (초기화), requestJson (HTTP 도우미)
     ├── config/     # 앱 상수 (animation, cache, site)
     ├── lib/        # 유틸 함수 (cn, cva, logger, convertString 등)
     ├── model/      # 레이아웃 context, 공용 훅
@@ -79,6 +79,7 @@ src/
 - Firebase 싱글턴은 `import { db } from '@/commons/api/firebase.server'` 로 가져온다
 - `cn()`, `cva` 는 `@/commons/lib` 에서 가져온다
 - 외부에서 들어오는 데이터(Notion, Firestore 문서, 웹훅 본문, 쿼리스트링)는 zod 스키마로 검사한다
+- `lib/`, `api/` 의 함수와 `queries.ts` 팩토리는 인자가 둘 이상이면 객체 하나로 받는다: `postLike({ kind, key, count })` (`.claude/rules/api-interface.md` 의 「0. 인자는 객체 하나로 받는다」)
 - `console.log` 를 쓰지 않는다. `console.warn` 과 `console.error` 만 쓴다
 
 > import 순서, FSD 레이어, public API, 파일 이름은 린트가 막는다. type import 형식과 `console.log` 금지는 규칙이고 자동 검사가 없다.
