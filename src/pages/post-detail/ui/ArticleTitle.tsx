@@ -7,7 +7,7 @@ import ArticleTitleInfo from './ArticleTitleInfo';
 
 interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags' | 'views'> {
   views: number | null | undefined;
-  /** 정보 줄 오른쪽에 두는 좋아요 버튼 (#120) */
+  /** 정보 줄에서 조회수 바로 옆에 두는 좋아요 버튼 (#120) */
   likeSlot?: ReactNode;
 }
 
@@ -43,7 +43,7 @@ export default function ArticleTitle(props: ArticleTitleProps) {
         </span>
         <h1 className="text-4xl max-md:text-2xl">{title}</h1>
         <p className="text-xl max-md:text-base font-light">{description}</p>
-        <div className="flex justify-between items-end">
+        <div className="flex items-center gap-4">
           <ArticleTitleInfo createdAt={createdAt} views={views} />
           {likeSlot}
         </div>

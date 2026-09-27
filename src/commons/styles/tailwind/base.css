@@ -39,6 +39,8 @@
     --blue-darker: #033d8b;
     --skeleton: #eaeaea;
     --skeleton-line: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb: rgba(15, 23, 42, 0.18);
+    --scrollbar-thumb-hover: rgba(15, 23, 42, 0.36);
 
     /* 본문(.markdown-body) 토큰. 바탕은 중립 회색이고 초록은 포인트로만 쓴다 */
     --md-text: #222;
@@ -89,6 +91,8 @@
     --blue-bright: #94ccfd;
     --skeleton: #494949;
     --skeleton-line: rgba(21, 21, 21, 0.3);
+    --scrollbar-thumb: rgba(226, 232, 240, 0.2);
+    --scrollbar-thumb-hover: rgba(226, 232, 240, 0.42);
 
     --md-text: #e5e5e5;
     --md-muted: #9ca3af;
