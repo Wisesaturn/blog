@@ -17,7 +17,7 @@ import { snippetNotionProperties } from '../model/snippetNotionProperties';
  */
 export default async function createSnippet(pageId: string) {
   try {
-    const snippet: Omit<ISnippet, 'views'> = await getNotionPage(
+    const snippet: ISnippet = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_SNIPPETS_KEY,
       snippetNotionProperties,
@@ -30,7 +30,7 @@ export default async function createSnippet(pageId: string) {
       const createdTime = new Date(page.created_time);
       const lastEditedTime = new Date(page.last_edited_time);
       // ////////////////// data /////////////////// //
-      const snippetData: Omit<ISnippet, 'views'> = {
+      const snippetData: ISnippet = {
         index: page.id,
         title: emoji ? `${emoji} ${title}` : title,
         plainTitle: title,
