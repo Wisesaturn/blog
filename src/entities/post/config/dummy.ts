@@ -13,7 +13,6 @@ const DUMMY_POSTS: IPost[] = [
     tags: ['Tag 1', 'Tag 2'],
     thumbnail: 'https://example.com/thumbnail1.jpg',
     title: 'Dummy Post 1',
-    views: 100,
   },
   {
     body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
@@ -27,7 +26,6 @@ const DUMMY_POSTS: IPost[] = [
     tags: ['Tag 3', 'Tag 4', 'Tag 5'],
     thumbnail: 'https://example.com/thumbnail2.jpg',
     title: 'Dummy Post 2',
-    views: 150,
   },
 ];
 

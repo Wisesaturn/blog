@@ -13,8 +13,6 @@ export const postDocument = z.object({
   last_editedAt: z.string(),
   lastmod: z.string(),
   body: z.string(),
-  /** 조회수는 stats 문서로 옮겼다 (#117). 옛 문서에만 남아 있고 새로 발행한 문서에는 없다 */
-  views: z.number().default(0),
 });
 
 /** 목록에서 읽는 글. 본문은 크기가 커서 목록에서 빼고 상세에서만 읽는다 */

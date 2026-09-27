@@ -17,6 +17,10 @@ function post(createdAt: string, views?: number): PostRow {
   return { createdAt, views, plain_title: createdAt } as unknown as PostRow;
 }
 
+/** 목록 통계 대신 테스트 행에 실어 둔 조회수를 읽는다 */
+const viewsOf = (p: PostRow) => (p as unknown as { views?: number }).views ?? 0;
+const viewsOfRow = (p: PostRow) => (p as unknown as { views?: number }).views;
+
 const OLD = '2024. 1. 1.';
 const MID = '2025. 6. 15.';
 const NEW = '2026. 3. 20.';
@@ -54,29 +58,41 @@ describe('asc 는 오래된 글을 앞에 둔다', () => {
   });
 });
 
+describe('mostView 는 조회수를 받기 전에는 최신순으로 둔다', () => {
+  /**
+   * 조회수는 목록 HTML 에 없고 통계 API 로 따로 받는다. 받기 전에 조회순을 흉내 내면 모든 글이 0 이라
+   * 사실상 작성일 순이 되는데, 그 뜻을 명시해 둔다. 받으면 `viewsOf` 를 넘겨 다시 정렬한다.
+   */
+  it('viewsOf 가 없으면 최신순이다', () => {
+    const rows = [post(OLD, 100), post(NEW, 1), post(MID, 50)];
+
+    expect(sortPosts(rows, 'mostView').map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+  });
+});
+
 describe('mostView 는 조회수가 많은 글을 앞에 둔다', () => {
   it('조회수 내림차순으로 정렬한다', () => {
     const rows = [post(OLD, 3), post(MID, 100), post(NEW, 20)];
 
-    expect(sortPosts(rows, 'mostView').map((p) => p.views)).toEqual([100, 20, 3]);
+    expect(sortPosts(rows, 'mostView', viewsOf).map(viewsOfRow)).toEqual([100, 20, 3]);
   });
 
   it('조회수가 같으면 최신 글을 앞에 둔다', () => {
     const rows = [post(OLD, 10), post(NEW, 10), post(MID, 10)];
 
-    expect(sortPosts(rows, 'mostView').map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+    expect(sortPosts(rows, 'mostView', viewsOf).map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
   });
 
   it('조회수가 없는 글은 0 으로 보고 뒤로 보낸다', () => {
     const rows = [post(NEW), post(OLD, 5)];
 
-    expect(sortPosts(rows, 'mostView').map((p) => p.views)).toEqual([5, undefined]);
+    expect(sortPosts(rows, 'mostView', viewsOf).map(viewsOfRow)).toEqual([5, undefined]);
   });
 });
 
 describe('빈 목록과 한 건', () => {
   it.each([['desc'], ['asc'], ['mostView']])('%s 로 빈 배열을 넣어도 빈 배열이다', (orderBy) => {
-    expect(sortPosts([], orderBy as never)).toEqual([]);
+    expect(sortPosts([], orderBy as never, viewsOf)).toEqual([]);
   });
 
   it('한 건이면 그대로 둔다', () => {

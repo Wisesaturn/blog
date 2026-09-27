@@ -19,7 +19,7 @@ import replaceBodyImages from './replaceBodyImages';
  */
 export default async function createPost(pageId: string) {
   try {
-    const post: Omit<IPost, 'views'> = await getNotionPage(
+    const post: IPost = await getNotionPage(
       pageId,
       process.env.NOTION_DATABASE_POSTS_KEY,
       postNotionProperties,
@@ -33,7 +33,7 @@ export default async function createPost(pageId: string) {
       const lastEditedTime = new Date(page.last_edited_time);
 
       // ////////////////// data /////////////////// //
-      const postData: Omit<IPost, 'views'> = {
+      const postData: IPost = {
         index: page.id,
         title: emoji ? `${emoji} ${title}` : title,
         thumbnail: getCoverUrl(page.cover),

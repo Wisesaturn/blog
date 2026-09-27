@@ -72,8 +72,9 @@ describe('카테고리는 고른 것 중 하나에 속하면 남긴다', () => {
 
 describe('정렬은 조건을 건 뒤에 한다', () => {
   it('mostView 면 조회수가 높은 순이다', () => {
-    const result = filterPosts(ALL, query({ orderBy: 'mostView' }));
-    expect(result.map((p) => p.views)).toEqual([1600, 300, 70]);
+    const viewsOf = (p: PostRow) => (p as unknown as { views: number }).views;
+    const result = filterPosts(ALL, query({ orderBy: 'mostView' }), viewsOf);
+    expect(result.map(viewsOf)).toEqual([1600, 300, 70]);
   });
 
   it('asc 면 오래된 글이 앞이다', () => {
