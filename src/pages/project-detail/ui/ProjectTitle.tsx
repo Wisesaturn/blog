@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { type ReactNode } from 'react';
 
 import { IProject } from '@/entities/project';
 
@@ -7,6 +8,8 @@ import ProjectTitleLink from './ProjectTitleLink';
 
 interface ProjectTitleProps extends GlobalAnimation, Omit<IProject, 'body' | 'views'> {
   views: number | null | undefined;
+  /** 정보 줄 오른쪽에 두는 좋아요 버튼 (#120) */
+  likeSlot?: ReactNode;
 }
 
 export default function ProjectTitle(props: ProjectTitleProps) {
@@ -21,6 +24,7 @@ export default function ProjectTitle(props: ProjectTitleProps) {
     views,
     category,
     title,
+    likeSlot,
   } = props;
 
   return (
@@ -51,7 +55,10 @@ export default function ProjectTitle(props: ProjectTitleProps) {
         </div>
         <p className="text-xl max-md:text-base font-light py-2">{description}</p>
         <div className="flex justify-between items-center max-md:items-start max-md:gap-1 max-md:flex-col-reverse">
-          <ProjectTitleInfo date={date} views={views} />
+          <div className="flex items-center gap-4">
+            <ProjectTitleInfo date={date} views={views} />
+            {likeSlot}
+          </div>
           <ProjectTitleLink github={github} website={website} />
         </div>
       </motion.section>

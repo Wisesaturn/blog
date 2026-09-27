@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { type ReactNode } from 'react';
 
 import { IPost } from '@/entities/post';
 
@@ -6,10 +7,12 @@ import ArticleTitleInfo from './ArticleTitleInfo';
 
 interface ArticleTitleProps extends GlobalAnimation, Omit<IPost, 'body' | 'tags' | 'views'> {
   views: number | null | undefined;
+  /** 정보 줄 오른쪽에 두는 좋아요 버튼 (#120) */
+  likeSlot?: ReactNode;
 }
 
 export default function ArticleTitle(props: ArticleTitleProps) {
-  const { animation, description, createdAt, thumbnail, views, category, title } = props;
+  const { animation, description, createdAt, thumbnail, views, category, title, likeSlot } = props;
 
   const thumbnailUrl =
     process.env.NODE_ENV === 'development'
@@ -42,6 +45,7 @@ export default function ArticleTitle(props: ArticleTitleProps) {
         <p className="text-xl max-md:text-base font-light">{description}</p>
         <div className="flex justify-between items-end">
           <ArticleTitleInfo createdAt={createdAt} views={views} />
+          {likeSlot}
         </div>
       </motion.section>
     </>
