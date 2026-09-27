@@ -17,11 +17,11 @@ import { snippetNotionProperties } from '../model/snippetNotionProperties';
  */
 export default async function createSnippet(pageId: string) {
   try {
-    const snippet: ISnippet = await getNotionPage(
+    const snippet: ISnippet = await getNotionPage({
       pageId,
-      process.env.NOTION_DATABASE_SNIPPETS_KEY,
-      snippetNotionProperties,
-    ).then(async (page) => {
+      databaseId: process.env.NOTION_DATABASE_SNIPPETS_KEY,
+      schema: snippetNotionProperties,
+    }).then(async (page) => {
       const { 이름: title, skills, description } = page.properties;
       Logger.log(`${page.id}/${title}를 찾았습니다`);
       const emoji = getIconEmoji(page.icon);
@@ -62,7 +62,7 @@ export default async function createSnippet(pageId: string) {
           collection: 'snippet',
           body: snippetData.body,
           category: `snippets`,
-          title: convertString(snippetData.plainTitle, 'spaceToDash'),
+          title: convertString({ str: snippetData.plainTitle, type: 'spaceToDash' }),
         });
         snippetData.body = replaceBody;
       }

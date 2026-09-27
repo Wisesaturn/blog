@@ -19,11 +19,11 @@ import replaceBodyImages from './replaceBodyImages';
  */
 export default async function createPost(pageId: string) {
   try {
-    const post: IPost = await getNotionPage(
+    const post: IPost = await getNotionPage({
       pageId,
-      process.env.NOTION_DATABASE_POSTS_KEY,
-      postNotionProperties,
-    ).then(async (page) => {
+      databaseId: process.env.NOTION_DATABASE_POSTS_KEY,
+      schema: postNotionProperties,
+    }).then(async (page) => {
       const { 이름: title, category, tags, description } = page.properties;
       Logger.log(`${page.id}/${title}를 찾았습니다`);
       const emoji = getIconEmoji(page.icon);
@@ -69,7 +69,7 @@ export default async function createPost(pageId: string) {
           src: postData.thumbnail,
           collection: 'post',
           category: postData.category,
-          title: convertString(postData.plain_title, 'spaceToDash'),
+          title: convertString({ str: postData.plain_title, type: 'spaceToDash' }),
         });
         postData.thumbnail = thumbnailUrl;
         Logger.log(`썸네일 : ${thumbnailUrl}`);
@@ -84,7 +84,7 @@ export default async function createPost(pageId: string) {
           collection: 'post',
           body: postData.body,
           category: postData.category,
-          title: convertString(postData.plain_title, 'spaceToDash'),
+          title: convertString({ str: postData.plain_title, type: 'spaceToDash' }),
         });
         postData.body = replaceBody;
       }

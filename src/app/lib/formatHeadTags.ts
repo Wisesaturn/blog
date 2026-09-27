@@ -40,7 +40,7 @@ export default function formatHeadTags(props: HeadTagFormat): MetaDescriptor[] {
   // calculate data
   const prefix = urlPrefix || '';
   const HOST_URL = `https://jaehan.blog/${prefix}`;
-  const convertTitle = `${params.title ? `${convertString(params.title, 'dashToSpace')}` : title || '사툰사툰'}`;
+  const convertTitle = `${params.title ? `${convertString({ str: params.title, type: 'dashToSpace' })}` : title || '사툰사툰'}`;
 
   let convertThumbnail = thumbnail || DEFAULT_THUMBNAIL;
   let convertDescription = description || DEFAULT_DESCRIPTION;
@@ -87,7 +87,7 @@ export default function formatHeadTags(props: HeadTagFormat): MetaDescriptor[] {
   const metadata = {
     title: convertTitle + convertSuffix || '사툰사툰',
     description: convertDescription,
-    url: convertString(convertUrl, 'spaceToDash'),
+    url: convertString({ str: convertUrl, type: 'spaceToDash' }),
     thumbnail: convertThumbnail,
   };
 

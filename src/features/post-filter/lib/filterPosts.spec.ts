@@ -35,50 +35,59 @@ const query = (overrides: Partial<PostsQuery> = {}): PostsQuery => ({
 
 describe('검색은 제목의 어느 위치든 걸린다', () => {
   it('제목 가운데에 있는 단어로 찾는다', () => {
-    expect(filterPosts(ALL, query({ keyword: '타입' }))).toEqual([TS_FUNC]);
+    expect(filterPosts({ posts: ALL, query: query({ keyword: '타입' }) })).toEqual([TS_FUNC]);
   });
 
   it('대소문자를 가리지 않는다', () => {
-    expect(filterPosts(ALL, query({ keyword: 'uselens' }))).toEqual([REACT_HOOK]);
+    expect(filterPosts({ posts: ALL, query: query({ keyword: 'uselens' }) })).toEqual([REACT_HOOK]);
   });
 
   it('앞뒤 공백은 무시한다', () => {
-    expect(filterPosts(ALL, query({ keyword: '  캐시  ' }))).toEqual([NEXT_CACHE]);
+    expect(filterPosts({ posts: ALL, query: query({ keyword: '  캐시  ' }) })).toEqual([
+      NEXT_CACHE,
+    ]);
   });
 
   it('검색어가 비면 전부 남긴다', () => {
-    expect(filterPosts(ALL, query())).toHaveLength(3);
+    expect(filterPosts({ posts: ALL, query: query() })).toHaveLength(3);
   });
 
   it('맞는 글이 없으면 빈 배열을 돌려준다', () => {
-    expect(filterPosts(ALL, query({ keyword: '없는단어' }))).toEqual([]);
+    expect(filterPosts({ posts: ALL, query: query({ keyword: '없는단어' }) })).toEqual([]);
   });
 });
 
 describe('카테고리는 고른 것 중 하나에 속하면 남긴다', () => {
   it('하나를 고르면 그 카테고리만 남긴다', () => {
-    expect(filterPosts(ALL, query({ categories: ['react'] }))).toEqual([REACT_HOOK]);
+    expect(filterPosts({ posts: ALL, query: query({ categories: ['react'] }) })).toEqual([
+      REACT_HOOK,
+    ]);
   });
 
   it('여럿을 고르면 합집합이다', () => {
-    const result = filterPosts(ALL, query({ categories: ['react', 'typescript'] }));
+    const result = filterPosts({
+      posts: ALL,
+      query: query({ categories: ['react', 'typescript'] }),
+    });
     expect(result).toEqual([REACT_HOOK, TS_FUNC]);
   });
 
   it('검색어와 함께 쓰면 둘 다 맞아야 남는다', () => {
-    expect(filterPosts(ALL, query({ keyword: '타입', categories: ['react'] }))).toEqual([]);
+    expect(
+      filterPosts({ posts: ALL, query: query({ keyword: '타입', categories: ['react'] }) }),
+    ).toEqual([]);
   });
 });
 
 describe('정렬은 조건을 건 뒤에 한다', () => {
   it('mostView 면 조회수가 높은 순이다', () => {
     const viewsOf = (p: PostRow) => (p as unknown as { views: number }).views;
-    const result = filterPosts(ALL, query({ orderBy: 'mostView' }), viewsOf);
+    const result = filterPosts({ posts: ALL, query: query({ orderBy: 'mostView' }), viewsOf });
     expect(result.map(viewsOf)).toEqual([1600, 300, 70]);
   });
 
   it('asc 면 오래된 글이 앞이다', () => {
-    const result = filterPosts(ALL, query({ orderBy: 'asc' }));
+    const result = filterPosts({ posts: ALL, query: query({ orderBy: 'asc' }) });
     expect(result).toEqual([TS_FUNC, NEXT_CACHE, REACT_HOOK]);
   });
 });
@@ -87,14 +96,14 @@ describe('loader 가 준 원본 배열은 바뀌지 않는다', () => {
   it('정렬해도 원본의 순서가 그대로다', () => {
     const origin = [TS_FUNC, REACT_HOOK, NEXT_CACHE];
 
-    filterPosts(origin, query({ orderBy: 'mostView' }));
-    filterPosts(origin, query({ orderBy: 'asc' }));
+    filterPosts({ posts: origin, query: query({ orderBy: 'mostView' }) });
+    filterPosts({ posts: origin, query: query({ orderBy: 'asc' }) });
 
     expect(origin).toEqual([TS_FUNC, REACT_HOOK, NEXT_CACHE]);
   });
 
   it('조건이 없어도 새 배열을 돌려준다', () => {
-    expect(filterPosts(ALL, query())).not.toBe(ALL);
+    expect(filterPosts({ posts: ALL, query: query() })).not.toBe(ALL);
   });
 });
 

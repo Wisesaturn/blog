@@ -24,7 +24,7 @@ export async function getPost(props: GetPostProps) {
     throw NotFoundError;
   }
 
-  return parseDocument(postDocument, docSnap);
+  return parseDocument({ schema: postDocument, doc: docSnap });
 }
 
 /**
@@ -41,7 +41,7 @@ export async function getPosts(): Promise<Omit<IPost, 'body'>[]> {
   const perCategory = await Promise.all(
     CATEGORY_DATA.map(async (category) => {
       const snapshot = await getDocs(collection(db, category.link));
-      return parseDocuments(postListItem, snapshot.docs);
+      return parseDocuments({ schema: postListItem, docs: snapshot.docs });
     }),
   );
 

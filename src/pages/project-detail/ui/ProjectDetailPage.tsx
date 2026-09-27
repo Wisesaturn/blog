@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useParams } from 'react-router';
 
 import { ProjectComments } from '@/features/comments';
+import { LikeButton, useLike } from '@/features/like';
 import { useContentStats } from '@/features/view-count';
 
 import { type IProject } from '@/entities/project';
@@ -17,11 +18,13 @@ interface ProjectDetailPageProps {
 
 /* -------------------------------------------------------------------------------------------------
  * ProjectDetailPage
- * 프로젝트 상세. 본문, 목록·공유 버튼, 댓글을 그리고 조회수를 올린다.
+ * 프로젝트 상세. 본문, 좋아요, 목록·공유 버튼, 댓글을 그리고 조회수를 올린다.
  * -----------------------------------------------------------------------------------------------*/
 export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const { title = '' } = useParams();
-  const { views } = useContentStats('project', title);
+  const { views } = useContentStats({ kind: 'project', key: title });
+  // 버튼이 둘이라 훅은 한 번만 부르고 같은 값을 넘긴다. 따로 부르면 모으는 클릭 수가 따로 논다
+  const { likes, like } = useLike({ kind: 'project', key: title });
 
   return (
     <motion.main
@@ -30,7 +33,14 @@ export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       variants={ANIMATE_FADE_UP_CONTAINER}
       className="layout min-h-screen"
     >
-      <ProjectBox project={{ ...project, views }} animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
+      <ProjectBox
+        project={{ ...project, views }}
+        likeSlot={<LikeButton likes={likes} onLike={like} />}
+        animation={{ variants: ANIMATE_FADE_UP_ITEM }}
+      />
+      <motion.div variants={ANIMATE_FADE_UP_ITEM}>
+        <LikeButton likes={likes} onLike={like} size="lg" />
+      </motion.div>
       <ProjectButtons animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
       <ProjectComments animation={{ variants: ANIMATE_FADE_UP_ITEM }} />
     </motion.main>

@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { type ReactNode } from 'react';
 
 import { TOC } from '@/features/toc';
 
@@ -9,18 +10,20 @@ import ArticleTags from './ArticleTags';
 import useCodePen from '../model/useCodePen';
 
 interface ArticeBoxProps extends GlobalAnimation {
+  /** 제목 정보 줄 오른쪽에 두는 좋아요 버튼 */
+  likeSlot?: ReactNode;
   /** 조회수는 통계 API 에서 받는다. 받는 중이면 `undefined`, 받지 못하면 `null` */
   post: Omit<IPost, 'views'> & { views: number | null | undefined };
 }
 
-export default function ArticleBox({ post, animation }: ArticeBoxProps) {
+export default function ArticleBox({ post, animation, likeSlot }: ArticeBoxProps) {
   useCodePen();
 
   const { body, tags, ...rest } = post;
 
   return (
     <>
-      <ArticleTitle {...rest} animation={{ variants: animation?.variants }} />
+      <ArticleTitle {...rest} likeSlot={likeSlot} animation={{ variants: animation?.variants }} />
       <motion.div
         variants={animation?.variants}
         className="flex w-full max-w-layout max-md:flex-col-reverse"

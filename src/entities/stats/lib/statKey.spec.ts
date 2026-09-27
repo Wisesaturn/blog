@@ -15,18 +15,20 @@ describe('toStatId 는 종류와 키로 Firestore 문서 ID 를 만든다', () =
     ['snippet', 'createSafeContext', 'snippet:createSafeContext'],
     ['project', '유클러버스', 'project:유클러버스'],
   ] as const)('%s %s → %s', (kind, key, id) => {
-    expect(toStatId(kind, key)).toBe(id);
+    expect(toStatId({ kind, key })).toBe(id);
   });
 
   it('ID 에 / 가 남지 않는다. Firestore 문서 ID 에서 / 는 경로 구분자다', () => {
-    expect(toStatId('post', 'react/글-제목')).not.toContain('/');
+    expect(toStatId({ kind: 'post', key: 'react/글-제목' })).not.toContain('/');
   });
 
   it('제목의 : 는 그대로 두고, 카테고리와 제목이 달라지면 ID 도 달라진다', () => {
-    expect(toStatId('post', 'react/useLens-파헤치기-:-구조')).toBe(
+    expect(toStatId({ kind: 'post', key: 'react/useLens-파헤치기-:-구조' })).toBe(
       'post:react:useLens-파헤치기-:-구조',
     );
-    expect(toStatId('post', 'react/a')).not.toBe(toStatId('post', 'nextjs/a'));
+    expect(toStatId({ kind: 'post', key: 'react/a' })).not.toBe(
+      toStatId({ kind: 'post', key: 'nextjs/a' }),
+    );
   });
 });
 
@@ -39,7 +41,7 @@ describe('parseStatPath 는 splat 경로를 콘텐츠 키와 동작으로 나눈
     ['snippet', 'createSafeContext/view', 'createSafeContext', 'view'],
     ['project', '유클러버스/like', '유클러버스', 'like'],
   ] as const)('%s "%s" → key %s, 동작 %s', (kind, splat, key, operation) => {
-    expect(parseStatPath(kind, splat)).toEqual({ key, operation });
+    expect(parseStatPath({ kind, splat })).toEqual({ key, operation });
   });
 
   it.each([
@@ -50,6 +52,6 @@ describe('parseStatPath 는 splat 경로를 콘텐츠 키와 동작으로 나눈
     ['post', 'react//view', '빈 조각'],
     ['snippet', '', '빈 경로'],
   ] as const)('%s "%s" 는 null 이다 (%s)', (kind, splat, _reason) => {
-    expect(parseStatPath(kind, splat)).toBeNull();
+    expect(parseStatPath({ kind, splat })).toBeNull();
   });
 });

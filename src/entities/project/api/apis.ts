@@ -35,8 +35,8 @@ export async function getProject(props: GetProjectProps) {
   }
 
   return {
-    ...parseDocument(projectMeta, queryMetaSnapshot.docs[0]),
-    ...parseDocument(projectBody, queryBodySnapshot.docs[0]),
+    ...parseDocument({ schema: projectMeta, doc: queryMetaSnapshot.docs[0] }),
+    ...parseDocument({ schema: projectBody, doc: queryBodySnapshot.docs[0] }),
   };
 }
 
@@ -44,7 +44,7 @@ export async function getProjects() {
   const perProject = await Promise.all(
     PROJECTS_DATA.map(async (project) => {
       const querySnapshot = await getDocs(query(collection(db, 'projects', project.name, 'meta')));
-      return parseDocuments(projectMeta, querySnapshot.docs);
+      return parseDocuments({ schema: projectMeta, docs: querySnapshot.docs });
     }),
   );
 

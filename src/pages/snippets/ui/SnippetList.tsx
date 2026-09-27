@@ -19,6 +19,7 @@ export default function SnippetList(props: Props) {
             animation={animation}
             {...snippet}
             views={stats.views(snippetStatKey(snippet))}
+            likes={stats.likes(snippetStatKey(snippet))}
           />
         </div>
       ))}

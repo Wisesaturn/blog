@@ -33,16 +33,21 @@ const describeIssues = (error: z.ZodError) => {
 
 /**
  * @description 목록으로 읽은 문서를 검사하고, 스키마와 맞지 않는 문서는 경고를 남기고 건너뛴다
- * @param schema 도메인 문서 스키마
- * @param docs `getDocs` 로 읽은 문서들
+ * @param params.schema 도메인 문서 스키마
+ * @param params.docs `getDocs` 로 읽은 문서들
  * @returns 검사를 통과한 문서의 값. 스키마에 없는 필드(`reactions` 등)는 빠진다
  *
  * 목록 하나 때문에 페이지 전체나 sitemap 이 실패하지 않도록 건너뛴다.
+ * @example
+ * parseDocuments({ schema: postListItem, docs: snapshot.docs });
  */
-export function parseDocuments<S extends z.ZodType>(
-  schema: S,
-  docs: FirestoreDocument[],
-): z.output<S>[] {
+export function parseDocuments<S extends z.ZodType>({
+  schema,
+  docs,
+}: {
+  schema: S;
+  docs: FirestoreDocument[];
+}): z.output<S>[] {
   return docs.flatMap((doc) => {
     const result = schema.safeParse(doc.data(), parseOptions);
     if (result.success) return [result.data];
@@ -55,12 +60,20 @@ export function parseDocuments<S extends z.ZodType>(
 
 /**
  * @description 한 건으로 읽은 문서를 검사한다
- * @param schema 도메인 문서 스키마
- * @param doc `getDoc` 등으로 읽은 문서. 존재하는지는 부르는 쪽이 먼저 확인한다
+ * @param params.schema 도메인 문서 스키마
+ * @param params.doc `getDoc` 등으로 읽은 문서. 존재하는지는 부르는 쪽이 먼저 확인한다
  * @returns 검사를 통과한 문서의 값
  * @throws 스키마와 다르면 문서 경로와 어긋난 필드를 적은 에러
+ * @example
+ * parseDocument({ schema: postDocument, doc: docSnap });
  */
-export function parseDocument<S extends z.ZodType>(schema: S, doc: FirestoreDocument): z.output<S> {
+export function parseDocument<S extends z.ZodType>({
+  schema,
+  doc,
+}: {
+  schema: S;
+  doc: FirestoreDocument;
+}): z.output<S> {
   const result = schema.safeParse(doc.data(), parseOptions);
   if (!result.success) {
     throw new Error(`${doc.ref.path} 문서가 스키마와 다릅니다: ${describeIssues(result.error)}`);
