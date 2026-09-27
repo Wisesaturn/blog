@@ -18,7 +18,7 @@ export default function PostRow(props: PostRowProps) {
   const { createdAt, title, description, category, views, likes, plain_title: plainTitle } = props;
 
   if (typeof plainTitle !== 'string') return null;
-  const convertTitle = convertString(plainTitle, 'spaceToDash');
+  const convertTitle = convertString({ str: plainTitle, type: 'spaceToDash' });
 
   return (
     <Link

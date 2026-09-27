@@ -12,7 +12,8 @@ import isRetryable from './isRetryable';
  * 서버가 이미 올린 요청(응답 모양만 틀림)을 다시 보내면 좋아요가 두 번 오른다. 둘 다 화면에는 드러나지 않는다.
  */
 
-const apiError = (status: number) => new ApiError(status, '/api/stats/post/a/like', null);
+const apiError = (status: number) =>
+  new ApiError({ status, url: '/api/stats/post/a/like', body: null });
 
 describe('isRetryable 은 잠깐의 실패만 다시 보낸다', () => {
   it.each([

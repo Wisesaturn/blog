@@ -22,7 +22,7 @@ export async function getSnippet(props: GetSnippetProps) {
     throw NotFoundError;
   }
 
-  return parseDocument(snippetDocument, docSnap);
+  return parseDocument({ schema: snippetDocument, doc: docSnap });
 }
 
 /**
@@ -31,7 +31,7 @@ export async function getSnippet(props: GetSnippetProps) {
  */
 export async function getSnippets() {
   const snapshot = await getDocs(collection(db, 'snippets'));
-  return parseDocuments(snippetDocument, snapshot.docs);
+  return parseDocuments({ schema: snippetDocument, docs: snapshot.docs });
 }
 
 interface UpdateSnippetProps {

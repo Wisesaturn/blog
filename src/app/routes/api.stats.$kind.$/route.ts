@@ -22,7 +22,7 @@ function readTarget(params: LoaderFunctionArgs['params']) {
   if (!parsedKind.success) return null;
 
   const kind = parsedKind.data;
-  const parsed = parseStatPath(kind, params['*'] ?? '');
+  const parsed = parseStatPath({ kind, splat: params['*'] ?? '' });
   if (!parsed) return null;
   if (kind === 'post' && !CATEGORY_DATA.some((c) => c.link === parsed.key.split('/')[0])) {
     return null;
@@ -36,7 +36,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
   if (!target || target.operation) return notFound();
 
   try {
-    return Response.json(await getStat(target.kind, target.key), { headers: NO_STORE });
+    return Response.json(await getStat({ kind: target.kind, key: target.key }), {
+      headers: NO_STORE,
+    });
   } catch (err) {
     console.error(err);
     return Response.json({ message: '통계를 읽지 못했습니다' }, { status: 500, headers: NO_STORE });
@@ -49,8 +51,8 @@ async function view(request: Request, kind: StatKind, key: string) {
     request,
     kind,
     key,
-    increase: () => increaseViews(kind, key),
-    read: async () => (await getStat(kind, key)).views,
+    increase: () => increaseViews({ kind, key }),
+    read: async () => (await getStat({ kind, key })).views,
   });
   return Response.json({ views }, { headers: { ...NO_STORE, 'Set-Cookie': setCookie } });
 }
@@ -68,7 +70,7 @@ async function like(request: Request, kind: StatKind, key: string) {
     );
   }
   return Response.json(
-    { likes: await increaseLikes(kind, key, body.data.count) },
+    { likes: await increaseLikes({ kind, key, count: body.data.count }) },
     { headers: NO_STORE },
   );
 }

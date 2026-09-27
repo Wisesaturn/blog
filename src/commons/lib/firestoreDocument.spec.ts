@@ -24,10 +24,13 @@ describe('parseDocuments 는 스키마와 맞지 않는 문서를 건너뛴다',
   it('맞는 문서만 돌려주고, 건너뛴 문서의 경로와 필드를 경고로 남긴다', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    const result = parseDocuments(schema, [
-      doc('react/글', { title: '글', views: 3 }),
-      doc('react/유령', { reactions: { thumbsup: 1 } }),
-    ]);
+    const result = parseDocuments({
+      schema,
+      docs: [
+        doc('react/글', { title: '글', views: 3 }),
+        doc('react/유령', { reactions: { thumbsup: 1 } }),
+      ],
+    });
 
     expect(result).toEqual([{ title: '글', views: 3 }]);
     expect(warn).toHaveBeenCalledOnce();
@@ -36,7 +39,10 @@ describe('parseDocuments 는 스키마와 맞지 않는 문서를 건너뛴다',
   });
 
   it('스키마에 없는 필드는 결과에서 뺀다', () => {
-    const result = parseDocuments(schema, [doc('a/b', { title: '글', views: 1, reactions: {} })]);
+    const result = parseDocuments({
+      schema,
+      docs: [doc('a/b', { title: '글', views: 1, reactions: {} })],
+    });
 
     expect(result).toEqual([{ title: '글', views: 1 }]);
   });
@@ -44,20 +50,20 @@ describe('parseDocuments 는 스키마와 맞지 않는 문서를 건너뛴다',
 
 describe('parseDocument 는 스키마와 다르면 에러를 낸다', () => {
   it('맞으면 값을 돌려준다', () => {
-    expect(parseDocument(schema, doc('a/b', { title: '글', views: 1 }))).toEqual({
+    expect(parseDocument({ schema, doc: doc('a/b', { title: '글', views: 1 }) })).toEqual({
       title: '글',
       views: 1,
     });
   });
 
   it('다르면 문서 경로와 어긋난 필드를 적는다', () => {
-    expect(() => parseDocument(schema, doc('react/글', { title: 1, views: 1 }))).toThrow(
+    expect(() => parseDocument({ schema, doc: doc('react/글', { title: 1, views: 1 }) })).toThrow(
       /^react\/글 문서가 스키마와 다릅니다: title: /,
     );
   });
 
   it('없는 필드는 이름만 모아서 적는다. 유령 문서는 필드가 전부 없어 로그가 길어진다', () => {
-    expect(() => parseDocument(schema, doc('react/유령', { reactions: {} }))).toThrow(
+    expect(() => parseDocument({ schema, doc: doc('react/유령', { reactions: {} }) })).toThrow(
       'react/유령 문서가 스키마와 다릅니다: 없는 필드 title, views',
     );
   });

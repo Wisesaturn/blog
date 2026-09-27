@@ -87,7 +87,7 @@ async function main() {
   console.warn(`${write ? '[WRITE]' : '[DRY-RUN]'} ${rows.length}개`);
   rows.forEach((r) =>
     console.warn(
-      `  ${toStatId(r.kind, r.key).padEnd(70)} views=${String(r.views).padStart(5)} page=${r.notionPageId ?? '(없음)'}`,
+      `  ${toStatId({ kind: r.kind, key: r.key }).padEnd(70)} views=${String(r.views).padStart(5)} page=${r.notionPageId ?? '(없음)'}`,
     ),
   );
   (['post', 'snippet', 'project'] as const).forEach((kind) => {
@@ -105,7 +105,7 @@ async function main() {
   await Promise.all(
     rows.map((r) =>
       setDoc(
-        doc(db, 'stats', toStatId(r.kind, r.key)),
+        doc(db, 'stats', toStatId({ kind: r.kind, key: r.key })),
         {
           kind: r.kind,
           key: r.key,

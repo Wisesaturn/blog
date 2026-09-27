@@ -33,7 +33,7 @@ export async function countView(
   options: CountViewOptions,
 ): Promise<{ views: number; setCookie: string }> {
   const { request, kind, key, increase, read } = options;
-  const visited = createCookie(viewCookieName(kind, key), {
+  const visited = createCookie(viewCookieName({ kind, key }), {
     path: '/',
     secure: true,
     httpOnly: true,

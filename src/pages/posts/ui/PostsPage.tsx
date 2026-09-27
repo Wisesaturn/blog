@@ -31,11 +31,11 @@ export default function PostsPage({ posts }: PostsPageProps) {
   const stats = useListStats('post');
   const visiblePosts = useMemo(() => {
     const { viewsOf } = stats;
-    return filterPosts(
+    return filterPosts({
       posts,
-      parsePostsQuery(searchParams),
-      viewsOf && ((post) => viewsOf(postStatKey(post))),
-    );
+      query: parsePostsQuery(searchParams),
+      viewsOf: viewsOf && ((post) => viewsOf(postStatKey(post))),
+    });
   }, [posts, searchParams, stats]);
 
   return (

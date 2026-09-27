@@ -44,7 +44,7 @@ export interface LikeBatcher {
  * @param options 보내는 함수와 결과를 받을 콜백
  * @returns 클릭을 받는 묶음 전송기
  * @example
- * const batcher = createLikeBatcher({ send: (n, k) => postLike(kind, key, n, k), onSent, onChange });
+ * const batcher = createLikeBatcher({ send: (count, keepalive) => postLike({ kind, key, count, keepalive }), onSent, onChange });
  * button.onclick = () => batcher.add();
  */
 export default function createLikeBatcher(options: LikeBatcherOptions): LikeBatcher {

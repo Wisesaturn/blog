@@ -9,6 +9,13 @@ export const statKind = z.enum(STAT_KINDS);
 
 export type StatKind = z.infer<typeof statKind>;
 
+/** 통계가 붙는 콘텐츠 하나. 종류와 키는 늘 함께 다닌다 */
+export interface StatTarget {
+  kind: StatKind;
+  /** 글은 `카테고리/제목`, 스니펫과 프로젝트는 제목 */
+  key: string;
+}
+
 /** 콘텐츠 하나의 숫자. `GET /api/stats/:kind/:key` 응답이다 */
 export const statValues = z.object({
   views: z.number(),

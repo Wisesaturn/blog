@@ -10,5 +10,6 @@ export {
   statValues,
   type StatKind,
   type StatMap,
+  type StatTarget,
   type StatValues,
 } from './model/stat';

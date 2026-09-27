@@ -22,9 +22,9 @@ interface SnippetDetailPageProps {
  * -----------------------------------------------------------------------------------------------*/
 export default function SnippetDetailPage({ snippet }: SnippetDetailPageProps) {
   const { title = '' } = useParams();
-  const { views } = useContentStats('snippet', title);
+  const { views } = useContentStats({ kind: 'snippet', key: title });
   // 버튼이 둘이라 훅은 한 번만 부르고 같은 값을 넘긴다. 따로 부르면 모으는 클릭 수가 따로 논다
-  const { likes, like } = useLike('snippet', title);
+  const { likes, like } = useLike({ kind: 'snippet', key: title });
 
   return (
     <motion.main

@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { postLike, statsQueries, type StatKind } from '@/entities/stats';
+import { postLike, statsQueries, type StatTarget } from '@/entities/stats';
 
 import createLikeBatcher, { type LikeBatcher } from '../lib/createLikeBatcher';
 import isRetryable from '../lib/isRetryable';
@@ -26,22 +26,22 @@ interface Like {
  *
  * 한 화면에 버튼이 둘(제목 옆, 본문 아래)이어도 이 훅은 페이지에서 한 번만 부르고 둘에 같은 값을 넘긴다.
  * 버튼마다 부르면 모으는 수가 따로 놀아 한쪽 응답이 다른 쪽의 아직 안 보낸 수를 덮는다.
- * @param kind 콘텐츠 종류
- * @param key 콘텐츠 키
+ * @param target.kind 콘텐츠 종류
+ * @param target.key 콘텐츠 키
  * @returns 보여 줄 좋아요 수와 누르는 함수
  * @example
- * const { likes, like } = useLike('post', `${category}/${title}`);
+ * const { likes, like } = useLike({ kind: 'post', key: `${category}/${title}` });
  */
-export default function useLike(kind: StatKind, key: string): Like {
+export default function useLike({ kind, key }: StatTarget): Like {
   const queryClient = useQueryClient();
-  const detail = useQuery(statsQueries.detail(kind, key));
+  const detail = useQuery(statsQueries.detail({ kind, key }));
   const [unsent, setUnsent] = useState(0);
   const batcherRef = useRef<LikeBatcher | null>(null);
 
   useEffect(() => {
-    const { queryKey } = statsQueries.detail(kind, key);
+    const { queryKey } = statsQueries.detail({ kind, key });
     const batcher = createLikeBatcher({
-      send: (count, keepalive) => postLike(kind, key, count, keepalive),
+      send: (count, keepalive) => postLike({ kind, key, count, keepalive }),
       onSent: (likes) => queryClient.setQueryData(queryKey, (prev) => prev && { ...prev, likes }),
       onChange: setUnsent,
       shouldRetry: isRetryable,

@@ -8,5 +8,5 @@ import convertString from '@/commons/lib/convertString';
  * snippetStatKey({ plainTitle: 'createSafeContext' }); // 'createSafeContext'
  */
 export default function snippetStatKey(snippet: { plainTitle: string }): string {
-  return convertString(snippet.plainTitle, 'spaceToDash');
+  return convertString({ str: snippet.plainTitle, type: 'spaceToDash' });
 }

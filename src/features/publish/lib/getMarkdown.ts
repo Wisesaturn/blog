@@ -135,7 +135,7 @@ n2m.setCustomTransformer('callout', async (block: any) => {
     : '';
   const emoji = icon?.type === 'emoji' ? icon.emoji : '';
 
-  return formatCallout(emoji, [text, children].filter(Boolean).join('\n\n'));
+  return formatCallout({ icon: emoji, content: [text, children].filter(Boolean).join('\n\n') });
 });
 
 /**

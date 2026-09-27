@@ -31,7 +31,7 @@ export default async function getContentPaths(): Promise<ContentPaths> {
   const [posts, projects, snippets] = await Promise.all([getPosts(), getProjects(), getSnippets()]);
 
   const toPath = (prefix: string, plainTitle: string, lastmod: string): ContentPath => ({
-    path: `${prefix}/${convertString(plainTitle, 'spaceToDash')}`,
+    path: `${prefix}/${convertString({ str: plainTitle, type: 'spaceToDash' })}`,
     lastmod,
   });
 

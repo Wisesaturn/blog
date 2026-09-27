@@ -16,14 +16,14 @@ import convertString from '@/commons/lib/convertString';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   // 시크릿이 없거나 다르면 Notion 을 읽기 전에 돌려보낸다
-  if (!verifyWebhookSecret(request)) {
+  if (!verifyWebhookSecret({ request })) {
     return new Response('Unauthorized', { status: 401 });
   }
 
   try {
     const pageId = getWebhookPageId(await request.json());
     const { body: projectBody, ...project } = await createProject(pageId);
-    const title = convertString(project.plainTitle, 'spaceToDash');
+    const title = convertString({ str: project.plainTitle, type: 'spaceToDash' });
     await updateProject({
       title,
       meta: project,
@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       isUpdateProject: true,
     });
     // 조회수와 좋아요를 두는 stats 문서를 만들고 댓글을 달 Notion 페이지를 기록한다 (#117)
-    await ensureStat('project', title, project.index);
+    await ensureStat({ kind: 'project', key: title, notionPageId: project.index });
     // 저장이 성공한 뒤에 옛 파일을 지운다. 그 전에 실패하면 운영 문서가 가리키는 파일이 남아 있어야 한다 (#104)
     await deleteStore({
       collection: 'project',

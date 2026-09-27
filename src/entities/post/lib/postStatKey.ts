@@ -13,5 +13,5 @@ import convertString from '@/commons/lib/convertString';
  * // 'react/useState-동작-원리와-클로저'
  */
 export default function postStatKey(post: { category: string; plain_title: string }): string {
-  return `${post.category}/${convertString(post.plain_title, 'spaceToDash')}`;
+  return `${post.category}/${convertString({ str: post.plain_title, type: 'spaceToDash' })}`;
 }

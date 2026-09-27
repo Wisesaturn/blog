@@ -29,22 +29,27 @@ describe('requestJson 은 응답을 스키마로 검사해 돌려준다', () => 
 
   it('스키마를 통과한 값을 돌려준다', async () => {
     mockFetch(jsonResponse({ views: 3, likes: 1 }));
-    await expect(requestJson('/api/stats/post/a/b', stat)).resolves.toEqual({ views: 3, likes: 1 });
+    await expect(requestJson({ url: '/api/stats/post/a/b', schema: stat })).resolves.toEqual({
+      views: 3,
+      likes: 1,
+    });
   });
 
   it('zod(전체) 스키마도 받는다', async () => {
     mockFetch(jsonResponse({ views: 3 }));
-    await expect(requestJson('/x', z.object({ views: z.number() }))).resolves.toEqual({ views: 3 });
+    await expect(
+      requestJson({ url: '/x', schema: z.object({ views: z.number() }) }),
+    ).resolves.toEqual({ views: 3 });
   });
 
   it('스키마에 없는 필드는 빼고 돌려준다', async () => {
     mockFetch(jsonResponse({ views: 3, likes: 1, secret: 'x' }));
-    await expect(requestJson('/x', stat)).resolves.toEqual({ views: 3, likes: 1 });
+    await expect(requestJson({ url: '/x', schema: stat })).resolves.toEqual({ views: 3, likes: 1 });
   });
 
   it('모양이 틀리면 ApiError 가 아니라 zod 검사 에러를 던진다', async () => {
     mockFetch(jsonResponse({ views: '3' }));
-    const error = await requestJson('/x', stat).catch((e: unknown) => e);
+    const error = await requestJson({ url: '/x', schema: stat }).catch((e: unknown) => e);
     expect(error).not.toBeInstanceOf(ApiError);
     expect(error).toBeInstanceOf(zm.core.$ZodError);
   });
@@ -53,7 +58,7 @@ describe('requestJson 은 응답을 스키마로 검사해 돌려준다', () => 
 describe('requestJson 은 실패 상태 코드를 ApiError 로 던진다', () => {
   it.each([400, 403, 404, 429, 500])('%i 이면 status 와 본문을 담는다', async (status) => {
     mockFetch(jsonResponse({ message: '실패' }, status));
-    await expect(requestJson('/api/x', zm.object({}))).rejects.toMatchObject({
+    await expect(requestJson({ url: '/api/x', schema: zm.object({}) })).rejects.toMatchObject({
       name: 'ApiError',
       status,
       url: '/api/x',
@@ -63,7 +68,7 @@ describe('requestJson 은 실패 상태 코드를 ApiError 로 던진다', () =>
 
   it('실패 본문이 JSON 이 아니면 body 는 null 이다', async () => {
     mockFetch(new Response('Bad Gateway', { status: 502 }));
-    await expect(requestJson('/x', zm.object({}))).rejects.toMatchObject({
+    await expect(requestJson({ url: '/x', schema: zm.object({}) })).rejects.toMatchObject({
       status: 502,
       body: null,
     });
@@ -73,7 +78,9 @@ describe('requestJson 은 실패 상태 코드를 ApiError 로 던진다', () =>
 describe('requestJson 은 fetch 옵션을 넘기고 json 을 본문으로 보낸다', () => {
   it('json 을 직렬화하고 Content-Type 을 붙인다', async () => {
     const fetchFn = mockFetch(jsonResponse({ likes: 4 }));
-    await requestJson('/like', zm.object({ likes: zm.number() }), {
+    await requestJson({
+      url: '/like',
+      schema: zm.object({ likes: zm.number() }),
       method: 'POST',
       json: { count: 3 },
     });
@@ -86,7 +93,7 @@ describe('requestJson 은 fetch 옵션을 넘기고 json 을 본문으로 보낸
 
   it('json 이 없으면 본문과 Content-Type 을 붙이지 않는다', async () => {
     const fetchFn = mockFetch(jsonResponse({}));
-    await requestJson('/x', zm.object({}));
+    await requestJson({ url: '/x', schema: zm.object({}) });
 
     const [, init] = fetchFn.mock.calls[0];
     expect(init?.body).toBeUndefined();
@@ -96,7 +103,9 @@ describe('requestJson 은 fetch 옵션을 넘기고 json 을 본문으로 보낸
   it('signal 과 keepalive, 헤더를 그대로 넘긴다', async () => {
     const fetchFn = mockFetch(jsonResponse({}));
     const controller = new AbortController();
-    await requestJson('/x', zm.object({}), {
+    await requestJson({
+      url: '/x',
+      schema: zm.object({}),
       signal: controller.signal,
       keepalive: true,
       headers: { Authorization: 'Bearer t' },

@@ -29,14 +29,18 @@ describe('desc 는 최신 글을 앞에 둔다', () => {
   it('날짜 내림차순으로 정렬한다', () => {
     const rows = [post(OLD), post(NEW), post(MID)];
 
-    expect(sortPosts(rows, 'desc').map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+    expect(sortPosts({ posts: rows, orderBy: 'desc' }).map((p) => p.createdAt)).toEqual([
+      NEW,
+      MID,
+      OLD,
+    ]);
   });
 
   it('두 자리 월이 한 자리 월보다 뒤라는 것을 안다', () => {
     // 문자열로 비교하면 '2023. 12. 1.' 이 '2023. 5. 19.' 보다 앞선다
     const rows = [post('2023. 12. 1.'), post('2024. 5. 19.'), post('2023. 5. 19.')];
 
-    expect(sortPosts(rows, 'desc').map((p) => p.createdAt)).toEqual([
+    expect(sortPosts({ posts: rows, orderBy: 'desc' }).map((p) => p.createdAt)).toEqual([
       '2024. 5. 19.',
       '2023. 12. 1.',
       '2023. 5. 19.',
@@ -46,7 +50,9 @@ describe('desc 는 최신 글을 앞에 둔다', () => {
   it('알 수 없는 값이 오면 desc 로 본다', () => {
     const rows = [post(OLD), post(NEW)];
 
-    expect(sortPosts(rows, 'unknown' as never).map((p) => p.createdAt)).toEqual([NEW, OLD]);
+    expect(sortPosts({ posts: rows, orderBy: 'unknown' as never }).map((p) => p.createdAt)).toEqual(
+      [NEW, OLD],
+    );
   });
 });
 
@@ -54,7 +60,11 @@ describe('asc 는 오래된 글을 앞에 둔다', () => {
   it('날짜 오름차순으로 정렬한다', () => {
     const rows = [post(NEW), post(OLD), post(MID)];
 
-    expect(sortPosts(rows, 'asc').map((p) => p.createdAt)).toEqual([OLD, MID, NEW]);
+    expect(sortPosts({ posts: rows, orderBy: 'asc' }).map((p) => p.createdAt)).toEqual([
+      OLD,
+      MID,
+      NEW,
+    ]);
   });
 });
 
@@ -66,7 +76,11 @@ describe('mostView 는 조회수를 받기 전에는 최신순으로 둔다', ()
   it('viewsOf 가 없으면 최신순이다', () => {
     const rows = [post(OLD, 100), post(NEW, 1), post(MID, 50)];
 
-    expect(sortPosts(rows, 'mostView').map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+    expect(sortPosts({ posts: rows, orderBy: 'mostView' }).map((p) => p.createdAt)).toEqual([
+      NEW,
+      MID,
+      OLD,
+    ]);
   });
 });
 
@@ -74,29 +88,38 @@ describe('mostView 는 조회수가 많은 글을 앞에 둔다', () => {
   it('조회수 내림차순으로 정렬한다', () => {
     const rows = [post(OLD, 3), post(MID, 100), post(NEW, 20)];
 
-    expect(sortPosts(rows, 'mostView', viewsOf).map(viewsOfRow)).toEqual([100, 20, 3]);
+    expect(sortPosts({ posts: rows, orderBy: 'mostView', viewsOf }).map(viewsOfRow)).toEqual([
+      100, 20, 3,
+    ]);
   });
 
   it('조회수가 같으면 최신 글을 앞에 둔다', () => {
     const rows = [post(OLD, 10), post(NEW, 10), post(MID, 10)];
 
-    expect(sortPosts(rows, 'mostView', viewsOf).map((p) => p.createdAt)).toEqual([NEW, MID, OLD]);
+    expect(
+      sortPosts({ posts: rows, orderBy: 'mostView', viewsOf }).map((p) => p.createdAt),
+    ).toEqual([NEW, MID, OLD]);
   });
 
   it('조회수가 없는 글은 0 으로 보고 뒤로 보낸다', () => {
     const rows = [post(NEW), post(OLD, 5)];
 
-    expect(sortPosts(rows, 'mostView', viewsOf).map(viewsOfRow)).toEqual([5, undefined]);
+    expect(sortPosts({ posts: rows, orderBy: 'mostView', viewsOf }).map(viewsOfRow)).toEqual([
+      5,
+      undefined,
+    ]);
   });
 });
 
 describe('빈 목록과 한 건', () => {
   it.each([['desc'], ['asc'], ['mostView']])('%s 로 빈 배열을 넣어도 빈 배열이다', (orderBy) => {
-    expect(sortPosts([], orderBy as never, viewsOf)).toEqual([]);
+    expect(sortPosts({ posts: [], orderBy: orderBy as never, viewsOf })).toEqual([]);
   });
 
   it('한 건이면 그대로 둔다', () => {
-    expect(sortPosts([post(MID)], 'desc').map((p) => p.createdAt)).toEqual([MID]);
+    expect(sortPosts({ posts: [post(MID)], orderBy: 'desc' }).map((p) => p.createdAt)).toEqual([
+      MID,
+    ]);
   });
 });
 
@@ -108,13 +131,13 @@ describe('입력 배열을 제자리에서 바꾼다', () => {
   it('돌려준 배열이 넣은 배열과 같은 객체다', () => {
     const rows = [post(OLD), post(NEW)];
 
-    expect(sortPosts(rows, 'desc')).toBe(rows);
+    expect(sortPosts({ posts: rows, orderBy: 'desc' })).toBe(rows);
   });
 
   it('넣은 배열의 순서가 함께 바뀐다', () => {
     const rows = [post(OLD), post(NEW)];
 
-    sortPosts(rows, 'desc');
+    sortPosts({ posts: rows, orderBy: 'desc' });
 
     expect(rows.map((p) => p.createdAt)).toEqual([NEW, OLD]);
   });
