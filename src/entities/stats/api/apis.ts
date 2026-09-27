@@ -1,10 +1,12 @@
 import {
   collection,
   doc,
+  FirestoreError,
   getDoc,
   getDocs,
   increment,
   query,
+  runTransaction,
   setDoc,
   updateDoc,
   where,
@@ -72,23 +74,44 @@ export async function increaseViews(target: StatTarget): Promise<number> {
 }
 
 /**
+ * @description 통계 문서가 없어서 난 에러인지 가린다. 라우트가 404 와 500 을 나눌 때 쓴다
+ *
+ * 브라우저는 404 를 받으면 다시 보내지 않고, 500 을 받으면 다시 보낸다. 그래서 Firestore 가 잠깐 실패한
+ * 것(`unavailable`, `deadline-exceeded` 등)을 404 로 돌려주면 누른 좋아요를 버리게 된다.
+ * @param error `increaseViews` 가 던진 에러
+ * @returns `updateDoc` 이 문서를 찾지 못해 실패했으면 true
+ */
+export function isMissingStat(error: unknown): boolean {
+  return error instanceof FirestoreError && error.code === 'not-found';
+}
+
+/**
  * @description 좋아요를 `count` 만큼 올리고, 올린 뒤의 값을 돌려준다
  *
- * 브라우저가 쓰로틀로 모은 클릭 수를 한 번에 보낸다. `increaseViews` 처럼 통계 문서가 없으면 실패하고
- * 없는 키로 문서를 만들지 않는다.
+ * 브라우저가 1초 동안 모은 클릭 수를 한 번에 보낸다. 읽기와 쓰기를 트랜잭션 하나로 묶었다.
+ * 쓰고 나서 따로 읽으면, 쓰기는 됐는데 읽기가 실패한 경우에도 에러가 된다. 그러면 브라우저가 같은 수를 다시
+ * 보내 두 번 오른다. 트랜잭션이면 실패했을 때 아무것도 반영되지 않아 다시 보내도 된다.
+ *
+ * 통계 문서가 없으면 `null` 이다. 공개 API 에서 부르므로 없는 키로 문서를 새로 만들지 않는다.
  * @param params.kind 콘텐츠 종류
  * @param params.key 콘텐츠 키
  * @param params.count 올릴 수. 호출하는 쪽이 1~100 으로 검사한다
- * @returns 올린 뒤의 좋아요 수
- * @throws 통계 문서가 없으면 에러
+ * @returns 올린 뒤의 좋아요 수. 통계 문서가 없으면 `null`
+ * @throws 트랜잭션이 실패하면 에러. 이때는 아무것도 반영되지 않았다
  */
 export async function increaseLikes({
   count,
   ...target
-}: StatTarget & { count: number }): Promise<number> {
+}: StatTarget & { count: number }): Promise<number | null> {
   const ref = statRef(target);
-  await updateDoc(ref, { likes: increment(count) });
-  return toValues((await getDoc(ref)).data()).likes;
+  return runTransaction(db, async (transaction) => {
+    const snap = await transaction.get(ref);
+    if (!snap.exists()) return null;
+
+    const likes = toValues(snap.data()).likes + count;
+    transaction.update(ref, { likes });
+    return likes;
+  });
 }
 
 /**

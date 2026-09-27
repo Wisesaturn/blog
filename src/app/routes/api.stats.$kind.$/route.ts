@@ -4,12 +4,21 @@ import { countView } from '@/features/view-count';
 
 import { CATEGORY_DATA } from '@/entities/post';
 import { likeRequest, parseStatPath, statKind, type StatKind } from '@/entities/stats';
-import { getStat, increaseLikes, increaseViews } from '@/entities/stats/index.server';
+import {
+  getStat,
+  increaseLikes,
+  increaseViews,
+  isMissingStat,
+} from '@/entities/stats/index.server';
 
 const NO_STORE = { 'Cache-Control': 'no-store' };
 
 const notFound = () =>
   Response.json({ message: '없는 콘텐츠입니다' }, { status: 404, headers: NO_STORE });
+
+/** 브라우저는 5xx 를 잠깐의 실패로 보고 다시 보낸다. 404 와 섞으면 누른 좋아요를 버린다 */
+const serverError = () =>
+  Response.json({ message: '통계를 쓰지 못했습니다' }, { status: 500, headers: NO_STORE });
 
 /**
  * `/api/stats/:kind/{콘텐츠 키}[/동작]` 을 콘텐츠 키와 동작으로 읽는다.
@@ -69,14 +78,14 @@ async function like(request: Request, kind: StatKind, key: string) {
       { status: 400, headers: NO_STORE },
     );
   }
-  return Response.json(
-    { likes: await increaseLikes({ kind, key, count: body.data.count }) },
-    { headers: NO_STORE },
-  );
+  const likes = await increaseLikes({ kind, key, count: body.data.count });
+  if (likes === null) return notFound();
+  return Response.json({ likes }, { headers: NO_STORE });
 }
 
 /**
- * `POST …/view`, `POST …/like`. 통계 문서가 없는 키는 404 다. 공개 API 라 없는 키로 문서를 만들지 않는다
+ * `POST …/view`, `POST …/like`. 통계 문서가 없는 키는 404 다. 공개 API 라 없는 키로 문서를 만들지 않는다.
+ * 그 밖의 실패는 500 이다. 브라우저가 404 는 버리고 500 은 다시 보내므로 둘을 섞지 않는다
  */
 export async function action({ request, params }: ActionFunctionArgs) {
   const target = readTarget(params);
@@ -86,7 +95,8 @@ export async function action({ request, params }: ActionFunctionArgs) {
   try {
     return operation === 'view' ? await view(request, kind, key) : await like(request, kind, key);
   } catch (err) {
+    if (isMissingStat(err)) return notFound();
     console.error(err);
-    return notFound();
+    return serverError();
   }
 }

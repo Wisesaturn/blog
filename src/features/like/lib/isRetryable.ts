@@ -10,7 +10,7 @@ import { ApiError } from '@/commons/api/requestJson';
  * @param error `postLike` 가 던진 에러
  * @returns 다시 보낼지
  * @example
- * createLikeBatcher({ send, onSent, onChange, shouldRetry: isRetryable });
+ * useMutation({ mutationFn, retry: (_failureCount, error) => isRetryable(error) });
  */
 export default function isRetryable(error: unknown): boolean {
   if (error instanceof ApiError) return error.status === 429 || error.status >= 500;
