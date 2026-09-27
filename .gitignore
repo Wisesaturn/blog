@@ -19,6 +19,11 @@ yarn-error.log*
 *storybook.log
 
 #firebase
+# Firestore 규칙과 배포 설정은 레포에 올리지 않는다. 로컬에서 firebase deploy --only firestore:rules 로 배포한다
+firestore.rules
+firebase.json
+.firebaserc
+.firebase/
 firebaseAdminKey.json
 .vercel
 .vercel-cli
