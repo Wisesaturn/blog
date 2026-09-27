@@ -76,6 +76,8 @@ beforeEach(() => {
 afterEach(() => {
   queryClient.clear();
   mockedPostLike.mockReset();
+  // visibilityState spy 를 되돌린다. hidden 으로 남으면 뒤 테스트가 숨긴 탭에서 돈다
+  vi.restoreAllMocks();
   vi.unstubAllGlobals();
   vi.useRealTimers();
 });
@@ -146,7 +148,7 @@ describe('useLike 는 실패 종류에 따라 다시 보낼지 정한다', () =>
     expect(mockedPostLike).toHaveBeenCalledTimes(1);
     expect(result.current.likes).toBe(6);
 
-    // TanStack Query 의 기본 간격: 첫 재시도 1초, 다음 2초
+    // 첫 재시도 1초, 다음 2초
     await advance(1000);
     expect(mockedPostLike).toHaveBeenCalledTimes(2);
     await advance(1999);
@@ -154,6 +156,49 @@ describe('useLike 는 실패 종류에 따라 다시 보낼지 정한다', () =>
     await advance(1);
     expect(mockedPostLike).toHaveBeenCalledTimes(3);
     expect(result.current.likes).toBe(6);
+  });
+
+  it('다시 보내기를 기다리는 중에 떠나면 그 수를 keepalive 로 바로 보낸다', async () => {
+    mockedPostLike
+      .mockRejectedValueOnce(new ApiError({ status: 500, url: '/like', body: null }))
+      .mockResolvedValue(8);
+    const { result } = setup();
+
+    act(() => {
+      for (let i = 0; i < 3; i += 1) result.current.like();
+    });
+    await advance(SEND_INTERVAL);
+    expect(result.current.likes).toBe(8);
+
+    await act(async () => {
+      window.dispatchEvent(new Event('pagehide'));
+    });
+    expect(mockedPostLike).toHaveBeenLastCalledWith({ ...A, count: 3, keepalive: true });
+  });
+
+  it('다른 글로 옮긴 뒤에도 옛 글의 실패한 수를 다시 보내고, 떠나면 keepalive 로 보낸다', async () => {
+    mockedPostLike
+      .mockRejectedValueOnce(new ApiError({ status: 500, url: '/like', body: null }))
+      .mockRejectedValueOnce(new ApiError({ status: 500, url: '/like', body: null }))
+      .mockResolvedValue(9);
+    const { result, rerender } = setup();
+
+    act(() => {
+      for (let i = 0; i < 4; i += 1) result.current.like();
+    });
+    await advance(SEND_INTERVAL);
+    queryClient.setQueryData(statsQueries.detail(B).queryKey, { views: 0, likes: 0 });
+    rerender(B);
+
+    // 옛 글은 1초 뒤 다시 보낸다. 또 실패한다
+    await advance(1000);
+    expect(mockedPostLike).toHaveBeenLastCalledWith({ ...A, count: 4, keepalive: false });
+    // 다음 시도(2초) 전에 탭을 닫는다
+    await act(async () => {
+      window.dispatchEvent(new Event('pagehide'));
+    });
+    expect(mockedPostLike).toHaveBeenLastCalledWith({ ...A, count: 4, keepalive: true });
+    expect(result.current.likes).toBe(0);
   });
 
   it('404 는 한 번만 보내고 멈춘다. 그 수는 버리고 뒤에 누른 것도 보내지 않는다', async () => {
@@ -254,6 +299,34 @@ describe('useLike 는 늦게 온 응답이나 다른 글의 응답으로 숫자�
     expect(result.current.likes).toBe(2);
     // 옛 글의 캐시는 옛 글의 합계로 고친다
     expect(queryClient.getQueryData(statsQueries.detail(A).queryKey)?.likes).toBe(10);
+  });
+
+  it('다른 글로 옮긴 첫 렌더부터 옛 글의 숫자를 보여 주지 않는다', async () => {
+    mockedPostLike.mockResolvedValue(50);
+    queryClient.setQueryData(statsQueries.detail(A).queryKey, { views: 0, likes: 5 });
+    const seen: (number | null | undefined)[] = [];
+    const wrapper = ({ children }: { children: ReactNode }) =>
+      createElement(QueryClientProvider, { client: queryClient }, children);
+    const { result, rerender } = renderHook(
+      (props: StatTarget) => {
+        const value = useLike(props);
+        seen.push(value.likes);
+        return value;
+      },
+      { wrapper, initialProps: A },
+    );
+
+    // 옛 글에서 누르고, 아직 안 보낸 수가 남은 채로 옮긴다
+    act(() => result.current.like());
+    await advance(SEND_INTERVAL);
+    act(() => result.current.like());
+
+    seen.length = 0;
+    rerender(B);
+    // B 는 아직 통계를 받지 못했다. 첫 렌더부터 skeleton(undefined) 이어야 한다
+    expect(seen[0]).toBeUndefined();
+    expect(seen).not.toContain(50);
+    expect(seen).not.toContain(51);
   });
 
   it('상세 조회가 실패해도 좋아요 응답을 받으면 그 합계를 보여 준다', async () => {
