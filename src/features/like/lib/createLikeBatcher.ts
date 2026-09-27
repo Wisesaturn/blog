@@ -9,6 +9,13 @@ interface LikeBatcherOptions {
   interval?: number;
   /** 한 번에 보낼 수 있는 최대 수. 넘는 만큼은 다음 묶음으로 넘긴다 */
   max?: number;
+  /**
+   * 실패를 다시 보낼지. false 면 그 수를 버리고 전송기를 멈춘다.
+   * 404 처럼 다시 보내도 같은 결과인 실패를 거르는 데 쓴다. 기본값은 모두 다시 보낸다
+   */
+  shouldRetry?: (error: unknown) => boolean;
+  /** 실패가 이어질 때 늘어나는 간격의 상한(ms) */
+  maxInterval?: number;
 }
 
 export interface LikeBatcher {
@@ -30,7 +37,10 @@ export interface LikeBatcher {
  * 보내는 동안 눌린 수는 다음 묶음으로 넘긴다.
  *
  * 실패하면 되돌리지 않고 그 수를 다음 묶음에 합쳐 다시 보낸다. 화면 숫자는 기준값 + `unsent()` 라
- * 실패해도 줄지 않는다.
+ * 실패해도 줄지 않는다. 실패가 이어지면 간격을 두 배씩 늘리고(`maxInterval` 까지), 성공하면 되돌린다.
+ *
+ * `shouldRetry` 가 false 를 돌려주는 실패(없는 콘텐츠의 404 등)는 다시 보내도 같다. 그 수를 버리고 전송기를
+ * 멈춰, 그 뒤로 누른 것도 보내지 않는다. 멈추지 않으면 페이지를 떠날 때까지 1초마다 같은 실패를 되풀이한다.
  * @param options 보내는 함수와 결과를 받을 콜백
  * @returns 클릭을 받는 묶음 전송기
  * @example
@@ -38,9 +48,20 @@ export interface LikeBatcher {
  * button.onclick = () => batcher.add();
  */
 export default function createLikeBatcher(options: LikeBatcherOptions): LikeBatcher {
-  const { send, onSent, onChange, interval = 1000, max = 100 } = options;
+  const {
+    send,
+    onSent,
+    onChange,
+    interval = 1000,
+    max = 100,
+    shouldRetry = () => true,
+    maxInterval = 30_000,
+  } = options;
   let pending = 0;
   let inFlight = 0;
+  /** 이어진 실패 수. 다음 간격을 interval × 2^failures 로 늘린다 */
+  let failures = 0;
+  let stopped = false;
   let timer: ReturnType<typeof setTimeout> | undefined;
 
   const notify = () => onChange(pending + inFlight);
@@ -54,11 +75,19 @@ export default function createLikeBatcher(options: LikeBatcherOptions): LikeBatc
     send(count, keepalive)
       .then((likes) => {
         inFlight -= count;
+        failures = 0;
         onSent(likes);
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         inFlight -= count;
-        pending += count;
+        if (shouldRetry(error)) {
+          pending += count;
+          failures += 1;
+          return;
+        }
+        stopped = true;
+        pending = 0;
+        stopTimer();
       })
       .finally(() => {
         notify();
@@ -66,31 +95,34 @@ export default function createLikeBatcher(options: LikeBatcherOptions): LikeBatc
       });
   };
 
+  const stopTimer = () => {
+    if (timer !== undefined) clearTimeout(timer);
+    timer = undefined;
+  };
+
   const schedule = () => {
-    if (timer !== undefined) return;
+    if (stopped || timer !== undefined) return;
+    const delay = Math.min(interval * 2 ** failures, maxInterval);
     timer = setTimeout(() => {
       timer = undefined;
       // 한 번에 하나만 보낸다. 보내는 중이면 끝난 뒤(finally)에 다시 잡는다
       if (inFlight === 0) dispatch(false);
-    }, interval);
+    }, delay);
   };
 
   return {
     add: () => {
+      if (stopped) return;
       pending += 1;
       notify();
       schedule();
     },
     flushNow: (keepalive) => {
-      if (timer !== undefined) clearTimeout(timer);
-      timer = undefined;
+      stopTimer();
       // 떠나는 중에는 보내는 중인 요청을 기다릴 수 없어 남은 것을 따로 보낸다
       while (pending > 0) dispatch(keepalive);
     },
     unsent: () => pending + inFlight,
-    dispose: () => {
-      if (timer !== undefined) clearTimeout(timer);
-      timer = undefined;
-    },
+    dispose: stopTimer,
   };
 }

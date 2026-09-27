@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { postLike, statsQueries, type StatKind } from '@/entities/stats';
 
 import createLikeBatcher, { type LikeBatcher } from '../lib/createLikeBatcher';
+import isRetryable from '../lib/isRetryable';
 
 interface Like {
   /** 보여 줄 좋아요 수. 받는 중이면 `undefined`, 받지 못하면 `null` */
@@ -20,7 +21,8 @@ interface Like {
  *
  * 화면 숫자 = 서버 합계(`statsQueries.detail` 캐시) + 아직 서버에 들어가지 않은 클릭 수. 누르면 바로 오르고
  * (낙관적 업데이트), 요청은 1초마다 모아서 보낸다. 응답이 오면 캐시를 서버 합계로 고쳐 다른 사람이 누른 수까지
- * 반영한다. 실패해도 숫자를 되돌리지 않고 다음 묶음에 합쳐 다시 보낸다.
+ * 반영한다. 잠깐의 실패는 숫자를 되돌리지 않고 다음 묶음에 합쳐 다시 보낸다. 다시 보내도 같은 실패(없는
+ * 콘텐츠의 404 등)면 보내기를 멈춘다(`isRetryable`).
  *
  * 한 화면에 버튼이 둘(제목 옆, 본문 아래)이어도 이 훅은 페이지에서 한 번만 부르고 둘에 같은 값을 넘긴다.
  * 버튼마다 부르면 모으는 수가 따로 놀아 한쪽 응답이 다른 쪽의 아직 안 보낸 수를 덮는다.
@@ -42,6 +44,7 @@ export default function useLike(kind: StatKind, key: string): Like {
       send: (count, keepalive) => postLike(kind, key, count, keepalive),
       onSent: (likes) => queryClient.setQueryData(queryKey, (prev) => prev && { ...prev, likes }),
       onChange: setUnsent,
+      shouldRetry: isRetryable,
     });
     batcherRef.current = batcher;
 

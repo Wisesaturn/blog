@@ -8,6 +8,9 @@ import createLikeBatcher from './createLikeBatcher';
  * 여기서 틀리면 에러 없이 좋아요가 빠진다. 보내는 중에 눌린 수를 잃거나, 실패한 묶음을 버리거나,
  * 탭을 닫을 때 남은 수를 보내지 않으면 화면에는 올라갔던 숫자가 새로고침 뒤 줄어 있다.
  * 반대로 묶지 못하면 연타가 곧 Firestore 쓰기 폭증이다.
+ *
+ * 다시 보내도 같은 실패(없는 콘텐츠의 404)를 계속 다시 보내면 페이지를 떠날 때까지 1초마다 요청이 나간다.
+ * 화면에는 아무 표시가 없어서 네트워크 탭을 봐야만 드러난다.
  */
 
 const setup = (send = vi.fn((count: number) => Promise.resolve(count))) => {
@@ -96,7 +99,8 @@ describe('createLikeBatcher 는 서버 합계와 아직 안 들어간 수를 나
     expect(batcher.unsent()).toBe(2);
 
     batcher.add();
-    await vi.advanceTimersByTimeAsync(1000);
+    // 한 번 실패했으므로 다음 간격은 2초다
+    await vi.advanceTimersByTimeAsync(2000);
     expect(send.mock.calls.map(([count]) => count)).toEqual([2, 3]);
     expect(onSent).toHaveBeenCalledWith(5);
   });
@@ -124,5 +128,79 @@ describe('createLikeBatcher 는 떠날 때 남은 수를 keepalive 로 바로 �
     batcher.dispose();
     await vi.advanceTimersByTimeAsync(2000);
     expect(send).not.toHaveBeenCalled();
+  });
+});
+
+describe('createLikeBatcher 는 실패 종류에 따라 다시 보낼지 정한다', () => {
+  it('다시 보내지 않을 실패면 한 번만 보내고 멈춘다', async () => {
+    const send = vi.fn(() => Promise.reject(new Error('404')));
+    const onChange = vi.fn();
+    const batcher = createLikeBatcher({
+      send,
+      onSent: vi.fn(),
+      onChange,
+      shouldRetry: () => false,
+    });
+
+    batcher.add();
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(batcher.unsent()).toBe(0);
+    expect(onChange).toHaveBeenLastCalledWith(0);
+  });
+
+  it('멈춘 뒤에 누른 것은 모으지도 보내지도 않는다', async () => {
+    const send = vi.fn(() => Promise.reject(new Error('404')));
+    const batcher = createLikeBatcher({
+      send,
+      onSent: vi.fn(),
+      onChange: vi.fn(),
+      shouldRetry: () => false,
+    });
+
+    batcher.add();
+    await vi.advanceTimersByTimeAsync(1000);
+    batcher.add();
+    batcher.flushNow(true);
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(batcher.unsent()).toBe(0);
+  });
+
+  it('실패가 이어지면 간격을 1초, 2초, 4초 … 로 늘리고 상한을 넘지 않는다', async () => {
+    const send = vi.fn((_count: number) => Promise.reject(new Error('500')));
+    const batcher = createLikeBatcher({
+      send,
+      onSent: vi.fn(),
+      onChange: vi.fn(),
+      maxInterval: 4000,
+    });
+
+    batcher.add();
+    const sentAt: number[] = [];
+    for (let t = 0; t < 20_000; t += 100) {
+      const before = send.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(100);
+      if (send.mock.calls.length > before) sentAt.push(t + 100);
+    }
+    expect(sentAt.slice(0, 6)).toEqual([1000, 3000, 7000, 11_000, 15_000, 19_000]);
+    expect(batcher.unsent()).toBe(1);
+  });
+
+  it('성공하면 간격이 다시 1초로 돌아온다', async () => {
+    const send = vi
+      .fn<(count: number) => Promise<number>>()
+      .mockRejectedValueOnce(new Error('500'))
+      .mockRejectedValueOnce(new Error('500'))
+      .mockResolvedValue(1);
+    const batcher = createLikeBatcher({ send, onSent: vi.fn(), onChange: vi.fn() });
+
+    batcher.add();
+    await vi.advanceTimersByTimeAsync(1000 + 2000 + 4000);
+    expect(send).toHaveBeenCalledTimes(3);
+
+    batcher.add();
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(send).toHaveBeenCalledTimes(4);
   });
 });
