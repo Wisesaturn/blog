@@ -10,12 +10,14 @@ interface ListStats {
   isReady: boolean;
   /** 화면에 보일 조회수. 받는 중이면 `undefined`, 받지 못하면 `null`, 통계가 없는 콘텐츠는 0 */
   views: (key: string) => StatState;
+  /** 화면에 보일 좋아요 수. `views` 와 같은 규칙이다 (#120) */
+  likes: (key: string) => StatState;
   /** 정렬에 쓸 조회수. 통계를 받은 뒤에만 있다 */
   viewsOf: ((key: string) => number) | undefined;
 }
 
 /**
- * @description 목록 화면의 조회수. 한 종류의 통계를 한 번 받아 카드마다 끼운다
+ * @description 목록 화면의 조회수와 좋아요 수. 한 종류의 통계를 한 번 받아 카드마다 끼운다
  *
  * 목록 페이지는 숫자 없이 prerender 한다 (#119). 화면을 그린 뒤 `GET /api/stats/:kind` 를 한 번 부른다.
  * 응답은 CDN 에 60초 캐시되므로 목록의 숫자는 최대 1분 늦을 수 있다.
@@ -31,8 +33,9 @@ export default function useListStats(kind: StatKind): ListStats {
   return useMemo(() => {
     if (data) {
       const viewsOf = (key: string) => data[key]?.views ?? 0;
-      return { isReady: true, views: viewsOf, viewsOf };
+      return { isReady: true, views: viewsOf, likes: (key) => data[key]?.likes ?? 0, viewsOf };
     }
-    return { isReady: false, views: () => (isError ? null : undefined), viewsOf: undefined };
+    const pending = () => (isError ? null : undefined);
+    return { isReady: false, views: pending, likes: pending, viewsOf: undefined };
   }, [data, isError]);
 }

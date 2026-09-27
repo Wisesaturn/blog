@@ -65,6 +65,7 @@ export default function PostsPage({ posts }: PostsPageProps) {
       <PostList
         posts={visiblePosts}
         viewsFor={(post) => stats.views(postStatKey(post))}
+        likesFor={(post) => stats.likes(postStatKey(post))}
         viewsReady={stats.isReady}
         animation={{ variants: ANIMATE_FADE_UP_ITEM }}
       />
