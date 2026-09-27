@@ -43,6 +43,23 @@ describe('getStoragePaths 는 Storage 주소를 파일 경로로 바꿔 모은�
     );
   });
 
+  /**
+   * `encodeURIComponent` 는 괄호를 인코딩하지 않아 주소에 `)` 가 그대로 남고, 정규식이 거기서 경로를 자른다.
+   * 본문의 CSS `url(...)` 끝 괄호를 경로로 잡지 않으려고 둔 제외라 고치지 않는다.
+   * 대신 `uploadImage` 가 `toStorageFileName` 으로 괄호를 뺀 이름으로 올린다 (#129)
+   */
+  it('괄호가 든 주소는 ) 앞에서 경로를 잘라 실제 경로와 달라진다', () => {
+    const url = encode('project/team-projects/유클러버스/team_(1)-1.webp');
+
+    expect(getStoragePaths(url)).toEqual(new Set(['project/team-projects/유클러버스/team_(1']));
+  });
+
+  it('CSS url() 로 감싼 주소는 끝 괄호를 빼고 경로를 모은다', () => {
+    const body = `<div style="background: url(${encode('post/react/a/bg-1.webp')})"></div>`;
+
+    expect(getStoragePaths(body)).toEqual(new Set(['post/react/a/bg-1.webp']));
+  });
+
   it('잘린 퍼센트 인코딩은 건너뛰고 나머지 경로는 모은다', () => {
     const broken = `${BASE}/post%2Freact%2Fa%E0%A4`;
     const valid = encode('post/react/a/ok.webp');
