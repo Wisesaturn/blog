@@ -38,6 +38,9 @@ function Contact() {
       >
         <Icons.Instagram type="normal" />
       </Link>
+      <a href="/rss.xml" target="_blank" rel="noreferrer" aria-label="RSS 피드 구독">
+        <Icons.Rss type="normal" />
+      </a>
     </div>
   );
 }
