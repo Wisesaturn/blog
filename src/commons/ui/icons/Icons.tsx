@@ -19,6 +19,7 @@ import ArrowUpIcon from './ArrowUp';
 import RefreshIcon from './Refresh';
 import ListIcon from './List';
 import WebIcon from './Web';
+import RssIcon from './Rss';
 
 // global type
 declare global {
@@ -98,6 +99,8 @@ class Icons {
   static List = Icons.createIcon(ListIcon);
 
   static Web = Icons.createIcon(WebIcon);
+
+  static Rss = Icons.createIcon(RssIcon);
 }
 declare global {
   type IconElement = keyof typeof Icons;
