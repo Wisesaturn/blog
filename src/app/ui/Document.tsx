@@ -58,6 +58,7 @@ export default function Document({ children }: { children: React.ReactNode }) {
           rel="apple-touch-startup-image"
         />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="alternate" type="application/rss+xml" title="사툰사툰" href="/rss.xml" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="manifest" href="/assets/manifest.webmanifest" />
         <Links />

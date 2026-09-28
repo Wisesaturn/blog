@@ -10,3 +10,6 @@ export { version as APP_VERSION } from '../../../package.json';
 
 /** 푸터의 버전 표기가 가리키는 릴리즈 노트 */
 export const RELEASE_URL = 'https://github.com/Wisesaturn/blog/releases';
+
+/** 운영 사이트 주소. 끝에 `/` 가 없다. sitemap 과 RSS 의 절대 URL 에 쓴다 */
+export const SITE_URL = 'https://jaehan.blog';

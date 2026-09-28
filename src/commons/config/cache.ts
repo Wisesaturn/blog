@@ -9,3 +9,9 @@
  * 예전 응답을 바로 주고 뒤에서 갱신하게 한다. Vercel 은 두 값을 CDN 에서 쓰고 브라우저에는 떼어 보낸다.
  */
 export const DETAIL_CACHE_CONTROL = 'public, s-maxage=86400, stale-while-revalidate=31556952';
+
+/**
+ * `/rss.xml` 응답의 `Cache-Control`. 피드는 발행할 때만 바뀌고, 발행하면 Deploy Hook 으로 다시 배포되어
+ * CDN 캐시가 비므로 상세와 같이 하루를 둔다. 캐시가 없으면 리더가 부를 때마다 모든 카테고리 컬렉션을 읽는다.
+ */
+export const FEED_CACHE_CONTROL = 'public, s-maxage=86400, stale-while-revalidate=31556952';

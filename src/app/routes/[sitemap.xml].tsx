@@ -1,8 +1,9 @@
+import { SITE_URL } from '@/commons/config/site';
 import { ISitemap } from '@/commons/types/global';
 
 import getContentPaths from '../lib/getContentPaths';
 
-export const HOST_URL = `https://jaehan.blog`;
+export const HOST_URL = SITE_URL;
 
 export const loader = async () => {
   const { posts, projects, snippets } = await getContentPaths();
