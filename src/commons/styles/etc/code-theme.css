@@ -34,7 +34,6 @@
   --code-highlight-border: #4078f2;
   --code-inserted-bg: rgba(80, 161, 79, 0.12);
   --code-deleted-bg: rgba(228, 86, 73, 0.12);
-  --code-selection: rgba(64, 120, 242, 0.2);
 }
 
 :root[color-theme*='dark'] {
@@ -59,7 +58,6 @@
   --code-highlight-border: #61afef;
   --code-inserted-bg: rgba(152, 195, 121, 0.15);
   --code-deleted-bg: rgba(224, 108, 117, 0.15);
-  --code-selection: rgba(97, 175, 239, 0.25);
 }
 
 /* -------------------------------------------------------------------------------------------------
@@ -94,11 +92,6 @@ pre[class*='language-'] {
   /* border 는 폭에 더해져 짧은 코드에도 가로 스크롤바를 만든다. outline 은 레이아웃에 영향이 없다 */
   outline: 1px solid var(--code-border);
   outline-offset: -1px;
-}
-
-pre[class*='language-'] ::selection,
-code[class*='language-'] ::selection {
-  background-color: var(--code-selection);
 }
 
 /* -------------------------------------------------------------------------------------------------

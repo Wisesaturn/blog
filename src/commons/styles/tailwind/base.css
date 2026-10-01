@@ -41,6 +41,8 @@
     --skeleton-line: rgba(255, 255, 255, 0.3);
     --scrollbar-thumb: rgba(15, 23, 42, 0.18);
     --scrollbar-thumb-hover: rgba(15, 23, 42, 0.36);
+    /* 드래그 선택 색. 본문 strong 형광펜(--md-highlight)과 같은 초록 계열이라, 형광펜 위를 절반만 선택해도 경계가 보이는 진하기로 정했다 */
+    --selection: rgba(5, 150, 105, 0.35);
 
     /* 본문(.markdown-body) 토큰. 바탕은 중립 회색이고 초록은 포인트로만 쓴다 */
     --md-text: #222;
@@ -51,7 +53,6 @@
     --md-link: #3b82f6;
     --md-link-hover: #1d4ed8;
     --md-highlight: #b8ecd7;
-    --md-selection: rgba(59, 130, 246, 0.25);
     --md-callout-bg: #eefaf4;
     --md-heading-underline: rgba(5, 150, 105, 0.45);
 
@@ -93,6 +94,7 @@
     --skeleton-line: rgba(21, 21, 21, 0.3);
     --scrollbar-thumb: rgba(226, 232, 240, 0.2);
     --scrollbar-thumb-hover: rgba(226, 232, 240, 0.42);
+    --selection: var(--color-green-dark);
 
     --md-text: #e5e5e5;
     --md-muted: #9ca3af;
@@ -102,7 +104,6 @@
     --md-link: #60a5fa;
     --md-link-hover: #3b82f6;
     --md-highlight: rgba(110, 231, 183, 0.3);
-    --md-selection: rgba(96, 165, 250, 0.35);
     --md-callout-bg: rgba(110, 231, 183, 0.08);
     --md-heading-underline: rgba(110, 231, 183, 0.45);
 
@@ -209,13 +210,8 @@
 
   /* Drag Selection */
   ::selection {
-    background-color: var(--green-bright);
-    color: var(--black);
-  }
-
-  ::-moz-selection {
-    background-color: var(--green-bright);
-    color: var(--black);
+    background-color: var(--selection);
+    color: inherit;
   }
 
   input {
@@ -375,12 +371,6 @@
     :where(blockquote, .callout) strong {
       padding-inline: 0;
       background: none;
-    }
-
-    /* 선택 색 — 기본 선택 색(연민트)이 형광펜과 같은 계열이라 본문 안에서는 파랑 반투명을 쓴다 */
-    ::selection {
-      background-color: var(--md-selection);
-      color: inherit;
     }
 
     del {
