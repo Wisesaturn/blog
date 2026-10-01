@@ -4,7 +4,7 @@
   "private": true,
   "sideEffects": true,
   "type": "module",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "packageManager": "pnpm@9.15.0",
   "keywords": [
     "react-router",
